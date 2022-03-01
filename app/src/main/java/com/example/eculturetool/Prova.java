@@ -6,4 +6,7 @@ public class Prova {
     private String cognome;
     private String eta;
 
+
+    private String prova;
+
 }
