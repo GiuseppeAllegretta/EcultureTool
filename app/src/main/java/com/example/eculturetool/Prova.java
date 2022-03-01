@@ -9,5 +9,5 @@ public class Prova {
 
     private String prova;
     private String giovanni;
-
+    private String dom;
 }
