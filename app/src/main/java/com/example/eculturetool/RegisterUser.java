@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener{
@@ -96,34 +98,27 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Curatore curatore = new Curatore(nome, cognome, email);
-                            FirebaseDatabase.getInstance().getReference("Curatore")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(curatore).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(RegisterUser.this, "Il curatore è stato creato", Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
 
-                                    }else{
-                                        Toast.makeText(RegisterUser.this, "Registrazione fallita, prova di nuovo", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Curatore curatore = new Curatore(nome, cognome, email);
+
+                            Toast.makeText(RegisterUser.this, "Registrazione completata", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterUser.this, LoginActivity.class));
+
+                        }else {
+
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(RegisterUser.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    /**
-    private void back(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-**/
 }
