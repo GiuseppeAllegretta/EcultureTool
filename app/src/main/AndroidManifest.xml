@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".RegisterUser"
+            android:exported="false"
+            android:theme="@style/Fullscren"/>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Fullscren"/>
+        <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Fullscren">
@@ -21,8 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

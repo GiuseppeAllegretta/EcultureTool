@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "285807494230",
+    "project_id": "auth-96a19",
+    "storage_bucket": "auth-96a19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285807494230:android:0c6362600a38176b62a7f7",
+        "android_client_info": {
+          "package_name": "com.example.eculturetool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285807494230-8b6ldtl9v8okg5jevso025ehl2n441ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEPAklTEnKZegwz0yo_2eZPt6GnGgRa-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285807494230-8b6ldtl9v8okg5jevso025ehl2n441ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
