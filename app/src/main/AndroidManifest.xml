@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".Home"
+            android:exported="true"
+            android:theme="@style/Fullscren"/>
+        <activity
             android:name=".RegisterUser"
             android:exported="false"
             android:theme="@style/Fullscren"/>
