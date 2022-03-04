@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.registrati:
                 startActivity(new Intent(this, RegisterUser.class));
                 break;
+
             case R.id.logInButton:
                 userLogin();
                 break;
@@ -113,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAG, "signInWithEmail:success");
                         Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
                         //Indirizzamento al profilo utente
+                        progressBar.setVisibility(View.INVISIBLE);
                     }else{
                         Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.INVISIBLE);
@@ -122,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                     Toast.makeText(LoginActivity.this, "Autenticazione fallita", Toast.LENGTH_SHORT).show();
-
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
             }

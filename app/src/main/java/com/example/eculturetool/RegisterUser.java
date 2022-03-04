@@ -54,9 +54,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.registerButton:
-                progressBar.setVisibility(View.VISIBLE);
                 registerUser();
-
                 break;
         }
     }
@@ -104,6 +102,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
