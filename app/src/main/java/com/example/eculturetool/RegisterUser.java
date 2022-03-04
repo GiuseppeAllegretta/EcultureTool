@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private TextView registerUser;
     private final int PASSWORD_LENGTH = 6;
     private static final String TAG = "EmailPassword";
+    private ProgressBar progressBar;
 
 
     @Override
@@ -42,6 +44,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         editTextCognome = (EditText) findViewById(R.id.cognomeCuratore);
         editTextEmail = (EditText) findViewById(R.id.emailCuratore);
         editTextPassword = (EditText) findViewById(R.id.passwordCuratore);
+
+        progressBar = findViewById(R.id.progressBarRegister);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -49,6 +54,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.registerUser:
+                progressBar.setVisibility(View.VISIBLE);
                 registerUser();
 
                 break;
@@ -109,7 +115,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             FirebaseUser user = mAuth.getCurrentUser();
                             Curatore curatore = new Curatore(nome, cognome, email);
 
+
                             startActivity(new Intent(RegisterUser.this, LoginActivity.class));
+                            progressBar.setVisibility(View.INVISIBLE);
 
                             user.sendEmailVerification()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
