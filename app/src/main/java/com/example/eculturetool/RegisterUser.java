@@ -25,6 +25,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
     private TextView registerUser;
     private final int PASSWORD_LENGTH = 6;
+    private static final String TAG = "EmailPassword";
 
 
     @Override
@@ -108,8 +109,20 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             FirebaseUser user = mAuth.getCurrentUser();
                             Curatore curatore = new Curatore(nome, cognome, email);
 
-                            Toast.makeText(RegisterUser.this, "Registrazione completata", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterUser.this, LoginActivity.class));
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                                System.out.println("email inviata");
+                                            }
+                                        }
+                                    });
+
+                            Toast.makeText(RegisterUser.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
 
                         }else {
 
