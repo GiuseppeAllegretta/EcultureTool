@@ -17,11 +17,4 @@ public class Curatore {
         this.nome = nome;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
