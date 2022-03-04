@@ -34,7 +34,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
 
         mAuth = FirebaseAuth.getInstance();
-        registerUser = (Button) findViewById(R.id.registerButton);
+        registerUser = (Button) findViewById(R.id.registerUser);
         registerUser.setOnClickListener(this);
 
         editTextNome = (EditText) findViewById(R.id.nomeCuratore);
@@ -47,7 +47,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.registerButton:
+            case R.id.registerUser:
                 registerUser();
 
                 break;
