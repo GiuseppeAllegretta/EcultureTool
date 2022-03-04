@@ -37,7 +37,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
 
         mAuth = FirebaseAuth.getInstance();
-        registerUser = (Button) findViewById(R.id.registerUser);
+        registerUser = (Button) findViewById(R.id.registerButton);
         registerUser.setOnClickListener(this);
 
         editTextNome = (EditText) findViewById(R.id.nomeCuratore);
@@ -53,7 +53,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.registerUser:
+            case R.id.registerButton:
                 progressBar.setVisibility(View.VISIBLE);
                 registerUser();
 
