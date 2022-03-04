@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         //Indirizzamento al profilo utente
                     }else{
                         Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
 
                 } else {
