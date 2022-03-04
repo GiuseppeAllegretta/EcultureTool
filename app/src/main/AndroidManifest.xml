@@ -12,15 +12,16 @@
         <activity
             android:name=".RegisterUser"
             android:exported="false"
-            android:theme="@style/Fullscren"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".LoginActivity"
             android:exported="false"
-            android:theme="@style/Fullscren"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Fullscren">
+            android:theme="@style/Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

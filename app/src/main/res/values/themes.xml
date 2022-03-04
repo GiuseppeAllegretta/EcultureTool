@@ -19,7 +19,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Fullscren" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
 
