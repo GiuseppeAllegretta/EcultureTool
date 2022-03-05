@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.eculturetool.databinding.HomeBinding;
 import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.PlacesFragment;
+import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
 
 public class Home extends AppCompatActivity {
@@ -28,6 +29,9 @@ public class Home extends AppCompatActivity {
             switch(item.getItemId()){
                 case R.id.home:
                     replaceFragment(new HomeFragment());
+                    break;
+                case R.id.profile:
+                    replaceFragment(new ProfileFragment());
                     break;
                 case R.id.places:
                     replaceFragment(new PlacesFragment());
