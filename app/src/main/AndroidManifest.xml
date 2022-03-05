@@ -15,7 +15,8 @@
             android:theme="@style/Fullscreen" />
         <activity
             android:name=".PasswordDimenticataActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LoginActivity"/>
         <activity
             android:name=".RegisterUser"
             android:exported="false"
