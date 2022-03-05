@@ -8,7 +8,7 @@
     tools:context=".fragments.HomeFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textNome"
         android:layout_width="107dp"
         android:layout_height="35dp"
         android:layout_marginTop="44dp"
@@ -27,10 +27,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textNome" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/percorsiButton"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="64dp"
@@ -41,10 +41,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textNome" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/zoneButton"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
@@ -55,10 +55,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/percorsiButton" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/oggettiButton"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
@@ -69,6 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/zoneButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
