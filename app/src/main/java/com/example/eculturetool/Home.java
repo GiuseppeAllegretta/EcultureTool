@@ -1,9 +1,13 @@
 package com.example.eculturetool;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,8 +18,14 @@ import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.PlacesFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
 
@@ -23,10 +33,13 @@ public class Home extends AppCompatActivity {
 
     private Integer perc =0;
     private Integer ogg=0;
-    private EditText numeroPercorso, nome, anno, tipologia;
+    //private EditText numeroPercorso, anno, tipologia;
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/");
     private DatabaseReference myRef;
     private String uid;
+    private String nome;
+    private TextView tv;
+
 
 
     @Override
@@ -34,11 +47,26 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = HomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //Intent intent = getIntent();
-        //uid= intent.getStringExtra("uid");
-        //myRef = database.getReference("general").child(uid);
-        //myRef.setValue("empty");
-        replaceFragment(new HomeFragment());
+        Intent intent = getIntent();
+        uid= intent.getStringExtra("uid");
+        myRef = database.getReference("curatori").child(uid);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                tv = findViewById(R.id.nomeUtente);
+                tv.setText(snapshot.getValue(Curatore.class).getNome());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+            replaceFragment(new HomeFragment());
 
 
 
@@ -69,6 +97,8 @@ public class Home extends AppCompatActivity {
     }
 
 
+
+
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -77,16 +107,16 @@ public class Home extends AppCompatActivity {
     }
 
     public void addPerc(View view) {
-        myRef.child("percorso "+perc.toString()).setValue("vuoto");
+      //  myRef.child("percorso "+perc.toString()).setValue("vuoto");
         perc++;
     }
 
     public void addOgg(View view) {
 
-        Oggetto oggetto= new Oggetto(nome.getText().toString(),anno.getText().toString(),tipologia.getText().toString());
-        myRef.child("percorso "+numeroPercorso.getText().toString())
-                .child("oggetto "+ogg.toString())
-                .setValue(oggetto);
+      //  Oggetto oggetto= new Oggetto(nome.getText().toString(),anno.getText().toString(),tipologia.getText().toString());
+      //  myRef.child("percorso "+numeroPercorso.getText().toString())
+      //          .child("oggetto "+ogg.toString())
+       //         .setValue(oggetto);
         ogg++;
     }
 }

@@ -2,7 +2,8 @@ package com.example.eculturetool;
 
 public class Curatore {
 
-     public String uid, nome, cognome, email;
+
+    private String uid, nome, cognome, email;
 
     public Curatore() {
     }
@@ -19,16 +20,16 @@ public class Curatore {
         return cognome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public Curatore(String uid, String nome, String cognome, String email) {
         this.uid = uid;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
 
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
 }

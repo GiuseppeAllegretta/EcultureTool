@@ -113,10 +113,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if(user.isEmailVerified()){
                         Log.d(TAG, "signInWithEmail:success");
                         Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
-                        //Intent login = ;
-                        //String uid = user.getUid();
-                        //login.putExtra("uid", uid);
-                        startActivity(new Intent(LoginActivity.this, Home.class));
+                        Intent login = new Intent(LoginActivity.this, Home.class);
+                        String uid = user.getUid();
+                        login.putExtra("uid", uid);
+                        startActivity(login);
 
                         progressBar.setVisibility(View.INVISIBLE);
                     }else{
