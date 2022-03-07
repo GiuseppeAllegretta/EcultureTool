@@ -1,4 +1,4 @@
-package com.example.eculturetool;
+package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eculturetool.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.registrati:
-                startActivity(new Intent(this, RegisterUser.class));
+                startActivity(new Intent(this, RegisterUserActivity.class));
                 break;
 
             case R.id.logInButton:
@@ -113,10 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if(user.isEmailVerified()){
                         Log.d(TAG, "signInWithEmail:success");
                         Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
-                        Intent login = new Intent(LoginActivity.this, HomeActivity.class);
-                        String uid = user.getUid();
-                        login.putExtra("uid", uid);
-                        startActivity(login);
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
                         progressBar.setVisibility(View.INVISIBLE);
                     }else{

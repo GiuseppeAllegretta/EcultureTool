@@ -1,4 +1,4 @@
-package com.example.eculturetool;
+package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eculturetool.R;
+import com.example.eculturetool.entities.Curatore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
+public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
@@ -117,7 +119,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             writeCuratore(user, curatore);
 
 
-                            startActivity(new Intent(RegisterUser.this, LoginActivity.class));
+                            startActivity(new Intent(RegisterUserActivity.this, LoginActivity.class));
                             progressBar.setVisibility(View.INVISIBLE);
 
                             user.sendEmailVerification()
@@ -131,12 +133,12 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                         }
                                     });
 
-                            Toast.makeText(RegisterUser.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterUserActivity.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                         } else {
 
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(RegisterUser.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterUserActivity.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     }

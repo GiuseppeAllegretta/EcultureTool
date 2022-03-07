@@ -1,4 +1,4 @@
-package com.example.eculturetool;
+package com.example.eculturetool.entities;
 
 import androidx.annotation.NonNull;
 

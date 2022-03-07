@@ -2,6 +2,8 @@ package com.example.eculturetool.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,8 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eculturetool.HomeActivity;
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +29,11 @@ import com.example.eculturetool.R;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    private Connection connection = new Connection();
+    private DatabaseReference myRef;
+
+    private TextView nome, cognome, email;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,6 +99,33 @@ public class ProfileFragment extends Fragment {
         //label.setText(HomeActivity.loggedUser.getEmail());
 
         return vistaProfilo;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        nome = view.findViewById(R.id.profile_name);
+        email = view.findViewById(R.id.profile_email);
+
+
+        myRef = connection.getMyRefCuratore();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                nome.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
+                email.setText(snapshot.getValue(Curatore.class).getEmail());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 }
 

@@ -9,8 +9,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +28,12 @@ import com.example.eculturetool.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    private Connection connection = new Connection();
+    private DatabaseReference myRef;
+
+    private TextView tv;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,10 +66,29 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         }
+
+        tv = view.findViewById(R.id.nomeUtente);
+
+        myRef = connection.getMyRefCuratore();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +97,6 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
 
     }
 
@@ -75,4 +107,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragments
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
+
 }

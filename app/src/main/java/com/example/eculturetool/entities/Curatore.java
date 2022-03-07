@@ -1,4 +1,4 @@
-package com.example.eculturetool;
+package com.example.eculturetool.entities;
 
 public class Curatore {
 
@@ -12,6 +12,14 @@ public class Curatore {
         return uid;
     }
 
+
+    public Curatore(String uid, String nome, String cognome, String email) {
+        this.uid = uid;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -22,14 +30,6 @@ public class Curatore {
 
     public String getEmail() {
         return email;
-    }
-
-    public Curatore(String uid, String nome, String cognome, String email) {
-        this.uid = uid;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.eculturetool;
+package com.example.eculturetool.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.util.Log;
 
 import android.view.View;
 
+
+import com.example.eculturetool.R;
 
 import java.lang.ref.WeakReference;
 

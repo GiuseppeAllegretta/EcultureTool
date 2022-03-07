@@ -15,25 +15,25 @@
         android:theme="@style/Theme.EcultureTool">
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="true"
             android:theme="@style/Fullscreen" />
         <activity
-            android:name=".PasswordDimenticataActivity"
+            android:name=".activities.PasswordDimenticataActivity"
             android:exported="false"
             android:label="Password Dimenticata"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity"/>
         <activity
-            android:name=".RegisterUser"
+            android:name=".activities.RegisterUserActivity"
             android:exported="false"
             android:label="Registrazione"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:theme="@style/Fullscreen">
             <intent-filter>
@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true" />
     </application>
 

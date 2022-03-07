@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:autofillHints="name"
-    tools:context=".RegisterUser">
+    tools:context=".activities.RegisterUserActivity">
 
     <TextView
         android:id="@+id/banner"

@@ -1,10 +1,8 @@
-package com.example.eculturetool;
+package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,32 +11,41 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.eculturetool.R;
 import com.example.eculturetool.databinding.HomeBinding;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.PlacesFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
     HomeBinding binding;
+    final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
+    private FirebaseDatabase database = FirebaseDatabase.getInstance(REF);
+    private DatabaseReference myRef;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+
+    protected Curatore curatore;
+
 
     private Integer perc =0;
     private Integer ogg=0;
     //private EditText numeroPercorso, anno, tipologia;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance("https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/");
-    private DatabaseReference myRef;
+
     private String uid;
     private String nome;
     private TextView tv;
+
 
 
 
@@ -47,17 +54,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = HomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /**
         Intent intent = getIntent();
-        uid= intent.getStringExtra("uid");
+        uid = intent.getStringExtra("uid");
         myRef = database.getReference("curatori").child(uid);
+
+
 
         myRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tv = findViewById(R.id.nomeUtente);
-                tv.setText(snapshot.getValue(Curatore.class).getNome());
-
+                curatore = snapshot.getValue(Curatore.class);
             }
 
             @Override
@@ -65,14 +75,9 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        **/
 
-            replaceFragment(new HomeFragment());
-
-
-
-
-
-
+        replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -97,7 +102,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+
+
+    }
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
