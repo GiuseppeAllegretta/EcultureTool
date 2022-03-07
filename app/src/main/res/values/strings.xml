@@ -12,4 +12,10 @@
     <string name="title_activity_main2">MainActivity2</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Nome Curatore</string>
+    <string name="surname">Cognome Curatore</string>
+    <string name="email">Email Curatore</string>
+    <string name="place">Struttura Curatore</string>
+
+    <string name="twitterUsername">\@joeytribbiani</string>
 </resources>
