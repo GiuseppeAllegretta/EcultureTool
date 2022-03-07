@@ -1,6 +1,5 @@
 package com.example.eculturetool.fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eculturetool.Home;
+import com.example.eculturetool.HomeActivity;
 import com.example.eculturetool.R;
 
 /**
@@ -78,11 +77,11 @@ public class ProfileFragment extends Fragment {
         //imgUser.setImageResource(R.drawable.ic_user);
 
         label = vistaProfilo.findViewById(R.id.profile_name);
-        label.setText(new StringBuilder().append(Home.loggedUser.getNome()).append(" ").append(Home.loggedUser.getCognome()).toString());
+        //label.setText(new StringBuilder().append(HomeActivity.loggedUser.getNome()).append(" ").append(HomeActivity.loggedUser.getCognome()).toString());
 
         //
         label = vistaProfilo.findViewById(R.id.profile_email);
-        label.setText(Home.loggedUser.getEmail());
+        //label.setText(HomeActivity.loggedUser.getEmail());
 
         return vistaProfilo;
     }
