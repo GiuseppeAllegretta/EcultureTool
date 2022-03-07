@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterUser extends AppCompatActivity implements View.OnClickListener{
+public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
@@ -54,51 +54,51 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.registerButton:
                 registerUser();
                 break;
         }
     }
 
-    private void registerUser(){
+    private void registerUser() {
 
         String nome = editTextNome.getText().toString().trim();
         String cognome = editTextCognome.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(nome.isEmpty()){
+        if (nome.isEmpty()) {
             editTextNome.setError("Il nome è richiesto");
             editTextNome.requestFocus();
             return;
         }
 
-        if(cognome.isEmpty()){
+        if (cognome.isEmpty()) {
             editTextCognome.setError("Il cognome è richiesto");
             editTextCognome.requestFocus();
             return;
         }
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTextEmail.setError("L'email è richiesta");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("L'email deve essere valida");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             editTextPassword.setError("La password è richiesta");
             editTextPassword.requestFocus();
             return;
         }
 
-        if(password.length() < PASSWORD_LENGTH){
+        if (password.length() < PASSWORD_LENGTH) {
             editTextPassword.setError("La password deve avere almeno " + PASSWORD_LENGTH + " caratteri");
             editTextPassword.requestFocus();
             return;
@@ -111,10 +111,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Curatore curatore = new Curatore(nome, cognome, email);
+                            Curatore curatore = new Curatore(user.getUid(), nome, cognome, email);
+
+                            writeCuratore(user, curatore);
 
 
                             startActivity(new Intent(RegisterUser.this, LoginActivity.class));
@@ -133,7 +133,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
                             Toast.makeText(RegisterUser.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
-                        }else {
+                        } else {
 
                             // If sign in fails, display a message to the user.
                             Toast.makeText(RegisterUser.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
@@ -143,15 +143,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    private void writeCuratore(FirebaseUser user, Curatore curatore) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance(("https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/"));
+        DatabaseReference myRef = database.getReference("curatori").child(user.getUid());
 
-    private void writeUser(Curatore curatore, String Uid){
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        if(curatore != null && Uid != null){
-            mDatabase.child("users").child(Uid).setValue(curatore);
-        }
+        myRef.setValue(curatore);
     }
 
-
 }
+
+
