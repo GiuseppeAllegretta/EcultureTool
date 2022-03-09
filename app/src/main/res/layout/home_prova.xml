@@ -84,7 +84,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_museum" />
+                    android:src="@drawable/percorso" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="Percorsi"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
 
@@ -140,7 +140,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_museum" />
+                    android:src="@drawable/mappa" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="Zone"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
 
@@ -193,7 +193,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_museum" />
+                    android:src="@drawable/oggetti" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -202,7 +202,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="Oggetti"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
 

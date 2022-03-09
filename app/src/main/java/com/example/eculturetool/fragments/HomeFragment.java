@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragments
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.home_prova, container, false);
     }
 
 
