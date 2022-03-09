@@ -21,7 +21,7 @@
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"
-            android:theme="@style/Fullscreen" />
+            android:theme="@style/Theme.EcultureTool.NoActionBar" />
         <activity
             android:name=".activities.PasswordDimenticataActivity"
             android:exported="false"
