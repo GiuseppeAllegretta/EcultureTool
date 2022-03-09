@@ -14,12 +14,9 @@ import android.widget.TextView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -71,7 +68,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tv = view.findViewById(R.id.nomeUtente);
+        tv = view.findViewById(R.id.nomeCuratore);
 
         myRef = connection.getMyRefCuratore();
 
@@ -105,7 +102,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragments
-        return inflater.inflate(R.layout.home_prova, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 
