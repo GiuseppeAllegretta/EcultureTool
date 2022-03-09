@@ -3,8 +3,10 @@
     package="com.example.eculturetool">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
-
+        <activity
+            android:name=".activities.UploadImageActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"
@@ -22,12 +26,12 @@
             android:name=".activities.PasswordDimenticataActivity"
             android:exported="false"
             android:label="Password Dimenticata"
-            android:parentActivityName=".activities.LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity" />
         <activity
             android:name=".activities.RegisterUserActivity"
             android:exported="false"
             android:label="Registrazione"
-            android:parentActivityName=".activities.LoginActivity"/>
+            android:parentActivityName=".activities.LoginActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false"

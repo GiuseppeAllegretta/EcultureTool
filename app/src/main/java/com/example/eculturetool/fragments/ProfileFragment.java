@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
+import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
@@ -140,6 +141,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        changeImg.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("Button Clicked");
+
+                Intent activity2Intent = new Intent(getActivity(), UploadImageActivity.class);
+                startActivity(activity2Intent);
             }
         });
 
