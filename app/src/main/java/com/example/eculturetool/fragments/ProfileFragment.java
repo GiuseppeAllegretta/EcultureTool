@@ -142,9 +142,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
-
-
     }
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();//logout
