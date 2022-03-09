@@ -21,6 +21,7 @@ import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,9 +44,9 @@ public class ProfileFragment extends Fragment {
     private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
     TextView label;
-    ImageView imgUser;
-    ImageView logout;
-    Button changeImg;
+    Button imgUser;
+    Button logout;
+    FloatingActionButton changeImg;
     Activity context;
     String strImage;
 
@@ -119,6 +120,7 @@ public class ProfileFragment extends Fragment {
         logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         changeImg = view.findViewById(R.id.change_imgUser);
+
         nome = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
 
