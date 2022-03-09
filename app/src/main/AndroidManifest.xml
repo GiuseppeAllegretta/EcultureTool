@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.ModificaProfiloActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.HomeActivity"/>
+        <activity
             android:name=".activities.UploadImageActivity"
             android:exported="false" />
         <activity
