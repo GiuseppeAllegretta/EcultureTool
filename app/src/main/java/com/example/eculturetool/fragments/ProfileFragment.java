@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
+import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
@@ -44,10 +45,11 @@ public class ProfileFragment extends Fragment {
     private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
     TextView label;
-    Button imgUser;
+    ImageView imgUser;
     Button logout;
     FloatingActionButton changeImg;
     Activity context;
+    FloatingActionButton editButton;
     String strImage;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -124,6 +126,22 @@ public class ProfileFragment extends Fragment {
         nome = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
 
+        editButton=view.findViewById(R.id.fab);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
+
+
+                /*Intent intent = new Intent(context.getApplicationContext(), ModificaProfiloActivity.class);
+                startActivity(intent);*/
+
+
+            }
+        });
+
+
         myRef = connection.getMyRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -158,6 +176,10 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(context.getApplicationContext(), LoginActivity.class));
         getActivity().finish();
     }
+
+/*    public void editProfile(View view){
+        startActivity(new Intent(context.getApplicationContext(), ModificaProfiloActivity.class));
+    }*/
 
 }
 
