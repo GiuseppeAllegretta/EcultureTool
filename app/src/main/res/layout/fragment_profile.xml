@@ -230,7 +230,6 @@
                         android:layout_height="match_parent"
                         android:backgroundTint="#D2D2D2"
                         android:text="Esci"
-                        android:onClick="logout"
                         android:textColor="@color/black" />
 
 

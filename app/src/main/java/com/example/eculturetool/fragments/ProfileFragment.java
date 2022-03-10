@@ -133,10 +133,10 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.profile_email);
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
-        settingsButton= view.findViewById(R.id.settings_button);
+        settingsButton = view.findViewById(R.id.settings_button);
 
 
-        editButton=view.findViewById(R.id.fab);
+        editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,8 +151,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
-
 
 
         myRef = connection.getMyRefCuratore();
@@ -185,20 +183,25 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-settingsButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        showPopup(view);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(view);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(view);
+            }
+        });
+
     }
-});
 
-
-
-    }
-
-    public void logout (View view){
+    public void logout(View view) {
         FirebaseAuth.getInstance().signOut();//logout
-        startActivity(new Intent(context.getApplicationContext(), LoginActivity.class));
+        startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
     }
 
@@ -229,7 +232,6 @@ settingsButton.setOnClickListener(new View.OnClickListener() {
         popup.inflate(R.menu.settings_menu);
         popup.show();
     }
-
 
 
 }
