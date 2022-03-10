@@ -1,13 +1,9 @@
 package com.example.eculturetool.fragments;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +11,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
-import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.IOException;
-import java.util.Objects;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,11 +43,11 @@ public class ProfileFragment extends Fragment {
     private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
     TextView label;
-    Button imgUser;
-    Button logout;
-    FloatingActionButton changeImg;
+    ImageView imgUser;
+    ImageView logout;
+    Button changeImg;
     Activity context;
-    FloatingActionButton editButton;
+    String strImage;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,7 +57,7 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Uri imageUri;
+    private String imageUri;
     private Bitmap bitmap;
 
     public ProfileFragment() {
@@ -110,8 +100,7 @@ public class ProfileFragment extends Fragment {
         View vistaProfilo = inflater.inflate(R.layout.fragment_profile, container, false);
         //((HomeAdminActivity) requireActivity()).disableBackArrow();
 
-        //imgUser = vistaProfilo.findViewById(R.id.imgUser);
-        //imgUser.setImageResource(R.drawable.ic_user);
+        imgUser = vistaProfilo.findViewById(R.id.imgUser);
 
         label = vistaProfilo.findViewById(R.id.profile_name);
         //label.setText(new StringBuilder().append(HomeActivity.loggedUser.getNome()).append(" ").append(HomeActivity.loggedUser.getCognome()).toString());
@@ -128,26 +117,10 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         logout = view.findViewById(R.id.logout);
+        imgUser = view.findViewById(R.id.imgUser);
         changeImg = view.findViewById(R.id.change_imgUser);
-
         nome = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
-
-        editButton=view.findViewById(R.id.fab);
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
-
-
-                /*Intent intent = new Intent(context.getApplicationContext(), ModificaProfiloActivity.class);
-                startActivity(intent);*/
-
-
-            }
-        });
-
 
         myRef = connection.getMyRefCuratore();
 
@@ -156,6 +129,7 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 nome.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
                 email.setText(snapshot.getValue(Curatore.class).getEmail());
+                Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
             }
 
             @Override
@@ -168,23 +142,20 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
 
-                Intent activity2Intent = new Intent(getActivity(), UploadImageActivity.class);
-                startActivity(activity2Intent);
+                Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
+                startActivity(uploadImageActivity);
             }
         });
 
 
 
     }
+
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();//logout
         startActivity(new Intent(context.getApplicationContext(), LoginActivity.class));
         getActivity().finish();
     }
-
-/*    public void editProfile(View view){
-        startActivity(new Intent(context.getApplicationContext(), ModificaProfiloActivity.class));
-    }*/
 
 }
 
