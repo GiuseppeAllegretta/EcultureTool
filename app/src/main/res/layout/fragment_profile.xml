@@ -43,8 +43,7 @@
                         android:background="@drawable/circle"
                         android:padding="3dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/ic_museum"/>
-
+                        android:src="@drawable/ic_museum" />
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,11 +51,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|bottom"
+                        android:backgroundTint="@color/gialloSecondario"
                         android:clickable="true"
                         android:src="@android:drawable/ic_menu_camera"
-                        android:backgroundTint="@color/gialloSecondario"
-                        app:elevation="0dp"
-                        android:tint="@color/black"/>
+                        android:tint="@color/black"
+                        app:elevation="0dp" />
 
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -152,6 +151,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:id="@+id/nome_profilo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -181,6 +181,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:id="@+id/cognome_profilo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"

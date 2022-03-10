@@ -161,7 +161,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                     // get reference to 'curatori' node
                                     mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                                     //aggiorno l'url dell'immagine
-                                    mFirebaseDatabase.child("uFIurtEH4SS8Grz2SExHqCtc1UB3").child("img").setValue(uri.toString());
+                                    mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
                                     //Intent activity3Intent = new Intent(UploadImageActivity.this, ProfileFragment.class);
                                     //activity3Intent.putExtra("img", uri);
                                     //setResult(1888,activity3Intent);

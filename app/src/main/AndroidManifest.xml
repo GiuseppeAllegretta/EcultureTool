@@ -18,7 +18,8 @@
         <activity
             android:name=".activities.ModificaProfiloActivity"
             android:exported="false"
-            android:parentActivityName=".activities.HomeActivity"/>
+            android:parentActivityName=".activities.HomeActivity"
+            android:label="Modifica Profilo"/>
         <activity
             android:name=".activities.UploadImageActivity"
             android:exported="false" />

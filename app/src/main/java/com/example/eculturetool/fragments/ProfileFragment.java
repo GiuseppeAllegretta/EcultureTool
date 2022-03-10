@@ -22,6 +22,7 @@ import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class ProfileFragment extends Fragment {
     private Connection connection = new Connection();
     private DatabaseReference myRef;
 
-    private TextView nome, cognome, email;
+    private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
     private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
@@ -122,9 +123,11 @@ public class ProfileFragment extends Fragment {
         logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         changeImg = view.findViewById(R.id.change_imgUser);
-
-        nome = view.findViewById(R.id.profile_name);
+        nomeFoto = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
+        nome = view.findViewById(R.id.nome_profilo);
+        cognome = view.findViewById(R.id.cognome_profilo);
+
 
         editButton=view.findViewById(R.id.fab);
 
@@ -132,6 +135,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
+
 
 
                 /*Intent intent = new Intent(context.getApplicationContext(), ModificaProfiloActivity.class);
@@ -147,9 +151,14 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                nome.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
+                nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
                 email.setText(snapshot.getValue(Curatore.class).getEmail());
-                Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
+                nome.setText(snapshot.getValue(Curatore.class).getNome());
+                cognome.setText(snapshot.getValue(Curatore.class).getCognome());
+
+                //Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
+                Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
+
             }
 
             @Override
