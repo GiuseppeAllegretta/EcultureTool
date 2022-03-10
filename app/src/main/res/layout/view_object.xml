@@ -25,8 +25,7 @@
         android:layout_height="250sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80sp"
-        android:layout_marginEnd="10sp"
-        android:background="@drawable/gioconda" />
+        android:layout_marginEnd="10sp" />
 
     <TextView
         android:id="@+id/descrizione"
