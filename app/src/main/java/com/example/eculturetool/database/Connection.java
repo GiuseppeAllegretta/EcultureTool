@@ -39,4 +39,8 @@ public class Connection {
     public DatabaseReference getMyRefCuratore(){
         return database.getReference("curatori").child(user.getUid());
     }
+
+    public String getREF() {
+        return REF;
+    }
 }

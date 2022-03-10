@@ -148,7 +148,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     private void writeCuratore(FirebaseUser user, Curatore curatore) {
         FirebaseDatabase database = FirebaseDatabase.getInstance(("https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/"));
         DatabaseReference myRef = database.getReference("curatori").child(user.getUid());
-
         myRef.setValue(curatore);
     }
 

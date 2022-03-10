@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,19 +7,63 @@
     tools:context=".fragments.ProfileFragment">
 
 
-    <LinearLayout
-        android:id="@+id/linlay1"
+    <!-- ActionBar conferma e indietro-->
+    <com.google.android.material.appbar.AppBarLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/toolbar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/verdePrimario"
+            android:minHeight="?attr/actionBarSize"
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_conferma"
+                android:padding="8dp"
+                android:id="@+id/icona_conferma"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
+
+            <ImageView
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:src="@drawable/ic_freccia_back"
+                android:padding="8dp"
+                android:id="@+id/freccia_back"
+                android:layout_gravity="left"
+                android:layout_marginLeft="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifica Profilo"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"/>
 
 
-    </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linlay1">
+        android:layout_below="@+id/toolbar">
 
 
         <RelativeLayout

@@ -33,7 +33,8 @@
             android:name=".activities.ModificaProfiloActivity"
             android:exported="false"
             android:parentActivityName=".activities.HomeActivity"
-            android:label="Modifica Profilo"/>
+            android:label="Modifica Profilo"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.UploadImageActivity"
             android:exported="false" />
