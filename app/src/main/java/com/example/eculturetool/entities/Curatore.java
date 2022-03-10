@@ -3,9 +3,13 @@ package com.example.eculturetool.entities;
 public class Curatore {
 
 
-    private String uid, nome, cognome, email;
+    private String uid, nome, cognome, email, img;
 
     public Curatore() {
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getUid(){
@@ -30,6 +34,10 @@ public class Curatore {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getImg() {
+        return img;
     }
 
 }

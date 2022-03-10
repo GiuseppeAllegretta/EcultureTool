@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
+import com.example.eculturetool.database.Connection;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +37,9 @@ public class UploadImageActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
+    private Connection connection = new Connection();
+    private DatabaseReference myRef;
+
     private Button mButtonChooseImage;
     private Button mButtonUpload;
     private TextView mTextViewShowUploads;
@@ -45,8 +49,14 @@ public class UploadImageActivity extends AppCompatActivity {
 
     private Uri mImageUri;
 
+    //realtime database reference
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
+
+
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
+
     private StorageTask mUploadTask;
 
     @Override
@@ -136,11 +146,28 @@ public class UploadImageActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(getApplicationContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
                                     taskSnapshot.getTask().toString());
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
+                            //myRef = connection.getMyRefCuratore();
+                            //myRef.child("img").setValue(fileReference);
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    //Riferimento a realtime database
+                                    mFirebaseInstance = FirebaseDatabase.getInstance();
+                                    // get reference to 'curatori' node
+                                    mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
+                                    //aggiorno l'url dell'immagine
+                                    mFirebaseDatabase.child("uFIurtEH4SS8Grz2SExHqCtc1UB3").child("img").setValue(uri.toString());
+                                    //Intent activity3Intent = new Intent(UploadImageActivity.this, ProfileFragment.class);
+                                    //activity3Intent.putExtra("img", uri);
+                                    //setResult(1888,activity3Intent);
+                                    finish();
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -157,7 +184,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Nessun file selezionato!", Toast.LENGTH_SHORT).show();
         }
     }
 }
