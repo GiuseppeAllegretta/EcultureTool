@@ -116,7 +116,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
+
                         progressBar.setVisibility(View.INVISIBLE);
+                        finish();
                     }else{
                         Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.INVISIBLE);

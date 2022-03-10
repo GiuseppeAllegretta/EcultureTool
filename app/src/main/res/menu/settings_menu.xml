@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/modifica_password_popup"
+        android:title="Modifica password" />
+
+    <item
+        android:id="@+id/elimina_profilo_popup"
+        android:title="Elimina profilo"/>
+
+    <item
+        android:id="@+id/item3"
+        android:title="Item 3" />
+
+    <item
+        android:id="@+id/item4"
+        android:title="Item 4" />
+
+</menu>

@@ -5,18 +5,23 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.HomeActivity;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
@@ -52,6 +57,7 @@ public class ProfileFragment extends Fragment {
     Activity context;
     FloatingActionButton editButton;
     String strImage;
+    ImageButton settingsButton;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -127,6 +133,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.profile_email);
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
+        settingsButton= view.findViewById(R.id.settings_button);
 
 
         editButton=view.findViewById(R.id.fab);
@@ -144,6 +151,8 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+
 
 
         myRef = connection.getMyRefCuratore();
@@ -176,6 +185,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+settingsButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        showPopup(view);
+    }
+});
+
 
 
     }
@@ -186,9 +202,35 @@ public class ProfileFragment extends Fragment {
         getActivity().finish();
     }
 
-/*    public void editProfile(View view){
-        startActivity(new Intent(context.getApplicationContext(), ModificaProfiloActivity.class));
-    }*/
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(getActivity(), v);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.modifica_password_popup:
+
+                        Toast.makeText(getActivity(), "Modifica pass cliccato", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.elimina_profilo_popup:
+                        Toast.makeText(getActivity(), "Elimina profilo", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.item3:
+                        Toast.makeText(getActivity(), "Item 3 clicked", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.item4:
+                        Toast.makeText(getActivity(), "Item 4 clicked", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popup.inflate(R.menu.settings_menu);
+        popup.show();
+    }
+
+
 
 }
 
