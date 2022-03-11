@@ -28,6 +28,11 @@
             android:exported="true"/>
         <activity android:name=".provaoggetti.ElencoOggetti"
             android:exported="true" />
+        <activity android:name=".utilities.FilePicker"
+            android:exported="true"/>
+        <!-- Utilizzata per ritagliare le foto acquisite da fotocamera e galleria -->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
 
         <activity
             android:name=".activities.ModificaProfiloActivity"

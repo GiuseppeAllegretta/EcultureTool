@@ -12,6 +12,8 @@
     <color name="verdeTerziario">#B4FFFF</color>
     <color name="gialloPrimario">#FED811</color>
     <color name="gialloSecondario">#FDC100</color>
+    <color name="opacityWhite">#80FFFFFF</color>
+    <color name="opacityBlack">#90000000</color>
 
 
     <color name="address">#2F7092</color>
