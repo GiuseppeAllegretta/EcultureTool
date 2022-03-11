@@ -19,6 +19,7 @@ import com.example.eculturetool.fragments.PlacesFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
 import com.example.eculturetool.provaoggetti.ElencoOggetti;
+import com.example.eculturetool.utilities.FilePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -90,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new ProfileFragment());
                     break;
                 case R.id.places:
-                    startActivity(new Intent(getApplicationContext(), ElencoOggetti.class));
+                    startActivity(new Intent(getApplicationContext(), FilePicker.class));
                     //replaceFragment(new PlacesFragment());
                     break;
                 case R.id.qr_scanner:
