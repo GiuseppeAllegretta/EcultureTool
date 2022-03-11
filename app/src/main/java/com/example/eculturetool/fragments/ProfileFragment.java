@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.HomeActivity;
 import com.example.eculturetool.activities.LoginActivity;
+import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
@@ -212,8 +213,7 @@ public class ProfileFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.modifica_password_popup:
-
-                        Toast.makeText(getActivity(), "Modifica pass cliccato", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), ModificaPasswordActivity.class));
                         return true;
                     case R.id.elimina_profilo_popup:
                         Toast.makeText(getActivity(), "Elimina profilo", Toast.LENGTH_SHORT).show();
