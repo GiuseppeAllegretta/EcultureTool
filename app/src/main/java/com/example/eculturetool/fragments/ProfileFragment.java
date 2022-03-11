@@ -1,6 +1,7 @@
 package com.example.eculturetool.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton editButton;
     String strImage;
     ImageButton settingsButton;
+    Button eliminaProfilo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -135,6 +138,8 @@ public class ProfileFragment extends Fragment {
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
         settingsButton = view.findViewById(R.id.settings_button);
+        eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
+
 
 
         editButton = view.findViewById(R.id.fab);
@@ -216,7 +221,7 @@ public class ProfileFragment extends Fragment {
                         startActivity(new Intent(getActivity(), ModificaPasswordActivity.class));
                         return true;
                     case R.id.elimina_profilo_popup:
-                        Toast.makeText(getActivity(), "Elimina profilo", Toast.LENGTH_SHORT).show();
+                        showCustomDialog();
                         return true;
                     case R.id.item3:
                         Toast.makeText(getActivity(), "Item 3 clicked", Toast.LENGTH_SHORT).show();
@@ -233,6 +238,15 @@ public class ProfileFragment extends Fragment {
         popup.show();
     }
 
+
+    void showCustomDialog(){
+        final Dialog dialog=new Dialog(getActivity());
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_elimina_profilo);
+        dialog.show();
+    }
 
 }
 

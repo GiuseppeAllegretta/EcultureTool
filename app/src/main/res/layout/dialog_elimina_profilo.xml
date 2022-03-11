@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vuoi cancellare definitivamento il tuo profilo?"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:textAlignment="center"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:layout_marginRight="10dp"
+
+            ></Button>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:backgroundTint="@color/verdePrimario"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:padding="4dp"
+            ></Button>
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
