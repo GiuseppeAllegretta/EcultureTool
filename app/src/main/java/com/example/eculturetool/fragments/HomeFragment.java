@@ -68,10 +68,10 @@ public class HomeFragment extends Fragment {
         myRef = connection.getMyRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
+                if(snapshot.getValue(Curatore.class) != null)
+                    tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
             }
 
             @Override

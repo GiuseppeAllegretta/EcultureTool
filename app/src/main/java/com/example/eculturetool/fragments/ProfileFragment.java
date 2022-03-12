@@ -27,15 +27,19 @@ import com.example.eculturetool.activities.HomeActivity;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
+import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.utilities.CircleTransform;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +52,8 @@ public class ProfileFragment extends Fragment {
 
     private Connection connection = new Connection();
     private DatabaseReference myRef;
+    private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
+    private FirebaseDatabase database;
 
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
@@ -141,7 +147,6 @@ public class ProfileFragment extends Fragment {
         eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
 
 
-
         editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -164,14 +169,15 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
-                email.setText(snapshot.getValue(Curatore.class).getEmail());
-                nome.setText(snapshot.getValue(Curatore.class).getNome());
-                cognome.setText(snapshot.getValue(Curatore.class).getCognome());
+                if(snapshot.getValue(Curatore.class) != null){
+                    nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
+                    email.setText(snapshot.getValue(Curatore.class).getEmail());
+                    nome.setText(snapshot.getValue(Curatore.class).getNome());
+                    cognome.setText(snapshot.getValue(Curatore.class).getCognome());
 
-                //Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
-                Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
-
+                    //Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
+                    Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
+                }
             }
 
             @Override
@@ -223,12 +229,7 @@ public class ProfileFragment extends Fragment {
                     case R.id.elimina_profilo_popup:
                         showCustomDialog();
                         return true;
-                    case R.id.item3:
-                        Toast.makeText(getActivity(), "Item 3 clicked", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.item4:
-                        Toast.makeText(getActivity(), "Item 4 clicked", Toast.LENGTH_SHORT).show();
-                        return true;
+
                     default:
                         return false;
                 }
@@ -239,13 +240,54 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    /**
+     * Metodo che gestisce il dialog di conferma eliminazione del profilo.
+     * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
+     */
     void showCustomDialog(){
-        final Dialog dialog=new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity());
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_elimina_profilo);
+
+        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione);
+        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione);
+
+        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
+        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
+        //successivamente all'eleminazione dello stesso nell'authentication db
+        String uid = connection.getUser().getUid();
+
         dialog.show();
+
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                connection.getUser().delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    database = FirebaseDatabase.getInstance(REF);
+                                    database.getReference("curatori").child(uid).removeValue();
+                                    dialog.dismiss();
+                                    startActivity(new Intent(getActivity(), SplashActivity.class));
+                                    getActivity().finish();
+                                }
+                            }
+                        });
+            }
+        });
+
+        rifiuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
     }
 
 }

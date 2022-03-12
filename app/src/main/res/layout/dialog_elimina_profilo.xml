@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="16dp">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vuoi cancellare definitivamento il tuo profilo?"
-        android:textSize="24sp"
+        android:layout_marginBottom="16dp"
+        android:text="Vuoi cancellare definitivamente il tuo profilo?"
         android:textColor="@color/black"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/conferma_cancellazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Si"
@@ -25,18 +27,17 @@
             android:backgroundTint="@android:color/holo_red_light"
             android:layout_weight="1"
             android:padding="4dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="10dp"/>
 
-            ></Button>
         <Button
+            android:id="@+id/annulla_cancellazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
             android:backgroundTint="@color/verdePrimario"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:padding="4dp"
-            ></Button>
+            android:padding="4dp"/>
 
 
 
