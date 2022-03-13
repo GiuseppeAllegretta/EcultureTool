@@ -26,4 +26,14 @@
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
+
+
+    <!-- State list colors -->
+    <color name="button_pressed_color">@color/gialloSecondario</color>
+    <color name="button_not_pressed_color">@color/verdePrimario</color>
+    <color name="button_focused_color">@color/black</color>
+    <!-- State list drawable -->
+    <drawable name="button_pressed_drawable">@color/button_pressed_color</drawable>
+    <drawable name="button_not_pressed_drawable">@color/button_not_pressed_color</drawable>
+    <drawable name="button_focused_drawable">@color/button_focused_color</drawable>
 </resources>

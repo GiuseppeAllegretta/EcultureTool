@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50sp"
         android:layout_marginTop="60sp"
-        android:backgroundTint="@color/verdePrimario"
+        android:background="@drawable/button_state"
         android:text="Registrati"
         android:textColor="@color/white"
         android:textSize="30sp"

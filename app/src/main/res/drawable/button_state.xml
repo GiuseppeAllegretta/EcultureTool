@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed -->
+    <item android:drawable="@drawable/button_pressed_drawable" android:state_pressed="true"/>
+
+    <!-- focused -->
+    <item android:drawable="@drawable/button_focused_drawable" android:state_focused="true"/>
+
+    <!-- default -->
+    <item android:drawable="@drawable/button_not_pressed_drawable"/>
+
+</selector>
