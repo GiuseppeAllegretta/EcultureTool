@@ -52,6 +52,7 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment {
 
     public static final int PICK_PROFILE_IMAGE_REQUEST = 1801;
+    public static final String PROFILE_IMAGES_DIR = "profile_images";
     private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -193,7 +194,7 @@ public class ProfileFragment extends Fragment {
                 System.out.println("Button Clicked");
 
                 Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
-                uploadImageActivity.putExtra("directory","objects_images");
+                uploadImageActivity.putExtra("directory", PROFILE_IMAGES_DIR);
                 startActivityForResult(uploadImageActivity, PICK_PROFILE_IMAGE_REQUEST);
             }
         });
