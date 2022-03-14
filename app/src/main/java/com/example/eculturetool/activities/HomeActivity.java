@@ -91,8 +91,8 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new ProfileFragment());
                     break;
                 case R.id.places:
-                    startActivity(new Intent(getApplicationContext(), FilePicker.class));
-                    //replaceFragment(new PlacesFragment());
+                    //startActivity(new Intent(getApplicationContext(), FilePicker.class));
+                    replaceFragment(new PlacesFragment());
                     break;
                 case R.id.qr_scanner:
                     replaceFragment(new QRScannerFragment());
