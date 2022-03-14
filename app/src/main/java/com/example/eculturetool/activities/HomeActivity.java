@@ -1,10 +1,15 @@
 package com.example.eculturetool.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private String uid;
     private String nome;
     private TextView tv;
+    float x1,x2,y1,y2;
 
 
 
@@ -49,6 +55,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = HomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if(ContextCompat.checkSelfPermission( this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},1888);
+
+        }
 
         /**
         Intent intent = getIntent();
@@ -97,7 +108,22 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1=event.getX();
+                y1=event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2=event.getX();
+                y2=event.getY();
+                if(x1<x2){
+                    replaceFragment(new QRScannerFragment());}
+                break;
+        }
+        return false;
+    }
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
