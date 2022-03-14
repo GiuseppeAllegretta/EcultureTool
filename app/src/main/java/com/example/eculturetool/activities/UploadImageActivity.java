@@ -70,8 +70,8 @@ public class UploadImageActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView);
         mProgressBar = findViewById(R.id.progressBar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child("profile_images");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child("profile_images");
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
