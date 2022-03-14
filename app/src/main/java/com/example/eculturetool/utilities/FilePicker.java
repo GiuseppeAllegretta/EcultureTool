@@ -1,7 +1,6 @@
 package com.example.eculturetool.utilities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,10 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -60,7 +55,7 @@ public class FilePicker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_picker);
 
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseInstance = connection.getDatabase();
         mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
         mStorageRef = FirebaseStorage.getInstance().getReference("oggetti");
 
@@ -95,7 +90,7 @@ public class FilePicker extends AppCompatActivity {
 
                 EntityOggetto oggetto = new EntityOggetto(13, nome.getText().toString(), tipologia.getText().toString(),
                         descrizione.getText().toString(), "urlll");
-                //mFirebaseDatabase.push().setValue(oggetto);
+                mFirebaseDatabase.push().setValue(oggetto);
                 DatabaseReference oggettoReference = mFirebaseDatabase.push();
                 oggettoReference.setValue(oggetto);
                 uploadFile(nome.getText().toString(), oggettoReference);
@@ -155,15 +150,20 @@ public class FilePicker extends AppCompatActivity {
 
 
     private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
+       // ContentResolver cR = getContentResolver();
+       // MimeTypeMap mime = MimeTypeMap.getSingleton();
+        String filePath = uri.getPath();
+         // Without dot jpg, png
+        return filePath.substring(filePath.lastIndexOf(".") + 1);
+                //mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
     private void uploadFile(String nomeFile, DatabaseReference oggettoReference) {
         if (uri != null) {
+            System.out.println("uri: " + uri);
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(uri));
+            System.out.println("storage reference: " + fileReference);
 
             mUploadTask = fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -171,6 +171,7 @@ public class FilePicker extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
+                            System.out.println("nome file: " + nomeFile + "task snapshot: " + taskSnapshot.getTask().toString());
                             Upload upload = new Upload(nomeFile, taskSnapshot.getTask().toString());
                             String uploadId = mFirebaseDatabase.push().getKey();
                             mFirebaseDatabase.child(uploadId).setValue(upload);
@@ -180,11 +181,12 @@ public class FilePicker extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     //Riferimento a realtime database
-                                    mFirebaseInstance = FirebaseDatabase.getInstance();
+                                    mFirebaseInstance = connection.getDatabase();
                                     // get reference to 'curatori' node
                                     mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
                                     //aggiorno l'url dell'immagine
-                                    mFirebaseDatabase.child(oggettoReference.toString()).child("url").setValue(uri.toString());
+                                    System.out.println(oggettoReference.toString());
+                                    mFirebaseDatabase.child(oggettoReference.toString()).child("url").setValue(uri.toString()); //Qui va il percorso di firebase
                                     //Intent activity3Intent = new Intent(UploadImageActivity.this, ProfileFragment.class);
                                     //activity3Intent.putExtra("img", uri);
                                     //setResult(1888,activity3Intent);
