@@ -28,7 +28,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.Upload;
-import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.provaoggetti.EntityOggetto;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +50,6 @@ public class FilePicker extends AppCompatActivity {
     private StorageReference mStorageRef;
     private StorageTask mUploadTask;
 
-    private ProgressBar mProgressBar;
     private ImageView image;
     private Button btn;
     private Uri uri;
@@ -69,27 +67,43 @@ public class FilePicker extends AppCompatActivity {
         mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
         mStorageRef = FirebaseStorage.getInstance().getReference("oggetti");
 
-        mProgressBar = findViewById(R.id.progressBar);
-        image = (ImageView) findViewById(R.id.image);
+        image = findViewById(R.id.image);
+        image.setImageBitmap(null);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean pick = true;
-                if(pick){
-                    if(!checkCameraPermission()){
+                if (pick) {
+                    if (!checkCameraPermission()) {
                         requestCameraPermission();
                     } else
                         PickImage();
                 } else {
-                    if(!checkStoragePermission()){
+                    if (!checkStoragePermission()) {
                         requestStoragePermission();
                     } else
                         PickImage();
                 }
             }
+
         });
 
-        btn = (Button) findViewById(R.id.btnCrea);
+        ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            Uri uri = data.getData();
+                            image.setImageURI(uri);
+                        }
+                    }
+                }
+        );
+
+
+        btn = findViewById(R.id.btnCrea);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +125,27 @@ public class FilePicker extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                image.setBackgroundResource(android.R.color.transparent);
+                Uri resultUri = result.getUri();
+                try {
+                    InputStream stream = getContentResolver().openInputStream(resultUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
+                    image.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
     }
 
     private void PickImage() {
@@ -136,20 +171,6 @@ public class FilePicker extends AppCompatActivity {
         return res1 && res2;
     }
 
-    ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        Intent data = result.getData();
-                        uri = data.getData();
-                        image.setImageURI(uri); //caricare da url
-                    }
-                }
-            }
-    );
-
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
@@ -166,13 +187,6 @@ public class FilePicker extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mProgressBar.setProgress(0);
-                                }
-                            }, 500);
 
                             Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(nomeFile, taskSnapshot.getTask().toString());
@@ -202,47 +216,11 @@ public class FilePicker extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                            mProgressBar.setProgress((int) progress);
-                        }
                     });
+
         } else {
             Toast.makeText(getApplicationContext(), "Nessun file selezionato!", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-
-    public void openFilePicker(View view) {
-        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        data.setType("image/*");
-        data = Intent.createChooser(data, "Scegli un file");
-        sActivityResultLauncher.launch(data);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                try{
-                    InputStream stream = getContentResolver().openInputStream(resultUri);
-                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
-                    image.setImageBitmap(bitmap);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }
-    }
 }
