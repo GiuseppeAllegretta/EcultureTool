@@ -16,14 +16,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.HomeActivity;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
@@ -32,7 +30,6 @@ import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.utilities.CircleTransform;
-import com.example.eculturetool.utilities.FilePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -190,8 +187,8 @@ public class PlacesFragment extends Fragment {
         changeImg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
-
-                Intent uploadImageActivity = new Intent(getActivity(), FilePicker.class);
+                Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
+                uploadImageActivity.putExtra("directory","objects_images");
                 startActivity(uploadImageActivity);
             }
         });
