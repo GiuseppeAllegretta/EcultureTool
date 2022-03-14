@@ -1,12 +1,7 @@
 package com.example.eculturetool.utilities;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,21 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
-import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.provaoggetti.EntityOggetto;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -44,9 +32,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.InputStream;
 
 public class FilePicker extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -84,8 +69,8 @@ public class FilePicker extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView);
         mProgressBar = findViewById(R.id.progressBar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child("objects_images");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child("objects_images");
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
