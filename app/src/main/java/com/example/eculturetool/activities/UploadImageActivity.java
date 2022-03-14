@@ -178,7 +178,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             mProgressBar.setProgress((int) progress);
                         }

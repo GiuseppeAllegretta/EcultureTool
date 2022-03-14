@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -23,10 +24,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
@@ -40,116 +43,99 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.InputStream;
 
 public class FilePicker extends AppCompatActivity {
+    private static final int PICK_IMAGE_REQUEST = 1;
+
     private Connection connection = new Connection();
+    private DatabaseReference myRef;
+
+    private Button mButtonChooseImage;
+    private Button mButtonUpload;
+    private TextView mTextViewShowUploads;
+    private EditText mEditTextFileName;
+    private ImageView mImageView;
+    private ProgressBar mProgressBar;
+
+    private Uri mImageUri;
+
+    //realtime database reference
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
+
+
     private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
     private StorageTask mUploadTask;
 
-    private ProgressBar mProgressBar;
-    private ImageView image;
-    private Button btn;
-    private Uri uri;
-
-    private EditText nome;
-    private EditText tipologia;
-    private EditText descrizione;
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.file_picker);
-
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
-        mStorageRef = FirebaseStorage.getInstance().getReference("oggetti");
-
+        setContentView(R.layout.activity_upload_image);
+        mButtonChooseImage = findViewById(R.id.selectButton);
+        mButtonUpload = findViewById(R.id.uploadButton);
+        mTextViewShowUploads = findViewById(R.id.showImageTextView);
+        mEditTextFileName = findViewById(R.id.imageName);
+        mImageView = findViewById(R.id.imageView);
         mProgressBar = findViewById(R.id.progressBar);
-        image = (ImageView) findViewById(R.id.image);
-        image.setOnClickListener(new View.OnClickListener() {
+
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean pick = true;
-                if(pick){
-                    if(!checkCameraPermission()){
-                        requestCameraPermission();
-                    } else
-                        PickImage();
-                } else {
-                    if(!checkStoragePermission()){
-                        requestStoragePermission();
-                    } else
-                        PickImage();
-                }
+                openFileChooser();
             }
         });
 
-        btn = (Button) findViewById(R.id.btnCrea);
-        btn.setOnClickListener(new View.OnClickListener() {
+        mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nome = findViewById(R.id.nome);
-                tipologia = findViewById(R.id.tipologia);
-                descrizione = findViewById(R.id.descrizione);
-
-                EntityOggetto oggetto = new EntityOggetto(13, nome.getText().toString(), tipologia.getText().toString(),
-                        descrizione.getText().toString(), "urlll");
-                //mFirebaseDatabase.push().setValue(oggetto);
-                DatabaseReference oggettoReference = mFirebaseDatabase.push();
-                oggettoReference.setValue(oggetto);
-                uploadFile(nome.getText().toString(), oggettoReference);
 
                 if (mUploadTask != null && mUploadTask.isInProgress()) {
                     Toast.makeText(FilePicker.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
-                    uploadFile(nome.getText().toString(), mFirebaseDatabase);
+                    uploadFile();
                 }
+            }
+        });
+
+        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openImagesActivity();
             }
         });
     }
 
-    private void PickImage() {
-        CropImage.activity().start(this);
+    private void openImagesActivity() {
+        Intent intent = new Intent(getApplicationContext(), ShowImage.class);
+        startActivity(intent);
     }
 
-    private void requestStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private void requestCameraPermission() {
-        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+            Picasso.get().load(mImageUri).into(mImageView);
+        }
     }
-
-    private boolean checkStoragePermission() {
-        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        return res2;
-    }
-
-    private boolean checkCameraPermission() {
-        boolean res1 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        return res1 && res2;
-    }
-
-    ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        Intent data = result.getData();
-                        uri = data.getData();
-                        image.setImageURI(uri); //caricare da url
-                    }
-                }
-            }
-    );
-
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
@@ -157,12 +143,12 @@ public class FilePicker extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadFile(String nomeFile, DatabaseReference oggettoReference) {
-        if (uri != null) {
+    private void uploadFile() {
+        if (mImageUri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(uri));
+                    + "." + getFileExtension(mImageUri));
 
-            mUploadTask = fileReference.putFile(uri)
+            mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -175,9 +161,10 @@ public class FilePicker extends AppCompatActivity {
                             }, 500);
 
                             Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(nomeFile, taskSnapshot.getTask().toString());
-                            String uploadId = mFirebaseDatabase.push().getKey();
-                            mFirebaseDatabase.child(uploadId).setValue(upload);
+                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
+                                    taskSnapshot.getTask().toString());
+                            String uploadId = mDatabaseRef.push().getKey();
+                            mDatabaseRef.child(uploadId).setValue(upload);
                             //myRef = connection.getMyRefCuratore();
                             //myRef.child("img").setValue(fileReference);
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -186,9 +173,9 @@ public class FilePicker extends AppCompatActivity {
                                     //Riferimento a realtime database
                                     mFirebaseInstance = FirebaseDatabase.getInstance();
                                     // get reference to 'curatori' node
-                                    mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
+                                    mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                                     //aggiorno l'url dell'immagine
-                                    mFirebaseDatabase.child(oggettoReference.toString()).child("url").setValue(uri.toString());
+                                    mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
                                     //Intent activity3Intent = new Intent(UploadImageActivity.this, ProfileFragment.class);
                                     //activity3Intent.putExtra("img", uri);
                                     //setResult(1888,activity3Intent);
@@ -205,44 +192,13 @@ public class FilePicker extends AppCompatActivity {
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             mProgressBar.setProgress((int) progress);
                         }
                     });
         } else {
             Toast.makeText(getApplicationContext(), "Nessun file selezionato!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-
-    public void openFilePicker(View view) {
-        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        data.setType("image/*");
-        data = Intent.createChooser(data, "Scegli un file");
-        sActivityResultLauncher.launch(data);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                try{
-                    InputStream stream = getContentResolver().openInputStream(resultUri);
-                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
-                    image.setImageBitmap(bitmap);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
         }
     }
 }

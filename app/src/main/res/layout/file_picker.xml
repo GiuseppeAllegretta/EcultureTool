@@ -30,6 +30,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
             <!-- TODO creare un modulo di caricamento che ridimensioni le immagini-->
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/change_imgUser2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:backgroundTint="@color/gialloSecondario"
+                android:clickable="true"
+                android:src="@android:drawable/ic_menu_camera"
+                android:tint="@color/black"
+                app:elevation="0dp" />
+
             <TextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
