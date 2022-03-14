@@ -194,7 +194,7 @@ public class ProfileFragment extends Fragment {
 
                 Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
                 uploadImageActivity.putExtra("directory","objects_images");
-                startActivityForResult(uploadImageActivity, 1801);
+                startActivityForResult(uploadImageActivity, PICK_PROFILE_IMAGE_REQUEST);
             }
         });
 
