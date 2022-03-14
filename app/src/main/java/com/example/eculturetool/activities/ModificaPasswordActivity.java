@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.eculturetool.R;
@@ -28,6 +29,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private ImageView frecciaBack, tastoConferma;
     private Connection connection = new Connection();
     private DatabaseReference myRef;
+    private ProgressBar progressBar;
 
     boolean flagPassword = false;
 
@@ -43,15 +45,10 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.conferma_nuova_password);
         frecciaBack = findViewById(R.id.freccia_back_modifica_password);
         tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
+        progressBar = findViewById(R.id.pb);
 
         //Ottenimento riferimento al curatore attualmente connesso
         myRef = connection.getMyRefCuratore();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,19 +61,15 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(modificaPassword())
                     onBackPressed();
-                //else
-                    //Toast.makeText(ModificaPasswordActivity.this, "Campo vuoto", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
+private String passNuova;
     public boolean modificaPassword(){
         FirebaseDatabase database = FirebaseDatabase.getInstance(connection.getREF());
         DatabaseReference myRef = database.getReference("curatori").child(connection.getUser().getUid());
 
-        String passAttuale, passNuova, passNuovaConf;
+        String passAttuale, passNuovaConf;
         passAttuale = oldPassword.getText().toString();
         passNuova = newPassword.getText().toString();
         passNuovaConf = confirmPassword.getText().toString();
@@ -107,48 +100,46 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             return false;
         }
 
+        return passwordVerificata(connection.getUser().getEmail().toString(), passAttuale);
 
-        boolean isCorretta = passwordVerificata(connection.getUser().getEmail().toString(), passAttuale);
-
-        System.out.println("isCorretta: " + isCorretta);
-        if(!isCorretta){
-            Toast.makeText(this, "La password attuale non coincide", Toast.LENGTH_SHORT).show();
-            oldPassword.setError("Password non corretta");
-            oldPassword.requestFocus();
-            return false;
-        }
-
-        connection.getUser().updatePassword(passNuova)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ModificaPasswordActivity.this, "Password Aggiornata", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(ModificaPasswordActivity.this, "Password non aggiornata", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-        return true;
     }
 
     public boolean passwordVerificata(String email, String password){
-        System.out.println("Prima di tutto: " + flagPassword);
+        progressBar.setVisibility(View.VISIBLE);
 
         connection.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("prima dell'if: " + flagPassword);
-                        if (task.isSuccessful()) {
-                            flagPassword = true;
-                            System.out.println("onComplete: " + flagPassword);
+                        if (task.isSuccessful())
+                        {
+                            connection.getUser().updatePassword(passNuova)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(ModificaPasswordActivity.this, "Password Aggiornata", Toast.LENGTH_SHORT).show();
+                                                onBackPressed();
+                                                flagPassword = true;
+
+                                            } else {
+                                                Toast.makeText(ModificaPasswordActivity.this, "Password non aggiornata", Toast.LENGTH_SHORT).show();
+                                                flagPassword = false;
+                                            }
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "La password attuale non coincide", Toast.LENGTH_SHORT).show();
+                            oldPassword.setError("Password non corretta");
+                            oldPassword.requestFocus();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            flagPassword = false;
                         }
                     }
                 });
-
-
         return flagPassword;
     }
 }
