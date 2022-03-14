@@ -194,7 +194,7 @@ public class PlacesFragment extends Fragment {
                 uploadImageActivity.putExtra("directory", OBJECTS_IMAGES_DIR);
                 //Utilizzo dell'immagine
                 uploadImageActivity.putExtra("purpose","object");
-                startActivityForResult(uploadImageActivity, 1800);
+                startActivityForResult(uploadImageActivity, PICK_OBJECT_IMAGE_REQUEST);
             }
         });
 
