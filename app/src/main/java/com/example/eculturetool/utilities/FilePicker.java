@@ -9,13 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -35,7 +33,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -85,22 +82,7 @@ public class FilePicker extends AppCompatActivity {
                         PickImage();
                 }
             }
-
         });
-
-        ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            Uri uri = data.getData();
-                            image.setImageURI(uri);
-                        }
-                    }
-                }
-        );
 
 
         btn = findViewById(R.id.btnCrea);
@@ -134,9 +116,9 @@ public class FilePicker extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 image.setBackgroundResource(android.R.color.transparent);
-                Uri resultUri = result.getUri();
+                uri = result.getUri();
                 try {
-                    InputStream stream = getContentResolver().openInputStream(resultUri);
+                    InputStream stream = getContentResolver().openInputStream(uri);
                     Bitmap bitmap = BitmapFactory.decodeStream(stream);
                     image.setImageBitmap(bitmap);
                 } catch (Exception e) {
