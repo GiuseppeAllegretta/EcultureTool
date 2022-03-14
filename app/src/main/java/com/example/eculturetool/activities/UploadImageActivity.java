@@ -156,15 +156,9 @@ public class UploadImageActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    //Riferimento a realtime database
-                                    mFirebaseInstance = FirebaseDatabase.getInstance();
-                                    // get reference to 'curatori' node
-                                    mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
-                                    //aggiorno l'url dell'immagine
-                                    mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
-                                    //Intent activity3Intent = new Intent(UploadImageActivity.this, ProfileFragment.class);
-                                    //activity3Intent.putExtra("img", uri);
-                                    //setResult(1888,activity3Intent);
+                                    Intent intent=new Intent();
+                                    intent.setData(uri);
+                                    setResult(RESULT_OK, intent);
                                     finish();
                                 }
                             });

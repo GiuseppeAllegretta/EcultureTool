@@ -48,6 +48,8 @@ import com.squareup.picasso.Picasso;
  */
 public class PlacesFragment extends Fragment {
 
+    public static final String OBJECTS_IMAGES_DIR = "objects_images";
+    private static final int PICK_OBJECT_IMAGE_REQUEST = 1800;
     private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -188,8 +190,11 @@ public class PlacesFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
                 Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
-                uploadImageActivity.putExtra("directory","objects_images");
-                startActivity(uploadImageActivity);
+                //Nome della cartella in cui voglio che venga salvata l'immagine
+                uploadImageActivity.putExtra("directory", OBJECTS_IMAGES_DIR);
+                //Utilizzo dell'immagine
+                uploadImageActivity.putExtra("purpose","object");
+                startActivityForResult(uploadImageActivity, 1800);
             }
         });
 
@@ -206,6 +211,24 @@ public class PlacesFragment extends Fragment {
                 logout(view);
             }
         });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Ottengo uri immagine
+        //String uri = data.getStringExtra("uri");
+        String uri = "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F1647264580539.jpg?alt=media&token=3eb182d7-d010-4922-886a-2abf1e6ddb16";
+        if (requestCode == PICK_OBJECT_IMAGE_REQUEST && resultCode == UploadImageActivity.RESULT_OK){
+            //Bisogna aggiornare qui i dati dell'oggetto creato con l'uri ricavato
+            //Riferimento a realtime database
+            //FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+            // get reference to 'curatori' node
+            //DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
+            //aggiorno l'url dell'immagine
+            //mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri);
+        }
 
     }
 
