@@ -1,17 +1,21 @@
 package com.example.eculturetool.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +29,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference myRef;
 
     private TextView tv;
+    private CardView oggetti;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -64,6 +69,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tv = view.findViewById(R.id.nomeCuratore);
+        oggetti = view.findViewById(R.id.oggettiCard);
 
         myRef = connection.getMyRefCuratore();
 
@@ -77,6 +83,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        oggetti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), OggettiActivity.class));
             }
         });
 
@@ -98,6 +111,8 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragments
         return inflater.inflate(R.layout.fragment_home, container, false);
+
+
     }
 
 
