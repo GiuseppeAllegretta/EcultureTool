@@ -45,11 +45,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
@@ -57,18 +52,18 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database;
-    ActivityResultLauncher<Intent> startForProfileImageUpload;
-
+    private ActivityResultLauncher<Intent> startForProfileImageUpload;
+    protected static Curatore curatore;
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
     private ImageView profilePic;
-    TextView label;
-    ImageView imgUser;
-    Button logout;
-    FloatingActionButton changeImg;
-    FloatingActionButton editButton;
-    ImageButton settingsButton;
-    Button eliminaProfilo;
+    private TextView label;
+    private ImageView imgUser;
+    private Button logout;
+    private FloatingActionButton changeImg;
+    private FloatingActionButton editButton;
+    private ImageButton settingsButton;
+    private Button eliminaProfilo;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -133,11 +128,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Curatore.class) != null){
-                    nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
-                    email.setText(snapshot.getValue(Curatore.class).getEmail());
-                    nome.setText(snapshot.getValue(Curatore.class).getNome());
-                    cognome.setText(snapshot.getValue(Curatore.class).getCognome());
-                    Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
+                    curatore = snapshot.getValue(Curatore.class);
+                    nomeFoto.setText(new StringBuilder().append(curatore.getNome()).append(" ").append(curatore.getCognome()).toString());
+                    email.setText(curatore.getEmail());
+                    nome.setText(curatore.getNome());
+                    cognome.setText(curatore.getCognome());
+                    Picasso.get().load(curatore.getImg()).transform(new CircleTransform()).into(imgUser);
                 }
             }
 
