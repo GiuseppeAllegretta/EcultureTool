@@ -1,6 +1,5 @@
 package com.example.eculturetool.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,14 +16,16 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.HomeActivity;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
@@ -44,11 +45,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -56,25 +52,21 @@ import androidx.activity.result.contract.ActivityResultContracts;
  */
 public class ProfileFragment extends Fragment {
 
-    public static final int PICK_PROFILE_IMAGE_REQUEST = 1801;
     public static final String PROFILE_IMAGES_DIR = "profile_images";
     private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database;
-    ActivityResultLauncher<Intent> activityResultLaunch;
+    ActivityResultLauncher<Intent> startForProfileImageUpload;
 
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
-    private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
     TextView label;
     ImageView imgUser;
     Button logout;
     FloatingActionButton changeImg;
-    Activity context;
     FloatingActionButton editButton;
-    String strImage;
     ImageButton settingsButton;
     Button eliminaProfilo;
 
@@ -118,7 +110,7 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        activityResultLaunch = registerForActivityResult(
+        startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -134,7 +126,6 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
-
         setHasOptionsMenu(true);
     }
 
@@ -144,16 +135,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View vistaProfilo = inflater.inflate(R.layout.fragment_profile, container, false);
         //((HomeAdminActivity) requireActivity()).disableBackArrow();
-
-        imgUser = vistaProfilo.findViewById(R.id.imgUser);
-
-        label = vistaProfilo.findViewById(R.id.profile_name);
-        //label.setText(new StringBuilder().append(HomeActivity.loggedUser.getNome()).append(" ").append(HomeActivity.loggedUser.getCognome()).toString());
-
-        //
-        label = vistaProfilo.findViewById(R.id.profile_email);
-        //label.setText(HomeActivity.loggedUser.getEmail());
-
         return vistaProfilo;
     }
 
@@ -170,24 +151,14 @@ public class ProfileFragment extends Fragment {
         cognome = view.findViewById(R.id.cognome_profilo);
         settingsButton = view.findViewById(R.id.settings_button);
         eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
-
-
         editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
-
-
-
-                /*Intent intent = new Intent(context.getApplicationContext(), ModificaProfiloActivity.class);
-                startActivity(intent);*/
-
-
             }
         });
-
 
         myRef = connection.getMyRefCuratore();
 
@@ -199,8 +170,6 @@ public class ProfileFragment extends Fragment {
                     email.setText(snapshot.getValue(Curatore.class).getEmail());
                     nome.setText(snapshot.getValue(Curatore.class).getNome());
                     cognome.setText(snapshot.getValue(Curatore.class).getCognome());
-
-                    //Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
                     Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
                 }
             }
@@ -216,7 +185,7 @@ public class ProfileFragment extends Fragment {
                 System.out.println("Button Clicked");
                 Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
                 uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
-                activityResultLaunch.launch(uploadImageIntent);
+                startForProfileImageUpload.launch(uploadImageIntent);
             }
         });
 
@@ -264,7 +233,6 @@ public class ProfileFragment extends Fragment {
         popup.show();
     }
 
-
     /**
      * Metodo che gestisce il dialog di conferma eliminazione del profilo.
      * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
@@ -311,10 +279,7 @@ public class ProfileFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
-
     }
-
 }
 
 

@@ -55,24 +55,20 @@ import androidx.activity.result.contract.ActivityResultContracts;
 public class PlacesFragment extends Fragment {
 
     public static final String OBJECTS_IMAGES_DIR = "object_images";
-    private static final int PICK_OBJECT_IMAGE_REQUEST = 1800;
     private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database;
-    ActivityResultLauncher<Intent> activityResultLaunch;
+    ActivityResultLauncher<Intent> startForObjectImageUpload;
 
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
-    private static final int GALLERY_INTENT_CODE = 4269;
     private ImageView profilePic;
     TextView label;
     ImageView imgUser;
     Button logout;
     FloatingActionButton changeImg;
-    Activity context;
     FloatingActionButton editButton;
-    String strImage;
     ImageButton settingsButton;
     Button eliminaProfilo;
 
@@ -116,8 +112,7 @@ public class PlacesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        activityResultLaunch = registerForActivityResult(
+        startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -143,16 +138,6 @@ public class PlacesFragment extends Fragment {
         // Inflate the layout for this fragment
         View vistaProfilo = inflater.inflate(R.layout.fragment_profile, container, false);
         //((HomeAdminActivity) requireActivity()).disableBackArrow();
-
-        imgUser = vistaProfilo.findViewById(R.id.imgUser);
-
-        label = vistaProfilo.findViewById(R.id.profile_name);
-        //label.setText(new StringBuilder().append(HomeActivity.loggedUser.getNome()).append(" ").append(HomeActivity.loggedUser.getCognome()).toString());
-
-        //
-        label = vistaProfilo.findViewById(R.id.profile_email);
-        //label.setText(HomeActivity.loggedUser.getEmail());
-
         return vistaProfilo;
     }
 
@@ -169,24 +154,14 @@ public class PlacesFragment extends Fragment {
         cognome = view.findViewById(R.id.cognome_profilo);
         settingsButton = view.findViewById(R.id.settings_button);
         eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
-
-
         editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
-
-
-
-                /*Intent intent = new Intent(context.getApplicationContext(), ModificaProfiloActivity.class);
-                startActivity(intent);*/
-
-
             }
         });
-
 
         myRef = connection.getMyRefCuratore();
 
@@ -215,7 +190,7 @@ public class PlacesFragment extends Fragment {
                 Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
                 //Nome della cartella in cui voglio che venga salvata l'immagine
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
-                activityResultLaunch.launch(uploadImageIntent);
+                startForObjectImageUpload.launch(uploadImageIntent);
             }
         });
 
@@ -232,7 +207,6 @@ public class PlacesFragment extends Fragment {
                 logout(view);
             }
         });
-
     }
 
     public void logout(View view) {
@@ -310,8 +284,5 @@ public class PlacesFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
-
     }
-
 }
