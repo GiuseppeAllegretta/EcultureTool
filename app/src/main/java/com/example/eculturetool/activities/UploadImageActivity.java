@@ -1,9 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +13,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
@@ -35,24 +39,15 @@ import com.squareup.picasso.Picasso;
 
 public class UploadImageActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-
     private Connection connection = new Connection();
-    private DatabaseReference myRef;
-
     private Button mButtonChooseImage;
     private Button mButtonUpload;
     private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-
     private Uri mImageUri;
-
-    //realtime database reference
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
-
+    ActivityResultLauncher<Intent> activityResultLaunch;
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -72,6 +67,19 @@ public class UploadImageActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
+
+        activityResultLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Uri uri = result.getData().getData();
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                            mImageUri = result.getData().getData();
+                            Picasso.get().load(mImageUri).into(mImageView);
+                        }
+                    }
+                });
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,17 +118,7 @@ public class UploadImageActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(mImageView);
-        }
+        activityResultLaunch.launch(intent);
     }
 
     private String getFileExtension(Uri uri) {
@@ -151,8 +149,6 @@ public class UploadImageActivity extends AppCompatActivity {
                                     taskSnapshot.getTask().toString());
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
-                            //myRef = connection.getMyRefCuratore();
-                            //myRef.child("img").setValue(fileReference);
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
