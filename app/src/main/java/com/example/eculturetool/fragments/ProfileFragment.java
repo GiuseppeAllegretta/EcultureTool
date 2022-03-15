@@ -44,6 +44,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -57,6 +62,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database;
+    ActivityResultLauncher<Intent> activityResultLaunch;
 
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
@@ -112,6 +118,22 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        activityResultLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Uri uri = result.getData().getData();
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                            //Riferimento a realtime database
+                            FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+                            // get reference to 'curatori' node
+                            DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
+                            //aggiorno l'url dell'immagine
+                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        }
+                    }
+                });
 
         setHasOptionsMenu(true);
     }
@@ -192,10 +214,9 @@ public class ProfileFragment extends Fragment {
         changeImg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
-
-                Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
-                uploadImageActivity.putExtra("directory", PROFILE_IMAGES_DIR);
-                startActivityForResult(uploadImageActivity, PICK_PROFILE_IMAGE_REQUEST);
+                Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
+                uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
+                activityResultLaunch.launch(uploadImageIntent);
             }
         });
 
@@ -212,23 +233,6 @@ public class ProfileFragment extends Fragment {
                 logout(view);
             }
         });
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Ottengo uri
-        //String uri = data.getStringExtra("uri");
-        Uri uri = data.getData();
-        if (requestCode == PICK_PROFILE_IMAGE_REQUEST && resultCode == UploadImageActivity.RESULT_OK){
-            //Riferimento a realtime database
-            FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-            // get reference to 'curatori' node
-            DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
-            //aggiorno l'url dell'immagine
-            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
-        }
 
     }
 

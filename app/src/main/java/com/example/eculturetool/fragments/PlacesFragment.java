@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -41,6 +42,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -48,12 +54,13 @@ import com.squareup.picasso.Picasso;
  */
 public class PlacesFragment extends Fragment {
 
-    public static final String OBJECTS_IMAGES_DIR = "objects_images";
+    public static final String OBJECTS_IMAGES_DIR = "object_images";
     private static final int PICK_OBJECT_IMAGE_REQUEST = 1800;
     private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database;
+    ActivityResultLauncher<Intent> activityResultLaunch;
 
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
@@ -109,6 +116,23 @@ public class PlacesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        activityResultLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Uri uri = result.getData().getData();
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                            //Riferimento a realtime database
+                            FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+                            // get reference to 'curatori' node
+                            DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
+                            //aggiorno l'url dell'immagine
+                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        }
+                    }
+                });
 
         setHasOptionsMenu(true);
     }
@@ -175,7 +199,6 @@ public class PlacesFragment extends Fragment {
                     nome.setText(snapshot.getValue(Curatore.class).getNome());
                     cognome.setText(snapshot.getValue(Curatore.class).getCognome());
 
-                    //Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).fit().centerCrop().into(imgUser);
                     Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
                 }
             }
@@ -189,12 +212,10 @@ public class PlacesFragment extends Fragment {
         changeImg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
-                Intent uploadImageActivity = new Intent(getActivity(), UploadImageActivity.class);
+                Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
                 //Nome della cartella in cui voglio che venga salvata l'immagine
-                uploadImageActivity.putExtra("directory", OBJECTS_IMAGES_DIR);
-                //Utilizzo dell'immagine
-                uploadImageActivity.putExtra("purpose","object");
-                startActivityForResult(uploadImageActivity, PICK_OBJECT_IMAGE_REQUEST);
+                uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
+                activityResultLaunch.launch(uploadImageIntent);
             }
         });
 
@@ -211,24 +232,6 @@ public class PlacesFragment extends Fragment {
                 logout(view);
             }
         });
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Ottengo uri immagine
-        //String uri = data.getStringExtra("uri");
-        String uri = "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F1647264580539.jpg?alt=media&token=3eb182d7-d010-4922-886a-2abf1e6ddb16";
-        if (requestCode == PICK_OBJECT_IMAGE_REQUEST && resultCode == UploadImageActivity.RESULT_OK){
-            //Bisogna aggiornare qui i dati dell'oggetto creato con l'uri ricavato
-            //Riferimento a realtime database
-            //FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-            // get reference to 'curatori' node
-            //DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
-            //aggiorno l'url dell'immagine
-            //mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri);
-        }
 
     }
 
