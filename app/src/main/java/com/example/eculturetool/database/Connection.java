@@ -4,29 +4,33 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Connection {
 
-    private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    FirebaseAuth auth;
-    FirebaseUser user;
+    private static final String DBREF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
+    private static final String STORREF = "gs://auth-96a19.appspot.com/";
+
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance(DBREF).getReference();
+    private StorageReference storageReference = FirebaseStorage.getInstance(STORREF).getReference();
+
+    static FirebaseAuth auth;
+    static FirebaseUser user;
 
     public Connection(){
-        database = FirebaseDatabase.getInstance(REF);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
     }
 
-
-    public FirebaseDatabase getDatabase() {
-        return database;
+    public DatabaseReference getDatabaseReference(){
+        return databaseReference;
     }
 
-    public DatabaseReference getMyRef() {
-        return myRef;
+    public StorageReference getStorageReference() {
+        return storageReference;
     }
+
 
     public FirebaseAuth getAuth() {
         return auth;
@@ -36,11 +40,19 @@ public class Connection {
         return user;
     }
 
-    public DatabaseReference getMyRefCuratore(){
-        return database.getReference("curatori").child(user.getUid());
+    public  DatabaseReference getRefCuratore(){
+        return databaseReference.child("curatori").child(user.getUid());
     }
 
-    public String getREF() {
-        return REF;
+    public static String getUidCuratore(){
+        return user.getUid();
+    }
+
+    public final String getDBREF(){
+        return DBREF;
+    }
+
+    public final String getSTORREF(){
+        return STORREF;
     }
 }

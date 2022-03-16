@@ -125,7 +125,7 @@ public class PlacesFragment extends Fragment {
             }
         });
 
-        myRef = connection.getMyRefCuratore();
+        myRef = connection.getRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

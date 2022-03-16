@@ -22,6 +22,7 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.eculturetool.R;
 import com.google.zxing.Result;
 
+//TODO se si preme il tasto indietro, si esce dall'app
 
 public class QRScannerFragment extends Fragment {
 

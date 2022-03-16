@@ -47,8 +47,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
         progressBar = findViewById(R.id.pb);
 
-        //Ottenimento riferimento al curatore attualmente connesso
-        myRef = connection.getMyRefCuratore();
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,8 +64,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     }
 private String passNuova;
     public boolean modificaPassword(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance(connection.getREF());
-        DatabaseReference myRef = database.getReference("curatori").child(connection.getUser().getUid());
+       // FirebaseDatabase database = FirebaseDatabase.getInstance(connection.getDBREF());
+        //DatabaseReference myRef = database.getReference("curatori").child(connection.getUser().getUid());
 
         String passAttuale, passNuovaConf;
         passAttuale = oldPassword.getText().toString();

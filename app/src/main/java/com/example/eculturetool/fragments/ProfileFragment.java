@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        myRef = connection.getMyRefCuratore();
+        myRef = connection.getRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

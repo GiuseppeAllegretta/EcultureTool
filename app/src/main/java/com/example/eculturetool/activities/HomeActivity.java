@@ -1,6 +1,7 @@
 package com.example.eculturetool.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,7 +19,6 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.databinding.HomeBinding;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.fragments.HomeFragment;
-import com.example.eculturetool.fragments.PlacesFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,8 +95,8 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new ProfileFragment());
                     break;
                 case R.id.places:
-                    //startActivity(new Intent(getApplicationContext(), FilePicker.class));
-                    replaceFragment(new PlacesFragment());
+                    startActivity(new Intent(getApplicationContext(), CreateObjectActivity.class));
+                    //replaceFragment(new PlacesFragment());
                     break;
                 case R.id.qr_scanner:
                     replaceFragment(new QRScannerFragment());

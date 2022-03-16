@@ -71,11 +71,13 @@ public class HomeFragment extends Fragment {
         tv = view.findViewById(R.id.nomeCuratore);
         oggetti = view.findViewById(R.id.oggettiCard);
 
-        myRef = connection.getMyRefCuratore();
+        myRef = connection.getRefCuratore();
+        System.out.println("--->" + myRef);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("--->" + snapshot);
                 if(snapshot.getValue(Curatore.class) != null)
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
             }

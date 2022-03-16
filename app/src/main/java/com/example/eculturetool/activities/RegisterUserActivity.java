@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -114,7 +115,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Curatore curatore = new Curatore(user.getUid(), nome, cognome, email);
+                            Curatore curatore = new Curatore(nome, cognome, email);
 
                             writeCuratore(user, curatore);
 

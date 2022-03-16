@@ -45,7 +45,7 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         back = findViewById(R.id.freccia_back);
         conferma = findViewById(R.id.icona_conferma);
 
-        myRef = connection.getMyRefCuratore();
+        myRef = connection.getRefCuratore();
     }
 
     @Override
@@ -84,8 +84,9 @@ public class ModificaProfiloActivity extends AppCompatActivity {
     }
 
     private boolean modificaDati() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance(connection.getREF());
+        FirebaseDatabase database = FirebaseDatabase.getInstance(connection.getDBREF());
         DatabaseReference myRef = database.getReference("curatori").child(connection.getUser().getUid());
+        //TODO controllare venga usato
 
         if(nome.getText().toString().isEmpty()){
             nome.setError("Inserisci il nome");
