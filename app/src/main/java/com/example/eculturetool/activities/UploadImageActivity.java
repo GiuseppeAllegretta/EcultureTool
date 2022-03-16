@@ -1,7 +1,9 @@
 package com.example.eculturetool.activities;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 public class UploadImageActivity extends AppCompatActivity {
 
@@ -83,7 +87,13 @@ public class UploadImageActivity extends AppCompatActivity {
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFileChooser();
+                if (!checkCameraPermission() ) {
+                    requestCameraPermission();
+                } else if(!checkStoragePermission()){
+                    requestStoragePermission();
+                } else{
+                    openFileChooser();
+                }
             }
         });
 
@@ -111,6 +121,25 @@ public class UploadImageActivity extends AppCompatActivity {
     private void openImagesActivity() {
         Intent intent = new Intent(getApplicationContext(), ShowImage.class);
         startActivity(intent);
+    }
+
+    private void requestStoragePermission() {
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    }
+
+    private void requestCameraPermission() {
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    }
+
+    private boolean checkStoragePermission() {
+        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return res2;
+    }
+
+    private boolean checkCameraPermission() {
+        boolean res1 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return res1 && res2;
     }
 
     private void openFileChooser() {
