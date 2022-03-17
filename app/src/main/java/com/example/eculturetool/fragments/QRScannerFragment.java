@@ -1,14 +1,9 @@
 package com.example.eculturetool.fragments;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,14 +13,9 @@ import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.eculturetool.R;
-import com.google.zxing.Result;
-
-//TODO se si preme il tasto indietro, si esce dall'app
 
 public class QRScannerFragment extends Fragment {
-
     private CodeScanner mCodeScanner;
 
     @Nullable
@@ -33,29 +23,19 @@ public class QRScannerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
-
         final Activity activity = getActivity();
         View root = inflater.inflate(R.layout.fragment_q_r_scanner, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
-        mCodeScanner = new CodeScanner(activity, scannerView);
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        if (activity != null) {
+            mCodeScanner = new CodeScanner(activity, scannerView);
+            mCodeScanner.setDecodeCallback(decodeCallBack -> activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, decodeCallBack.getText(), Toast.LENGTH_SHORT).show();
+                }
+            }));
+            scannerView.setOnClickListener(onClickListener -> mCodeScanner.startPreview());
+        }
         return root;
     }
 

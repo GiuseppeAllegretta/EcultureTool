@@ -2,11 +2,9 @@ package com.example.eculturetool.fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,11 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -34,8 +29,6 @@ import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.utilities.CircleTransform;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -48,22 +41,13 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment {
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
-    private Connection connection = new Connection();
-    private DatabaseReference myRef;
-    private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
-    private FirebaseDatabase database;
+    private final Connection connection = new Connection();
+
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     protected static Curatore curatore;
-    private TextView nomeFoto, cognomeFoto, email, nome, cognome;
-    private ProgressBar progressBar;
-    private ImageView profilePic;
-    private TextView label;
+    private TextView nomeFoto, email, nome, cognome;
+
     private ImageView imgUser;
-    private Button logout;
-    private FloatingActionButton changeImg;
-    private FloatingActionButton editButton;
-    private ImageButton settingsButton;
-    private Button eliminaProfilo;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -74,18 +58,15 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        Uri uri = result.getData().getData();
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
-                            //Riferimento a realtime database
-                            FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
-                            // get reference to 'curatori' node
-                            DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
-                            //aggiorno l'url dell'immagine
-                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
-                        }
+                activityResult -> {
+                    Uri uri = activityResult.getData().getData();
+                    if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK){
+                        //Riferimento a realtime database
+                        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+                        // get reference to 'curatori' node
+                        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
+                        //aggiorno l'url dell'immagine
+                        mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
                     }
                 });
         setHasOptionsMenu(true);
@@ -95,25 +76,22 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View vistaProfilo = inflater.inflate(R.layout.fragment_profile, container, false);
-        //((HomeAdminActivity) requireActivity()).disableBackArrow();
-        return vistaProfilo;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        logout = view.findViewById(R.id.logout);
+        Button logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
-        changeImg = view.findViewById(R.id.change_imgUser);
+        FloatingActionButton changeImg = view.findViewById(R.id.change_imgUser);
         nomeFoto = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
-        settingsButton = view.findViewById(R.id.settings_button);
-        eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
-        editButton = view.findViewById(R.id.fab);
+        ImageButton settingsButton = view.findViewById(R.id.settings_button);
+        FloatingActionButton editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,14 +100,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        myRef = connection.getRefCuratore();
+        DatabaseReference myRef = connection.getRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(Curatore.class) != null){
                     curatore = snapshot.getValue(Curatore.class);
-                    nomeFoto.setText(new StringBuilder().append(curatore.getNome()).append(" ").append(curatore.getCognome()).toString());
+                    if(curatore.getNome() != null && curatore.getCognome() != null)
+                        nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
                     email.setText(curatore.getEmail());
                     nome.setText(curatore.getNome());
                     cognome.setText(curatore.getCognome());
@@ -143,53 +122,38 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        changeImg.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println("Button Clicked");
-                Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
-                uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
-                startForProfileImageUpload.launch(uploadImageIntent);
-            }
+        changeImg.setOnClickListener(onClickListener -> {
+            System.out.println("Button Clicked");
+            Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
+            uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
+            startForProfileImageUpload.launch(uploadImageIntent);
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopup(view);
-            }
-        });
+        settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout(view);
-            }
-        });
+        logout.setOnClickListener(onClickListener -> logout());
 
     }
 
-    public void logout(View view) {
+    public void logout() {
         FirebaseAuth.getInstance().signOut();//logout
         startActivity(new Intent(getActivity(), LoginActivity.class));
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(getActivity(), v);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.modifica_password_popup:
-                        startActivity(new Intent(getActivity(), ModificaPasswordActivity.class));
-                        return true;
-                    case R.id.elimina_profilo_popup:
-                        showCustomDialog();
-                        return true;
+        popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
+            switch (onMenuItemClickListener.getItemId()) {
+                case R.id.modifica_password_popup:
+                    startActivity(new Intent(getActivity(), ModificaPasswordActivity.class));
+                    return true;
+                case R.id.elimina_profilo_popup:
+                    showCustomDialog();
+                    return true;
 
-                    default:
-                        return false;
-                }
+                default:
+                    return false;
             }
         });
         popup.inflate(R.menu.settings_menu);
@@ -213,35 +177,20 @@ public class ProfileFragment extends Fragment {
         //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
         //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
         //successivamente all'eleminazione dello stesso nell'authentication db
-        String uid = connection.getUser().getUid();
 
         dialog.show();
 
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                connection.getUser().delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    database = FirebaseDatabase.getInstance(REF);
-                                    database.getReference("curatori").child(uid).removeValue();
-                                    dialog.dismiss();
-                                    startActivity(new Intent(getActivity(), SplashActivity.class));
-                                    getActivity().finish();
-                                }
-                            }
-                        });
-            }
-        });
+        conferma.setOnClickListener(onClickListener -> connection.getUser().delete()
+                .addOnCompleteListener(onCompleteListener -> {
+                    if (onCompleteListener.isSuccessful()) {
+                        connection.getRefCuratore().removeValue();
+                        dialog.dismiss();
+                        startActivity(new Intent(getActivity(), SplashActivity.class));
+                        requireActivity().finish();
+                    }
+                }));
 
-        rifiuto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }
 
