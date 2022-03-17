@@ -143,6 +143,7 @@
 
                     <TextView
                         android:id="@+id/profile_email"
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -153,7 +154,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="3dp"
                         android:background="@color/grey" />
 
                 </LinearLayout>
@@ -177,13 +178,14 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text=""
+                        android:layout_marginTop="10dp"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="3dp"
                         android:background="@color/grey" />
 
                 </LinearLayout>
@@ -207,14 +209,67 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text=""
+                        android:layout_marginTop="10dp"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="3dp"
                         android:background="@color/grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Luogo selezionato"
+                        android:textColor="@color/headings"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/luogo_selezionato"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text=""
+                        android:layout_marginTop="10dp"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/grey" />
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/cambia_luogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Cambia Luogo"
+                        android:textColor="@color/white" />
+
+
 
                 </LinearLayout>
 
