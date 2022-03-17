@@ -18,4 +18,12 @@
     <string name="place">Struttura Curatore</string>
 
     <string name="twitterUsername">\@joeytribbiani</string>
+
+
+    <string-array name="tipologie_luoghi">
+        <item>Museo</item>
+        <item>Area archeologica</item>
+        <item>Mostra itinerante</item>
+        <item>Sito culturale</item>
+    </string-array>
 </resources>

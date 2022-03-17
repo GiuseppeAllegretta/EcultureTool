@@ -20,12 +20,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.CreazioneMuseoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".activities.OggettiActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
-        <activity android:name=".activities.CreateObjectActivity"
-            android:exported="true"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.CreateObjectActivity"
+            android:exported="true" />
         <activity
             android:name=".activities.ModificaPasswordActivity"
             android:exported="false"

@@ -1,8 +1,8 @@
 package com.example.eculturetool.entities;
 
 public enum Tipologia {
-    Museo,
-    Sito_culturale,
-    Scavo_archeologico,
-    Mostra_itinerante
+    MUSEO,
+    SITO_CULTURALE,
+    AREA_ARCHEOLOGICA,
+    MOSTRA_ITINERANTE
 }

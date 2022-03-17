@@ -6,13 +6,13 @@ public class Luogo {
 
     private String nome, descrizione;
     private Tipologia tipologia;
-    private String idCuratore;
+    private String id;
 
-    public Luogo(String nome, String descrizione, Tipologia tipologia){
+    public Luogo(String nome, String descrizione, Tipologia tipologia, String id){
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipologia = tipologia;
-        this.idCuratore = Connection.getUidCuratore();
+        this.id = id;
     }
 
     public String getNome() {
@@ -28,6 +28,6 @@ public class Luogo {
     }
 
     public String getIdCuratore() {
-        return idCuratore;
+        return id;
     }
 }

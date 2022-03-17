@@ -44,6 +44,10 @@ public class Connection {
         return databaseReference.child("curatori").child(user.getUid());
     }
 
+    public  DatabaseReference getRefLuogo(){
+        return databaseReference.child("luoghi").child(user.getUid());
+    }
+
     public static String getUidCuratore(){
         return user.getUid();
     }
@@ -55,4 +59,6 @@ public class Connection {
     public final String getSTORREF(){
         return STORREF;
     }
+
+
 }

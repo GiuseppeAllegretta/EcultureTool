@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Curatore;
-import com.example.eculturetool.entities.Luogo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -42,7 +41,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
 
         mAuth = FirebaseAuth.getInstance();
-        registerUser = (Button) findViewById(R.id.registerButton);
+        registerUser = (Button) findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
         editTextNome = (EditText) findViewById(R.id.nomeCuratore);
@@ -58,7 +57,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.registerButton:
+            case R.id.avantiButton:
                 registerUser();
                 break;
         }
@@ -109,48 +108,19 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Curatore curatore = new Curatore(nome, cognome, email);
+        Curatore curatore = new Curatore(nome, cognome, email);
 
-                            writeCuratore(user, curatore);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Curatore.Keys.CURATORE_KEY, curatore);
+        bundle.putString(Curatore.Keys.PASSWORD_KEY, password);
 
+        Intent intent = new Intent(this, CreazioneMuseoActivity.class);
+        intent.putExtras(bundle);
 
-                            startActivity(new Intent(RegisterUserActivity.this, LoginActivity.class));
-                            progressBar.setVisibility(View.INVISIBLE);
+        startActivity(intent);
 
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
-                                                System.out.println("email inviata");
-                                            }
-                                        }
-                                    });
-
-                            Toast.makeText(RegisterUserActivity.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        } else {
-
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(RegisterUserActivity.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
     }
 
-    private void writeCuratore(FirebaseUser user, Curatore curatore) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance(("https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/"));
-        DatabaseReference myRef = database.getReference("curatori").child(user.getUid());
-        myRef.setValue(curatore);
-    }
 
 }
 

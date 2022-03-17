@@ -1,10 +1,14 @@
 package com.example.eculturetool.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.net.URI;
 import java.sql.Array;
 import java.util.ArrayList;
 
-public class Curatore {
+public class Curatore implements Serializable {
 
     // TODO capire se serve ancora email o va eliminata
     // TODO capire se uid è un campo o non è necessario
@@ -46,4 +50,20 @@ public class Curatore {
     public ArrayList<Luogo> getLuoghi() {
         return luoghi;
     }
+
+    @Override
+    public String toString() {
+        return "Curatore{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public interface Keys{
+        final static String CURATORE_KEY = "CURATORE_KEY";
+        final static String PASSWORD_KEY = "PASSWORD_KEY";
+    }
+
+
 }
