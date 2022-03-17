@@ -1,6 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,20 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eculturetool.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView register, passwordDimenticata;
     private EditText editTextEmail, editTextPassword;
-    private Button signIn;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
-    private final int PASSWORD_LENGTH = 6;
     private static final String TAG = "EmailPassword";
 
 
@@ -37,10 +30,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        register = findViewById(R.id.registrati);
+        TextView register = findViewById(R.id.registrati);
         register.setOnClickListener(this);
 
-        signIn = findViewById(R.id.logInButton);
+        Button signIn = findViewById(R.id.logInButton);
         signIn.setOnClickListener(this);
 
         editTextEmail = findViewById(R.id.email);
@@ -49,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = findViewById(R.id.progressBarLogin);
         progressBar.setVisibility(View.INVISIBLE);
 
-        passwordDimenticata = (TextView) findViewById(R.id.passwordDimenticata);
+        TextView passwordDimenticata = findViewById(R.id.passwordDimenticata);
         passwordDimenticata.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -96,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        int PASSWORD_LENGTH = 6;
         if(password.length() < PASSWORD_LENGTH){
             editTextPassword.setError("La password deve avere almeno " + PASSWORD_LENGTH + " caratteri");
             editTextPassword.requestFocus();
@@ -104,34 +98,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    FirebaseUser user = auth.getCurrentUser();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(onCompleteListener -> {
+            if (onCompleteListener.isSuccessful()) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser user = auth.getCurrentUser();
 
-                    if(user.isEmailVerified()){
-                        Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                if(user.isEmailVerified()){
+                    Log.d(TAG, "signInWithEmail:success");
+                    Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
 
-                        progressBar.setVisibility(View.INVISIBLE);
-                        finish();
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                    Toast.makeText(LoginActivity.this, "Autenticazione fallita", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    finish();
+                }else{
+                    Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 }
 
+            } else {
+                // If sign in fails, display a message to the user.
+                Log.w(TAG, "signInWithEmail:failure", onCompleteListener.getException());
+                Toast.makeText(LoginActivity.this, "Autenticazione fallita", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
+
         });
 
     }

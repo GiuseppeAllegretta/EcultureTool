@@ -52,7 +52,7 @@ public class PlacesFragment extends Fragment {
     public static final String OBJECTS_IMAGES_DIR = "object_images";
     private Connection connection = new Connection();
     private DatabaseReference myRef;
-    private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
+    private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebaseda\tabase.app/";
     private FirebaseDatabase database;
     ActivityResultLauncher<Intent> startForObjectImageUpload;
 
