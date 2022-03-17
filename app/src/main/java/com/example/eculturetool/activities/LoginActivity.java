@@ -20,7 +20,7 @@ import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextEmail, editTextPassword;
     private FirebaseAuth mAuth;
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.registrati:
                 startActivity(new Intent(this, RegisterUserActivity.class));
                 break;
@@ -74,26 +74,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTextEmail.setError("L'email è richiesta");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("L'email deve essere valida");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             editTextPassword.setError("La password è richiesta");
             editTextPassword.requestFocus();
             return;
         }
 
         int PASSWORD_LENGTH = 6;
-        if(password.length() < PASSWORD_LENGTH){
+        if (password.length() < PASSWORD_LENGTH) {
             editTextPassword.setError("La password deve avere almeno " + PASSWORD_LENGTH + " caratteri");
             editTextPassword.requestFocus();
             return;
@@ -106,15 +106,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 FirebaseUser user = auth.getCurrentUser();
 
-                if(user.isEmailVerified()){
+                if (user.isEmailVerified()) {
                     Log.d(TAG, "signInWithEmail:success");
                     Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
 
-                    SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+
+                    //Gestione sessione
+                    /*SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
                     System.out.println("UID -->>>>>" +user.getUid());
-                    sessionManagement.saveSession(user.getUid());
-
-
+                    sessionManagement.saveSession(user.getUid());*/
 
 
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     progressBar.setVisibility(View.INVISIBLE);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -141,10 +141,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        checkSession();
+        //checkSession();
     }
 
-    private void checkSession() {
+    /*private void checkSession() {
         SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
         String userID=sessionManagement.getSession();
 
@@ -154,5 +154,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else{
             //non fa niente
         }
-    }
+    }*/
 }

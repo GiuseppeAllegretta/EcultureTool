@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
                     Uri uri = activityResult.getData().getData();
-                    if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK){
+                    if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         //Riferimento a realtime database
                         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
                         // get reference to 'curatori' node
@@ -106,9 +106,9 @@ public class ProfileFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Curatore.class) != null){
+                if (snapshot.getValue(Curatore.class) != null) {
                     curatore = snapshot.getValue(Curatore.class);
-                    if(curatore.getNome() != null && curatore.getCognome() != null)
+                    if (curatore.getNome() != null && curatore.getCognome() != null)
                         nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
                     email.setText(curatore.getEmail());
                     nome.setText(curatore.getNome());
@@ -138,8 +138,11 @@ public class ProfileFragment extends Fragment {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();//logout
-        SessionManagement sessionManagement=new SessionManagement(getActivity());
-        sessionManagement.removeSession();
+
+        //delete sessione
+        /*SessionManagement sessionManagement=new SessionManagement(getActivity());
+        sessionManagement.removeSession();*/
+
         startActivity(new Intent(getActivity(), LoginActivity.class));
         requireActivity().finish();
     }
@@ -167,7 +170,7 @@ public class ProfileFragment extends Fragment {
      * Metodo che gestisce il dialog di conferma eliminazione del profilo.
      * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
      */
-    void showCustomDialog(){
+    void showCustomDialog() {
         final Dialog dialog = new Dialog(getActivity());
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -188,8 +191,11 @@ public class ProfileFragment extends Fragment {
                     if (onCompleteListener.isSuccessful()) {
                         connection.getRefCuratore().removeValue();
                         dialog.dismiss();
-                        SessionManagement sessionManagement=new SessionManagement(getActivity());
-                        sessionManagement.removeSession();
+
+                        //delete sessione
+                        /*SessionManagement sessionManagement=new SessionManagement(getActivity());
+                        sessionManagement.removeSession();*/
+
                         startActivity(new Intent(getActivity(), SplashActivity.class));
                         requireActivity().finish();
                     }
