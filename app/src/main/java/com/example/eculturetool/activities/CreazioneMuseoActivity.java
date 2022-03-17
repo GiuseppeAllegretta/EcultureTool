@@ -136,6 +136,9 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
                             connection.getRefLuogo().child(key).setValue(luogo);
 
+                            //Settaggio del luogo appena creato come luogo corrente
+                            connection.getRefCuratore().child("luogoCorrente").setValue(key);
+
 
                             startActivity(new Intent(CreazioneMuseoActivity.this, LoginActivity.class));
 

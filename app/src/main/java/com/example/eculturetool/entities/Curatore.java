@@ -16,6 +16,7 @@ public class Curatore implements Serializable {
     //TODO vedere se fare string o URI
     private String img;
     private ArrayList<Luogo> luoghi = new ArrayList<>();
+    private String luogoCorrente;
 
     public Curatore() {
     }
@@ -24,6 +25,13 @@ public class Curatore implements Serializable {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+    }
+
+    public Curatore(String nome, String cognome, String email, String luogoCorrente) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.luogoCorrente = luogoCorrente;
     }
 
     public void addLuogo(Luogo luogo){
@@ -47,6 +55,10 @@ public class Curatore implements Serializable {
         return img;
     }
 
+    public void setLuogoCorrente(String luogoCorrente) {
+        this.luogoCorrente = luogoCorrente;
+    }
+
     public ArrayList<Luogo> getLuoghi() {
         return luoghi;
     }
@@ -64,6 +76,8 @@ public class Curatore implements Serializable {
         final static String CURATORE_KEY = "CURATORE_KEY";
         final static String PASSWORD_KEY = "PASSWORD_KEY";
     }
+
+
 
 
 }
