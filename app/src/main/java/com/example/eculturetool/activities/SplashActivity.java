@@ -24,13 +24,11 @@ public class SplashActivity extends AppCompatActivity {
     private long mStartTime = -1L;
     private boolean mIsDone;
 
-    private SplashActivity.UiHandler mHandler;
-
     private static class UiHandler extends Handler {
         private final WeakReference<SplashActivity> mActivityRef;
 
         public UiHandler(final SplashActivity srcActivity) {
-            this.mActivityRef = new WeakReference<SplashActivity>
+            this.mActivityRef = new WeakReference<>
                     (srcActivity);
         }
 
@@ -62,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
 
 // We initialize the Handler
-        mHandler = new SplashActivity.UiHandler(this);
+        UiHandler mHandler = new UiHandler(this);
 
         if (mStartTime == -1L) {
             mStartTime = SystemClock.uptimeMillis();
