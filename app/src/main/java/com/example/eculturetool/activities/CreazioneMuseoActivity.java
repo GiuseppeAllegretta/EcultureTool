@@ -66,6 +66,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         curatore = new Curatore();
         Intent intent = getIntent();
 
+
         Bundle bundle = intent.getExtras();
         curatore = (Curatore) bundle.getSerializable(Curatore.Keys.CURATORE_KEY);
         password = bundle.getString(Curatore.Keys.PASSWORD_KEY);
@@ -75,7 +76,13 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
     @Override
     protected void onStart() {
         super.onStart();
-
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        tipologiaLuogo.setAdapter(adapter);
+        tipologiaLuogo.setOnItemSelectedListener(this);
         registrazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,14 +97,6 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        tipologiaLuogo.setAdapter(adapter);
-        tipologiaLuogo.setOnItemSelectedListener(this);
-
         if (nome.isEmpty()) {
             nomeLuogo.setError("Il nome del luogo è richiesto");
             nomeLuogo.requestFocus();
@@ -111,7 +110,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         }
 
         System.out.println("tipologia: " + tipologia);
-        if(tipologia == null){
+        if (tipologia == null) {
             tipologiaLuogo.requestFocus();
             return;
         }
@@ -179,7 +178,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         String item = adapterView.getItemAtPosition(i).toString();
         System.out.println("item: " + item);
 
-        switch(item){
+        switch (item) {
             case "Museo":
                 tipologia = Tipologia.MUSEO;
                 break;
