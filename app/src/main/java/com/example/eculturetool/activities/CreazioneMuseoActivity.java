@@ -49,13 +49,6 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creazione_museo);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarCreazioneMuseo);
-
-        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
-        Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
-        myToolbar.setNavigationIcon(freccia_indietro);
-        setSupportActionBar(myToolbar);
-
         //Acquisizione riferimenti view nell'acitivty
         nomeLuogo = findViewById(R.id.nome_luogo);
         descrizioneLuogo = findViewById(R.id.descrizione_luogo);

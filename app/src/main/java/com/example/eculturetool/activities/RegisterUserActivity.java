@@ -32,6 +32,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     private final int PASSWORD_LENGTH = 6;
     private static final String TAG = "EmailPassword";
     private ProgressBar progressBar;
+    String nomeRestored = null;
 
 
     @Override
@@ -122,6 +123,23 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     }
 
 
+    //Prova per recuperare i dati quando si ritorna indietro dall'Activity CreazioneMuseoActivity
+    //INIZIO
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        EditText editTextNomeSavedState = (EditText) findViewById(R.id.nomeCuratore);
+        CharSequence charSequence = editTextNomeSavedState.getText();
+        savedInstanceState.putCharSequence("MySavedData", charSequence);
+    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        CharSequence restoreData = savedInstanceState.getCharSequence("MySavedData");
+        EditText myEditText = (EditText) findViewById(R.id.nomeCuratore);
+        myEditText.setText(restoreData);
+    }
+    //FINE
 }
 
 

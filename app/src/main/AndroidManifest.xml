@@ -22,7 +22,9 @@
         <activity
             android:name=".activities.CreazioneMuseoActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="Crea il tuo luogo"
+            android:parentActivityName=".activities.RegisterUserActivity" />
+
         <activity
             android:name=".activities.OggettiActivity"
             android:exported="true"
