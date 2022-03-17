@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.SessionManagement;
+import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -106,6 +109,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(user.isEmailVerified()){
                     Log.d(TAG, "signInWithEmail:success");
                     Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
+
+                    SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+                    System.out.println("UID -->>>>>" +user.getUid());
+                    sessionManagement.saveSession(user.getUid());
+
+
+
+
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
 
@@ -125,5 +136,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
+    }
+
+    private void checkSession() {
+        SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+        String userID=sessionManagement.getSession();
+
+        if(userID.compareTo("-1")!=0){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+        }else{
+            //non fa niente
+        }
     }
 }

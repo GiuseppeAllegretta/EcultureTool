@@ -27,6 +27,7 @@ import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -137,6 +138,8 @@ public class ProfileFragment extends Fragment {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();//logout
+        SessionManagement sessionManagement=new SessionManagement(getActivity());
+        sessionManagement.removeSession();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         requireActivity().finish();
     }
@@ -185,6 +188,8 @@ public class ProfileFragment extends Fragment {
                     if (onCompleteListener.isSuccessful()) {
                         connection.getRefCuratore().removeValue();
                         dialog.dismiss();
+                        SessionManagement sessionManagement=new SessionManagement(getActivity());
+                        sessionManagement.removeSession();
                         startActivity(new Intent(getActivity(), SplashActivity.class));
                         requireActivity().finish();
                     }
