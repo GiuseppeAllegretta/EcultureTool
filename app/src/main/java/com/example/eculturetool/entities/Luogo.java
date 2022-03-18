@@ -8,6 +8,10 @@ public class Luogo {
     private Tipologia tipologia;
     private String id;
 
+    public Luogo(){
+
+    }
+
     public Luogo(String nome, String descrizione, Tipologia tipologia, String id){
         this.nome = nome;
         this.descrizione = descrizione;
@@ -27,7 +31,17 @@ public class Luogo {
         return tipologia;
     }
 
-    public String getIdCuratore() {
+    public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Luogo{" +
+                "nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", tipologia=" + tipologia +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

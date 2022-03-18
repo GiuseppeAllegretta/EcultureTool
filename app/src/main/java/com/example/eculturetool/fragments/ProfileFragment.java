@@ -29,6 +29,7 @@ import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,9 +47,11 @@ public class ProfileFragment extends Fragment {
 
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     protected static Curatore curatore;
-    private TextView nomeFoto, email, nome, cognome;
-
+    private TextView nomeFoto, email, nome, cognome, nomeLuogo;
     private ImageView imgUser;
+
+    //Variabile che tiene traccia del luogo corrente. Sarà avvalorata quando si otterrano i riferimenti del curatore attraverso snapshot
+    private String luogoCorrente;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -91,6 +94,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.profile_email);
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
+        nomeLuogo = view.findViewById(R.id.luogo_selezionato);
         ImageButton settingsButton = view.findViewById(R.id.settings_button);
         FloatingActionButton editButton = view.findViewById(R.id.fab);
 
@@ -103,6 +107,7 @@ public class ProfileFragment extends Fragment {
 
         DatabaseReference myRef = connection.getRefCuratore();
 
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,6 +118,25 @@ public class ProfileFragment extends Fragment {
                     email.setText(curatore.getEmail());
                     nome.setText(curatore.getNome());
                     cognome.setText(curatore.getCognome());
+                    luogoCorrente = curatore.getLuogoCorrente();
+
+                    connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.getValue(Luogo.class) != null){
+                                System.out.println("snapshot: " + snapshot);
+                                Luogo luogo = snapshot.getValue(Luogo.class);
+                                System.out.println(luogo.toString());
+                                nomeLuogo.setText(luogo.getNome());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     Picasso.get().load(curatore.getImg()).transform(new CircleTransform()).into(imgUser);
                 }
             }
@@ -122,6 +146,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
 
         changeImg.setOnClickListener(onClickListener -> {
             System.out.println("Button Clicked");

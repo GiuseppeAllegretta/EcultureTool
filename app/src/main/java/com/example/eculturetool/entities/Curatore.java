@@ -55,6 +55,10 @@ public class Curatore implements Serializable {
         return img;
     }
 
+    public String getLuogoCorrente() {
+        return luogoCorrente;
+    }
+
     public void setLuogoCorrente(String luogoCorrente) {
         this.luogoCorrente = luogoCorrente;
     }

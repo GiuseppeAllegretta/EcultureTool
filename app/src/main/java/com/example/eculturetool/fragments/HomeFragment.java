@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +30,9 @@ public class HomeFragment extends Fragment {
     private Connection connection = new Connection();
     private DatabaseReference myRef;
 
-    private TextView tv;
+    private TextView tv, luogoGestito;
     private CardView oggetti;
+    private String luogoCorrente;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -70,6 +73,7 @@ public class HomeFragment extends Fragment {
 
         tv = view.findViewById(R.id.nomeCuratore);
         oggetti = view.findViewById(R.id.oggettiCard);
+        luogoGestito = view.findViewById(R.id.nomeLuogoHome);
 
         myRef = connection.getRefCuratore();
         System.out.println("--->" + myRef);
@@ -79,7 +83,26 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("--->" + snapshot);
                 if(snapshot.getValue(Curatore.class) != null)
+                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
+
+                connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getValue(Luogo.class) != null){
+                            System.out.println("snapshot: " + snapshot);
+                            Luogo luogo = snapshot.getValue(Luogo.class);
+                            System.out.println(luogo.toString());
+                            luogoGestito.setText(Html.fromHtml("Stai gestendo " + "<b>" + luogo.getNome() + "</b>", 0));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override

@@ -24,19 +24,20 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:text="Nome Utente"
+                android:textStyle="bold"
                 android:textColor="@color/white"
 
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/nomeLuogoHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:layout_below="@id/nomeCuratore"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="80dp"
-                android:text="Benvenuto nella home"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </RelativeLayout>
