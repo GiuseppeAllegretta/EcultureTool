@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.entities.Tipologia;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
         String nome = luoghiList.get(position).getNome();
         holder.nomeLuogo.setText(nome);
         holder.iconaTipologia.setImageResource(luoghiList.get(position).getIdImage());
+        setImageLuogo(holder,luoghiList.get(holder.getAdapterPosition()).getTipologia());
 
         /**
         holder.itemSelected.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
         });
 
         **/
+    }
+
+    private void setImageLuogo(RecyclerAdapter.LuoghiViewHolder holder,Tipologia tipologia) {
+        switch (tipologia){
+            case MUSEO:
+                holder.iconaTipologia.setImageResource(R.drawable.art_museum);
+                break;
+
+            case AREA_ARCHEOLOGICA:
+                holder.iconaTipologia.setImageResource(R.drawable.archeology);
+                break;
+
+            case MOSTRA_ITINERANTE:
+                holder.iconaTipologia.setImageResource(R.drawable.sculpture);
+                break;
+
+            case SITO_CULTURALE:
+                holder.iconaTipologia.setImageResource(R.drawable.sweep);
+                break;
+        }
+
     }
 
     @Override
