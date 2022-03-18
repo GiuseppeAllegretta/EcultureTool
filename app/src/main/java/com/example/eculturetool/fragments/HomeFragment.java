@@ -82,9 +82,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("--->" + snapshot);
-                if(snapshot.getValue(Curatore.class) != null)
+                //System.out.println(snapshot.getValue(Curatore.class).toString());
+                if(snapshot.getValue(Curatore.class) != null) {
                     luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-                    tv.setText(snapshot.getValue(Curatore.class).getNome() + " " +  snapshot.getValue(Curatore.class).getCognome());
+                    tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
+                }
 
                 connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                     @Override

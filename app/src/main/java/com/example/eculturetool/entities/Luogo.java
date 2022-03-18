@@ -7,6 +7,8 @@ public class Luogo {
     private String nome, descrizione;
     private Tipologia tipologia;
     private String id;
+    private int idImage;
+
 
     public Luogo(){
 
@@ -17,6 +19,11 @@ public class Luogo {
         this.descrizione = descrizione;
         this.tipologia = tipologia;
         this.id = id;
+    }
+
+    public Luogo(String nome, String descrizione, Tipologia tipologia, String id, int idImage){
+        this(nome, descrizione, tipologia, id);
+        this.idImage = idImage;
     }
 
     public String getNome() {
@@ -34,6 +41,11 @@ public class Luogo {
     public String getId() {
         return id;
     }
+
+    public int getIdImage() {
+        return idImage;
+    }
+
 
     @Override
     public String toString() {

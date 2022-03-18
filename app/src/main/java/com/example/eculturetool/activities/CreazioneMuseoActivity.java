@@ -125,7 +125,11 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
                             //Scrittura del luogo sul Realtime Database
                             String key = connection.getRefLuogo().push().getKey();
-                            Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
+
+                            Luogo luogo = setImageLuogo(nome, descrizione, tipologia, key);
+                            //Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
+
+
                             connection.getRefLuogo().child(key).setValue(luogo);
 
                             //Settaggio del luogo appena creato come luogo corrente
@@ -161,6 +165,30 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                 });
 
 
+    }
+
+    private Luogo setImageLuogo(String nome, String descrizione, Tipologia tipologia, String key) {
+        Luogo luogo = null;
+
+        switch (tipologia){
+            case MUSEO:
+                luogo = new Luogo(nome, descrizione, tipologia, key, R.drawable.art_museum);
+                break;
+
+            case AREA_ARCHEOLOGICA:
+                luogo = new Luogo(nome, descrizione, tipologia, key, R.drawable.archeology);
+                break;
+
+            case MOSTRA_ITINERANTE:
+                luogo = new Luogo(nome, descrizione, tipologia, key, R.drawable.sculpture);
+                break;
+
+            case SITO_CULTURALE:
+                luogo = new Luogo(nome, descrizione, tipologia, key, R.drawable.sweep);
+                break;
+        }
+
+        return luogo;
     }
 
 

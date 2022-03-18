@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
+import com.example.eculturetool.activities.LuoghiActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     protected static Curatore curatore;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
+    private Button cambiaLuogo;
     private ImageView imgUser;
 
     //Variabile che tiene traccia del luogo corrente. Sarà avvalorata quando si otterrano i riferimenti del curatore attraverso snapshot
@@ -95,6 +97,7 @@ public class ProfileFragment extends Fragment {
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
         nomeLuogo = view.findViewById(R.id.luogo_selezionato);
+        cambiaLuogo = view.findViewById(R.id.cambia_luogo);
         ImageButton settingsButton = view.findViewById(R.id.settings_button);
         FloatingActionButton editButton = view.findViewById(R.id.fab);
 
@@ -153,6 +156,14 @@ public class ProfileFragment extends Fragment {
             Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
             uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
             startForProfileImageUpload.launch(uploadImageIntent);
+        });
+
+        //Operazioni da eseguire quando l'utente decide di cambiare il luogo
+        cambiaLuogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), LuoghiActivity.class));
+            }
         });
 
         settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));

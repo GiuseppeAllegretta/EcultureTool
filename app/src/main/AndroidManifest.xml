@@ -20,11 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.LuoghiActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".activities.CreazioneMuseoActivity"
             android:exported="true"
             android:label="Crea il tuo luogo"
             android:parentActivityName=".activities.RegisterUserActivity" />
-
         <activity
             android:name=".activities.OggettiActivity"
             android:exported="true"
@@ -55,7 +58,7 @@
             android:name=".activities.UploadImageActivity"
             android:exported="false"
             android:label="Carica Immagine"
-            android:parentActivityName=".activities.HomeActivity"/>
+            android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"

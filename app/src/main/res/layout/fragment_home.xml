@@ -24,10 +24,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:text="Nome Utente"
-                android:textStyle="bold"
                 android:textColor="@color/white"
+                android:textSize="24sp"
 
-                android:textSize="24sp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/nomeLuogoHome"
