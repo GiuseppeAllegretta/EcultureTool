@@ -48,10 +48,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     public void onBindViewHolder(@NonNull RecyclerAdapter.LuoghiViewHolder holder, int position) {
         String nome = luoghiList.get(position).getNome();
         holder.nomeLuogo.setText(nome);
-
-       /**
         holder.iconaTipologia.setImageResource(luoghiList.get(position).getIdImage());
 
+        /**
         holder.itemSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
