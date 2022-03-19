@@ -113,7 +113,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
 
     @Override
     public void onLuogoClick(int position) {
-        Luogo luogoSelezionato = luoghiList.get(position);
+        String luogoSelezionato = luoghiList.get(position).getId();
         Intent intent = new Intent(this, DettaglioLuogoActivity.class);
         intent.putExtra("LUOGO", luogoSelezionato);
         startActivity(intent);
