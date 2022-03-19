@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapter;
@@ -18,6 +22,7 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.fragments.ProfileFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -45,11 +50,18 @@ public class LuoghiActivity extends AppCompatActivity{
         myToolbar.setNavigationIcon(freccia_indietro);
         setSupportActionBar(myToolbar);
 
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Ritorna al fragment del profilo chiamante
+                finish();
+            }
+        });
+
         recyclerView = findViewById(R.id.recyclerView);
         luoghiList = new ArrayList<>();
 
         setLuogoInfo();
-
     }
 
     private void setAdapter() {
@@ -78,8 +90,8 @@ public class LuoghiActivity extends AppCompatActivity{
 
                             for(int i = 0; i < count; i++){
                                 luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                                Luogo luogoprova= new Luogo("scavo","ciao",Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
-                                luoghiList.add(luogoprova);
+                                //Luogo luogoprova= new Luogo("scavo","ciao",Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
+                                //luoghiList.add(luogoprova);
                                 System.out.println(luoghiList.get(i));
                             }
                             setAdapter();

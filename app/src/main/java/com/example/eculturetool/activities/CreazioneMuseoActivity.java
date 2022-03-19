@@ -118,6 +118,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = connection.getAuth().getCurrentUser();
+                            System.out.println("UID: "+ user.getUid());
 
                             //Scrittura del curatore sul Realtime Database
                             connection.getRefCuratore().setValue(curatore);
@@ -125,6 +126,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
                             //Scrittura del luogo sul Realtime Database
                             String key = connection.getRefLuogo().push().getKey();
+                            System.out.println("KEY: "+ key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
 
 
