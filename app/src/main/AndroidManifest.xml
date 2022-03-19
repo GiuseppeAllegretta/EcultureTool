@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.DettaglioLuogoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LuoghiActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

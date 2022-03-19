@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,21 +19,32 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.LuoghiViewHolder>{
 
     private ArrayList<Luogo> luoghiList;
+    private OnLuogoListener mOnLuogoListener;
 
-    public RecyclerAdapter(ArrayList<Luogo> luoghiList){
+    public RecyclerAdapter(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener){
         this.luoghiList = luoghiList;
+        this.mOnLuogoListener = onLuogoListener;
     }
 
-    public class LuoghiViewHolder extends RecyclerView.ViewHolder{
+    public class LuoghiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomeLuogo;
         private ImageView iconaTipologia;
         private LinearLayout itemSelected;
+        OnLuogoListener onLuogoListener;
 
-        public LuoghiViewHolder(final View view ){
+        public LuoghiViewHolder(final View view, OnLuogoListener onLuogoListener){
             super(view);
             nomeLuogo = view.findViewById(R.id.nomeLuogo);
             iconaTipologia = view.findViewById(R.id.iconaTipologia);
             itemSelected = view.findViewById(R.id.itemSelected);
+            this.onLuogoListener = onLuogoListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onLuogoListener.onLuogoClick(getAdapterPosition());
         }
     }
 
@@ -42,7 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     @Override
     public RecyclerAdapter.LuoghiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items, parent, false);
-        return new LuoghiViewHolder(itemView);
+        return new LuoghiViewHolder(itemView, mOnLuogoListener);
     }
 
     @Override
@@ -89,6 +99,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     @Override
     public int getItemCount() {
         return luoghiList.size();
+    }
+
+    public interface OnLuogoListener {
+        public void onLuogoClick(int position);
     }
 
 }

@@ -2,7 +2,9 @@ package com.example.eculturetool.entities;
 
 import com.example.eculturetool.database.Connection;
 
-public class Luogo {
+import java.io.Serializable;
+
+public class Luogo implements Serializable {
 
     private String nome, descrizione;
     private Tipologia tipologia;
