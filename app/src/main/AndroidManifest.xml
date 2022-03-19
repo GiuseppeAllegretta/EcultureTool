@@ -21,7 +21,9 @@
         android:theme="@style/Theme.EcultureTool">
         <activity
             android:name=".activities.DettaglioLuogoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label=""
+            android:parentActivityName=".activities.LuoghiActivity"/>
         <activity
             android:name=".activities.LuoghiActivity"
             android:exported="true"
