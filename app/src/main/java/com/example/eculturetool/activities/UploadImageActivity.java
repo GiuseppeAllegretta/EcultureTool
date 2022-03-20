@@ -12,6 +12,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,13 +88,7 @@ public class UploadImageActivity extends AppCompatActivity {
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkCameraPermission() ) {
-                    requestCameraPermission();
-                } else if(!checkStoragePermission()){
-                    requestStoragePermission();
-                } else{
-                    openFileChooser();
-                }
+                showPopup(v);
             }
         });
 
@@ -204,5 +199,30 @@ public class UploadImageActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Nessun file selezionato!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
+            switch (onMenuItemClickListener.getItemId()) {
+                case R.id.select_image_popup:
+                    if (!checkCameraPermission() ) {
+                        requestCameraPermission();
+                    } else if(!checkStoragePermission()){
+                        requestStoragePermission();
+                    } else{
+                        openFileChooser();
+                    }
+                    return true;
+                case R.id.capture_image:
+                    //showCustomDialog();
+                    return true;
+
+                default:
+                    return false;
+            }
+        });
+        popup.inflate(R.menu.upload_image_options);
+        popup.show();
     }
 }

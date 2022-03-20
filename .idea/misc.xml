@@ -58,10 +58,14 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="1.0250508626302084" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
