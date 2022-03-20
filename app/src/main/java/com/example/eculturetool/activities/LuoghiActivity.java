@@ -2,6 +2,7 @@ package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eculturetool.R;
@@ -33,6 +36,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     private RecyclerView recyclerView;
 
     private String luogoCorrente;
+    private RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
     private void setAdapter() {
-        RecyclerAdapter adapter = new RecyclerAdapter(luoghiList, this);
+        adapter = new RecyclerAdapter(luoghiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -118,5 +122,26 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         intent.putExtra("LUOGO", luogoSelezionato);
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.oggetti_menu, menu);
+        MenuItem item = menu.findItem(R.id.ricerca);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
