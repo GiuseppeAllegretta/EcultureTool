@@ -2,11 +2,14 @@ package com.example.eculturetool.activities;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -39,7 +42,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.ByteArrayOutputStream;
 
 public class UploadImageActivity extends AppCompatActivity {
 
@@ -51,7 +55,8 @@ public class UploadImageActivity extends AppCompatActivity {
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
-    ActivityResultLauncher<Intent> activityResultLaunch;
+    ActivityResultLauncher<Intent> chooseFileResultLaunch;
+    ActivityResultLauncher<Intent> tookPhotoResultLaunch;
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -72,12 +77,11 @@ public class UploadImageActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
 
-        activityResultLaunch = registerForActivityResult(
+        chooseFileResultLaunch = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        Uri uri = result.getData().getData();
                         if (result.getResultCode() == UploadImageActivity.RESULT_OK){
                             mImageUri = result.getData().getData();
                             Picasso.get().load(mImageUri).into(mImageView);
@@ -85,6 +89,16 @@ public class UploadImageActivity extends AppCompatActivity {
                     }
                 });
 
+        tookPhotoResultLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Bitmap image = (Bitmap) result.getData().getExtras().get("data");
+                        mImageUri = getImageUri(getApplicationContext(), image);
+                        mImageView.setImageBitmap(image);
+                    }
+                });
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +121,6 @@ public class UploadImageActivity extends AppCompatActivity {
         mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openImagesActivity();
             }
         });
@@ -141,7 +154,12 @@ public class UploadImageActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        activityResultLaunch.launch(intent);
+        chooseFileResultLaunch.launch(intent);
+    }
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        tookPhotoResultLaunch.launch(intent);
     }
 
     private String getFileExtension(Uri uri) {
@@ -201,6 +219,13 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
@@ -215,7 +240,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     }
                     return true;
                 case R.id.capture_image:
-                    //showCustomDialog();
+                    openCamera();
                     return true;
 
                 default:
