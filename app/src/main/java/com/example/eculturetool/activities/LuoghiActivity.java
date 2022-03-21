@@ -22,6 +22,7 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -38,10 +39,13 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     private String luogoCorrente;
     private RecyclerAdapter adapter;
 
+    private FloatingActionButton fabAddLuogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_luoghi);
+        fabAddLuogo = findViewById(R.id.addLuogo);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarLuoghi);
 
@@ -63,6 +67,20 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         luoghiList = new ArrayList<>();
 
         setLuogoInfo();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        fabAddLuogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class));
+            }
+        });
+
     }
 
     private void setAdapter() {
@@ -89,10 +107,11 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
                             int count = (int) snapshot.getChildrenCount();
                             System.out.println("count: " +count);
 
+                            luoghiList.clear();
                             for(int i = 0; i < count; i++){
                                 luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                                Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
-                                luoghiList.add(luogoprova);
+                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
+                                //luoghiList.add(luogoprova);
                                 System.out.println(luoghiList.get(i));
                             }
                             setAdapter();

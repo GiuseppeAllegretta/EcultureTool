@@ -19,6 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
+        <activity
+            android:name=".activities.AggiungiLuogoActivity"
+            android:exported="false"
+            android:label="Crea Luogo"
+            android:parentActivityName=".activities.LuoghiActivity"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -33,7 +39,7 @@
             android:name=".activities.DettaglioLuogoActivity"
             android:exported="false"
             android:label=""
-            android:parentActivityName=".activities.LuoghiActivity"/>
+            android:parentActivityName=".activities.LuoghiActivity" />
         <activity
             android:name=".activities.LuoghiActivity"
             android:exported="true"
