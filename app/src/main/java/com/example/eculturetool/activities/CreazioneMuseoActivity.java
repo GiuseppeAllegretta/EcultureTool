@@ -121,7 +121,8 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                             System.out.println("UID: "+ user.getUid());
 
                             //Scrittura del curatore sul Realtime Database
-                            connection.getRefCuratore().setValue(curatore);
+                            //connection.getRefCuratore().setValue(curatore);
+                            connection.getDatabaseReference().child("curatori").child(user.getUid()).setValue(curatore);
 
 
                             //Scrittura del luogo sul Realtime Database
