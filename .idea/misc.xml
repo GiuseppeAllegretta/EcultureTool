@@ -69,6 +69,7 @@
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.2125" />
       </map>
     </option>
   </component>
