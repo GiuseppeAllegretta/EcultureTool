@@ -5,14 +5,10 @@
       <map>
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1355" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.151" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.275" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.2774358974358974" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_modifica_luogo.xml" value="0.28489583333333335" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_modifica_profilo.xml" value="0.2989583333333333" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_oggetti.xml" value="0.32037037037037036" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_password_dimenticata.xml" value="0.2703125" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
@@ -27,8 +23,6 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/switch_item.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/view_object.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.2989583333333333" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/ic_action_settings.xml" value="0.229" />
@@ -36,15 +30,17 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_focused_color.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_normal.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1675" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/round_image.xml" value="0.1565" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/font/le_chant_des_albatros.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_museo.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_modifica_password.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_modifica_profilo.xml" value="0.264" />
-        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_oggetti.xml" value="0.14615384615384616" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_oggetti.xml" value="0.176" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_password_dimenticata.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_register_user.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_show_image.xml" value="0.20854700854700856" />
@@ -57,6 +53,8 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/home.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/home_prova.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/image_item.xml" value="0.20854700854700856" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_oggetto.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_items.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/object_lower_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/switch_item.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/view_object.xml" value="0.20854700854700856" />
@@ -64,10 +62,6 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="1.0250508626302084" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
-        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
-        <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
       </map>
     </option>
   </component>

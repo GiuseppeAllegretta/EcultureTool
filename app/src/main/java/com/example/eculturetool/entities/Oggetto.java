@@ -12,6 +12,7 @@ public class Oggetto {
 
     }
 
+
     public Oggetto(String id, String nome, String descrizione, String urlImmagine){
         this.id = id;
         this.nome = nome;

@@ -17,11 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.RecyclerAdapter;
+import com.example.eculturetool.RecyclerAdapterLuogo;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.Tipologia;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter.OnLuogoListener {
+public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapterLuogo.OnLuogoListener {
 
     private final Connection connection = new Connection();
 
@@ -37,7 +36,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     private RecyclerView recyclerView;
 
     private String luogoCorrente;
-    private RecyclerAdapter adapter;
+    private RecyclerAdapterLuogo adapter;
 
     private FloatingActionButton fabAddLuogo;
 
@@ -84,7 +83,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
     private void setAdapter() {
-        adapter = new RecyclerAdapter(luoghiList, this);
+        adapter = new RecyclerAdapterLuogo(luoghiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

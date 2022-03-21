@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.LuoghiViewHolder> implements Filterable {
+public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLuogo.LuoghiViewHolder> implements Filterable {
 
     private ArrayList<Luogo> luoghiList;
     private OnLuogoListener mOnLuogoListener;
@@ -28,7 +28,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     //Serve per la ricerca
     private ArrayList<Luogo> luoghiListAll;
 
-    public RecyclerAdapter(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener){
+    public RecyclerAdapterLuogo(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener){
         this.luoghiList = luoghiList;
         this.mOnLuogoListener = onLuogoListener;
         this.luoghiListAll = new ArrayList<>(luoghiList);
@@ -59,19 +59,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
 
     @NonNull
     @Override
-    public RecyclerAdapter.LuoghiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerAdapterLuogo.LuoghiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items, parent, false);
         return new LuoghiViewHolder(itemView, mOnLuogoListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter.LuoghiViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerAdapterLuogo.LuoghiViewHolder holder, int position) {
         String nome = luoghiList.get(position).getNome();
         holder.nomeLuogo.setText(nome);
         setImageLuogo(holder,luoghiList.get(holder.getAdapterPosition()).getTipologia());
     }
 
-    private void setImageLuogo(RecyclerAdapter.LuoghiViewHolder holder,Tipologia tipologia) {
+    private void setImageLuogo(RecyclerAdapterLuogo.LuoghiViewHolder holder, Tipologia tipologia) {
         switch (tipologia){
             case MUSEO:
                 holder.iconaTipologia.setImageResource(R.drawable.art_museum);
