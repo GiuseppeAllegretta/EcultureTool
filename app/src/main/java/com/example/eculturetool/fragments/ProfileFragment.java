@@ -1,6 +1,7 @@
 package com.example.eculturetool.fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
@@ -28,10 +30,8 @@ import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,13 +39,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
     private final Connection connection = new Connection();
-
+    private Context context;
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     protected static Curatore curatore;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
@@ -62,6 +61,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = requireActivity().getApplicationContext();
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
@@ -88,7 +88,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         Button logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         FloatingActionButton changeImg = view.findViewById(R.id.change_imgUser);
@@ -139,8 +138,7 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-
-                    Picasso.get().load(curatore.getImg()).transform(new CircleTransform()).into(imgUser);
+                    Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
                 }
             }
 

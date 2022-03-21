@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
@@ -42,7 +43,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -93,7 +93,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == UploadImageActivity.RESULT_OK){
                             mImageUri = result.getData().getData();
-                            Picasso.get().load(mImageUri).into(mImageView);
+                            Glide.with(UploadImageActivity.this).load(mImageUri).into(mImageView);
                         }
                     }
                 });
@@ -104,7 +104,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         mImageUri = Uri.fromFile(photoFile);
-                        Picasso.get().load(mImageUri).into(mImageView);
+                        Glide.with(UploadImageActivity.this).load(mImageUri).into(mImageView);
                     }
                 });
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {

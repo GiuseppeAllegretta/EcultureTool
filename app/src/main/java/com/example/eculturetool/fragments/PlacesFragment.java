@@ -1,9 +1,8 @@
 package com.example.eculturetool.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,10 +17,15 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
@@ -30,7 +34,6 @@ import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
-import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,12 +43,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 
 public class PlacesFragment extends Fragment {
 
@@ -55,7 +52,7 @@ public class PlacesFragment extends Fragment {
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebaseda\tabase.app/";
     private FirebaseDatabase database;
     ActivityResultLauncher<Intent> startForObjectImageUpload;
-
+    private Context context;
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
     private ImageView profilePic;
@@ -74,6 +71,7 @@ public class PlacesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = requireActivity().getApplicationContext();
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -136,7 +134,7 @@ public class PlacesFragment extends Fragment {
                     nome.setText(snapshot.getValue(Curatore.class).getNome());
                     cognome.setText(snapshot.getValue(Curatore.class).getCognome());
 
-                    Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
+                    Glide.with(context).load(snapshot.getValue(Curatore.class).getImg()).circleCrop().into(imgUser);
                 }
             }
 
