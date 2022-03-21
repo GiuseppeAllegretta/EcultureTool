@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eculturetool.R;
@@ -21,6 +23,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     private TextView nomeLuogo, nomeLuogoPiccolo, descrizioneLuogo, tipologiaLuogo;
     private String idLuogo;
+    private Button impostaLuogoCorrente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         nomeLuogoPiccolo = findViewById(R.id.nomeLuogoDettaglioPiccolo);
         descrizioneLuogo = findViewById(R.id.descrizioneDettaglio);
         tipologiaLuogo = findViewById(R.id.tipologiaDettaglio);
+        impostaLuogoCorrente = findViewById(R.id.impostaLuogoCorrente);
 
 
         //Recupero dei dati dall'intent
@@ -57,6 +61,15 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        impostaLuogoCorrente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                connection.getRefCuratore().child("luogoCorrente").setValue(idLuogo);
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
             }
         });
     }

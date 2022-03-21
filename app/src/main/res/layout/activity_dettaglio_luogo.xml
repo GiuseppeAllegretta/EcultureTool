@@ -166,8 +166,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_edit"
         android:backgroundTint="@color/gialloSecondario"
+        android:src="@android:drawable/ic_menu_edit"
         app:fabSize="normal" />
 
 

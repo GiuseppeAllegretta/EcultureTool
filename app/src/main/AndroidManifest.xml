@@ -20,10 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.ModificaLuogoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AggiungiLuogoActivity"
             android:exported="false"
             android:label="Crea Luogo"
-            android:parentActivityName=".activities.LuoghiActivity"/>
+            android:parentActivityName=".activities.LuoghiActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
