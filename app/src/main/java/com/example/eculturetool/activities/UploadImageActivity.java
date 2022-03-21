@@ -32,6 +32,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -55,6 +56,7 @@ public class UploadImageActivity extends AppCompatActivity {
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
+    private View parentLayout;
     ActivityResultLauncher<Intent> chooseFileResultLaunch;
     ActivityResultLauncher<Intent> tookPhotoResultLaunch;
 
@@ -67,6 +69,7 @@ public class UploadImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
+        parentLayout = findViewById(android.R.id.content);
         mButtonChooseImage = findViewById(R.id.selectButton);
         mButtonUpload = findViewById(R.id.uploadButton);
         mTextViewShowUploads = findViewById(R.id.showImageTextView);
@@ -129,25 +132,6 @@ public class UploadImageActivity extends AppCompatActivity {
     private void openImagesActivity() {
         Intent intent = new Intent(getApplicationContext(), ShowImage.class);
         startActivity(intent);
-    }
-
-    private void requestStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-    }
-
-    private void requestCameraPermission() {
-        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-    }
-
-    private boolean checkStoragePermission() {
-        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        return res2;
-    }
-
-    private boolean checkCameraPermission() {
-        boolean res1 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        return res1 && res2;
     }
 
     private void openFileChooser() {
@@ -228,19 +212,22 @@ public class UploadImageActivity extends AppCompatActivity {
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
+        Permissions permissions = Permissions.getInstance();
         popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
             switch (onMenuItemClickListener.getItemId()) {
                 case R.id.select_image_popup:
-                    if (!checkCameraPermission() ) {
-                        requestCameraPermission();
-                    } else if(!checkStoragePermission()){
-                        requestStoragePermission();
+                    if(!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)){
+                        permissions.requestStoragePermission(UploadImageActivity.this);
                     } else{
                         openFileChooser();
                     }
                     return true;
                 case R.id.capture_image:
-                    openCamera();
+                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout) ) {
+                        permissions.requestCameraPermission(UploadImageActivity.this);
+                    } else{
+                        openCamera();
+                    }
                     return true;
 
                 default:
