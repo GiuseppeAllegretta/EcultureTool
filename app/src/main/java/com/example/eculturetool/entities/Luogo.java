@@ -9,7 +9,6 @@ public class Luogo implements Serializable {
     private String nome, descrizione;
     private Tipologia tipologia;
     private String id;
-    private int idImage;
 
 
     public Luogo(){
@@ -23,10 +22,6 @@ public class Luogo implements Serializable {
         this.id = id;
     }
 
-    public Luogo(String nome, String descrizione, Tipologia tipologia, String id, int idImage){
-        this(nome, descrizione, tipologia, id);
-        this.idImage = idImage;
-    }
 
     public String getNome() {
         return nome;
@@ -44,9 +39,6 @@ public class Luogo implements Serializable {
         return id;
     }
 
-    public int getIdImage() {
-        return idImage;
-    }
 
 
     @Override
