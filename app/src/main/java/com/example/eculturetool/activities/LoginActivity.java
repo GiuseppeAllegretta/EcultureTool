@@ -1,7 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.database.SessionManagement;
-import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

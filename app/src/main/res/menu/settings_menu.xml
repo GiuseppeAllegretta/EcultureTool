@@ -6,6 +6,6 @@
 
     <item
         android:id="@+id/elimina_profilo_popup"
-        android:title="Elimina profilo"/>
+        android:title="Elimina profilo" />
 
 </menu>

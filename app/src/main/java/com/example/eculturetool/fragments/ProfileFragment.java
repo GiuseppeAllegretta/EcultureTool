@@ -1,6 +1,7 @@
 package com.example.eculturetool.fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
@@ -28,10 +30,8 @@ import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,13 +39,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
     private final Connection connection = new Connection();
-
+    private Context context;
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     protected static Curatore curatore;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
@@ -62,17 +61,23 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = requireActivity().getApplicationContext();
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
-                    Uri uri = activityResult.getData().getData();
+                    Uri uri = null;
+                    if (activityResult.getData() != null) {
+                        uri = activityResult.getData().getData();
+                    }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         //Riferimento a realtime database
-                        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+                        FirebaseDatabase mFirebaseInstance = connection.getDatabase();
                         // get reference to 'curatori' node
                         DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                         //aggiorno l'url dell'immagine
-                        mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        if (uri != null) {
+                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        }
                     }
                 });
         setHasOptionsMenu(true);
@@ -88,7 +93,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         Button logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         FloatingActionButton changeImg = view.findViewById(R.id.change_imgUser);
@@ -116,21 +120,24 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Curatore.class) != null) {
                     curatore = snapshot.getValue(Curatore.class);
-                    if (curatore.getNome() != null && curatore.getCognome() != null)
-                        nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
-                    email.setText(curatore.getEmail());
-                    nome.setText(curatore.getNome());
-                    cognome.setText(curatore.getCognome());
-                    luogoCorrente = curatore.getLuogoCorrente();
+                    if (curatore != null) {
+                        nomeFoto.setText(String.format("%s %s", curatore.getNome(), curatore.getCognome()));
+                        email.setText(curatore.getEmail());
+                        nome.setText(curatore.getNome());
+                        cognome.setText(curatore.getCognome());
+                        luogoCorrente = curatore.getLuogoCorrente();
+                    }
 
                     connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.getValue(Luogo.class) != null){
+                            if (snapshot.getValue(Luogo.class) != null) {
                                 System.out.println("snapshot: " + snapshot);
                                 Luogo luogo = snapshot.getValue(Luogo.class);
-                                System.out.println(luogo.toString());
-                                nomeLuogo.setText(luogo.getNome());
+                                if (luogo != null) {
+                                    System.out.println(luogo);
+                                    nomeLuogo.setText(luogo.getNome());
+                                }
                             }
                         }
 
@@ -139,8 +146,7 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-
-                    Picasso.get().load(curatore.getImg()).transform(new CircleTransform()).into(imgUser);
+                    Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
                 }
             }
 

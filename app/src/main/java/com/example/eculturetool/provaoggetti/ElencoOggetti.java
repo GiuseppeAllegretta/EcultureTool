@@ -39,7 +39,7 @@ public class ElencoOggetti extends AppCompatActivity {
         oggetti.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaOggetti= new ArrayList<>();
+                listaOggetti = new ArrayList<>();
                 //Ottengo il numero di oggetti già creati
                 size = Math.toIntExact(snapshot.getChildrenCount());
                 for (DataSnapshot child : snapshot.getChildren()) {
@@ -55,15 +55,13 @@ public class ElencoOggetti extends AppCompatActivity {
         });
 
 
-
-        Oggetto oggetto = new Oggetto("boh", "Monnalisa"+size, "Mi trovo al Louvre", "https://www.zeusnews.it/img/4/8/1/6/2/0/026184-620-google-vedi-immagini.jpg");
+        Oggetto oggetto = new Oggetto("boh", "Monnalisa" + size, "Mi trovo al Louvre", "https://www.zeusnews.it/img/4/8/1/6/2/0/026184-620-google-vedi-immagini.jpg");
         // get reference to 'curatori' node
         mFirebaseDatabase = mFirebaseInstance.getReference("oggetti");
         //aggiorno l'url dell'immagine
         //mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
         //Scrivo l'oggetto
         mFirebaseDatabase.push().setValue(oggetto);
-
 
 
     }

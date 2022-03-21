@@ -1,8 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
@@ -71,7 +71,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         connection.getRefLuogo().child(idLuogo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Luogo.class) != null){
+                if (snapshot.getValue(Luogo.class) != null) {
                     Luogo luogo = snapshot.getValue(Luogo.class);
                     nomeLuogo.setText(luogo.getNome());
                     descrizioneLuogo.setText(luogo.getDescrizione());
@@ -105,7 +105,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     private int getIndexSpinner(Tipologia tipologia) {
         int index = 0;
 
-        switch (tipologia){
+        switch (tipologia) {
             case MUSEO:
                 index = 0;
                 break;
@@ -139,7 +139,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        if(controlloEsistenzaNomeLuogo(nome) == true){
+        if (controlloEsistenzaNomeLuogo(nome) == true) {
             nomeLuogo.requestFocus();
             nomeLuogo.setError("Nome già esistente");
             return;
@@ -165,7 +165,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
     /**
-     *
      * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
      */
     private List getListLuoghiCreati() {
@@ -180,10 +179,10 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
                 Luogo luogo;
 
-                for(int i = 0; i < count; i++){
+                for (int i = 0; i < count; i++) {
                     luogo = iteratore.iterator().next().getValue(Luogo.class);
 
-                    if(luogo.getId().compareTo(idLuogo) != 0){
+                    if (luogo.getId().compareTo(idLuogo) != 0) {
                         luoghiList.add(luogo);
                     }
                 }
@@ -199,12 +198,12 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         return luoghi;
     }
 
-    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo){
+    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {
         boolean isEsistente = false;
         nomeLuogo = this.nomeLuogo.getText().toString();
 
-        for(int i = 0; i < luoghiList.size(); i++){
-            if(nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0){
+        for (int i = 0; i < luoghiList.size(); i++) {
+            if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
                 //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }

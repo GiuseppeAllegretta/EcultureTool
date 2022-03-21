@@ -1,12 +1,6 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
@@ -26,8 +23,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class CreazioneMuseoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -118,7 +113,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = connection.getAuth().getCurrentUser();
-                            System.out.println("UID: "+ user.getUid());
+                            System.out.println("UID: " + user.getUid());
 
                             //Scrittura del curatore sul Realtime Database
                             //connection.getRefCuratore().setValue(curatore);
@@ -127,7 +122,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
                             //Scrittura del luogo sul Realtime Database
                             String key = connection.getRefLuogo().push().getKey();
-                            System.out.println("KEY: "+ key);
+                            System.out.println("KEY: " + key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
 
 

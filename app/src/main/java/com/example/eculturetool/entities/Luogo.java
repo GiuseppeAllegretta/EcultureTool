@@ -1,7 +1,5 @@
 package com.example.eculturetool.entities;
 
-import com.example.eculturetool.database.Connection;
-
 import java.io.Serializable;
 
 public class Luogo implements Serializable {
@@ -11,11 +9,11 @@ public class Luogo implements Serializable {
     private String id;
 
 
-    public Luogo(){
+    public Luogo() {
 
     }
 
-    public Luogo(String nome, String descrizione, Tipologia tipologia, String id){
+    public Luogo(String nome, String descrizione, Tipologia tipologia, String id) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipologia = tipologia;
@@ -40,7 +38,6 @@ public class Luogo implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "Luogo{" +
@@ -51,7 +48,7 @@ public class Luogo implements Serializable {
                 '}';
     }
 
-    public interface tipologiaLuoghi{
+    public interface tipologiaLuoghi {
         public final static String MUSEO = "Museo";
         public final static String AREA_ARCHEOLOGICA = "Area Archeologica";
         public final static String SITO_CULTURALE = "Sito Culturale";

@@ -2,9 +2,7 @@ package com.example.eculturetool.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,23 +26,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
-import com.example.eculturetool.ShowImage;
 import com.example.eculturetool.Upload;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,7 +49,6 @@ public class UploadImageActivity extends AppCompatActivity {
     private Connection connection = new Connection();
     private Button mButtonChooseImage;
     private Button mButtonUpload;
-    private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
@@ -78,22 +71,20 @@ public class UploadImageActivity extends AppCompatActivity {
         parentLayout = findViewById(android.R.id.content);
         mButtonChooseImage = findViewById(R.id.selectButton);
         mButtonUpload = findViewById(R.id.uploadButton);
-        mTextViewShowUploads = findViewById(R.id.showImageTextView);
-        mEditTextFileName = findViewById(R.id.imageName);
         mImageView = findViewById(R.id.imageView);
         mProgressBar = findViewById(R.id.progressBar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
+        mStorageRef = connection.getStorage().getReference("uploads").child(getIntent().getStringExtra("directory"));
+        mDatabaseRef = connection.getDatabase().getReference("uploads").child(getIntent().getStringExtra("directory"));
 
         chooseFileResultLaunch = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
                             mImageUri = result.getData().getData();
-                            Picasso.get().load(mImageUri).into(mImageView);
+                            Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
                         }
                     }
                 });
@@ -104,7 +95,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         mImageUri = Uri.fromFile(photoFile);
-                        Picasso.get().load(mImageUri).into(mImageView);
+                        Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
                     }
                 });
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
@@ -125,18 +116,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 }
             }
         });
-
-        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImagesActivity();
-            }
-        });
-    }
-
-    private void openImagesActivity() {
-        Intent intent = new Intent(getApplicationContext(), ShowImage.class);
-        startActivity(intent);
     }
 
     private void openFileChooser() {
@@ -160,6 +139,7 @@ public class UploadImageActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
@@ -219,14 +199,13 @@ public class UploadImageActivity extends AppCompatActivity {
                             }, 500);
 
                             Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
-                                    taskSnapshot.getTask().toString());
+                            Upload upload = new Upload(taskSnapshot.getTask().toString());
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Intent intent=new Intent();
+                                    Intent intent = new Intent();
                                     intent.setData(uri);
                                     setResult(RESULT_OK, intent);
                                     finish();
@@ -252,29 +231,22 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         Permissions permissions = Permissions.getInstance();
         popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
             switch (onMenuItemClickListener.getItemId()) {
                 case R.id.select_image_popup:
-                    if(!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)){
+                    if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
                         permissions.requestStoragePermission(UploadImageActivity.this);
-                    } else{
+                    } else {
                         openFileChooser();
                     }
                     return true;
                 case R.id.capture_image:
-                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout) ) {
+                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
                         permissions.requestCameraPermission(UploadImageActivity.this);
-                    } else{
+                    } else {
                         openCamera();
                     }
                     return true;

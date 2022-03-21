@@ -1,13 +1,13 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
@@ -37,36 +37,38 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         frecciaBack.setOnClickListener(onClickListener -> onBackPressed());
 
         tastoConferma.setOnClickListener(onClickListener -> {
-            if(modificaPassword())
+            if (modificaPassword())
                 onBackPressed();
         });
     }
-private String passNuova;
-    public boolean modificaPassword(){
+
+    private String passNuova;
+
+    public boolean modificaPassword() {
         String passAttuale, passNuovaConf;
         passAttuale = oldPassword.getText().toString();
         passNuova = newPassword.getText().toString();
         passNuovaConf = confirmPassword.getText().toString();
 
-        if(passAttuale.isEmpty()){
+        if (passAttuale.isEmpty()) {
             oldPassword.setError("Inserisci la password attuale");
             oldPassword.requestFocus();
             return false;
         }
 
-        if(passNuova.isEmpty()){
+        if (passNuova.isEmpty()) {
             newPassword.setError("Inserisci la nuova password");
             newPassword.requestFocus();
             return false;
         }
 
-        if(passNuovaConf.isEmpty()){
+        if (passNuovaConf.isEmpty()) {
             confirmPassword.setError("Conferma la password");
             confirmPassword.requestFocus();
             return false;
         }
 
-        if(passNuova.compareTo(passNuovaConf) != 0){
+        if (passNuova.compareTo(passNuovaConf) != 0) {
             Toast.makeText(this, "Le due password non coincidono", Toast.LENGTH_SHORT).show();
             newPassword.setError("Le due password non coincidono");
             confirmPassword.setError("Le due password non coincidono");
@@ -78,14 +80,13 @@ private String passNuova;
 
     }
 
-    public boolean passwordVerificata(String email, String password){
+    public boolean passwordVerificata(String email, String password) {
         progressBar.setVisibility(View.VISIBLE);
 
         connection.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, onCompleteListener -> {
                     System.out.println("prima dell'if: " + flagPassword);
-                    if (onCompleteListener.isSuccessful())
-                    {
+                    if (onCompleteListener.isSuccessful()) {
                         connection.getUser().updatePassword(passNuova)
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -99,8 +100,7 @@ private String passNuova;
                                     }
                                     progressBar.setVisibility(View.INVISIBLE);
                                 });
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "La password attuale non coincide", Toast.LENGTH_SHORT).show();
                         oldPassword.setError("Password non corretta");
                         oldPassword.requestFocus();

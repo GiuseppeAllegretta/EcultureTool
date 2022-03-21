@@ -15,15 +15,19 @@ public class Connection {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance(DBREF).getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance(STORREF).getReference();
 
-    static FirebaseAuth auth;
-    static FirebaseUser user;
+    private static FirebaseAuth auth;
+    private static FirebaseStorage storage;
+    private static FirebaseDatabase database;
+    private static FirebaseUser user;
 
-    public Connection(){
+    public Connection() {
         auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
     }
 
-    public DatabaseReference getDatabaseReference(){
+    public DatabaseReference getDatabaseReference() {
         return databaseReference;
     }
 
@@ -36,27 +40,35 @@ public class Connection {
         return auth;
     }
 
+    public FirebaseStorage getStorage() {
+        return storage;
+    }
+
+    public FirebaseDatabase getDatabase() {
+        return database;
+    }
+
     public FirebaseUser getUser() {
         return user;
     }
 
-    public  DatabaseReference getRefCuratore(){
+    public DatabaseReference getRefCuratore() {
         return databaseReference.child("curatori").child(user.getUid());
     }
 
-    public  DatabaseReference getRefLuogo(){
+    public DatabaseReference getRefLuogo() {
         return databaseReference.child("luoghi").child(user.getUid());
     }
 
-    public static String getUidCuratore(){
+    public static String getUidCuratore() {
         return user.getUid();
     }
 
-    public final String getDBREF(){
+    public final String getDBREF() {
         return DBREF;
     }
 
-    public final String getSTORREF(){
+    public final String getSTORREF() {
         return STORREF;
     }
 

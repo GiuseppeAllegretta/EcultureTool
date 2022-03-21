@@ -1,9 +1,8 @@
 package com.example.eculturetool.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,10 +17,15 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.ModificaPasswordActivity;
@@ -30,7 +34,6 @@ import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
-import com.example.eculturetool.utilities.CircleTransform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,12 +43,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 
 public class PlacesFragment extends Fragment {
 
@@ -55,7 +52,7 @@ public class PlacesFragment extends Fragment {
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebaseda\tabase.app/";
     private FirebaseDatabase database;
     ActivityResultLauncher<Intent> startForObjectImageUpload;
-
+    private Context context;
     private TextView nomeFoto, cognomeFoto, email, nome, cognome;
     private ProgressBar progressBar;
     private ImageView profilePic;
@@ -74,13 +71,14 @@ public class PlacesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = requireActivity().getApplicationContext();
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         Uri uri = result.getData().getData();
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
                             //Riferimento a realtime database
                             FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
                             // get reference to 'curatori' node
@@ -115,7 +113,7 @@ public class PlacesFragment extends Fragment {
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
         settingsButton = view.findViewById(R.id.settings_button);
-        eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
+        eliminaProfilo = view.findViewById(R.id.elimina_profilo_popup);
         editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -130,13 +128,13 @@ public class PlacesFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Curatore.class) != null){
+                if (snapshot.getValue(Curatore.class) != null) {
                     nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
                     email.setText(snapshot.getValue(Curatore.class).getEmail());
                     nome.setText(snapshot.getValue(Curatore.class).getNome());
                     cognome.setText(snapshot.getValue(Curatore.class).getCognome());
 
-                    Picasso.get().load(snapshot.getValue(Curatore.class).getImg()).transform(new CircleTransform()).into(imgUser);
+                    Glide.with(context).load(snapshot.getValue(Curatore.class).getImg()).circleCrop().into(imgUser);
                 }
             }
 
@@ -204,7 +202,7 @@ public class PlacesFragment extends Fragment {
      * Metodo che gestisce il dialog di conferma eliminazione del profilo.
      * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
      */
-    void showCustomDialog(){
+    void showCustomDialog() {
         final Dialog dialog = new Dialog(getActivity());
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

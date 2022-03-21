@@ -1,34 +1,17 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.RecyclerAdapterLuogo;
-import com.example.eculturetool.RecyclerAdapterOggetto;
-import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.entities.Oggetto;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class OggettiActivity extends AppCompatActivity {
-    private final Connection connection = new Connection();
-    private ArrayList<Oggetto> oggettiList;
-    private RecyclerView recyclerView;
-
-
-    private FloatingActionButton fabAddOggetto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,50 +25,13 @@ public class OggettiActivity extends AppCompatActivity {
         myToolbar.setNavigationIcon(freccia_indietro);
         setSupportActionBar(myToolbar);
 
-        //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Ritorna al fragment del profilo chiamante
-                finish();
-            }
-        });
-
-        recyclerView = findViewById(R.id.recyclerViewOggetti);
-        oggettiList = new ArrayList<>();
-
-    setOggettoInfo();
-    setAdapter();
-
     }
-
-    private void setAdapter(){
-        System.out.println("OGGETTI -->"+oggettiList);
-        RecyclerAdapterOggetto adapter= new RecyclerAdapterOggetto(oggettiList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void setOggettoInfo() {
-        //popolo array di oggetti
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-    }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.oggetti_menu, menu);
         return true;
     }
-
-
-
 
 
 }

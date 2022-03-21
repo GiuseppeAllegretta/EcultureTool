@@ -3,8 +3,6 @@ package com.example.eculturetool.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.eculturetool.entities.Curatore;
-
 public class SessionManagement {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -17,14 +15,14 @@ public class SessionManagement {
     }
 
     public void saveSession(String idCuratore) {
-       editor.putString(SESSION_KEY, idCuratore).commit();
+        editor.putString(SESSION_KEY, idCuratore).commit();
     }
 
     public String getSession() {
-        return sharedPreferences.getString(SESSION_KEY,"-1");
+        return sharedPreferences.getString(SESSION_KEY, "-1");
     }
 
-    public void removeSession(){
-        editor.putString(SESSION_KEY,"-1").commit();
+    public void removeSession() {
+        editor.putString(SESSION_KEY, "-1").commit();
     }
 }

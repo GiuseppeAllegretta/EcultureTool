@@ -2,19 +2,16 @@ package com.example.eculturetool.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import android.text.Html;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.OggettiActivity;
@@ -84,7 +81,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("--->" + snapshot);
                 //System.out.println(snapshot.getValue(Curatore.class).toString());
-                if(snapshot.getValue(Curatore.class) != null) {
+                if (snapshot.getValue(Curatore.class) != null) {
                     luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
                 }
@@ -92,7 +89,7 @@ public class HomeFragment extends Fragment {
                 connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue(Luogo.class) != null){
+                        if (snapshot.getValue(Luogo.class) != null) {
                             System.out.println("snapshot: " + snapshot);
                             Luogo luogo = snapshot.getValue(Luogo.class);
                             System.out.println(luogo.toString());

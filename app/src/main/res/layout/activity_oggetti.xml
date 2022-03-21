@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".activities.OggettiActivity">
-
-
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbarOggetti"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:backgroundTint="@color/verdePrimario"
-    android:backgroundTintMode="src_over"
-    android:elevation="8dp"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:title="Luoghi"
-    app:titleTextColor="@color/white" />
+    android:layout_height="match_parent"
+    tools:context=".activities.OggettiActivity"
+    android:orientation="vertical">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewOggetti"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarOggetti"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarOggetti" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="8dp"
+        android:backgroundTint="@color/verdePrimario"
+        android:backgroundTintMode="src_over"
+        app:titleTextColor="@color/white"
+        app:title="Oggetti"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/addOggetto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentBottom="true"
-    android:layout_marginEnd="@dimen/fab_margin"
-    android:layout_marginBottom="@dimen/fab_margin"
-    android:src="@drawable/ic_add"
-    app:fabSize="normal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addOggetto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fabSize="normal"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:src="@drawable/ic_add" />
 
 
-</RelativeLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
