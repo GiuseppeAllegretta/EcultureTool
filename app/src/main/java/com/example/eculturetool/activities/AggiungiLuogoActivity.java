@@ -1,8 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Connection connection = new Connection();
 
@@ -81,7 +81,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        if(controlloEsistenzaNomeLuogo(nome) == true){
+        if (controlloEsistenzaNomeLuogo(nome) == true) {
             nomeLuogo.requestFocus();
             nomeLuogo.setError("Nome già esistente");
             return;
@@ -105,7 +105,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
         //Scrittura del luogo sul Realtime Database
         String key = connection.getRefLuogo().push().getKey();
-        System.out.println("KEY: "+ key);
+        System.out.println("KEY: " + key);
         Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
 
 
@@ -119,12 +119,12 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
 
-    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo){
+    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {
         boolean isEsistente = false;
         nomeLuogo = this.nomeLuogo.getText().toString();
 
-        for(int i = 0; i < luoghiList.size(); i++){
-            if(nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0){
+        for (int i = 0; i < luoghiList.size(); i++) {
+            if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
                 //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }
@@ -135,7 +135,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
 
     /**
-     *
      * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
      */
     private List getListLuoghiCreati() {
@@ -148,7 +147,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
                 int count = (int) snapshot.getChildrenCount();
                 System.out.println("count: " + count);
 
-                for(int i = 0; i < count; i++){
+                for (int i = 0; i < count; i++) {
                     luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
                     System.out.println(luoghiList.get(i));
                 }

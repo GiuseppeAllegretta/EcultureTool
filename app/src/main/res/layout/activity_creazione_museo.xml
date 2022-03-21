@@ -101,7 +101,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/tipologie_luoghi"/>
+                android:entries="@array/tipologie_luoghi" />
 
 
             <View
@@ -131,9 +131,9 @@
             android:layout_height="match_parent"
             android:text="Registrati"
             android:textSize="20dp"
-            android:background ="@drawable/button_state"
+            android:background="@drawable/button_state"
             android:textColor="@color/white"
-            android:gravity="center"/>
+            android:gravity="center" />
     </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView

@@ -78,7 +78,7 @@ public class PlacesFragment extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         Uri uri = result.getData().getData();
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
                             //Riferimento a realtime database
                             FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
                             // get reference to 'curatori' node
@@ -113,7 +113,7 @@ public class PlacesFragment extends Fragment {
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
         settingsButton = view.findViewById(R.id.settings_button);
-        eliminaProfilo=view.findViewById(R.id.elimina_profilo_popup);
+        eliminaProfilo = view.findViewById(R.id.elimina_profilo_popup);
         editButton = view.findViewById(R.id.fab);
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +128,7 @@ public class PlacesFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Curatore.class) != null){
+                if (snapshot.getValue(Curatore.class) != null) {
                     nomeFoto.setText(new StringBuilder().append(snapshot.getValue(Curatore.class).getNome()).append(" ").append(snapshot.getValue(Curatore.class).getCognome()).toString());
                     email.setText(snapshot.getValue(Curatore.class).getEmail());
                     nome.setText(snapshot.getValue(Curatore.class).getNome());
@@ -202,7 +202,7 @@ public class PlacesFragment extends Fragment {
      * Metodo che gestisce il dialog di conferma eliminazione del profilo.
      * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
      */
-    void showCustomDialog(){
+    void showCustomDialog() {
         final Dialog dialog = new Dialog(getActivity());
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,8 +23,8 @@ public class Permissions extends AppCompatActivity {
         return permissions;
     }
 
-    public Snackbar getPermanentSnackBarWithOkAction(View parentLayout, String text){
-        Snackbar snackBar = Snackbar.make(parentLayout, text, Snackbar.LENGTH_INDEFINITE );
+    public Snackbar getPermanentSnackBarWithOkAction(View parentLayout, String text) {
+        Snackbar snackBar = Snackbar.make(parentLayout, text, Snackbar.LENGTH_INDEFINITE);
         snackBar.setAction("Ok", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +33,7 @@ public class Permissions extends AppCompatActivity {
         });
         return snackBar;
     }
+
     public void requestStoragePermission(Activity activity) {
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
     }
@@ -44,7 +44,7 @@ public class Permissions extends AppCompatActivity {
 
     public boolean checkStoragePermission(Activity activity, View parentLayout) {
         boolean res2 = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        if(!res2){
+        if (!res2) {
             Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
             snackBar.show();
         }
@@ -54,7 +54,7 @@ public class Permissions extends AppCompatActivity {
     public boolean checkCameraPermission(Activity activity, View parentLayout) {
         boolean res1 = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
         boolean res2 = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        if(!(res1 && res2)){
+        if (!(res1 && res2)) {
             Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
             snackBar.show();
         }

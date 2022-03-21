@@ -37,8 +37,6 @@ import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -83,15 +81,15 @@ public class UploadImageActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView);
         mProgressBar = findViewById(R.id.progressBar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child(getIntent().getStringExtra("directory"));
+        mStorageRef = connection.getStorage().getReference("uploads").child(getIntent().getStringExtra("directory"));
+        mDatabaseRef = connection.getDatabase().getReference("uploads").child(getIntent().getStringExtra("directory"));
 
         chooseFileResultLaunch = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK){
+                        if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
                             mImageUri = result.getData().getData();
                             Glide.with(UploadImageActivity.this).load(mImageUri).into(mImageView);
                         }
@@ -160,6 +158,7 @@ public class UploadImageActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
@@ -226,7 +225,7 @@ public class UploadImageActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Intent intent=new Intent();
+                                    Intent intent = new Intent();
                                     intent.setData(uri);
                                     setResult(RESULT_OK, intent);
                                     finish();
@@ -265,16 +264,16 @@ public class UploadImageActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
             switch (onMenuItemClickListener.getItemId()) {
                 case R.id.select_image_popup:
-                    if(!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)){
+                    if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
                         permissions.requestStoragePermission(UploadImageActivity.this);
-                    } else{
+                    } else {
                         openFileChooser();
                     }
                     return true;
                 case R.id.capture_image:
-                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout) ) {
+                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
                         permissions.requestCameraPermission(UploadImageActivity.this);
-                    } else{
+                    } else {
                         openCamera();
                     }
                     return true;

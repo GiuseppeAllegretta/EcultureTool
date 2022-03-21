@@ -6,5 +6,5 @@
 
     <item
         android:id="@+id/capture_image"
-        android:title="Scatta foto"/>
+        android:title="Scatta foto" />
 </menu>

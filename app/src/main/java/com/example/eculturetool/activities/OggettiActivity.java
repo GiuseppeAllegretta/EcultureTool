@@ -1,13 +1,13 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.example.eculturetool.R;
 
@@ -32,9 +32,6 @@ public class OggettiActivity extends AppCompatActivity {
         inflater.inflate(R.menu.oggetti_menu, menu);
         return true;
     }
-
-
-
 
 
 }

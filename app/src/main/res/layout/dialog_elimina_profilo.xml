@@ -27,7 +27,7 @@
             android:backgroundTint="@android:color/holo_red_light"
             android:layout_weight="1"
             android:padding="4dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp" />
 
         <Button
             android:id="@+id/annulla_cancellazione"
@@ -37,13 +37,10 @@
             android:backgroundTint="@color/verdePrimario"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:padding="4dp"/>
-
+            android:padding="4dp" />
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

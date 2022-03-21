@@ -1,16 +1,14 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
-
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 

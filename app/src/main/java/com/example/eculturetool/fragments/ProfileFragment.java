@@ -65,14 +65,19 @@ public class ProfileFragment extends Fragment {
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
-                    Uri uri = activityResult.getData().getData();
+                    Uri uri = null;
+                    if (activityResult.getData() != null) {
+                        uri = activityResult.getData().getData();
+                    }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         //Riferimento a realtime database
-                        FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
+                        FirebaseDatabase mFirebaseInstance = connection.getDatabase();
                         // get reference to 'curatori' node
                         DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                         //aggiorno l'url dell'immagine
-                        mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        if (uri != null) {
+                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                        }
                     }
                 });
         setHasOptionsMenu(true);
@@ -115,21 +120,24 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Curatore.class) != null) {
                     curatore = snapshot.getValue(Curatore.class);
-                    if (curatore.getNome() != null && curatore.getCognome() != null)
-                        nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
-                    email.setText(curatore.getEmail());
-                    nome.setText(curatore.getNome());
-                    cognome.setText(curatore.getCognome());
-                    luogoCorrente = curatore.getLuogoCorrente();
+                    if (curatore != null) {
+                        nomeFoto.setText(String.format("%s %s", curatore.getNome(), curatore.getCognome()));
+                        email.setText(curatore.getEmail());
+                        nome.setText(curatore.getNome());
+                        cognome.setText(curatore.getCognome());
+                        luogoCorrente = curatore.getLuogoCorrente();
+                    }
 
                     connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.getValue(Luogo.class) != null){
+                            if (snapshot.getValue(Luogo.class) != null) {
                                 System.out.println("snapshot: " + snapshot);
                                 Luogo luogo = snapshot.getValue(Luogo.class);
-                                System.out.println(luogo.toString());
-                                nomeLuogo.setText(luogo.getNome());
+                                if (luogo != null) {
+                                    System.out.println(luogo);
+                                    nomeLuogo.setText(luogo.getNome());
+                                }
                             }
                         }
 

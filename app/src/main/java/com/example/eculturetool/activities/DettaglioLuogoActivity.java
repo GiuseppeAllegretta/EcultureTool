@@ -1,13 +1,13 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
@@ -53,7 +53,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         connection.getRefLuogo().child(idLuogo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Luogo.class) != null){
+                if (snapshot.getValue(Luogo.class) != null) {
                     nomeLuogo.setText(snapshot.getValue(Luogo.class).getNome());
                     nomeLuogoPiccolo.setText(snapshot.getValue(Luogo.class).getNome());
                     descrizioneLuogo.setText(snapshot.getValue(Luogo.class).getDescrizione());
@@ -89,7 +89,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private String setTipologia(Tipologia tipologia) {
         String risultato = null;
 
-        switch (tipologia){
+        switch (tipologia) {
             case MUSEO:
                 risultato = Luogo.tipologiaLuoghi.MUSEO;
                 break;

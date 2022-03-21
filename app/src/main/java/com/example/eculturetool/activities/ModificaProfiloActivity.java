@@ -70,7 +70,7 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(modificaDati())
+                if (modificaDati())
                     onBackPressed();
                 else
                     Toast.makeText(ModificaProfiloActivity.this, "Campo vuoto", Toast.LENGTH_SHORT).show();
@@ -83,26 +83,26 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("curatori").child(connection.getUser().getUid());
         //TODO controllare venga usato
 
-        if(nome.getText().toString().isEmpty()){
+        if (nome.getText().toString().isEmpty()) {
             nome.setError("Inserisci il nome");
             nome.requestFocus();
             return false;
         }
 
-        if(!Pattern.matches(NO_ALPHA_REGEX, nome.getText().toString())){
+        if (!Pattern.matches(NO_ALPHA_REGEX, nome.getText().toString())) {
             nome.setError("Inserisci nome valido");
             nome.requestFocus();
             return false;
         }
 
 
-        if(cognome.getText().toString().isEmpty()){
+        if (cognome.getText().toString().isEmpty()) {
             cognome.setError("Inserisci il cognome");
             cognome.requestFocus();
             return false;
         }
 
-        if(!Pattern.matches(NO_ALPHA_REGEX, cognome.getText().toString())){
+        if (!Pattern.matches(NO_ALPHA_REGEX, cognome.getText().toString())) {
             cognome.setError("Inserisci cognome valido");
             cognome.requestFocus();
             return false;

@@ -9,15 +9,15 @@
     <item
         android:id="@+id/places"
         android:icon="@drawable/ic_places"
-        android:title="Places"/>
+        android:title="Places" />
 
     <item
         android:id="@+id/qr_scanner"
         android:icon="@drawable/ic_qr_scanner"
-        android:title="QRScanner"/>
+        android:title="QRScanner" />
 
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profilo"/>
+        android:title="Profilo" />
 </menu>

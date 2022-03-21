@@ -1,5 +1,12 @@
 package com.example.eculturetool.activities;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -9,19 +16,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapter;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.Tipologia;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,7 +94,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(Curatore.class) != null){
+                if (snapshot.getValue(Curatore.class) != null) {
 
                     //Ottengo il luogo corrente del curatore
                     luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
@@ -105,10 +104,10 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Iterable<DataSnapshot> iteratore = snapshot.getChildren();
                             int count = (int) snapshot.getChildrenCount();
-                            System.out.println("count: " +count);
+                            System.out.println("count: " + count);
 
                             luoghiList.clear();
-                            for(int i = 0; i < count; i++){
+                            for (int i = 0; i < count; i++) {
                                 luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
                                 //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
                                 //luoghiList.add(luogoprova);

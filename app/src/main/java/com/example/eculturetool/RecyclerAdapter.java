@@ -28,20 +28,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     //Serve per la ricerca
     private ArrayList<Luogo> luoghiListAll;
 
-    public RecyclerAdapter(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener){
+    public RecyclerAdapter(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener) {
         this.luoghiList = luoghiList;
         this.mOnLuogoListener = onLuogoListener;
         this.luoghiListAll = new ArrayList<>(luoghiList);
     }
 
 
-    public class LuoghiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class LuoghiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView nomeLuogo;
         private ImageView iconaTipologia;
         private LinearLayout itemSelected;
         OnLuogoListener onLuogoListener;
 
-        public LuoghiViewHolder(final View view, OnLuogoListener onLuogoListener){
+        public LuoghiViewHolder(final View view, OnLuogoListener onLuogoListener) {
             super(view);
             nomeLuogo = view.findViewById(R.id.nomeLuogo);
             iconaTipologia = view.findViewById(R.id.iconaTipologia);
@@ -68,11 +68,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
     public void onBindViewHolder(@NonNull RecyclerAdapter.LuoghiViewHolder holder, int position) {
         String nome = luoghiList.get(position).getNome();
         holder.nomeLuogo.setText(nome);
-        setImageLuogo(holder,luoghiList.get(holder.getAdapterPosition()).getTipologia());
+        setImageLuogo(holder, luoghiList.get(holder.getAdapterPosition()).getTipologia());
     }
 
-    private void setImageLuogo(RecyclerAdapter.LuoghiViewHolder holder,Tipologia tipologia) {
-        switch (tipologia){
+    private void setImageLuogo(RecyclerAdapter.LuoghiViewHolder holder, Tipologia tipologia) {
+        switch (tipologia) {
             case MUSEO:
                 holder.iconaTipologia.setImageResource(R.drawable.art_museum);
                 break;
@@ -113,11 +113,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Luoghi
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Luogo> filteredList = new ArrayList<>();
 
-            if(charSequence.toString().isEmpty()){
+            if (charSequence.toString().isEmpty()) {
                 filteredList.addAll(luoghiListAll);
-            }else {
-                for (Luogo luogo: luoghiListAll){
-                    if(luogo.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())){
+            } else {
+                for (Luogo luogo : luoghiListAll) {
+                    if (luogo.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(luogo);
                     }
                 }

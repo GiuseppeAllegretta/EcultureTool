@@ -1,11 +1,6 @@
 package com.example.eculturetool.entities;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
-import java.net.URI;
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Curatore implements Serializable {
@@ -34,7 +29,7 @@ public class Curatore implements Serializable {
         this.luogoCorrente = luogoCorrente;
     }
 
-    public void addLuogo(Luogo luogo){
+    public void addLuogo(Luogo luogo) {
         luoghi.add(luogo);
     }
 
@@ -76,12 +71,10 @@ public class Curatore implements Serializable {
                 '}';
     }
 
-    public interface Keys{
+    public interface Keys {
         final static String CURATORE_KEY = "CURATORE_KEY";
         final static String PASSWORD_KEY = "PASSWORD_KEY";
     }
-
-
 
 
 }

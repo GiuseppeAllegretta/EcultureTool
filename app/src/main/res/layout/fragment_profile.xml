@@ -31,10 +31,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_settings"/>
-
-
-
+                    android:src="@drawable/ic_action_settings" />
 
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -113,187 +110,184 @@
             android:layout_below="@+id/linlay1">
 
 
-
-        <RelativeLayout
-            android:id="@+id/linlay2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linlay1">
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/linlay2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="false"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="30dp"
-                android:orientation="vertical">
+                android:layout_below="@+id/linlay1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="false"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="30dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/profile_email"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text=""
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@color/grey" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nome"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/nome_profilo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text=""
-                        android:layout_marginTop="10dp"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
 
-                    <View
+                        <TextView
+                            android:id="@+id/profile_email"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@color/grey" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cognome"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/cognome_profilo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text=""
-                        android:layout_marginTop="10dp"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nome"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
 
-                    <View
+                        <TextView
+                            android:id="@+id/nome_profilo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text=""
+                            android:layout_marginTop="10dp"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@color/grey" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Luogo selezionato"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/luogo_selezionato"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cognome"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/cognome_profilo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text=""
+                            android:layout_marginTop="10dp"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
 
 
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@color/grey" />
-
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Luogo selezionato"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
 
-                    <Button
-                        android:id="@+id/cambia_luogo"
+                        <TextView
+                            android:id="@+id/luogo_selezionato"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_marginTop="10dp"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Cambia Luogo"
-                        android:textColor="@color/white" />
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/cambia_luogo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Cambia Luogo"
+                            android:textColor="@color/white" />
 
 
+                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/logout"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="#D2D2D2"
-                        android:text="Esci"
-                        android:textColor="@color/black" />
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="#D2D2D2"
+                            android:text="Esci"
+                            android:textColor="@color/black" />
 
 
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
 
-
-        </RelativeLayout>
+            </RelativeLayout>
 
         </ScrollView>
 
@@ -309,6 +303,6 @@
         android:src="@android:drawable/ic_menu_edit"
         android:tint="@color/black"
         android:backgroundTint="@color/gialloSecondario"
-        app:elevation="0dp"/>
+        app:elevation="0dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

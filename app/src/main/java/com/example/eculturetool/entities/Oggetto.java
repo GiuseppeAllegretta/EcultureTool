@@ -8,11 +8,11 @@ public class Oggetto {
     private String urlImmagine;
     private String urlQrcode;
 
-    public Oggetto(){
+    public Oggetto() {
 
     }
 
-    public Oggetto(String id, String nome, String descrizione, String urlImmagine){
+    public Oggetto(String id, String nome, String descrizione, String urlImmagine) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -43,8 +43,6 @@ public class Oggetto {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-
-
 
 
     public String getUrl() {
