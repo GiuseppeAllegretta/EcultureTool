@@ -39,15 +39,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
-        <activity
-            android:name=".activities.ModificaLuogoActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
-            android:name=".activities.AggiungiLuogoActivity"
-            android:exported="false"
-            android:label="Crea Luogo"
-            android:parentActivityName=".activities.LuoghiActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -58,6 +49,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity
+            android:name=".activities.ModificaLuogoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".activities.AggiungiLuogoActivity"
+            android:exported="false"
+            android:label="Crea Luogo"
+            android:parentActivityName=".activities.LuoghiActivity" />
 
         <activity
             android:name=".activities.DettaglioLuogoActivity"
