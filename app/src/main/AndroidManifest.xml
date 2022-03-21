@@ -21,7 +21,8 @@
         android:theme="@style/Theme.EcultureTool">
         <activity
             android:name=".activities.ModificaLuogoActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.AggiungiLuogoActivity"
             android:exported="false"

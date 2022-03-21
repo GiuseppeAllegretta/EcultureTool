@@ -13,6 +13,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -24,6 +25,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private TextView nomeLuogo, nomeLuogoPiccolo, descrizioneLuogo, tipologiaLuogo;
     private String idLuogo;
     private Button impostaLuogoCorrente;
+    private FloatingActionButton editLuogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         descrizioneLuogo = findViewById(R.id.descrizioneDettaglio);
         tipologiaLuogo = findViewById(R.id.tipologiaDettaglio);
         impostaLuogoCorrente = findViewById(R.id.impostaLuogoCorrente);
+        editLuogo = findViewById(R.id.editLuogo);
 
 
         //Recupero dei dati dall'intent
@@ -70,6 +73,15 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                 connection.getRefCuratore().child("luogoCorrente").setValue(idLuogo);
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
+            }
+        });
+
+        editLuogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
+                intent.putExtra("LUOGO", idLuogo);
+                startActivity(intent);
             }
         });
     }
