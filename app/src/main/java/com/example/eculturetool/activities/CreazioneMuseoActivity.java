@@ -18,7 +18,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.TipologiaLuogo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,7 +35,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
     private Curatore curatore;
     private String password;
-    private Tipologia tipologia;
+    private TipologiaLuogo tipologia;
 
     final static String SELEZIONA_NUOVO_ELEMENTO = "seleziona un elemento";
 
@@ -172,19 +172,19 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
         switch (item) {
             case "Museo":
-                tipologia = Tipologia.MUSEO;
+                tipologiaLuogo = TipologiaLuogo.MUSEO;
                 break;
 
             case "Area archeologica":
-                tipologia = Tipologia.AREA_ARCHEOLOGICA;
+                tipologiaLuogo = TipologiaLuogo.AREA_ARCHEOLOGICA;
                 break;
 
             case "Mostra itinerante":
-                tipologia = Tipologia.MOSTRA_ITINERANTE;
+                tipologiaLuogo = TipologiaLuogo.MOSTRA_ITINERANTE;
                 break;
 
             case "Sito culturale":
-                tipologia = Tipologia.SITO_CULTURALE;
+                tipologiaLuogo = TipologiaLuogo.SITO_CULTURALE;
                 break;
 
         }
