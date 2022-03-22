@@ -18,7 +18,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.TipologiaLuogo;
+import com.example.eculturetool.entities.Tipologia;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

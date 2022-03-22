@@ -12,13 +12,16 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
-import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.TipologiaOggetto;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -32,8 +35,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
     private ProgressBar progressBar;
+    private String luogoCorrente;
+    protected static Curatore curatore;
 
-    private Tipologia tipologia;
+    private TipologiaOggetto tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
     List<Oggetto> oggettiList = new ArrayList<>();
@@ -106,9 +111,27 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         //Scrittura del luogo sul Realtime Database
         String key = connection.getRefOggetti().push().getKey();
-        System.out.println("KEY: " + key);
         Oggetto oggetto = new Oggetto(key, nome, descrizione, "prova");
-        connection.getRefOggetti().child(key).setValue(oggetto);
+
+        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(String.class) != null) {
+                    String luogo = snapshot.getValue(String.class);
+                    if (luogo != null) {
+                        luogoCorrente = luogo;
+                        if (key != null) {
+                            connection.getRefOggetti().child(luogoCorrente).child(key).setValue(oggetto);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
@@ -183,7 +206,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 break;
 
             case "Sito culturale":
-                tipologia = TipologiaOggetto.SITO_CULTURALE;
+                tipologia = TipologiaOggetto.ALTRO;
                 break;
         }
     }
