@@ -60,6 +60,8 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
+        <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />

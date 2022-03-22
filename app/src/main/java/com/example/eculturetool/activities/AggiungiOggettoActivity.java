@@ -1,49 +1,25 @@
 package com.example.eculturetool.activities;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.RecyclerAdapterLuogo;
 import com.example.eculturetool.database.Connection;
-import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,28 +28,28 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
     private Connection connection = new Connection();
 
-    private EditText nomeLuogo, descrizioneLuogo;
-    private Spinner tipologiaLuogo;
-    private Button creaLuogo;
+    private EditText nomeOggetto, descrizioneOggetto;
+    private Spinner tipologiaOggetto;
+    private Button creaOggetto;
     private ProgressBar progressBar;
 
     private Tipologia tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
-    List<Luogo> luoghiList;
+    List<Oggetto> oggettiList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiungi_luogo);
+        setContentView(R.layout.activity_aggiungi_oggetti);
 
-        nomeLuogo = findViewById(R.id.nome_luogo_add);
-        descrizioneLuogo = findViewById(R.id.descrizione_luogo_add);
-        tipologiaLuogo = findViewById(R.id.spinner_tipologia_luoghi_add);
-        creaLuogo = findViewById(R.id.creaLuogo);
-        progressBar = findViewById(R.id.progressAddLuogo);
+        nomeOggetto = findViewById(R.id.nome_oggetto_add);
+        descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
+        tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
+        creaOggetto = findViewById(R.id.creaOggetto);
+        progressBar = findViewById(R.id.progressAddOggetto);
 
-        luoghiList = getListLuoghiCreati();
+        oggettiList = getListOggettiCreati();
     }
 
     @Override
@@ -81,46 +57,46 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         super.onStart();
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_oggetti, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        tipologiaLuogo.setAdapter(adapter);
-        tipologiaLuogo.setOnItemSelectedListener(this);
-        creaLuogo.setOnClickListener(new View.OnClickListener() {
+        tipologiaOggetto.setAdapter(adapter);
+        tipologiaOggetto.setOnItemSelectedListener(this);
+        creaOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                creazioneLuogo();
+                creazioneOggetto();
             }
         });
     }
 
-    private void creazioneLuogo() {
+    private void creazioneOggetto() {
 
-        String nome = nomeLuogo.getText().toString().trim();
-        String descrizione = descrizioneLuogo.getText().toString().trim();
+        String nome = nomeOggetto.getText().toString().trim();
+        String descrizione = descrizioneOggetto.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeLuogo.setError("Il nome del luogo è richiesto");
-            nomeLuogo.requestFocus();
+            nomeOggetto.setError("Il nome dell'oggetto è richiesto");
+            nomeOggetto.requestFocus();
             return;
         }
 
-        if (controlloEsistenzaNomeLuogo(nome) == true) {
-            nomeLuogo.requestFocus();
-            nomeLuogo.setError("Nome già esistente");
+        if (controlloEsistenzaNomeOggetto(nome)) {
+            nomeOggetto.requestFocus();
+            nomeOggetto.setError("Nome già esistente");
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneLuogo.setError("La descrizione è richiesta");
-            descrizioneLuogo.requestFocus();
+            descrizioneOggetto.setError("La descrizione è richiesta");
+            descrizioneOggetto.requestFocus();
             return;
         }
 
-        System.out.println("tipologia: " + tipologiaLuogo);
-        if (tipologiaLuogo == null) {
-            tipologiaLuogo.requestFocus();
+        System.out.println("tipologia: " + tipologiaOggetto);
+        if (tipologiaOggetto == null) {
+            tipologiaOggetto.requestFocus();
             return;
         }
 
@@ -129,12 +105,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         progressBar.setVisibility(View.VISIBLE);
 
         //Scrittura del luogo sul Realtime Database
-        String key = connection.getRefLuogo().push().getKey();
+        String key = connection.getRefOggetti().push().getKey();
         System.out.println("KEY: " + key);
-        Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
-
-
-        connection.getRefLuogo().child(key).setValue(luogo);
+        Oggetto oggetto = new Oggetto(key, nome, descrizione, "prova");
+        connection.getRefOggetti().child(key).setValue(oggetto);
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
@@ -144,12 +118,12 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     }
 
 
-    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {
+    private boolean controlloEsistenzaNomeOggetto(String nomeOggetto) {
         boolean isEsistente = false;
-        nomeLuogo = this.nomeLuogo.getText().toString();
+        nomeOggetto = this.nomeOggetto.getText().toString();
 
-        for (int i = 0; i < luoghiList.size(); i++) {
-            if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
+        for (int i = 0; i < oggettiList.size(); i++) {
+            if (nomeOggetto.compareToIgnoreCase(oggettiList.get(i).getNome()) == 0) {
                 //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }
@@ -162,8 +136,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     /**
      * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
      */
-    private List getListLuoghiCreati() {
-        List<Luogo> luoghi = new ArrayList<>();
+    private List getListOggettiCreati() {
+        List<Oggetto> oggetti = new ArrayList<>();
 
         connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
             @Override
@@ -173,8 +147,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 System.out.println("count: " + count);
 
                 for (int i = 0; i < count; i++) {
-                    luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                    System.out.println(luoghiList.get(i));
+                    oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
+                    System.out.println(oggettiList.get(i));
                 }
             }
 
@@ -184,7 +158,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        return luoghi;
+        return oggetti;
     }
 
 
@@ -211,13 +185,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             case "Sito culturale":
                 tipologia = Tipologia.SITO_CULTURALE;
                 break;
-
         }
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }

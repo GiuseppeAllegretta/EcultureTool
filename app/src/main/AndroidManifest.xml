@@ -87,8 +87,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.AggiungiOggettoActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:exported="false"
+            android:label="Crea Oggetto"
+            android:parentActivityName=".activities.OggettiActivity" />
         <activity
             android:name=".activities.ModificaPasswordActivity"
             android:exported="false"

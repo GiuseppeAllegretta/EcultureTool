@@ -27,4 +27,11 @@
         <item>Sito culturale</item>
     </string-array>
 
+    <string-array name="tipologie_oggetti">
+        <item>Museo</item>
+        <item>Area archeologica</item>
+        <item>Mostra itinerante</item>
+        <item>Sito culturale</item>
+    </string-array>
+
 </resources>

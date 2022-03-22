@@ -27,12 +27,12 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome Luogo"
+                android:text="Nome Oggetto"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/nome_luogo_add"
+                android:id="@+id/nome_oggetto_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -59,12 +59,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descrizione Luogo"
+                android:text="Descrizione Oggetto"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/descrizione_luogo_add"
+                android:id="@+id/descrizione_oggetto_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -92,16 +92,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipologia del luogo"
+                android:text="Tipologia del oggetto"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinner_tipologia_luoghi_add"
+                android:id="@+id/spinner_tipologia_oggetto_add"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/tipologie_luoghi" />
+                android:entries="@array/tipologie_oggetti" />
 
 
             <View
@@ -126,10 +126,10 @@
         android:layout_marginRight="15dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/creaLuogo"
+            android:id="@+id/creaOggetto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Crea luogo"
+            android:text="Crea oggetto"
             android:textSize="20dp"
             android:background="@drawable/button_state"
             android:textColor="@color/white"
@@ -137,7 +137,7 @@
     </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/progressAddLuogo"
+        android:id="@+id/progressAddOggetto"
         style="@style/SpinKitView.Large.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
