@@ -1,6 +1,7 @@
 package com.example.eculturetool.activities;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -19,16 +20,24 @@ import android.view.View;
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterOggetto;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class OggettiActivity extends AppCompatActivity {
-    //private final Connection connection = new Connection();
+    private final Connection connection = new Connection();
 
     private ArrayList<Oggetto> oggettiList;
     private RecyclerView recyclerView;
+
+    //luogo corrente che sta gestendo il curatore
+    private String luogoCorrente;
 
 
     private FloatingActionButton fabAddOggetto;
@@ -79,6 +88,45 @@ public class OggettiActivity extends AppCompatActivity {
         oggettiList.add(new Oggetto("id4", "nome4","descrizione","urlImmagine"));
         oggettiList.add(new Oggetto("id5", "nome5","descrizione","urlImmagine"));
         oggettiList.add(new Oggetto("id6", "nome6","descrizione","urlImmagine"));
+
+//        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.getValue(Curatore.class) != null) {
+//
+//                    //Ottengo il luogo corrente del curatore
+//                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+//
+//                    connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+//                            int count = (int) snapshot.getChildrenCount();
+//                            System.out.println("count: " + count);
+//
+//                            oggettiList.clear();
+//                            for (int i = 0; i < count; i++) {
+//                                oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
+//                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
+//                                //luoghiList.add(luogoprova);
+//                                System.out.println(oggettiList.get(i));
+//                            }
+//                            setAdapter();
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
 

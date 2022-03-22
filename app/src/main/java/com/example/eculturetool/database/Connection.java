@@ -35,7 +35,6 @@ public class Connection {
         return storageReference;
     }
 
-
     public FirebaseAuth getAuth() {
         return auth;
     }
@@ -58,6 +57,10 @@ public class Connection {
 
     public DatabaseReference getRefLuogo() {
         return databaseReference.child("luoghi").child(user.getUid());
+    }
+
+    public DatabaseReference getRefOggetti() {
+        return databaseReference.child("oggetti").child(user.getUid());
     }
 
     public static String getUidCuratore() {
