@@ -3,8 +3,11 @@ package com.example.eculturetool.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -13,139 +16,167 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.RecyclerAdapterLuogo;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-public class CreateObjectActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
-    private ImageView image;
-    private ProgressBar progressBar;
-    private EditText nome;
-    private EditText tipologia;
-    private EditText descrizione;
+public class CreateObjectActivity extends AppCompatActivity implements RecyclerAdapterLuogo.OnLuogoListener {
 
-    private final String DATAREF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/"; //Link al realtime database Firebase
-    private final String STORREF = "gs://auth-96a19.appspot.com/"; //Link allo storage Firebase
 
-    DatabaseReference root = FirebaseDatabase.getInstance(DATAREF).getReference("uploads").child("objects_images"); //Acquisizione percorso salvataggio oggetti
-    StorageReference storageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads").child("objects_images"); //Acqusizione percorso storage
+    private final Connection connection = new Connection();
 
-    private Uri uri; //L'URI dell'immagine caricata dall'utente
+    private ArrayList<Luogo> luoghiList;
+    private RecyclerView recyclerView;
+
+    private String luogoCorrente;
+    private RecyclerAdapterLuogo adapter;
+
+    private FloatingActionButton fabAddLuogo;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_object);
+        setContentView(R.layout.activity_luoghi);
+        fabAddLuogo = findViewById(R.id.addLuogo);
 
-        // Set variabili interfaccia
-        image = findViewById(R.id.image);
-        Button btnCrea = findViewById(R.id.btnCrea);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarLuoghi);
 
-        nome = findViewById(R.id.nome); // Nome dell'opera
-        tipologia = findViewById(R.id.tipologia); // Tipologia dell'opera
-        descrizione = findViewById(R.id.descrizione); // Descrizione dell'opera
+        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
+        Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
+        //myToolbar.setNavigationIcon(freccia_indietro);
+        //setSupportActionBar(myToolbar);
 
-        // Check dei permessi; se sono false si richiede di accettare i permessi
-        image.setOnClickListener(onClickListener -> {
-            boolean permissions = true;
-            if (!checkCameraPermission()) {
-                permissions = false;
-                requestCameraPermission();
-            }
-            if (!checkStoragePermission()) {
-                permissions = false;
-                requestStoragePermission();
-            }
-            if (permissions)
-                PickImage();
-        });
-
-        // Procedura di upload su Firebase se l'URI non è nullo
-        btnCrea.setOnClickListener(onClickListener -> {
-            if (uri != null) {
-                uploadImageToFirebase(uri);
-            } else {
-                Toast.makeText(getApplicationContext(), "Nessuna immagine selezionata!", Toast.LENGTH_SHORT).show();
+        //Azione da eseguire quando si clicca la freccia di navigazione
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Ritorna al fragment del profilo chiamante
+                finish();
             }
         });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        luoghiList = new ArrayList<>();
+
+        setLuogoInfo();
     }
 
-    // Metodo che consente di caricare una risorsa URI su Firebase
-    private void uploadImageToFirebase(Uri uri) {
-        final StorageReference fileRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
 
-        fileRef.putFile(uri).addOnCompleteListener(task -> fileRef.getDownloadUrl().addOnSuccessListener(onSuccessListener -> {
-            String oggettoId = root.push().getKey();
-            Oggetto oggetto = new Oggetto(oggettoId, nome.getText().toString(), descrizione.getText().toString(),
-                    onSuccessListener.toString());
-            root.child(oggettoId).setValue(oggetto);
-            progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(CreateObjectActivity.this, "Upload completato!", Toast.LENGTH_SHORT).show();
-        }))
-                .addOnProgressListener(onProgessListener -> progressBar.setVisibility(View.VISIBLE))
-                .addOnFailureListener(onFailureListener -> {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(CreateObjectActivity.this, "Upload fallito!", Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    // Permette di acquisire un'immagine da diverse fonti, anche da fotocamera, e di eseguirne il crop
-    private void PickImage() {
-        CropImage.activity().start(this);
-    }
-
-    // Ritorna l'estensione di un file
-    private String getFileExtension(Uri uri) {
-        return MimeTypeMap.getFileExtensionFromUrl(uri.toString());
-    }
-
-    // Se l'acquisizione dell'immagine avviene correttamente, la nuova immagine viene impostata come immagine attuale
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK && data != null) {
-                image.setBackgroundResource(android.R.color.transparent);
-                uri = result.getUri();
-                try {
-                    image.setImageURI(uri);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                error.printStackTrace();
+    protected void onStart() {
+        super.onStart();
+
+        fabAddLuogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class));
             }
-        }
+        });
+
     }
 
-    private void requestStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    private void setAdapter() {
+        adapter = new RecyclerAdapterLuogo(luoghiList, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
     }
 
-    private void requestCameraPermission() {
-        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    private void setLuogoInfo() {
+        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(Curatore.class) != null) {
+
+                    //Ottengo il luogo corrente del curatore
+                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+
+                    connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+                            int count = (int) snapshot.getChildrenCount();
+                            System.out.println("count: " + count);
+
+                            luoghiList.clear();
+                            for (int i = 0; i < count; i++) {
+                                luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
+                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
+                                //luoghiList.add(luogoprova);
+                                System.out.println(luoghiList.get(i));
+                            }
+                            setAdapter();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
-    private boolean checkStoragePermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+    @Override
+    public void onLuogoClick(int position) {
+        String luogoSelezionato = luoghiList.get(position).getId();
+        Intent intent = new Intent(this, DettaglioLuogoActivity.class);
+        intent.putExtra("LUOGO", luogoSelezionato);
+        startActivity(intent);
+
     }
 
-    private boolean checkCameraPermission() {
-        boolean res1 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        boolean res2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        return res1 && res2;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.oggetti_menu, menu);
+        MenuItem item = menu.findItem(R.id.ricerca);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
