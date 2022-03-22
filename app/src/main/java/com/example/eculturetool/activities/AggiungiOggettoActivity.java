@@ -107,7 +107,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         String key = connection.getRefOggetti().push().getKey();
         System.out.println("KEY: " + key);
         Oggetto oggetto = new Oggetto(key, nome, descrizione, "prova");
-        connection.getRefOggetti().child(key).setValue(oggetto);
+        connection.getRefOggetti().child(key).child(connection.getRefCuratore().child("luogoCorrente").toString()).setValue(oggetto);
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
@@ -182,7 +182,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 break;
 
             case "Sito culturale":
-                tipologia = TipologiaOggetto.SITO_CULTURALE;
+                tipologia = TipologiaOggetto.ALTRO;
                 break;
         }
     }
