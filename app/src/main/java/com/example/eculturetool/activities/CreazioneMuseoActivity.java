@@ -172,19 +172,19 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
         switch (item) {
             case "Museo":
-                tipologiaLuogo = TipologiaLuogo.MUSEO;
+                tipologia = TipologiaLuogo.MUSEO;
                 break;
 
             case "Area archeologica":
-                tipologiaLuogo = TipologiaLuogo.AREA_ARCHEOLOGICA;
+                tipologia = TipologiaLuogo.AREA_ARCHEOLOGICA;
                 break;
 
             case "Mostra itinerante":
-                tipologiaLuogo = TipologiaLuogo.MOSTRA_ITINERANTE;
+                tipologia = TipologiaLuogo.MOSTRA_ITINERANTE;
                 break;
 
             case "Sito culturale":
-                tipologiaLuogo = TipologiaLuogo.SITO_CULTURALE;
+                tipologia = TipologiaLuogo.SITO_CULTURALE;
                 break;
 
         }
