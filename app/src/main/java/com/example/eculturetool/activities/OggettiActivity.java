@@ -3,6 +3,7 @@ package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -15,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -36,6 +38,7 @@ public class OggettiActivity extends AppCompatActivity {
 
     private ArrayList<Oggetto> oggettiList;
     private RecyclerView recyclerView;
+    private RecyclerAdapterOggetto adapter;
 
     //luogo corrente che sta gestendo il curatore
     private String luogoCorrente;
@@ -87,7 +90,7 @@ public class OggettiActivity extends AppCompatActivity {
 
     private void setAdapter(){
         System.out.println("OGGETTI --> "+oggettiList);
-        RecyclerAdapterOggetto adapter= new RecyclerAdapterOggetto(oggettiList);
+        adapter = new RecyclerAdapterOggetto(oggettiList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -96,12 +99,12 @@ public class OggettiActivity extends AppCompatActivity {
 
     private void setOggettoInfo() {
         //popolo array di oggetti
-        oggettiList.add(new Oggetto("id1", "nome1","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id2", "nome2","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id3", "nome3","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id4", "nome4","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id5", "nome5","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id6", "nome6","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id1", "Monnalisa","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id2", "Lorenzo","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id3", "Matteo","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id4", "Giovanni","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id5", "Giuseppe","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id6", "Domenico","descrizione","urlImmagine"));
 
 //        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -145,8 +148,21 @@ public class OggettiActivity extends AppCompatActivity {
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.oggetti_menu, menu);
+        getMenuInflater().inflate(R.menu.oggetti_menu, menu);
+        MenuItem item = menu.findItem(R.id.ricerca);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 

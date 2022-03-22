@@ -17,9 +17,11 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <queries>
+
         <!-- Browser -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <data android:scheme="http" />
         </intent>
 
@@ -42,6 +44,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
+        <activity
+            android:name=".activities.DettaglioOggettoActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -62,7 +67,6 @@
             android:exported="false"
             android:label="Crea Luogo"
             android:parentActivityName=".activities.LuoghiActivity" />
-
         <activity
             android:name=".activities.DettaglioLuogoActivity"
             android:exported="false"
