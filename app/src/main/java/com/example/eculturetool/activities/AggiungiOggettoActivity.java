@@ -1,14 +1,19 @@
 package com.example.eculturetool.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,9 +24,11 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,14 +37,16 @@ import java.util.List;
 public class AggiungiOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Connection connection = new Connection();
-
+    public static final String OBJECTS_IMAGES_DIR = "objects_images";
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
     private ProgressBar progressBar;
     private String luogoCorrente;
     protected static Curatore curatore;
-
+    private ImageView imgOggetto;
+    private ActivityResultLauncher<Intent> startForObjectImageUpload;
+    private Uri imgUri;
     private TipologiaOggetto tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
@@ -47,14 +56,34 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_oggetti);
-
+        imgOggetto = findViewById(R.id.imgOggetto);
         nomeOggetto = findViewById(R.id.nome_oggetto_add);
         descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
         tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
         creaOggetto = findViewById(R.id.creaOggetto);
         progressBar = findViewById(R.id.progressAddOggetto);
-
+        FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
         oggettiList = getListOggettiCreati();
+
+        startForObjectImageUpload = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                activityResult -> {
+                    Uri uri = null;
+                    if (activityResult.getData() != null) {
+                        uri = activityResult.getData().getData();
+                    }
+                    if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
+                        imgUri = uri;
+                        Glide.with(this).load(imgUri).circleCrop().into(imgOggetto);
+                    }
+                });
+
+        changeImg.setOnClickListener(onClickListener -> {
+            System.out.println("Button Clicked");
+            Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
+            uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
+            startForObjectImageUpload.launch(uploadImageIntent);
+        });
     }
 
     @Override
@@ -111,7 +140,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         //Scrittura del luogo sul Realtime Database
         String key = connection.getRefOggetti().push().getKey();
-        Oggetto oggetto = new Oggetto(key, nome, descrizione, "prova");
+        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString());
 
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
