@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class OggettiActivity extends AppCompatActivity {
     //private final Connection connection = new Connection();
+
     private ArrayList<Oggetto> oggettiList;
     private RecyclerView recyclerView;
 
@@ -62,7 +63,7 @@ public class OggettiActivity extends AppCompatActivity {
     }
 
     private void setAdapter(){
-        System.out.println("OGGETTI -->"+oggettiList);
+        System.out.println("OGGETTI --> "+oggettiList);
         RecyclerAdapterOggetto adapter= new RecyclerAdapterOggetto(oggettiList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -72,11 +73,12 @@ public class OggettiActivity extends AppCompatActivity {
 
     private void setOggettoInfo() {
         //popolo array di oggetti
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id", "nome","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id1", "nome1","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id2", "nome2","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id3", "nome3","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id4", "nome4","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id5", "nome5","descrizione","urlImmagine"));
+        oggettiList.add(new Oggetto("id6", "nome6","descrizione","urlImmagine"));
     }
 
 

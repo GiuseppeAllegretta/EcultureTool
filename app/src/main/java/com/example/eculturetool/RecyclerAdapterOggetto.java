@@ -20,8 +20,9 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     private ArrayList<Oggetto> oggettiList;
 
     public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList){
-        this.oggettiList=oggettiList;
+        this.oggettiList = oggettiList;
     }
+
     public class OggettiViewHolder extends RecyclerView.ViewHolder{
         private TextView nomeOggetto,descrizioneOggetto;
         //private ImageView immagineOggetto;
@@ -29,7 +30,7 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
         public OggettiViewHolder(final View view){
             super(view);
-            nomeOggetto=view.findViewById(R.id.nomeOggetto);
+            nomeOggetto = view.findViewById(R.id.nomeOggetto);
             descrizioneOggetto=view.findViewById(R.id.descrizioneOggetto);
             //immagineOggetto=view.findViewById(R.id.iconaOggetto);
 
@@ -45,8 +46,8 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterOggetto.OggettiViewHolder holder, int position) {
-        String nome=oggettiList.get(position).getNome();
-        String descrizione=oggettiList.get(position).getDescrizione();
+        String nome = oggettiList.get(position).getNome();
+        String descrizione = oggettiList.get(position).getDescrizione();
         holder.nomeOggetto.setText(nome);
         holder.descrizioneOggetto.setText(descrizione);
         //holder.immagineOggetto.setImageResource(oggetto.getUrl()); URL richiede int
@@ -54,6 +55,6 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public int getItemCount() {
-        return 0;
+        return oggettiList.size();
     }
 }
