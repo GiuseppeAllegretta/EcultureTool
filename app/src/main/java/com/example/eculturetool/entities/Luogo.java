@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Luogo implements Serializable {
 
     private String nome, descrizione;
-    private TipologiaLuogo tipologia;
+    private Tipologia tipologia;
     private String id;
 
 
@@ -13,7 +13,7 @@ public class Luogo implements Serializable {
 
     }
 
-    public Luogo(String nome, String descrizione, TipologiaLuogo tipologiaLuogo, String id) {
+    public Luogo(String nome, String descrizione, Tipologia tipologia, String id) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipologia = tipologia;
@@ -29,7 +29,7 @@ public class Luogo implements Serializable {
         return descrizione;
     }
 
-    public TipologiaLuogo getTipologia() {
+    public Tipologia getTipologia() {
         return tipologia;
     }
 

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.TipologiaLuogo;
+import com.example.eculturetool.entities.Tipologia;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,7 +86,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         });
     }
 
-    private String setTipologia(TipologiaLuogo tipologia) {
+    private String setTipologia(Tipologia tipologia) {
         String risultato = null;
 
         switch (tipologia) {

@@ -35,7 +35,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
     private Curatore curatore;
     private String password;
-    private TipologiaLuogo tipologia;
+    private Tipologia tipologia;
 
     final static String SELEZIONA_NUOVO_ELEMENTO = "seleziona un elemento";
 
@@ -172,19 +172,19 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
         switch (item) {
             case "Museo":
-                tipologia = TipologiaLuogo.MUSEO;
+                tipologia = Tipologia.MUSEO;
                 break;
 
             case "Area archeologica":
-                tipologia = TipologiaLuogo.AREA_ARCHEOLOGICA;
+                tipologia = Tipologia.AREA_ARCHEOLOGICA;
                 break;
 
             case "Mostra itinerante":
-                tipologia = TipologiaLuogo.MOSTRA_ITINERANTE;
+                tipologia = Tipologia.MOSTRA_ITINERANTE;
                 break;
 
             case "Sito culturale":
-                tipologia = TipologiaLuogo.SITO_CULTURALE;
+                tipologia = Tipologia.SITO_CULTURALE;
                 break;
 
         }

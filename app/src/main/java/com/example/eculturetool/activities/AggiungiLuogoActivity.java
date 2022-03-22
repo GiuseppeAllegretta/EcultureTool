@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.TipologiaLuogo;
+import com.example.eculturetool.entities.Tipologia;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -32,7 +32,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     private Button creaLuogo;
     private ProgressBar progressBar;
 
-    private TipologiaLuogo tipologia;
+    private Tipologia tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
     List<Luogo> luoghiList;
@@ -172,19 +172,19 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
         switch (item) {
             case "Museo":
-                tipologia = TipologiaLuogo.MUSEO;
+                tipologia = Tipologia.MUSEO;
                 break;
 
             case "Area archeologica":
-                tipologia = TipologiaLuogo.AREA_ARCHEOLOGICA;
+                tipologia = Tipologia.AREA_ARCHEOLOGICA;
                 break;
 
             case "Mostra itinerante":
-                tipologia = TipologiaLuogo.MOSTRA_ITINERANTE;
+                tipologia = Tipologia.MOSTRA_ITINERANTE;
                 break;
 
             case "Sito culturale":
-                tipologia = TipologiaLuogo.SITO_CULTURALE;
+                tipologia = Tipologia.SITO_CULTURALE;
                 break;
 
         }

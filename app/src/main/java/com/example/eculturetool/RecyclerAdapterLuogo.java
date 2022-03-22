@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.TipologiaLuogo;
+import com.example.eculturetool.entities.Tipologia;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,7 +71,7 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
         setImageLuogo(holder, luoghiList.get(holder.getAdapterPosition()).getTipologia());
     }
 
-    private void setImageLuogo(RecyclerAdapterLuogo.LuoghiViewHolder holder, TipologiaLuogo tipologia) {
+    private void setImageLuogo(RecyclerAdapterLuogo.LuoghiViewHolder holder, Tipologia tipologia) {
         switch (tipologia) {
             case MUSEO:
                 holder.iconaTipologia.setImageResource(R.drawable.art_museum);

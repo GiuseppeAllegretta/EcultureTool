@@ -1,6 +1,6 @@
 package com.example.eculturetool.entities;
 
-public enum TipologiaLuogo {
+public enum Tipologia {
     MUSEO,
     SITO_CULTURALE,
     AREA_ARCHEOLOGICA,

@@ -14,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
-import com.example.eculturetool.entities.TipologiaOggetto;
+import com.example.eculturetool.entities.Tipologia;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -32,7 +33,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Button creaOggetto;
     private ProgressBar progressBar;
 
-    private TipologiaOggetto tipologia;
+    private Tipologia tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
     List<Oggetto> oggettiList = new ArrayList<>();
@@ -107,7 +108,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         String key = connection.getRefOggetti().push().getKey();
         System.out.println("KEY: " + key);
         Oggetto oggetto = new Oggetto(key, nome, descrizione, "prova");
-        connection.getRefOggetti().child(key).child(connection.getRefCuratore().child("luogoCorrente").toString()).setValue(oggetto);
+        connection.getRefOggetti().child(key).setValue(oggetto);
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
@@ -182,7 +183,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 break;
 
             case "Sito culturale":
-                tipologia = TipologiaOggetto.ALTRO;
+                tipologia = TipologiaOggetto.SITO_CULTURALE;
                 break;
         }
     }
