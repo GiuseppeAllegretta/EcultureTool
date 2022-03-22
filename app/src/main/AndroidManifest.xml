@@ -82,7 +82,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.CreateObjectActivity"
+            android:name=".activities.AggiungiOggettoActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity

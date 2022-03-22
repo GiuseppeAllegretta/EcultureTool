@@ -79,7 +79,7 @@ public class OggettiActivity extends AppCompatActivity {
         fabAddOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class));
+                startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
             }
         });
 

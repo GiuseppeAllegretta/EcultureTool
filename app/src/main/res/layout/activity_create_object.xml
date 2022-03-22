@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/minimal_background"
     android:paddingBottom="20dp"
-    tools:context=".activities.CreateObjectActivity">
+    tools:context=".activities.AggiungiOggettoActivity">
 
     <ScrollView
         android:id="@+id/scoll"
