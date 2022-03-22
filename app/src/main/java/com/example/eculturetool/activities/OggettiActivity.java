@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -19,12 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterOggetto;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Oggetto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener{
+public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener {
     private final Connection connection = new Connection();
 
     private ArrayList<Oggetto> oggettiList;
@@ -79,8 +84,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     }
 
-    private void setAdapter(){
-        System.out.println("OGGETTI --> "+oggettiList);
+    private void setAdapter() {
+        System.out.println("OGGETTI --> " + oggettiList);
         adapter = new RecyclerAdapterOggetto(oggettiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -90,51 +95,51 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     private void setOggettoInfo() {
         //popolo array di oggetti
-        oggettiList.add(new Oggetto("id1", "Monnalisa","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id2", "Lorenzo","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id3", "Matteo","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id4", "Giovanni","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id5", "Giuseppe","descrizione","urlImmagine"));
-        oggettiList.add(new Oggetto("id6", "Domenico","descrizione","urlImmagine"));
+        /*oggettiList.add(new Oggetto("id1", "Monnalisa", "descrizione", "urlImmagine"));
+        oggettiList.add(new Oggetto("id2", "Lorenzo", "descrizione", "urlImmagine"));
+        oggettiList.add(new Oggetto("id3", "Matteo", "descrizione", "urlImmagine"));
+        oggettiList.add(new Oggetto("id4", "Giovanni", "descrizione", "urlImmagine"));
+        oggettiList.add(new Oggetto("id5", "Giuseppe", "descrizione", "urlImmagine"));
+        oggettiList.add(new Oggetto("id6", "Domenico", "descrizione", "urlImmagine"));*/
 
-//        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getValue(Curatore.class) != null) {
-//
-//                    //Ottengo il luogo corrente del curatore
-//                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-//
-//                    connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-//                            int count = (int) snapshot.getChildrenCount();
-//                            System.out.println("count: " + count);
-//
-//                            oggettiList.clear();
-//                            for (int i = 0; i < count; i++) {
-//                                oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
-//                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
-//                                //luoghiList.add(luogoprova);
-//                                System.out.println(oggettiList.get(i));
-//                            }
-//                            setAdapter();
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(Curatore.class) != null) {
+
+                    //Ottengo il luogo corrente del curatore
+                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+
+                    connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+                            int count = (int) snapshot.getChildrenCount();
+                            System.out.println("count: " + count);
+
+                            oggettiList.clear();
+                            for (int i = 0; i < count; i++) {
+                                oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
+                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
+                                //luoghiList.add(luogoprova);
+                                System.out.println(oggettiList.get(i));
+                            }
+                            setAdapter();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -160,7 +165,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     @Override
     public void onOggettoClick(int position) {
-        String oggettoSelezionato =  oggettiList.get(position).getId();
+        String oggettoSelezionato = oggettiList.get(position).getId();
         oggettiList.get(position);
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
         intent.putExtra("ID_OGGETTO", oggettoSelezionato);
