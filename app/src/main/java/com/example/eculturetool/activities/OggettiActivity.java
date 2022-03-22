@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class OggettiActivity extends AppCompatActivity {
+public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener{
     private final Connection connection = new Connection();
 
     private ArrayList<Oggetto> oggettiList;
@@ -81,7 +81,7 @@ public class OggettiActivity extends AppCompatActivity {
 
     private void setAdapter(){
         System.out.println("OGGETTI --> "+oggettiList);
-        adapter = new RecyclerAdapterOggetto(oggettiList);
+        adapter = new RecyclerAdapterOggetto(oggettiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -158,4 +158,12 @@ public class OggettiActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onOggettoClick(int position) {
+        String oggettoSelezionato =  oggettiList.get(position).getId();
+        oggettiList.get(position);
+        Intent intent = new Intent(this, DettaglioOggettoActivity.class);
+        intent.putExtra("ID_OGGETTO", oggettoSelezionato);
+        startActivity(intent);
+    }
 }

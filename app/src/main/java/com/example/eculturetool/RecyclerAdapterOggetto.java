@@ -23,24 +23,35 @@ import java.util.List;
 public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapterOggetto.OggettiViewHolder> implements Filterable {
     private ArrayList<Oggetto> oggettiList;
     private ArrayList<Oggetto> oggettiListAll;
+    private OnOggettoListener mOnOggettoListener;
 
-    public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList){
+    public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList, OnOggettoListener onOggettoListener){
         this.oggettiList = oggettiList;
         this.oggettiListAll = new ArrayList<>(oggettiList);
+        this.mOnOggettoListener = onOggettoListener;
     }
 
 
-    public class OggettiViewHolder extends RecyclerView.ViewHolder{
+    public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomeOggetto,descrizioneOggetto;
         //private ImageView immagineOggetto;
+        private OnOggettoListener onOggettoListener;
 
 
-        public OggettiViewHolder(final View view){
+        public OggettiViewHolder(final View view, OnOggettoListener onOggettoListener){
             super(view);
             nomeOggetto = view.findViewById(R.id.nomeOggetto);
             descrizioneOggetto=view.findViewById(R.id.descrizioneOggetto);
             //immagineOggetto=view.findViewById(R.id.iconaOggetto);
 
+            this.onOggettoListener = onOggettoListener;
+            view.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            onOggettoListener.onOggettoClick(getAdapterPosition());
         }
     }
 
@@ -48,7 +59,7 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     @Override
     public RecyclerAdapterOggetto.OggettiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_oggetto, parent, false);
-        return new OggettiViewHolder(itemView);
+        return new OggettiViewHolder(itemView, mOnOggettoListener);
     }
 
     @Override
@@ -101,4 +112,9 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
             notifyDataSetChanged();
         }
     };
+
+
+    public interface OnOggettoListener{
+        void onOggettoClick(int position);
+    }
 }
