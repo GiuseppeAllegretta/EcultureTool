@@ -45,9 +45,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.ModificaOggettoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
             android:name=".activities.DettaglioOggettoActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

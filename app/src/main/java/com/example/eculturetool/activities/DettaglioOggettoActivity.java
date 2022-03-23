@@ -119,5 +119,15 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         });
 
+        modificaOggetto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ModificaOggettoActivity.class);
+                intent.putExtra(Luogo.Keys.ID, luogoCorrente);
+                intent.putExtra(Oggetto.Keys.ID, idOggetto);
+                startActivity(intent);
+            }
+        });
+
     }
 }
