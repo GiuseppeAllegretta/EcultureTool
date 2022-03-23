@@ -37,7 +37,9 @@ import java.util.List;
 public class AggiungiOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Connection connection = new Connection();
+
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
+
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
@@ -49,13 +51,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Uri imgUri;
     private TipologiaOggetto tipologia;
 
-    //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
+    //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome uno precedente
     List<Oggetto> oggettiList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_oggetti);
+
         imgOggetto = findViewById(R.id.imgOggetto);
         nomeOggetto = findViewById(R.id.nome_oggetto_add);
         descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
@@ -63,7 +66,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         creaOggetto = findViewById(R.id.creaOggetto);
         progressBar = findViewById(R.id.progressAddOggetto);
         FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
-        oggettiList = getListOggettiCreati();
 
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -83,6 +85,21 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
             uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
             startForObjectImageUpload.launch(uploadImageIntent);
+        });
+
+        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(String.class) != null){
+                    luogoCorrente = snapshot.getValue(String.class).toString();
+                    oggettiList = getListOggettiCreati();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 
@@ -186,22 +203,26 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
 
     /**
-     * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
+     * @return: ritorna la lista degli oggetti memorizzati su firebase in riferimento a un determinato curatore tranne quello che si è selezionato
      */
-    private List getListOggettiCreati() {
+    private List<Oggetto> getListOggettiCreati() {
+
         List<Oggetto> oggetti = new ArrayList<>();
 
-        connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+        System.out.println("Luogo corrente" + luogoCorrente);
+        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> iteratore = snapshot.getChildren();
                 int count = (int) snapshot.getChildrenCount();
                 System.out.println("count: " + count);
 
+                Oggetto oggetto;
+
                 for (int i = 0; i < count; i++) {
-                    oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
-                    System.out.println(oggettiList.get(i));
+                    oggetti.add(iteratore.iterator().next().getValue(Oggetto.class));
                 }
+                System.out.println(oggetti);
             }
 
             @Override
