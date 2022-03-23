@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -31,6 +33,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private ImageView immagineOggetto;
     private FloatingActionButton cambiaImmagine, modificaOggetto;
     private Toolbar myToolbar;
+    private Button eliminaOggetto;
     private Context context;
 
     private String idOggetto, luogoCorrente;
@@ -59,6 +62,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         immagineOggetto = findViewById(R.id.immagineOggetto);
         cambiaImmagine = findViewById(R.id.change_imgObject);
         modificaOggetto = findViewById(R.id.editOggetto);
+        eliminaOggetto = findViewById(R.id.eliminaOggetto);
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
@@ -93,6 +97,14 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
+            }
+        });
+
+        eliminaOggetto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                connection.getRefOggetti().child(luogoCorrente).child(idOggetto).removeValue();
                 finish();
             }
         });
