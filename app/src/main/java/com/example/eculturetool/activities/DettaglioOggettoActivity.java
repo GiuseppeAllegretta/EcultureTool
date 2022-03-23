@@ -105,8 +105,18 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 connection.getRefOggetti().child(luogoCorrente).child(idOggetto).removeValue();
-                finish();
+
+                Snackbar.make(findViewById(R.id.dettaglioOggettiActivity), "Oggetto eliminato", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("chiudi", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                }).setBackgroundTint(getResources().getColor(R.color.verdePrimario))
+                        .setActionTextColor(getResources().getColor(R.color.white))
+                        .show();
             }
+
         });
 
     }
