@@ -21,6 +21,8 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.TipologiaOggetto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -85,7 +87,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     nomeOggetto.setText(snapshot.getValue(Oggetto.class).getNome());
                     descrizioneOggetto.setText(snapshot.getValue(Oggetto.class).getDescrizione());
                     Glide.with(context).load(snapshot.getValue(Oggetto.class).getUrl()).circleCrop().into(immagineOggetto);
-                    //tipologiaOggetto.setText(setTipologia(snapshot.getValue(Luogo.class).getTipologia()));
+                    tipologiaOggetto.setText(setTipologia(snapshot.getValue(Oggetto.class).getTipologiaOggetto()));
                     //zonaAppartenenza.setText(snapshot.getValue(Luogo.class).getDescrizione());
                 }
             }
@@ -139,6 +141,32 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String setTipologia(TipologiaOggetto tipologiaOggetto) {
+        String risultato = null;
+
+        switch (tipologiaOggetto) {
+            case QUADRO:
+                risultato = Oggetto.KeysTipologiaOggetto.QUADRO;
+                break;
+
+            case STATUA:
+                risultato = Oggetto.KeysTipologiaOggetto.STATUA;
+                break;
+
+            case SCULTURA:
+                risultato = Oggetto.KeysTipologiaOggetto.SCULTURA;
+                break;
+
+            case ALTRO:
+                risultato = Oggetto.KeysTipologiaOggetto.ALTRO;
+                break;
+        }
+
+
+
+        return risultato;
     }
 
 

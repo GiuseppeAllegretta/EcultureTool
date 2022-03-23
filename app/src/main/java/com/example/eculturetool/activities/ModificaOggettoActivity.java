@@ -37,7 +37,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     private List<Oggetto> oggettiList;
 
     private String luogoCorrente, idOggetto;
-
+    private TipologiaOggetto tipologia;
 
 
     @Override
@@ -118,7 +118,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
                     Oggetto oggetto = snapshot.getValue(Oggetto.class);
                     nomeOggetto.setText(oggetto.getNome());
                     descrizioneOggetto.setText(oggetto.getDescrizione());
-                    //tipologiaOggetto.setSelection(getIndexSpinner(oggetto.getTipologiaOggetto()));
+                    tipologiaOggetto.setSelection(getIndexSpinner(oggetto.getTipologiaOggetto()));
                     //TODO aggiungere la zona di appartenenza
 
                 }
@@ -177,6 +177,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
         connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("nome").setValue(nome);
         connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("descrizione").setValue(descrizione);
+        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
 
         finish();
     }
@@ -226,6 +227,28 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        String item = adapterView.getItemAtPosition(i).toString();
+        System.out.println("item: " + item);
+
+        switch (item) {
+            case Oggetto.KeysTipologiaOggetto.QUADRO:
+                tipologia = TipologiaOggetto.QUADRO;
+                break;
+
+            case Oggetto.KeysTipologiaOggetto.STATUA:
+                tipologia = TipologiaOggetto.STATUA;
+                break;
+
+            case Oggetto.KeysTipologiaOggetto.SCULTURA:
+                tipologia = TipologiaOggetto.SCULTURA;
+                break;
+
+            case Oggetto.KeysTipologiaOggetto.ALTRO:
+                tipologia = TipologiaOggetto.ALTRO;
+                break;
+
+        }
 
     }
 
