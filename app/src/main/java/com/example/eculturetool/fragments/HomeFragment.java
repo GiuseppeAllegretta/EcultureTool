@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.ZoneActivity;
 import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
@@ -29,7 +30,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference myRef;
 
     private TextView tv, luogoGestito;
-    private CardView oggetti;
+    private CardView oggetti,zone;
     private String luogoCorrente;
 
 
@@ -71,6 +72,7 @@ public class HomeFragment extends Fragment {
 
         tv = view.findViewById(R.id.nomeCuratore);
         oggetti = view.findViewById(R.id.oggettiCard);
+        zone= view.findViewById(R.id.zoneCard);
         luogoGestito = view.findViewById(R.id.nomeLuogoHome);
 
         myRef = connection.getRefCuratore();
@@ -118,6 +120,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        zone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ZoneActivity.class));
+            }
+        });
     }
 
     @Override
