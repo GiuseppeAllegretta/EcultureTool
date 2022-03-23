@@ -163,8 +163,23 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
+        if (descrizione.isEmpty()) {
+            descrizioneOggetto.setError("La descrizione è richiesta");
+            descrizioneOggetto.requestFocus();
+            return;
+        }
+
+        System.out.println("tipologia: " + tipologiaOggetto);
+        if (tipologiaOggetto == null) {
+            tipologiaOggetto.requestFocus();
+            return;
+        }
+
+        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("nome").setValue(nome);
+        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("descrizione").setValue(descrizione);
 
 
+        finish();
     }
 
     private int getIndexSpinner(TipologiaOggetto tipologiaOggetto) {
