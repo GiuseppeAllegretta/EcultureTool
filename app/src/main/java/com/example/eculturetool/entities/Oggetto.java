@@ -21,6 +21,11 @@ public class Oggetto {
         //TODO generare il qr
     }
 
+    public Oggetto(String id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto){
+        this(id, nome, descrizione, urlImmagine);
+        this.tipologiaOggetto = tipologiaOggetto;
+    }
+
     public String getId() {
         return id;
     }
@@ -82,6 +87,13 @@ public class Oggetto {
 
     public interface Keys{
         final static String ID = "ID_OGGETTO";
+    }
+
+    public interface KeysTipologiaOggetto{
+        public final static String QUADRO = "Quadro";
+        public final static String STATUA = "Statua";
+        public final static String SCULTURA = "Scultura";
+        public final static String ALTRO = "Altro";
     }
 }
 

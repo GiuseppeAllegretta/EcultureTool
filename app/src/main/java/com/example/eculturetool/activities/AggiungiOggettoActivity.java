@@ -145,7 +145,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        System.out.println("tipologia: " + tipologiaOggetto);
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
             return;
@@ -155,9 +154,9 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         //La progressbar diventa visibile
         progressBar.setVisibility(View.VISIBLE);
 
-        //Scrittura del luogo sul Realtime Database
+        //Scrittura dell'oggetto sul Realtime Database
         String key = connection.getRefOggetti().push().getKey();
-        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString());
+        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString(), tipologia);
 
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
@@ -243,19 +242,19 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         System.out.println("item: " + item);
 
         switch (item) {
-            case "Quadro":
+            case Oggetto.KeysTipologiaOggetto.QUADRO:
                 tipologia = TipologiaOggetto.QUADRO;
                 break;
 
-            case "Statua":
+            case Oggetto.KeysTipologiaOggetto.STATUA:
                 tipologia = TipologiaOggetto.STATUA;
                 break;
 
-            case "Scultura":
+            case Oggetto.KeysTipologiaOggetto.SCULTURA:
                 tipologia = TipologiaOggetto.SCULTURA;
                 break;
 
-            case "Sito culturale":
+            case Oggetto.KeysTipologiaOggetto.ALTRO:
                 tipologia = TipologiaOggetto.ALTRO;
                 break;
         }
