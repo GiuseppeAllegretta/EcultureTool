@@ -7,6 +7,7 @@ public class Oggetto {
     private String nome, descrizione;
     private String urlImmagine;
     private String urlQrcode;
+    private TipologiaOggetto tipologiaOggetto;
 
     public Oggetto() {
 
@@ -44,6 +45,9 @@ public class Oggetto {
         this.descrizione = descrizione;
     }
 
+    public TipologiaOggetto getTipologiaOggetto() {
+        return tipologiaOggetto;
+    }
 
     public String getUrl() {
         return urlImmagine;

@@ -27,7 +27,7 @@
                 android:layout_height="38dp"
                 android:src="@drawable/ic_conferma"
                 android:padding="8dp"
-                android:id="@+id/icona_conferma"
+                android:id="@+id/icona_conferma_modifica_oggetto"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp" />
 
@@ -36,7 +36,7 @@
                 android:layout_height="35dp"
                 android:src="@drawable/ic_freccia_back"
                 android:padding="8dp"
-                android:id="@+id/freccia_back"
+                android:id="@+id/freccia_back_modifica_oggetto"
                 android:layout_gravity="left"
                 android:layout_marginLeft="1dp" />
 
