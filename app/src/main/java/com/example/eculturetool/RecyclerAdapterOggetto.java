@@ -1,6 +1,7 @@
 package com.example.eculturetool;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,6 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomeOggetto,descrizioneOggetto;
         private ImageView immagineOggetto;
-        //private ImageView immagineOggetto;
         private OnOggettoListener onOggettoListener;
 
 
@@ -72,16 +72,12 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterOggetto.OggettiViewHolder holder, int position) {
-        //Uri uriImg = Uri.parse(oggettiList.get(position).getUrl());
-        //System.out.println("Uri: " + uriImg.toString());
 
         String nome = oggettiList.get(position).getNome();
         String descrizione = oggettiList.get(position).getDescrizione();
         holder.nomeOggetto.setText(nome);
         holder.descrizioneOggetto.setText(descrizione);
-
-        //holder.immagineOggetto.setImageURI(uriImg);
-        //holder.immagineOggetto.setImageResource(oggetto.getUrl()); URL richiede int
+        Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position).getUrl()).circleCrop().into(holder.immagineOggetto);
     }
 
     @Override
