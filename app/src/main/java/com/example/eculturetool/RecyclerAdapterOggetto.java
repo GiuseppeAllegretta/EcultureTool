@@ -1,20 +1,27 @@
 package com.example.eculturetool;
 
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.entities.Oggetto;
 
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +41,7 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
     public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomeOggetto,descrizioneOggetto;
+        private ImageView immagineOggetto;
         //private ImageView immagineOggetto;
         private OnOggettoListener onOggettoListener;
 
@@ -41,8 +49,8 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
         public OggettiViewHolder(final View view, OnOggettoListener onOggettoListener){
             super(view);
             nomeOggetto = view.findViewById(R.id.nomeOggetto);
-            descrizioneOggetto=view.findViewById(R.id.descrizioneOggetto);
-            //immagineOggetto=view.findViewById(R.id.iconaOggetto);
+            descrizioneOggetto = view.findViewById(R.id.descrizioneOggetto);
+            immagineOggetto = view.findViewById(R.id.iconaOggetto);
 
             this.onOggettoListener = onOggettoListener;
             view.setOnClickListener(this);
@@ -64,10 +72,15 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterOggetto.OggettiViewHolder holder, int position) {
+        //Uri uriImg = Uri.parse(oggettiList.get(position).getUrl());
+        //System.out.println("Uri: " + uriImg.toString());
+
         String nome = oggettiList.get(position).getNome();
         String descrizione = oggettiList.get(position).getDescrizione();
         holder.nomeOggetto.setText(nome);
         holder.descrizioneOggetto.setText(descrizione);
+
+        //holder.immagineOggetto.setImageURI(uriImg);
         //holder.immagineOggetto.setImageResource(oggetto.getUrl()); URL richiede int
     }
 
@@ -117,4 +130,5 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     public interface OnOggettoListener{
         void onOggettoClick(int position);
     }
+
 }

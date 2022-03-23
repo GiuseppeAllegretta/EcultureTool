@@ -22,6 +22,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterOggetto;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -169,7 +170,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         String oggettoSelezionato = oggettiList.get(position).getId();
         oggettiList.get(position);
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-        intent.putExtra("ID_OGGETTO", oggettoSelezionato);
+        intent.putExtra( Oggetto.Keys.ID, oggettoSelezionato);
+        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
         startActivity(intent);
     }
 }

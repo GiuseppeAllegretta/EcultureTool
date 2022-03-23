@@ -54,4 +54,8 @@ public class Luogo implements Serializable {
         public final static String SITO_CULTURALE = "Sito Culturale";
         public final static String MOSTRA_ITINERANTE = "Mostra Itinerante";
     }
+
+    public interface Keys{
+        final static String ID = "ID_LUOGO";
+    }
 }

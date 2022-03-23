@@ -75,6 +75,10 @@ public class Oggetto {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public interface Keys{
+        final static String ID = "ID_OGGETTO";
+    }
 }
 
 
