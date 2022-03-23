@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#06837F"
-            android:paddingBottom="15dp">
+            android:paddingBottom="1dp">
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/circle_border">
 
                 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -78,19 +79,6 @@
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgBox"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10sp"
-                android:fontFamily="sans-serif-light"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="26sp" />
-
 
         </RelativeLayout>
 

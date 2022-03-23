@@ -178,7 +178,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("nome").setValue(nome);
         connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("descrizione").setValue(descrizione);
 
-
         finish();
     }
 
