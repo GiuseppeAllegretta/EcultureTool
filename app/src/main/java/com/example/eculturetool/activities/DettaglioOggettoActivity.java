@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -119,6 +121,14 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         });
 
+        eliminaOggetto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomDialog();
+            }
+
+        });
+
         modificaOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,4 +140,43 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         });
 
     }
+
+
+    void showCustomDialog() {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_elimina_oggetto);
+
+        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_oggetto);
+        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_oggetto);
+
+        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
+        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
+        //successivamente all'eleminazione dello stesso nell'authentication db
+
+        dialog.show();
+
+        conferma.setOnClickListener(onClickListener ->
+                connection.getRefOggetti().child(luogoCorrente).child(idOggetto).removeValue().
+                        addOnCompleteListener(onCompleteListener -> {
+                            if (onCompleteListener.isSuccessful()) {
+                        /*Snackbar.make(findViewById(R.id.dettaglioOggettiActivity), "Oggetto eliminato", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("chiudi", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        finish();
+                                    }
+                                }).setBackgroundTint(getResources().getColor(R.color.verdePrimario))
+                                .setActionTextColor(getResources().getColor(R.color.white))
+                                .show();*/
+                                dialog.dismiss();
+                                finish();
+                            }
+                        }));
+
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
+    }
+
 }

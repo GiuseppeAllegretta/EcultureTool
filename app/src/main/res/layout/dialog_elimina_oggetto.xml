@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Vuoi cancellare definitivamente l'oggetto?"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/conferma_cancellazione_oggetto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:textAlignment="center"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:id="@+id/annulla_cancellazione_oggetto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:backgroundTint="@color/verdePrimario"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:padding="4dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
