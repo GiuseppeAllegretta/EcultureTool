@@ -5,9 +5,9 @@ public class Zona {
     private String nome;
     private String descrizione;
     private int numeroOggetti;
-    private static final int MAX_OGGETTI = 10;
 
-    public Zona(String nome, String descrizione, int numeroOggetti) {
+    public Zona(String id,String nome, String descrizione, int numeroOggetti) {
+        this.id=id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.numeroOggetti = numeroOggetti;
@@ -46,4 +46,7 @@ public class Zona {
     }
 
 
+    public interface Keys{
+        final static String ID = "ID_ZONA";
+    }
 }
