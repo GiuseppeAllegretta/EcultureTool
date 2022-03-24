@@ -24,6 +24,7 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
+import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +55,13 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome uno precedente
     List<Oggetto> oggettiList = new ArrayList<>();
 
+    //VARIABILI GESTIONE SPINNER PER LE ZONE
+    private Spinner spinnerZone;
+    private List<String> nomiZoneList = new ArrayList<>();
+    private List<Zona> zoneList = new ArrayList<>();
+    private ArrayAdapter<String> nomiZoneListAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +74,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         creaOggetto = findViewById(R.id.creaOggetto);
         progressBar = findViewById(R.id.progressAddOggetto);
         FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
+        spinnerZone = findViewById(R.id.spinner_zona_add);
 
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -120,6 +129,23 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 creazioneOggetto();
             }
         });
+
+        setZoneSpinner();
+    }
+
+
+    /**
+     * Metodo per settare l'elenco delle zone nello spinner relativo. Per ora ci sono solo valori statici
+     */
+    private void setZoneSpinner() {
+
+        nomiZoneList.add("room 1");
+        nomiZoneList.add("room 2");
+        nomiZoneList.add("room 3");
+
+        nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+        spinnerZone.setAdapter(nomiZoneListAdapter);
+
     }
 
     private void creazioneOggetto() {
