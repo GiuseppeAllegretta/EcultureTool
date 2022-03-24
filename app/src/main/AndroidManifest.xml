@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.eculturetool" >
+    package="com.example.eculturetool">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -43,10 +43,14 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EcultureTool" >
+        android:theme="@style/Theme.EcultureTool">
+        <activity
+            android:name=".activities.DettaglioZonaActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.AggiungiZonaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activities.ZoneActivity"/>
         <activity
             android:name=".activities.ZoneActivity"
             android:exported="false"
@@ -64,7 +68,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -147,7 +151,7 @@
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
-            android:theme="@style/Fullscreen" >
+            android:theme="@style/Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

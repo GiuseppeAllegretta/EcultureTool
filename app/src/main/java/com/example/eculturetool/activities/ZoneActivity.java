@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.eculturetool.R;
@@ -19,7 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ZoneActivity extends AppCompatActivity {
+public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener{
 
     private ArrayList<Zona> zoneList;
     private RecyclerView recyclerView;
@@ -78,11 +79,20 @@ public class ZoneActivity extends AppCompatActivity {
     }
 
     private void setAdapter(){
-        RecyclerAdapterZona adapter= new RecyclerAdapterZona(zoneList);
+        RecyclerAdapterZona adapter= new RecyclerAdapterZona(zoneList,this);
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onZonaClick(int position) {
+        zoneList.get(position);
+        System.out.println("POSIZIONE CLICCATA -->"+position);
+        Intent intent= new Intent(this,DettaglioZonaActivity.class);
+       // intent.putExtra("oggetto cliccato",valore);
+        startActivity(intent);
     }
 }
