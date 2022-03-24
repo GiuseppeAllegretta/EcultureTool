@@ -90,7 +90,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 });
 
         changeImg.setOnClickListener(onClickListener -> {
-            System.out.println("Button Clicked");
             Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
             uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
             startForObjectImageUpload.launch(uploadImageIntent);

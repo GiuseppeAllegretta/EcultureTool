@@ -1,24 +1,36 @@
 package com.example.eculturetool.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
@@ -27,20 +39,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DettaglioOggettoActivity extends AppCompatActivity {
 
     private Connection connection = new Connection();
-
+    public static final String OBJECTS_IMAGES_DIR = "objects_images";
+    private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private TextView nomeOggetto, descrizioneOggetto, tipologiaOggetto, zonaAppartenenza;
     private ImageView immagineOggetto;
     private FloatingActionButton cambiaImmagine, modificaOggetto;
     private Toolbar myToolbar;
     private Button eliminaOggetto;
     private Context context;
-
+    private Uri imgUri;
+    private Oggetto oggetto;
     private String idOggetto, luogoCorrente;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -67,11 +84,39 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         cambiaImmagine = findViewById(R.id.change_imgObject);
         modificaOggetto = findViewById(R.id.editOggetto);
         eliminaOggetto = findViewById(R.id.eliminaOggetto);
+        progressBar = findViewById(R.id.progress);
+
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
         idOggetto = intent.getStringExtra(Oggetto.Keys.ID);
         luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
+
+        startForObjectImageUpload = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                activityResult -> {
+                    Uri uri = null;
+                    if (activityResult.getData() != null) {
+                        uri = activityResult.getData().getData();
+                    }
+                    if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
+                        imgUri = uri;
+                        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("url").setValue(imgUri.toString());
+                        Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+                        }).circleCrop().into(immagineOggetto);
+                    }
+                });
 
     }
 
@@ -82,12 +127,13 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         connection.getRefOggetti().child(luogoCorrente).child(idOggetto).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Oggetto.class) != null) {
-                    getSupportActionBar().setTitle(snapshot.getValue(Oggetto.class).getNome());
-                    nomeOggetto.setText(snapshot.getValue(Oggetto.class).getNome());
-                    descrizioneOggetto.setText(snapshot.getValue(Oggetto.class).getDescrizione());
-                    Glide.with(context).load(snapshot.getValue(Oggetto.class).getUrl()).circleCrop().into(immagineOggetto);
-                    tipologiaOggetto.setText(setTipologia(snapshot.getValue(Oggetto.class).getTipologiaOggetto()));
+                oggetto = snapshot.getValue(Oggetto.class);
+                if (oggetto != null) {
+                    Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
+                    getSupportActionBar().setTitle(oggetto.getNome());
+                    nomeOggetto.setText(oggetto.getNome());
+                    descrizioneOggetto.setText(oggetto.getDescrizione());
+                    tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
                     //zonaAppartenenza.setText(snapshot.getValue(Luogo.class).getDescrizione());
                 }
             }
@@ -141,6 +187,12 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             }
         });
 
+        cambiaImmagine.setOnClickListener(onClickListener -> {
+            Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
+            uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
+            startForObjectImageUpload.launch(uploadImageIntent);
+        });
+
     }
 
     private String setTipologia(TipologiaOggetto tipologiaOggetto) {
@@ -150,22 +202,16 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             case QUADRO:
                 risultato = Oggetto.KeysTipologiaOggetto.QUADRO;
                 break;
-
             case STATUA:
                 risultato = Oggetto.KeysTipologiaOggetto.STATUA;
                 break;
-
             case SCULTURA:
                 risultato = Oggetto.KeysTipologiaOggetto.SCULTURA;
                 break;
-
             case ALTRO:
                 risultato = Oggetto.KeysTipologiaOggetto.ALTRO;
                 break;
         }
-
-
-
         return risultato;
     }
 
