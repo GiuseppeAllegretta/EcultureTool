@@ -3,6 +3,7 @@ package com.example.eculturetool.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,15 +14,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
@@ -49,7 +56,10 @@ public class ProfileFragment extends Fragment {
     protected static Curatore curatore;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
     private Button cambiaLuogo;
+    private Toolbar myToolbar;
     private ImageView imgUser;
+    private Uri imgUri;
+    private ProgressBar progressBar;
 
     //Variabile che tiene traccia del luogo corrente. Sarà avvalorata quando si otterrano i riferimenti del curatore attraverso snapshot
     private String luogoCorrente;
@@ -76,7 +86,21 @@ public class ProfileFragment extends Fragment {
                         DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                         //aggiorno l'url dell'immagine
                         if (uri != null) {
-                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                            imgUri = uri;
+                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(imgUri.toString());
+                            Glide.with(context).load(curatore.getImg()).listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            }).circleCrop().into(imgUser);
                         }
                     }
                 });
@@ -93,6 +117,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressBar = view.findViewById(R.id.progress);
+        myToolbar = view.findViewById(R.id.toolbarOggetto);
         Button logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         FloatingActionButton changeImg = view.findViewById(R.id.change_imgUser);
@@ -146,7 +172,19 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-                    Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+                    Glide.with(context).load(curatore.getImg()).listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    }).circleCrop().into(imgUser);
                 }
             }
 
@@ -158,7 +196,6 @@ public class ProfileFragment extends Fragment {
 
 
         changeImg.setOnClickListener(onClickListener -> {
-            System.out.println("Button Clicked");
             Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
             uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
             startForProfileImageUpload.launch(uploadImageIntent);
@@ -175,7 +212,6 @@ public class ProfileFragment extends Fragment {
         settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));
 
         logout.setOnClickListener(onClickListener -> logout());
-
     }
 
     public void logout() {

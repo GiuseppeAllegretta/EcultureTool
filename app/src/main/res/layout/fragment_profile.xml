@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment">
-
-
+    tools:context=".fragments.ProfileFragment"
+    android:id="@+id/profileFragment">
     <RelativeLayout
+        android:id="@+id/rellay1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <RelativeLayout
-            android:id="@+id/rellay1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#06837F"
-            android:paddingBottom="15dp">
-
+        android:layout_height="wrap_content"
+        android:background="#06837F"
+        android:paddingBottom="15dp">
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <ImageButton
                     android:id="@+id/settings_button"
                     android:layout_width="wrap_content"
@@ -32,53 +24,62 @@
                     android:layout_marginRight="10dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_action_settings" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <RelativeLayout
+            android:id="@+id/imgBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/circle_border">
 
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/progress"
+                    style="@style/SpinKitView.Large.Circle"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"
+                    app:SpinKit_Color="@color/gialloPrimario"
+                    app:layout_anchor="@+id/imgUser"
+                    app:layout_anchorGravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/imgUser"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginBottom="9dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/circle"
+                    android:padding="3dp"
+                    android:scaleType="centerInside" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/change_imgUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:backgroundTint="@color/gialloSecondario"
+                    android:clickable="true"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:tint="@color/black"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-            <RelativeLayout
-                android:id="@+id/imgBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/circle_border">
-
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imgUser"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="9dp"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginEnd="9dp"
-                        android:layout_marginBottom="9dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/circle"
-                        android:padding="3dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_museum" />
-
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/change_imgUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:backgroundTint="@color/gialloSecondario"
-                        android:clickable="true"
-                        android:src="@android:drawable/ic_menu_camera"
-                        android:tint="@color/black"
-                        app:elevation="0dp" />
-
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-            </RelativeLayout>
-
+        </RelativeLayout>
             <TextView
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
@@ -94,215 +95,193 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/linlay1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rellay1"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rellay1"
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linlay1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
 
-
-            <RelativeLayout
-                android:id="@+id/linlay2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linlay1">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="false"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="vertical">
+                    android:text="Email"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/profile_email"
-                            android:layout_marginTop="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text=""
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/grey" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
 
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/nome_profilo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nome"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/nome_profilo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text=""
-                            android:layout_marginTop="10dp"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/grey" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cognome"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
 
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/cognome_profilo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cognome"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/cognome_profilo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text=""
-                            android:layout_marginTop="10dp"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/grey" />
-
-                    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Luogo selezionato"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/luogo_selezionato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/cambia_luogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Cambia Luogo"
+                    android:textColor="@color/white" />
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Luogo selezionato"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
+            </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/luogo_selezionato"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:layout_marginTop="10dp"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/grey" />
-
-                    </LinearLayout>
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#D2D2D2"
+                    android:text="Esci"
+                    android:textColor="@color/black" />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/cambia_luogo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Cambia Luogo"
-                            android:textColor="@color/white" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/logout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:backgroundTint="#D2D2D2"
-                            android:text="Esci"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-            </RelativeLayout>
-
+            </LinearLayout>
+        </LinearLayout>
         </ScrollView>
-
-
-    </RelativeLayout>
-
+    </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:backgroundTint="@color/gialloSecondario"
         android:src="@android:drawable/ic_menu_edit"
         android:tint="@color/black"
-        android:backgroundTint="@color/gialloSecondario"
-        app:elevation="0dp" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:borderWidth="0dp"
+        app:fabSize="normal" />
+</RelativeLayout>
