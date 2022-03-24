@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
@@ -38,7 +36,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         fabAddLuogo = findViewById(R.id.addZona);
 
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarZone);
+        Toolbar myToolbar = findViewById(R.id.toolbarZone);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -46,12 +44,9 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         setSupportActionBar(myToolbar);
 
         //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Ritorna al fragment del profilo chiamante
-                finish();
-            }
+        myToolbar.setNavigationOnClickListener(view -> {
+            //Ritorna al fragment del profilo chiamante
+            finish();
         });
 
 
@@ -65,12 +60,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     protected void onStart() {
         super.onStart();
-        fabAddLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class));
-            }
-        });
+        fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
 
     }
 
