@@ -62,6 +62,9 @@ public class Connection {
     public DatabaseReference getRefOggetti() {
         return databaseReference.child("oggetti").child(user.getUid());
     }
+    public DatabaseReference getRefZone() {
+        return databaseReference.child("zone").child(user.getUid());
+    }
 
     public static String getUidCuratore() {
         return user.getUid();

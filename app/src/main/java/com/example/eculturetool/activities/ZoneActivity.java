@@ -65,11 +65,6 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     }
 
     private void setZoneInfo(){
-        zoneList.add(new Zona("Zona 1","La zona 1",10));
-        zoneList.add(new Zona("Zona 2","La zona 2",10));
-        zoneList.add(new Zona("Zona 3","La zona 3",10));
-        zoneList.add(new Zona("Zona 4","La zona 4",10));
-        zoneList.add(new Zona("Zona 5","La zona 5",10));
     }
 
     private void setAdapter(){
