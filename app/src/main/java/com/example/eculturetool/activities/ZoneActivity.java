@@ -1,6 +1,7 @@
 package com.example.eculturetool.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eculturetool.R;
@@ -25,6 +28,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     private ArrayList<Zona> zoneList;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddLuogo;
+    RecyclerAdapterZona adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     }
 
     private void setAdapter(){
-        RecyclerAdapterZona adapter= new RecyclerAdapterZona(zoneList,this);
+        adapter= new RecyclerAdapterZona(zoneList,this);
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -90,9 +94,30 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     public void onZonaClick(int position) {
         zoneList.get(position);
-        System.out.println("POSIZIONE CLICCATA -->"+position);
+        System.out.println("POSIZIONE CLICCATA --> "+position);
         Intent intent= new Intent(this,DettaglioZonaActivity.class);
        // intent.putExtra("oggetto cliccato",valore);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.oggetti_menu,menu);
+        MenuItem item=menu.findItem(R.id.ricerca);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

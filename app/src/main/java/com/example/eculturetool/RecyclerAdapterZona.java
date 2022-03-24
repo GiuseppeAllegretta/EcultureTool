@@ -3,23 +3,65 @@ package com.example.eculturetool;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZona.ZoneViewHolder> {
+public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZona.ZoneViewHolder> implements Filterable {
     private ArrayList<Zona> zoneList;
     private OnZonaListener mOnZonaListener;
+    private ArrayList<Zona> zoneListAll;
+
 
     public RecyclerAdapterZona(ArrayList<Zona> zoneList, OnZonaListener onZonaListener) {
         this.zoneList = zoneList;
         this.mOnZonaListener=onZonaListener;
+        this.zoneListAll= new ArrayList<>(zoneList);
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter= new Filter() {
+        //run on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Zona> filteredList = new ArrayList<>();
+
+            if(charSequence.toString().isEmpty()){
+                filteredList.addAll(zoneListAll);
+            }else {
+                for(Zona zona: zoneListAll){
+                    if(zona.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filteredList.add(zona);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+        //runs on a UI thread
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            zoneList.clear();
+            zoneList.addAll((Collection<? extends Zona>) filterResults.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
 
     public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
