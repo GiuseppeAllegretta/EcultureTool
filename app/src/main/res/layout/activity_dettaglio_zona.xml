@@ -1,9 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DettaglioZonaActivity">
+    tools:context=".activities.DettaglioZonaActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nomeLuogoDettaglio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome Zona"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/nomeZonaDettaglio"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descrizione"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/descrizioneZonaDettaglio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Numero massimo di oggetti"
+                    android:textColor="@color/headings"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/numeroOggettiDettaglio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/impostaLuogoCorrente"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/verdePrimario"
+                    android:text="Seleziona luogo"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editLuogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:backgroundTint="@color/gialloSecondario"
+        android:src="@android:drawable/ic_menu_edit"
+        app:fabSize="normal" />
+
+
+</RelativeLayout>
