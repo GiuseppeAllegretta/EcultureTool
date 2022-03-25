@@ -10,10 +10,14 @@ import android.widget.ProgressBar;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AggiungiZonaActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private static final int MAX_OGGETTI = 10;
     private String luogoCorrente;
+    List<Zona> zoneList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +41,29 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         creaZona=findViewById(R.id.creaZona);
 
 
+        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(String.class) != null){
+                    luogoCorrente = snapshot.getValue(String.class).toString();
+                    zoneList = getListZoneCreate();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         creaZona.setOnClickListener(view -> creazioneZona());
+
     }
 
     private void creazioneZona() {
@@ -55,6 +77,12 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             nomeZona.requestFocus();
             return;
         }
+        if (controlloEsistenzaNomeZona(nome)) {
+            nomeZona.requestFocus();
+            nomeZona.setError("Nome già esistente");
+            return;
+        }
+
         if (descrizione.isEmpty()) {
             descrizioneZona.setError("La descrizione è richiesta");
             descrizioneZona.requestFocus();
@@ -66,6 +94,11 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             numeroMax = Integer.parseInt(numeroMaxString);
         }else
             numeroMax=Integer.parseInt(numeroMaxString);
+            if(numeroMax>MAX_OGGETTI){
+                numeroOggetti.setError("Attenzione! Il numero massimo è 10");
+                descrizioneZona.requestFocus();
+                return;
+            }
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -106,5 +139,49 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         finish();
 
 
+    }
+
+    private boolean controlloEsistenzaNomeZona(String nomeZona) {
+        boolean isEsistente = false;
+        nomeZona = this.nomeZona.getText().toString();
+
+        for (int i = 0; i < zoneList.size(); i++) {
+            if (nomeZona.compareToIgnoreCase(zoneList.get(i).getNome()) == 0) {
+                System.out.println("nome corrente: " + zoneList.get(i).getNome());
+                isEsistente = true;
+            }
+        }
+
+        return isEsistente;
+    }
+
+
+    private List<Zona> getListZoneCreate() {
+
+        List<Zona> zone = new ArrayList<>();
+
+        System.out.println("Luogo corrente" + luogoCorrente);
+        connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+                int count = (int) snapshot.getChildrenCount();
+                System.out.println("count: " + count);
+
+                Zona zona;
+
+                for (int i = 0; i < count; i++) {
+                    zone.add(iteratore.iterator().next().getValue(Zona.class));
+                }
+                System.out.println(zone);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return zone;
     }
 }
