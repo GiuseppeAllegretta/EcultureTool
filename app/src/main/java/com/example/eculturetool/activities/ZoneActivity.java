@@ -1,5 +1,6 @@
 package com.example.eculturetool.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -16,17 +17,25 @@ import android.view.MenuItem;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener{
+public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener {
 
+
+    private final Connection connection = new Connection();
     private ArrayList<Zona> zoneList;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddLuogo;
     RecyclerAdapterZona adapter;
+    private String luogoCorrente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +59,10 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         });
 
 
-        recyclerView=findViewById(R.id.recyclerViewZone);
-        zoneList=new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerViewZone);
+        zoneList = new ArrayList<>();
 
         setZoneInfo();
-        setAdapter();
     }
 
     @Override
@@ -64,12 +72,10 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
     }
 
-    private void setZoneInfo(){
-    }
 
-    private void setAdapter(){
-        adapter= new RecyclerAdapterZona(zoneList,this);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getApplicationContext());
+    private void setAdapter() {
+        adapter = new RecyclerAdapterZona(zoneList, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -79,16 +85,16 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     public void onZonaClick(int position) {
         zoneList.get(position);
-        System.out.println("POSIZIONE CLICCATA --> "+position);
-        Intent intent= new Intent(this,DettaglioZonaActivity.class);
-       // intent.putExtra("oggetto cliccato",valore);
+        System.out.println("POSIZIONE CLICCATA --> " + position);
+        Intent intent = new Intent(this, DettaglioZonaActivity.class);
+        // intent.putExtra("oggetto cliccato",valore);
         startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.oggetti_menu,menu);
-        MenuItem item=menu.findItem(R.id.ricerca);
+        getMenuInflater().inflate(R.menu.oggetti_menu, menu);
+        MenuItem item = menu.findItem(R.id.ricerca);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -104,5 +110,43 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setZoneInfo() {
+        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(Curatore.class) != null) {
+
+                    //Ottengo il luogo corrente del curatore
+                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+
+                    connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+                            int count = (int) snapshot.getChildrenCount();
+
+                            zoneList.clear();
+                            for (int i = 0; i < count; i++) {
+                                zoneList.add(iteratore.iterator().next().getValue(Zona.class));
+                            }
+                            setAdapter();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
