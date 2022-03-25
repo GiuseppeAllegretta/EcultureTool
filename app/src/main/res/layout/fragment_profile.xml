@@ -100,6 +100,10 @@
 
         </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rellay1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,10 +111,6 @@
         android:layout_below="@id/rellay1"
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linlay1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -272,13 +272,13 @@
                     android:backgroundTint="#D2D2D2"
                     android:text="Esci"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="100dp"/>
+                    android:layout_marginBottom="100dp" />
 
 
             </LinearLayout>
         </LinearLayout>
-        </ScrollView>
     </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
