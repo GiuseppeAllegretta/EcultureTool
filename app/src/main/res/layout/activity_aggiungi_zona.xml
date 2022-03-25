@@ -4,215 +4,220 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AggiungiLuogoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.AggiungiLuogoActivity">
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-
-
-
-    <LinearLayout
-        android:id="@+id/linlay1"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linlay1">
-
-
-      <RelativeLayout
-          android:id="@+id/linlay2"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/linlay1">
 
         <LinearLayout
+            android:id="@+id/linlay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical">
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="Luogo selezioanto:"
-              android:gravity="center"
-              android:textSize="20sp"
-              android:layout_marginBottom="4dp"/>
-
-          <TextView
-              android:id="@+id/luogo_selezionato_crea_zona"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:text="NOME LUOGO SELEZIONATO"
-              android:gravity="center"
-              android:textStyle="bold|italic"
-              android:textSize="20sp"
-              android:layout_marginBottom="2dp"/>
-          <View
-              android:layout_width="match_parent"
-              android:layout_height="3dp"
-              android:layout_marginTop="3dp"
-              android:background="@color/verdePrimario" />
-
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="15dp"
-              android:orientation="vertical">
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome Zona"
-                android:textColor="@color/headings"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/nome_zona_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="sans-serif-light"
-                android:text=""
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="3dp"
-                android:background="@color/grey" />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="15dp"
-              android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descrizione Zona"
-                android:textColor="@color/headings"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/descrizione_zona_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="sans-serif-light"
-                android:text=""
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
-                android:background="@color/grey" />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="15dp"
-              android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Numero massimo di oggetti"
-                android:textColor="@color/headings"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/numeroOggetti_zona_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="sans-serif-light"
-                android:text=""
-                android:inputType="number"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
-                android:background="@color/grey" />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:layout_marginTop="50dp"
-              android:orientation="vertical"
-              android:layout_marginLeft="15dp"
-              android:layout_marginRight="15dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/creaZona"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Crea Zona"
-                android:textSize="20dp"
-                android:background="@drawable/button_state"
-                android:textColor="@color/white"
-                android:gravity="center" />
-          </LinearLayout>
-
-          <com.github.ybq.android.spinkit.SpinKitView
-              android:id="@+id/progressAddZona"
-              style="@style/SpinKitView.Large.Circle"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_centerInParent="true"
-              android:visibility="invisible"
-              app:SpinKit_Color="@color/verdePrimario"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintLeft_toLeftOf="parent"
-              app:layout_constraintRight_toRightOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              android:layout_gravity="center"
-              tools:ignore="MissingConstraints" />
+            android:orientation="horizontal">
 
 
         </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay1">
 
-      </RelativeLayout>
 
-    </ScrollView>
+            <RelativeLayout
+                android:id="@+id/linlay2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linlay1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="false"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="vertical">
+                    <!--<TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Luogo selezioanto:"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:id="@+id/luogo_selezionato_crea_zona"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="NOME LUOGO SELEZIONATO"
+                        android:gravity="center"
+                        android:textStyle="bold|italic"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="2dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/verdePrimario" />-->
 
 
-  </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nome Zona*"
+                            android:textColor="@color/headings"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/nome_zona_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Descrizione Zona*"
+                            android:textColor="@color/headings"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/descrizione_zona_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="1dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Numero massimo di oggetti"
+                            android:textColor="@color/headings"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/numeroOggetti_zona_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:inputType="number"
+                            android:text=""
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="1dp"
+                            android:background="@color/grey" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="N.B. Se il campo sovrastante viene lasciato vuoto, il numero di oggetti viene settato di default a 10."
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/creaZona"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_state"
+                            android:gravity="center"
+                            android:text="Crea Zona"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/progressAddZona"
+                        style="@style/SpinKitView.Large.Circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:visibility="invisible"
+                        app:SpinKit_Color="@color/verdePrimario"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="MissingConstraints" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
