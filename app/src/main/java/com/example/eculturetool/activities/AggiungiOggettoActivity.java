@@ -60,6 +60,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private List<String> nomiZoneList = new ArrayList<>();
     private List<Zona> zoneList = new ArrayList<>();
     private ArrayAdapter<String> nomiZoneListAdapter;
+    private int countZone;
 
 
     @Override
@@ -138,9 +139,50 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
      */
     private void setZoneSpinner() {
 
-        nomiZoneList.add("room 1");
-        nomiZoneList.add("room 2");
-        nomiZoneList.add("room 3");
+        System.out.println("Luogo corrente: " + luogoCorrente);
+
+        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(String.class) != null) {
+                    luogoCorrente = snapshot.getValue(String.class).toString();
+
+                    connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.getValue(Zona.class) != null){
+                                Iterable<DataSnapshot> iteratoreZone = snapshot.getChildren();
+                                countZone = (int) snapshot.getChildrenCount();
+                                System.out.println("countZone: " + countZone);
+
+                                //Avvalora zoneList con tutte le zone prese da db
+                                for(int i = 0; i < countZone; i++){
+                                    zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
+                                }
+
+                                //Avvalora nomiZoneList con i nomi di ogni singola zona
+                                for(int i = 0; i < countZone; i++){
+                                    nomiZoneList.add(zoneList.get(i).getNome());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
         spinnerZone.setAdapter(nomiZoneListAdapter);

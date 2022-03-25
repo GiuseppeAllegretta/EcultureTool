@@ -6,6 +6,10 @@ public class Zona {
     private String descrizione;
     private int numeroOggetti;
 
+    private Zona(){
+
+    }
+
     public Zona(String id,String nome, String descrizione, int numeroOggetti) {
         this.id=id;
         this.nome = nome;
