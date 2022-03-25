@@ -84,10 +84,9 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
     @Override
     public void onZonaClick(int position) {
-        zoneList.get(position);
-        System.out.println("POSIZIONE CLICCATA --> " + position);
+        String zonaSelezionata=zoneList.get(position).getId();
         Intent intent = new Intent(this, DettaglioZonaActivity.class);
-        // intent.putExtra("oggetto cliccato",valore);
+        intent.putExtra("ZONA",zonaSelezionata);
         startActivity(intent);
     }
 
