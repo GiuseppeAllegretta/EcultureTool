@@ -134,7 +134,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     nomeOggetto.setText(oggetto.getNome());
                     descrizioneOggetto.setText(oggetto.getDescrizione());
                     tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
-                    //zonaAppartenenza.setText(snapshot.getValue(Luogo.class).getDescrizione());
+                    zonaAppartenenza.setText(snapshot.getValue(Oggetto.class).getZonaAppartenenza());
                 }
             }
 

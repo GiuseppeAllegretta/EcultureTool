@@ -31,7 +31,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     private Spinner tipologiaLuogo;
     private Button creaLuogo;
     private ProgressBar progressBar;
-
     private Tipologia tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
@@ -115,7 +114,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         progressBar.setVisibility(View.INVISIBLE);
 
         finish();
-
     }
 
 
@@ -186,9 +184,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             case "Sito culturale":
                 tipologia = Tipologia.SITO_CULTURALE;
                 break;
-
         }
-
     }
 
     @Override
