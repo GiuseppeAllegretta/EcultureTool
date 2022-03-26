@@ -90,10 +90,6 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
                     break;
-                case R.id.places:
-                    startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
-                    //replaceFragment(new PlacesFragment());
-                    break;
                 case R.id.qr_scanner:
                     replaceFragment(new QRScannerFragment());
                     break;
