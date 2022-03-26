@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1355" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.151" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.2796296296296296" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.33" />
-        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.33" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.5" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -49,7 +50,6 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.2059071729957806" />
-        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -80,14 +80,24 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
+        <entry key="app/src/main/res/drawable-anydpi/circle.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable-anydpi/circle_border.xml" value="0.161" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.16" />
+        <entry key="app/src/main/res/drawable/button_shape_pressed.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/button_state.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/ic_add_to_percorso.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.308" />
+        <entry key="app/src/main/res/drawable/ic_edit_descrizione.xml" value="0.161" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.20107727050781252" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12563323201621074" />
         <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="1.0250508626302084" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4551467895507813" />
         <entry key="app/src/main/res/layout/home.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/image_item.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
