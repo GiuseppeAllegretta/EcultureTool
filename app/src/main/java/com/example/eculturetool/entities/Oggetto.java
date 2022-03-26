@@ -8,6 +8,7 @@ public class Oggetto {
     private String urlImmagine;
     private String urlQrcode;
     private TipologiaOggetto tipologiaOggetto;
+    private String zonaAppartenenza;
 
     public Oggetto() {
 
@@ -24,6 +25,11 @@ public class Oggetto {
     public Oggetto(String id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto){
         this(id, nome, descrizione, urlImmagine);
         this.tipologiaOggetto = tipologiaOggetto;
+    }
+
+    public Oggetto (String id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, String zonaAppartenenza){
+        this(id, nome, descrizione, urlImmagine, tipologiaOggetto);
+        this.zonaAppartenenza = zonaAppartenenza;
     }
 
     public String getId() {
@@ -83,6 +89,10 @@ public class Oggetto {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getZonaAppartenenza() {
+        return zonaAppartenenza;
     }
 
     public interface Keys{

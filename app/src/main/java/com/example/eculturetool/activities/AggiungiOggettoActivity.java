@@ -40,13 +40,13 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Connection connection = new Connection();
 
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
+    protected static Curatore curatore;
 
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
     private ProgressBar progressBar;
     private String luogoCorrente;
-    protected static Curatore curatore;
     private ImageView imgOggetto;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private Uri imgUri;
@@ -61,6 +61,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private List<Zona> zoneList = new ArrayList<>();
     private ArrayAdapter<String> nomiZoneListAdapter;
     private int countZone;
+    private String zonaSelezionata;
 
 
     @Override
@@ -96,6 +97,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             startForObjectImageUpload.launch(uploadImageIntent);
         });
 
+        //Queste operazioni consentono di recuperare tutti gli oggetti che appartengono a uno stesso luogo
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,6 +118,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     protected void onStart() {
         super.onStart();
 
+        setZoneSpinner();
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_oggetti, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -130,7 +134,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        setZoneSpinner();
     }
 
 
@@ -155,15 +158,18 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                                 countZone = (int) snapshot.getChildrenCount();
                                 System.out.println("countZone: " + countZone);
 
+                                zoneList.clear(); //pulisce la lista prima di riempirla
                                 //Avvalora zoneList con tutte le zone prese da db
                                 for(int i = 0; i < countZone; i++){
                                     zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
                                 }
 
+                                nomiZoneList.clear(); //pulisce la lista prima di riempirla
                                 //Avvalora nomiZoneList con i nomi di ogni singola zona
                                 for(int i = 0; i < countZone; i++){
                                     nomiZoneList.add(zoneList.get(i).getNome());
                                 }
+
                             }
                         }
 
@@ -173,8 +179,22 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                         }
                     });
 
-
                 }
+
+                nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+                spinnerZone.setAdapter(nomiZoneListAdapter);
+                spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        zonaSelezionata = nomiZoneList.get(i);
+                        System.out.println("Zona selezionata: " + zonaSelezionata);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
             }
 
@@ -184,8 +204,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
-        spinnerZone.setAdapter(nomiZoneListAdapter);
 
     }
 
@@ -223,7 +241,9 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         //Scrittura dell'oggetto sul Realtime Database
         String key = connection.getRefOggetti().push().getKey();
-        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString(), tipologia);
+        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
+
+        System.out.println("Oggetto inserito: " + oggetto.toString());
 
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
@@ -249,7 +269,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         progressBar.setVisibility(View.INVISIBLE);
 
         finish();
-
     }
 
 
@@ -325,6 +344,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 tipologia = TipologiaOggetto.ALTRO;
                 break;
         }
+
     }
 
     @Override
