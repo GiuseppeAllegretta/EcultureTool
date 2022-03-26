@@ -111,7 +111,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                progressBar.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.VISIBLE);
                                 return false;
                             }
                         }).circleCrop().into(immagineOggetto);

@@ -97,7 +97,7 @@ public class ProfileFragment extends Fragment {
 
                                 @Override
                                 public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    progressBar.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.VISIBLE);
                                     return false;
                                 }
                             }).circleCrop().into(imgUser);
@@ -172,19 +172,7 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-                    Glide.with(context).load(curatore.getImg()).listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
-                    }).circleCrop().into(imgUser);
+                    Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
                 }
             }
 
