@@ -25,6 +25,7 @@ import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.fragments.DialogAddOggettoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,6 +78,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         progressBar = findViewById(R.id.progressAddOggetto);
         FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
+
 
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -158,6 +160,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                                 countZone = (int) snapshot.getChildrenCount();
                                 System.out.println("countZone: " + countZone);
 
+
                                 zoneList.clear(); //pulisce la lista prima di riempirla
                                 //Avvalora zoneList con tutte le zone prese da db
                                 for(int i = 0; i < countZone; i++){
@@ -170,6 +173,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                                     nomiZoneList.add(zoneList.get(i).getNome());
                                 }
 
+                                nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+                                spinnerZone.setAdapter(nomiZoneListAdapter);
                             }
                         }
 
@@ -181,8 +186,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
                 }
 
-                nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
-                spinnerZone.setAdapter(nomiZoneListAdapter);
                 spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -207,7 +210,16 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
     }
 
+    private void openDialog() {
+        if (countZone == 0) {
+            System.out.println("Count Zone open Dialog " + countZone);
+            DialogAddOggettoFragment dialogAddOggettoFragment = new DialogAddOggettoFragment();
+            dialogAddOggettoFragment.show(getSupportFragmentManager(), "dialog");
+        }
+    }
+
     private void creazioneOggetto() {
+        openDialog();
 
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
