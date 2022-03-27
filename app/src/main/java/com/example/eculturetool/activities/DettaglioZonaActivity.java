@@ -2,9 +2,13 @@ package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.eculturetool.R;
@@ -20,11 +24,26 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     private String idZona;
     private TextView nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
+    private Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_zona);
+        myToolbar =findViewById(R.id.toolbarZona);
+
+        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
+        Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
+        myToolbar.setNavigationIcon(freccia_indietro);
+        setSupportActionBar(myToolbar);
+
+        //Azione da eseguire quando si clicca la freccia di navigazione
+        myToolbar.setNavigationOnClickListener(view -> {
+            //Ritorna al fragment del profilo chiamante
+            finish();
+        });
+
+
 
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);

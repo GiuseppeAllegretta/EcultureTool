@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activities.DettaglioZonaActivity"
     android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarZona"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/verdePrimario"
+        android:backgroundTintMode="src_over"
+        android:elevation="8dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/white" />
 
 
     <LinearLayout
@@ -138,11 +149,11 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/impostaLuogoCorrente"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/verdePrimario"
-                    android:text="Seleziona luogo"
+                    android:text="?Aggiungi oggetti?"
                     android:padding="10dp"
                     android:textColor="@color/white"
                     android:textSize="16sp" />

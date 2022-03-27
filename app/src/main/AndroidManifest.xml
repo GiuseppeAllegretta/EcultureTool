@@ -46,7 +46,8 @@
         android:theme="@style/Theme.EcultureTool">
         <activity
             android:name=".activities.DettaglioZonaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.AggiungiZonaActivity"
             android:exported="false"
