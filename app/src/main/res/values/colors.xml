@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="verdePrimario">#06837F</color>
     <color name="verdeSecondario">#02CECB</color>
     <color name="verdeTerziario">#B4FFFF</color>
@@ -14,6 +15,9 @@
     <color name="gialloSecondario">#FDC100</color>
     <color name="opacityWhite">#80FFFFFF</color>
     <color name="opacityBlack">#90000000</color>
+    
+    <color name="customWhite">#efefef</color>
+    <color name="lightWhiteGreen">#b8cfba</color>
 
 
     <color name="address">#2F7092</color>

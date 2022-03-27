@@ -35,6 +35,20 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/upload_image_options.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/ic_exit.xml" value="0.1" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_state.xml" value="0.1" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/gradient_background.xml" value="0.152" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/ic_expand_up.xml" value="0.1" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.34814814814814815" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/home.xml" value="0.2388888888888889" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/object_lower_menu.xml" value="0.34814814814814815" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.34814814814814815" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.34814814814814815" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/upload_image_options.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/ic_action_settings.xml" value="0.229" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1675" />
@@ -49,8 +63,7 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.2059071729957806" />
-        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.1" />
-        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.18691588785046728" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -102,7 +115,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

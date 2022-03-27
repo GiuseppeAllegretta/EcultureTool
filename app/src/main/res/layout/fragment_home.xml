@@ -1,224 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.EcultureTool.NoActionBar">
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activities.HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@id/nomeCuratore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/posterama_1927_light"
+            android:text="Nome Utente"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/nomeLuogoHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nomeCuratore"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="50dp"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/percorsiCard"
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/lightWhiteGreen"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/verdePrimario">
-
-            <TextView
-                android:id="@id/nomeCuratore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:text="Nome Utente"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/nomeLuogoHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nomeCuratore"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="25dp"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:alignmentMode="alignMargins"
-                android:columnCount="1"
-                android:columnOrderPreserved="false"
-                android:rowCount="3">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_percorsi"
+                    android:backgroundTint="@color/black"
+                    android:padding="10dp" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/percorsiCard"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
-                    app:cardMaxElevation="12dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="true">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="Percorsi"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <!--
-                    In the above cardview widget
-                    cardelevation property will give elevation to your card view
-                    card corner radius will provide radius to your card view
-                    card background color will give background color to your card view
-                    card max elevation will give the cardview maximum elevation
-                    card prevent corner overlap will add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners.
-                    card use compact padding will add padding in API v21+ as well to have the same measurements with previous versions.
-                    below are the two widgets imageview and text view we are displaying inside our card view.
-                    -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/luoghiCard"
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/lightWhiteGreen"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
 
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:columnCount="2"
-                        android:rowCount="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/percorso" />
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_luoghi"
+                    android:backgroundTint="@color/black"
+                    android:padding="10dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:text="Percorsi"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
-
-
-                    </GridLayout>
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/zoneCard"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
-                    app:cardMaxElevation="12dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="true">
-
-                    <!--
-                    In the above cardview widget
-                    cardelevation property will give elevation to your card view
-                    card corner radius will provide radius to your card view
-                    card background color will give background color to your card view
-                    card max elevation will give the cardview maximum elevation
-                    card prevent corner overlap will add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners.
-                    card use compact padding will add padding in API v21+ as well to have the same measurements with previous versions.
-                    below are the two widgets imageview and text view we are displaying inside our card view.
-                    -->
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:columnCount="2"
-                        android:rowCount="1">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/mappa" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:text="Zone"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
-
-
-                    </GridLayout>
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/oggettiCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
-                    app:cardMaxElevation="12dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="true">
-
-                    <!--
-                    In the above cardview widget
-                    cardelevation property will give elevation to your card view
-                    card corner radius will provide radius to your card view
-                    card background color will give background color to your card view
-                    card max elevation will give the cardview maximum elevation
-                    card prevent corner overlap will add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners.
-                    card use compact padding will add padding in API v21+ as well to have the same measurements with previous versions.
-                    below are the two widgets imageview and text view we are displaying inside our card view.
-                    -->
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:columnCount="2"
-                        android:rowCount="1">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/oggetti" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:text="Oggetti"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
-
-
-                    </GridLayout>
-                </androidx.cardview.widget.CardView>
-
-
-            </GridLayout>
-
-        </ScrollView>
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="Luoghi"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/zoneCard"
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/lightWhiteGreen"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_zone"
+                    android:backgroundTint="@color/black"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="Zone"
+                    android:textColor="@color/customWhite"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/oggettiCard"
+            android:layout_width="160dp"
+            android:layout_height="190dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/lightWhiteGreen"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_oggetti"
+                    android:backgroundTint="@color/black"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="Oggetti"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

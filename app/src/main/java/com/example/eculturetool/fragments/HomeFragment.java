@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference myRef;
 
     private TextView tv, luogoGestito;
-    private CardView oggetti,zone;
+    private CardView percorsi, luoghi, zone, oggetti;
     private String luogoCorrente;
 
 
@@ -71,8 +71,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tv = view.findViewById(R.id.nomeCuratore);
+        percorsi = view.findViewById(R.id.percorsiCard);
+        luoghi = view.findViewById(R.id.luoghiCard);
+        zone = view.findViewById(R.id.zoneCard);
         oggetti = view.findViewById(R.id.oggettiCard);
-        zone= view.findViewById(R.id.zoneCard);
         luogoGestito = view.findViewById(R.id.nomeLuogoHome);
 
         myRef = connection.getRefCuratore();
