@@ -10,6 +10,7 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.33" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.13703703703703704" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -102,7 +103,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -257,7 +257,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         System.out.println("Oggetto inserito: " + oggetto.toString());
 
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+        connection.getRefOggetti().child(luogoCorrente).child(key).setValue(oggetto);
+
+        //CODICE ERRATO
+        /*connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(String.class) != null) {
@@ -275,7 +278,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
