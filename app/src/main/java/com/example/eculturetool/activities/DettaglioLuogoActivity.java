@@ -25,7 +25,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     private final Connection connection = new Connection();
 
-    private TextView nomeLuogo, nomeLuogoPiccolo, descrizioneLuogo, tipologiaLuogo;
+    private TextView nomeLuogo, descrizioneLuogo, tipologiaLuogo;
     private String idLuogo;
     private Button impostaLuogoCorrente;
     private Button eliminaLuogo;
@@ -42,8 +42,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dettaglio_luogo);
 
         //Dichiarazione degli elementi della View
-        nomeLuogo = findViewById(R.id.nomeLuogoDettaglio);
-        nomeLuogoPiccolo = findViewById(R.id.nomeLuogoDettaglioPiccolo);
+        nomeLuogo = findViewById(R.id.nomeLuogoDettaglioPiccolo);
         descrizioneLuogo = findViewById(R.id.descrizioneDettaglio);
         tipologiaLuogo = findViewById(R.id.tipologiaDettaglio);
         impostaLuogoCorrente = findViewById(R.id.impostaLuogoCorrente);
@@ -66,8 +65,8 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Luogo.class) != null) {
+                    getSupportActionBar().setTitle(snapshot.getValue(Luogo.class).getNome());
                     nomeLuogo.setText(snapshot.getValue(Luogo.class).getNome());
-                    nomeLuogoPiccolo.setText(snapshot.getValue(Luogo.class).getNome());
                     descrizioneLuogo.setText(snapshot.getValue(Luogo.class).getDescrizione());
                     tipologiaLuogo.setText(setTipologia(snapshot.getValue(Luogo.class).getTipologia()));
                 }
