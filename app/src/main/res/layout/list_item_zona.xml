@@ -37,7 +37,9 @@
                 android:textStyle="bold"
                 android:text="Nome Zona"
                 android:textSize="22sp"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
             <TextView
                 android:id="@+id/descrizioneZona"
                 android:layout_width="wrap_content"
