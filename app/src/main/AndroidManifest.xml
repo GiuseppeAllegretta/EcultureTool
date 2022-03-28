@@ -45,13 +45,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
-            android:name=".activities.DettaglioZonaActivity"
+            android:name=".activities.ModificaZonaActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
+            android:name=".activities.DettaglioZonaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".activities.AggiungiZonaActivity"
             android:exported="false"
-            android:parentActivityName=".activities.ZoneActivity"/>
+            android:parentActivityName=".activities.ZoneActivity" />
         <activity
             android:name=".activities.ZoneActivity"
             android:exported="false"

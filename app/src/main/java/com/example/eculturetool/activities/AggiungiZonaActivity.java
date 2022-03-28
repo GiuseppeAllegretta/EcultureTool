@@ -96,7 +96,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             numeroMax=Integer.parseInt(numeroMaxString);
             if(numeroMax>MAX_OGGETTI){
                 numeroOggetti.setError("Attenzione! Il numero massimo è 10");
-                descrizioneZona.requestFocus();
+                numeroOggetti.requestFocus();
                 return;
             }
 

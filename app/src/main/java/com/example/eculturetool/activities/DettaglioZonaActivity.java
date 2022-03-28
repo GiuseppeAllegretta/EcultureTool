@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
+import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -25,12 +28,13 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     private TextView nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
     private Toolbar myToolbar;
+    private FloatingActionButton modificaZona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_zona);
-        myToolbar =findViewById(R.id.toolbarZona);
+        myToolbar = findViewById(R.id.toolbarZona);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -44,10 +48,10 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         });
 
 
-
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);
         numeroMaxOggettiZona = findViewById(R.id.numeroOggettiDettaglio);
+        modificaZona = findViewById(R.id.editZona);
 
         //recupero dati dall'intent
 
@@ -89,6 +93,17 @@ public class DettaglioZonaActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+
+        modificaZona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ModificaZonaActivity.class);
+                intent.putExtra(Luogo.Keys.ID, luogoCorrente);
+                intent.putExtra(Zona.Keys.ID, idZona);
+                startActivity(intent);
             }
         });
 
