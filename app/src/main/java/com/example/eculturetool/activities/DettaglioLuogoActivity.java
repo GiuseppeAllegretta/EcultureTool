@@ -21,6 +21,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
     private final Connection connection = new Connection();
@@ -35,6 +38,8 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private int numeroLuoghi;
     private String luogoCorrente;
     private static final int MIN_LUOGHI = 1;
+    private List<Luogo> luoghiList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,27 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         idLuogo = intent.getStringExtra("LUOGO");
 
         searchLuogoCorrente();
+
+        mListenerDeleteLuogo = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                numeroLuoghi = (int) snapshot.getChildrenCount();
+                System.out.println("numeroLuoghi: " + numeroLuoghi);
+
+                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
+
+                for(int i = 0; i < numeroLuoghi; i++){
+                    luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        connection.getRefLuogo().addValueEventListener(mListenerDeleteLuogo);
+
     }
 
     @Override
@@ -146,15 +172,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         eliminaLuogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                connection.getRefLuogo().addValueEventListener(mListenerDeleteLuogo);
-            }
-        });
-
-        mListenerDeleteLuogo = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                numeroLuoghi = (int) snapshot.getChildrenCount();
-                System.out.println("numeroLuoghi: " + numeroLuoghi);
 
                 if (numeroLuoghi == MIN_LUOGHI) {
                     System.out.println("Primo if numero luoghi: " + numeroLuoghi);
@@ -162,11 +179,10 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
                     if (idLuogo.compareTo(luogoCorrente) == 0) {
-                        Iterable<DataSnapshot> iteratore = snapshot.getChildren();
 
                         String luogoSelezionato;
                         for (int i = 0; i < numeroLuoghi; i++) {
-                            luogoSelezionato = iteratore.iterator().next().getValue(Luogo.class).getId();
+                            luogoSelezionato = luoghiList.get(i).getId();
                             if (idLuogo.compareTo(luogoSelezionato) != 0) {
                                 System.out.println("if del break: ");
                                 connection.getRefCuratore().child("luogoCorrente").setValue(luogoSelezionato);
@@ -184,13 +200,9 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                     }
                     showDialog();
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
+        });
 
     }
 
