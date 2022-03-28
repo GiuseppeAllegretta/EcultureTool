@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center|left"
-            android:layout_marginLeft="30dp">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="80dp">
 
             <TextView
                 android:id="@+id/nomeOggetto"
@@ -41,7 +42,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrizione completa dell'oggetto"
-                android:layout_gravity="center|left"/>
+                android:layout_gravity="center|left"
+                android:maxLines="3"
+                android:ellipsize="end"/>
 
         </GridLayout>
 
