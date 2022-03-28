@@ -1,5 +1,7 @@
 package com.example.eculturetool.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +34,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private ValueEventListener mListenerDeleteLuogo;
     private int numeroLuoghi;
     private String luogoCorrente;
+    private static final int MIN_LUOGHI = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,12 +143,22 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
 
     private void eliminaLuogo() {
+
+        eliminaLuogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                connection.getRefLuogo().addValueEventListener(mListenerDeleteLuogo);
+            }
+        });
+
         mListenerDeleteLuogo = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 numeroLuoghi = (int) snapshot.getChildrenCount();
+                System.out.println("numeroLuoghi: " + numeroLuoghi);
+                boolean isFinish = false;
 
-                if (numeroLuoghi == 1) {
+                if (numeroLuoghi == MIN_LUOGHI) {
                     System.out.println("Primo if numero luoghi: " + numeroLuoghi);
                     Toast.makeText(DettaglioLuogoActivity.this, "Ci deve essere almeno un luogo nell'app", Toast.LENGTH_LONG).show();
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
@@ -162,6 +175,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                                 connection.getRefOggetti().child(idLuogo).removeValue();
                                 connection.getRefZone().child(idLuogo).removeValue();
                                 connection.getRefLuogo().child(idLuogo).removeValue();
+                                isFinish = true;
                                 break;
                             }
                         }
@@ -170,9 +184,13 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                         connection.getRefOggetti().child(idLuogo).removeValue();
                         connection.getRefZone().child(idLuogo).removeValue();
                         connection.getRefLuogo().child(idLuogo).removeValue();
+                        isFinish = true;
                     }
+                    showDialog();
+                    return;
                 }
-                finish();
+                if(isFinish)
+                    finish();
             }
 
             @Override
@@ -181,18 +199,13 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         };
 
-        eliminaLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                connection.getRefLuogo().addValueEventListener(mListenerDeleteLuogo);
-            }
-        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         connection.getRefLuogo().removeEventListener(mListenerDeleteLuogo);
+
     }
 
     @Override
@@ -210,5 +223,18 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void showDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Avviso")
+                .setMessage("Il luogo e le zone associate sono stati eliminati")
+                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+        alert.create().show();
     }
 }
