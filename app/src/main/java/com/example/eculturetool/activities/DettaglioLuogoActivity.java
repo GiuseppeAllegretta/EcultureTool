@@ -156,7 +156,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 numeroLuoghi = (int) snapshot.getChildrenCount();
                 System.out.println("numeroLuoghi: " + numeroLuoghi);
-                boolean isFinish = false;
 
                 if (numeroLuoghi == MIN_LUOGHI) {
                     System.out.println("Primo if numero luoghi: " + numeroLuoghi);
@@ -175,7 +174,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                                 connection.getRefOggetti().child(idLuogo).removeValue();
                                 connection.getRefZone().child(idLuogo).removeValue();
                                 connection.getRefLuogo().child(idLuogo).removeValue();
-                                isFinish = true;
                                 break;
                             }
                         }
@@ -184,13 +182,9 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                         connection.getRefOggetti().child(idLuogo).removeValue();
                         connection.getRefZone().child(idLuogo).removeValue();
                         connection.getRefLuogo().child(idLuogo).removeValue();
-                        isFinish = true;
                     }
                     showDialog();
-                    return;
                 }
-                if(isFinish)
-                    finish();
             }
 
             @Override
