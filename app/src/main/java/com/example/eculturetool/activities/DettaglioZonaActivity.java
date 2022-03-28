@@ -73,9 +73,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
                             if (snapshot.getValue(Zona.class) != null) {
                                 nomeZona.setText(snapshot.getValue(Zona.class).getNome());
                                 descrizioneZona.setText(snapshot.getValue(Zona.class).getDescrizione());
-
-                                //questo da problemi, da risolvere
-                                //numeroMaxOggettiZona.setText((snapshot.getValue(Zona.class).getNumeroOggetti()));
+                                numeroMaxOggettiZona.setText(String.valueOf(snapshot.getValue(Zona.class).getNumeroOggetti()));
                             }
                         }
 
