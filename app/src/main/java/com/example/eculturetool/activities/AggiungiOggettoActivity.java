@@ -257,6 +257,9 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         System.out.println("Oggetto inserito: " + oggetto.toString());
 
+        //Metodo che recupare l'id della zona
+        //String idZona = retrieveZona(zonaSelezionata);
+
         connection.getRefOggetti().child(luogoCorrente).child(key).setValue(oggetto);
 
         //CODICE ERRATO
@@ -284,6 +287,23 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         progressBar.setVisibility(View.INVISIBLE);
 
         finish();
+    }
+
+    /**
+     * Metodo che recupara l'id della zona selezionata dall'utente in fase di creazione dell'oggetto
+     * @param zonaSelezionata: parametro Stringa che rappresenta il nome della zona selezionata nello spinner
+     * @return id della zona (firebase)
+     */
+    private String retrieveZona(String zonaSelezionata) {
+        String risultato = null;
+
+        for(Zona zona: zoneList){
+            if(zona.getNome().compareTo(zonaSelezionata) == 0){
+                risultato = zona.getId();
+            }
+        }
+
+        return risultato;
     }
 
 

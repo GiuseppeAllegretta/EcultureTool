@@ -34,19 +34,6 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_zona);
-        myToolbar = findViewById(R.id.toolbarZona);
-
-        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
-        Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
-        myToolbar.setNavigationIcon(freccia_indietro);
-        setSupportActionBar(myToolbar);
-
-        //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(view -> {
-            //Ritorna al fragment del profilo chiamante
-            finish();
-        });
-
 
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);
@@ -75,6 +62,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.getValue(Zona.class) != null) {
+                                getSupportActionBar().setTitle(snapshot.getValue(Zona.class).getNome());
                                 nomeZona.setText(snapshot.getValue(Zona.class).getNome());
                                 descrizioneZona.setText(snapshot.getValue(Zona.class).getDescrizione());
                                 numeroMaxOggettiZona.setText(String.valueOf(snapshot.getValue(Zona.class).getNumeroOggetti()));
