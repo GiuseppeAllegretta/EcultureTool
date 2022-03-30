@@ -25,7 +25,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center|left"
-            android:layout_marginLeft="30dp">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="80dp"
+            android:columnCount="1">
 
             <TextView
                 android:id="@+id/nomeZona"
@@ -33,15 +35,19 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Nome Oggetto"
+                android:text="Nome Zona"
                 android:textSize="22sp"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
             <TextView
                 android:id="@+id/descrizioneZona"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descrizione completa dell'oggetto"
-                android:layout_gravity="center|left"/>
+                android:text="Descrizione completa della zona"
+                android:layout_gravity="center|left"
+                android:maxLines="3"
+                android:ellipsize="end" />
 
         </GridLayout>
 

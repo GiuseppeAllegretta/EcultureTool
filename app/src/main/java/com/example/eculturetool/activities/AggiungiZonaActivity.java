@@ -96,7 +96,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             numeroMax=Integer.parseInt(numeroMaxString);
             if(numeroMax>MAX_OGGETTI){
                 numeroOggetti.setError("Attenzione! Il numero massimo è 10");
-                descrizioneZona.requestFocus();
+                numeroOggetti.requestFocus();
                 return;
             }
 
@@ -108,9 +108,10 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         System.out.println("KEY: " + key);
         Zona zona= new Zona(key,nome,descrizione,numeroMax);
 
-        //connection.getRefZone().child(key).setValue(zona);
+        connection.getRefZone().child(luogoCorrente).child(key).setValue(zona);
 
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+        //CODICE ERRATO
+        /*connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.getValue(String.class)!=null){
@@ -129,7 +130,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
 
 
