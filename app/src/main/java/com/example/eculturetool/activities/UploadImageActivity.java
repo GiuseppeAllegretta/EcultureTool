@@ -11,11 +11,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -46,16 +43,12 @@ import java.util.Date;
 
 public class UploadImageActivity extends AppCompatActivity {
 
-    private Connection connection = new Connection();
-    private Button mButtonChooseImage;
-    private Button mButtonUpload;
-    private EditText mEditTextFileName;
-    private ImageView mImageView;
+    private final Connection connection = new Connection();
+    private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
     private File photoFile;
     private View parentLayout;
-    private String currentPhotoPath;
     ActivityResultLauncher<Intent> chooseFileResultLaunch;
     ActivityResultLauncher<Intent> tookPhotoResultLaunch;
 
@@ -69,9 +62,12 @@ public class UploadImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
         parentLayout = findViewById(android.R.id.content);
-        mButtonChooseImage = findViewById(R.id.selectButton);
-        mButtonUpload = findViewById(R.id.uploadButton);
+        Button btnScatta = findViewById(R.id.btnScatta);
+        Button btnSeleziona = findViewById(R.id.btnSeleziona);
+        Button btnSalva = findViewById(R.id.btnSalva);
         mImageView = findViewById(R.id.imageView);
+        imagePlaceHolder = findViewById(R.id.imagePlaceHolder);
+
         mProgressBar = findViewById(R.id.progressBar);
 
         mStorageRef = connection.getStorage().getReference("uploads").child(getIntent().getStringExtra("directory"));
@@ -96,16 +92,34 @@ public class UploadImageActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         mImageUri = Uri.fromFile(photoFile);
                         Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
+                        imagePlaceHolder.setImageResource(android.R.color.transparent);
                     }
                 });
-        mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
+
+        Permissions permissions = Permissions.getInstance();
+        btnSeleziona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(v);
+                if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
+                    permissions.requestStoragePermission(UploadImageActivity.this);
+                } else {
+                    openFileChooser();
+                }
             }
         });
 
-        mButtonUpload.setOnClickListener(new View.OnClickListener() {
+        btnScatta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
+                    permissions.requestCameraPermission(UploadImageActivity.this);
+                } else {
+                    openCamera();
+                }
+            }
+        });
+
+        btnSalva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -130,14 +144,12 @@ public class UploadImageActivity extends AppCompatActivity {
         String timeStamp = SimpleDateFormat.getDateTimeInstance().format(new Date());
         String imageFileName = timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
     private void openCamera() {
@@ -231,31 +243,4 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        Permissions permissions = Permissions.getInstance();
-        popup.setOnMenuItemClickListener(onMenuItemClickListener -> {
-            switch (onMenuItemClickListener.getItemId()) {
-                case R.id.select_image_popup:
-                    if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
-                        permissions.requestStoragePermission(UploadImageActivity.this);
-                    } else {
-                        openFileChooser();
-                    }
-                    return true;
-                case R.id.capture_image:
-                    if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
-                        permissions.requestCameraPermission(UploadImageActivity.this);
-                    } else {
-                        openCamera();
-                    }
-                    return true;
-
-                default:
-                    return false;
-            }
-        });
-        popup.inflate(R.menu.upload_image_options);
-        popup.show();
-    }
 }

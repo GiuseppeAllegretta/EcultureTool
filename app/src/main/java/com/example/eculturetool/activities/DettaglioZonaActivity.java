@@ -38,7 +38,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);
         numeroMaxOggettiZona = findViewById(R.id.numeroOggettiDettaglio);
-        modificaZona = findViewById(R.id.editZona);
+        //modificaZona = findViewById(R.id.editZona);
 
         //recupero dati dall'intent
 
