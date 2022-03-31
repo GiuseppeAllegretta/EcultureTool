@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.SessionManagement;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -109,9 +110,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                     //Gestione sessione
-                    /*SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+                    SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
                     System.out.println("UID -->>>>>" +user.getUid());
-                    sessionManagement.saveSession(user.getUid());*/
+                    sessionManagement.saveSession(user.getUid());
 
 
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -138,10 +139,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        //checkSession();
+        checkSession();
     }
 
-    /*private void checkSession() {
+    private void checkSession() {
         SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
         String userID=sessionManagement.getSession();
 
@@ -151,5 +152,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else{
             //non fa niente
         }
-    }*/
+    }
 }
