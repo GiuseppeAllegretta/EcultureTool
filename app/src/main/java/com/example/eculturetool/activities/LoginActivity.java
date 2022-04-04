@@ -11,15 +11,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.SessionManagement;
+import com.example.eculturetool.entities.Luogo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Connection connection = new Connection();
     private EditText editTextEmail, editTextPassword;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -146,11 +153,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
         String userID=sessionManagement.getSession();
 
-        if(userID.compareTo("-1")!=0){
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        //Database funziona
+        if (connection.getAuth() != null){
+            connection.getRefCuratore().child(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        if(userID.compareTo("-1")!=0){
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        }
+                    }
+                }
 
-        }else{
-            //non fa niente
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    sessionManagement.removeSession();
+                }
+            });
+        }
+        //Database non funziona
+        else {
+            sessionManagement.removeSession();
         }
     }
 }
