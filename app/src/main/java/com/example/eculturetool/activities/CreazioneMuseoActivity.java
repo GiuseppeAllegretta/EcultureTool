@@ -113,21 +113,14 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = connection.getAuth().getCurrentUser();
-                            System.out.println("UID: " + user.getUid());
-
                             //Scrittura del curatore sul Realtime Database
                             //connection.getRefCuratore().setValue(curatore);
-                            connection.getDatabaseReference().child("curatori").child(user.getUid()).setValue(curatore);
-
-
+                            connection.getDatabaseReference().child("curatori").child(connection.getUser().getUid()).setValue(curatore);
                             //Scrittura del luogo sul Realtime Database
                             String key = connection.getRefLuogo().push().getKey();
                             System.out.println("KEY: " + key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
-
-
                             connection.getRefLuogo().child(key).setValue(luogo);
-
                             //Settaggio del luogo appena creato come luogo corrente
                             connection.getRefCuratore().child("luogoCorrente").setValue(key);
 
