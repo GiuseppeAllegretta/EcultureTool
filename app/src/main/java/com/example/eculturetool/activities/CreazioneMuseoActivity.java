@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class CreazioneMuseoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    Connection connection = new Connection();
+    Connection connection ;
 
     private EditText nomeLuogo, descrizioneLuogo;
     private Spinner tipologiaLuogo;
@@ -108,16 +108,18 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         //La progressbar diventa visibile
         progressBar.setVisibility(View.VISIBLE);
 
-        connection.getAuth().createUserWithEmailAndPassword(curatore.getEmail(), password)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(curatore.getEmail(), password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            connection=new Connection();
                             FirebaseUser user = connection.getAuth().getCurrentUser();
                             //Scrittura del curatore sul Realtime Database
-                            connection.getDatabaseReference().child("curatori").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(curatore);
+                            //connection.getRefCuratore().setValue(curatore);
+                            connection.getDatabaseReference().child("curatori").child(user.getUid()).setValue(curatore);
                             //Scrittura del luogo sul Realtime Database
-                            String key = connection.getDatabaseReference().child("luoghi").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().getKey();
+                            String key = connection.getRefLuogo().push().getKey();
                             System.out.println("KEY: " + key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
                             connection.getRefLuogo().child(key).setValue(luogo);
