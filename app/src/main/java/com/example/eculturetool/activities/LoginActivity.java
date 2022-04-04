@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //Database funziona
         if (connection.getAuth() != null){
-            connection.getRefCuratore().child(userID).addValueEventListener(new ValueEventListener() {
+            connection.getDatabase().getReference().child("curatori").child(userID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){

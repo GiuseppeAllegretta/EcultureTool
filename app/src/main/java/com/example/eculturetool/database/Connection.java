@@ -24,7 +24,7 @@ public class Connection {
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
-        user = auth.getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public DatabaseReference getDatabaseReference() {

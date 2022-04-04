@@ -22,6 +22,7 @@ import com.example.eculturetool.entities.Tipologia;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class CreazioneMuseoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -114,10 +115,9 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                         if (task.isSuccessful()) {
                             FirebaseUser user = connection.getAuth().getCurrentUser();
                             //Scrittura del curatore sul Realtime Database
-                            //connection.getRefCuratore().setValue(curatore);
-                            connection.getDatabaseReference().child("curatori").child(connection.getUser().getUid()).setValue(curatore);
+                            connection.getDatabaseReference().child("curatori").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(curatore);
                             //Scrittura del luogo sul Realtime Database
-                            String key = connection.getRefLuogo().push().getKey();
+                            String key = connection.getDatabaseReference().child("luoghi").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).push().getKey();
                             System.out.println("KEY: " + key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
                             connection.getRefLuogo().child(key).setValue(luogo);
