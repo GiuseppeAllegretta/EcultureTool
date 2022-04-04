@@ -8,9 +8,15 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.SessionManagement;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.ref.WeakReference;
 
@@ -21,6 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     private static final int GO_AHEAD_WHAT = 1;
     private long mStartTime = -1L;
     private boolean mIsDone;
+    private Connection connection = new Connection();
+    private boolean flag = false;
 
     private static class UiHandler extends Handler {
         private final WeakReference<SplashActivity> mActivityRef;
@@ -42,7 +50,13 @@ public class SplashActivity extends AppCompatActivity {
                     srcActivity.mStartTime;
             if (elapsedTime >= MIN_WAIT_INTERVAL && !srcActivity.mIsDone) {
                 srcActivity.mIsDone = true;
-                srcActivity.nextActivity();
+                if (srcActivity.checkSession()) {
+
+                    srcActivity.nextSessionActivity();
+                } else {
+                    srcActivity.nextActivity();
+                }
+
             }
 
 
@@ -66,7 +80,7 @@ public class SplashActivity extends AppCompatActivity {
         final Message goAheadMessage = mHandler.obtainMessage(GO_AHEAD_WHAT);
         mHandler.sendMessageAtTime(goAheadMessage, mStartTime + MAX_WAIT_INTERVAL);
         Log.d(TAG_LOG, "Handler message sent!");
-
+        checkSession();
 
     }
 
@@ -75,5 +89,41 @@ public class SplashActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void nextSessionActivity() {
+        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+        finish();
+    }
+
+
+    private boolean checkSession() {
+        SessionManagement sessionManagement = new SessionManagement(SplashActivity.this);
+        String userID = sessionManagement.getSession();
+
+
+        //Database funziona
+        if (connection.getAuth() != null) {
+            connection.getDatabase().getReference().child("curatori").child(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if (userID.compareTo("-1") != 0) {
+                            flag = true;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    sessionManagement.removeSession();
+                }
+            });
+        }
+        //Database non funziona
+        else {
+            sessionManagement.removeSession();
+        }
+        return flag;
     }
 }

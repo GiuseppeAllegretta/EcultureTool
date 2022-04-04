@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         TextView register = findViewById(R.id.registrati);
         register.setOnClickListener(this);
 
@@ -146,34 +147,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        checkSession();
     }
 
-    private void checkSession() {
-        SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
-        String userID=sessionManagement.getSession();
 
-        //Database funziona
-        if (connection.getAuth() != null){
-            connection.getDatabase().getReference().child("curatori").child(userID).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        if(userID.compareTo("-1")!=0){
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    sessionManagement.removeSession();
-                }
-            });
-        }
-        //Database non funziona
-        else {
-            sessionManagement.removeSession();
-        }
-    }
 }
