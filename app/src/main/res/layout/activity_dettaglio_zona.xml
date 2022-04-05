@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DettaglioZonaActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.DettaglioZonaActivity">
 
 
     <LinearLayout
@@ -71,9 +71,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-light"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
+
 
                 <View
                     android:layout_width="match_parent"

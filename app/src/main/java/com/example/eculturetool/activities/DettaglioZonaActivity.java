@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -46,6 +47,9 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         aggiungiOggettoButton = findViewById(R.id.aggiungiOggetto);
         eliminaZonaButton = findViewById(R.id.eliminaZona);
         modificaZona = findViewById(R.id.editZona);
+
+        //Metodo di scroll per la textView
+        descrizioneZona.setMovementMethod(new ScrollingMovementMethod());
 
         //recupero dati dall'intent
         Intent intent = getIntent();
