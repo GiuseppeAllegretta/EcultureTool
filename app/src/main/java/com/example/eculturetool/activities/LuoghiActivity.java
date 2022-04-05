@@ -99,7 +99,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
                     //Ottengo il luogo corrente del curatore
                     luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
 
-                    connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+                    connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Iterable<DataSnapshot> iteratore = snapshot.getChildren();

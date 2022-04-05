@@ -79,7 +79,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
             }
         };
-        connection.getRefLuogo().addValueEventListener(mListenerDeleteLuogo);
+        connection.getRefLuoghi().addValueEventListener(mListenerDeleteLuogo);
 
     }
 
@@ -87,7 +87,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        connection.getRefLuogo().child(idLuogo).addValueEventListener(new ValueEventListener() {
+        connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Luogo.class) != null) {
@@ -188,7 +188,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                                 connection.getRefCuratore().child("luogoCorrente").setValue(luogoSelezionato);
                                 connection.getRefOggetti().child(idLuogo).removeValue();
                                 connection.getRefZone().child(idLuogo).removeValue();
-                                connection.getRefLuogo().child(idLuogo).removeValue();
+                                connection.getRefLuoghi().child(idLuogo).removeValue();
                                 break;
                             }
                         }
@@ -196,7 +196,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                         System.out.println("if NON del break: ");
                         connection.getRefOggetti().child(idLuogo).removeValue();
                         connection.getRefZone().child(idLuogo).removeValue();
-                        connection.getRefLuogo().child(idLuogo).removeValue();
+                        connection.getRefLuoghi().child(idLuogo).removeValue();
                     }
                     showDialog();
                 }
@@ -209,14 +209,14 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        connection.getRefLuogo().removeEventListener(mListenerDeleteLuogo);
+        connection.getRefLuoghi().removeEventListener(mListenerDeleteLuogo);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 numeroLuoghi = (int) snapshot.getChildrenCount();

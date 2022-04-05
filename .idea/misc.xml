@@ -10,6 +10,7 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.33" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -20,6 +21,8 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_password_dimenticata.xml" value="0.2703125" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_upload_image.xml" value="0.2777777777777778" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/dialog_elimina_oggetto.xml" value="0.30520833333333336" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/dialog_elimina_zona.xml" value="0.30520833333333336" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_q_r_scanner.xml" value="0.36666666666666664" />

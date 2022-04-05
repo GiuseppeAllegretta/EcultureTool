@@ -103,12 +103,12 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         progressBar.setVisibility(View.VISIBLE);
 
         //Scrittura del luogo sul Realtime Database
-        String key = connection.getRefLuogo().push().getKey();
+        String key = connection.getRefLuoghi().push().getKey();
         System.out.println("KEY: " + key);
         Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
 
 
-        connection.getRefLuogo().child(key).setValue(luogo);
+        connection.getRefLuoghi().child(key).setValue(luogo);
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
@@ -138,7 +138,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     private List getListLuoghiCreati() {
         List<Luogo> luoghi = new ArrayList<>();
 
-        connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> iteratore = snapshot.getChildren();

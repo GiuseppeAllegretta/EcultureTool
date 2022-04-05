@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eculturetool.R;
@@ -24,11 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DettaglioZonaActivity extends AppCompatActivity {
     private final Connection connection = new Connection();
-    private String idZona;
+
     private TextView nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
-    private Toolbar myToolbar;
+    private String idZona;
     private FloatingActionButton modificaZona;
+    private Button aggiungiOggettoButton;
+    private Button eliminaZonaButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +43,13 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);
         numeroMaxOggettiZona = findViewById(R.id.numeroOggettiDettaglio);
-        //modificaZona = findViewById(R.id.editZona);
+        aggiungiOggettoButton = findViewById(R.id.aggiungiOggetto);
+        eliminaZonaButton = findViewById(R.id.eliminaZona);
+        modificaZona = findViewById(R.id.editZona);
 
         //recupero dati dall'intent
-
         Intent intent = getIntent();
         idZona = intent.getStringExtra("ZONA");
-
     }
 
     @Override
@@ -95,6 +100,44 @@ public class DettaglioZonaActivity extends AppCompatActivity {
             }
         });
 
+        aggiungiOggettoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
+            }
+        });
 
+        eliminaZonaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomDialog();
+            }
+        });
+
+    }
+
+    private void showCustomDialog() {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_elimina_zona);
+
+        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_zona);
+        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_zona);
+
+        dialog.show();
+
+        conferma.setOnClickListener(onClickListener ->
+                connection.getRefOggetti().child(luogoCorrente).child(idZona).removeValue().
+                        addOnCompleteListener(onCompleteListener -> {
+                            if (onCompleteListener.isSuccessful()) {
+                                connection.getRefZone().child(luogoCorrente).child(idZona).removeValue();
+                                dialog.dismiss();
+                                finish();
+                            }
+                        }));
+
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }

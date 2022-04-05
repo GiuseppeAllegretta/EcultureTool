@@ -6,44 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".activities.DettaglioZonaActivity"
     android:orientation="vertical">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarZona"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:backgroundTint="@color/verdePrimario"
-        android:backgroundTintMode="src_over"
-        android:elevation="8dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/white" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/nomeLuogoDettaglio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="32sp"
-                android:layout_margin="8dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:text="" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="false"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="25dp"
@@ -64,9 +36,9 @@
 
                 <TextView
                     android:id="@+id/nomeZonaDettaglio"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-light"
                     android:text=""
                     android:textColor="#000000"
@@ -97,9 +69,9 @@
                     android:id="@+id/descrizioneZonaDettaglio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-light"
                     android:text=""
-                    android:layout_marginTop="10dp"
                     android:textColor="#000000"
                     android:textSize="22sp" />
 
@@ -128,9 +100,9 @@
                     android:id="@+id/numeroOggettiDettaglio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-light"
                     android:text=""
-                    android:layout_marginTop="10dp"
                     android:textColor="#000000"
                     android:textSize="22sp" />
 
@@ -146,15 +118,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="bottom"
                 android:orientation="vertical">
 
                 <Button
-
+                    android:id="@+id/aggiungiOggetto"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:backgroundTint="@color/verdePrimario"
-                    android:text="Aggiungi oggetti?"
                     android:padding="10dp"
+                    android:text="Aggiungi oggetti"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/eliminaZona"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/verdePrimario"
+                    android:padding="10dp"
+                    android:text="Elimina Zona"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -169,7 +153,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editLuogo"
+        android:id="@+id/editZona"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

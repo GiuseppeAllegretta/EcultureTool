@@ -119,10 +119,10 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                             //connection.getRefCuratore().setValue(curatore);
                             connection.getDatabaseReference().child("curatori").child(user.getUid()).setValue(curatore);
                             //Scrittura del luogo sul Realtime Database
-                            String key = connection.getRefLuogo().push().getKey();
+                            String key = connection.getRefLuoghi().push().getKey();
                             System.out.println("KEY: " + key);
                             Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
-                            connection.getRefLuogo().child(key).setValue(luogo);
+                            connection.getRefLuoghi().child(key).setValue(luogo);
                             //Settaggio del luogo appena creato come luogo corrente
                             connection.getRefCuratore().child("luogoCorrente").setValue(key);
 

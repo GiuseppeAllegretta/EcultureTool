@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
                 }
 
-                connection.getRefLuogo().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+                connection.getRefLuoghi().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue(Luogo.class) != null) {

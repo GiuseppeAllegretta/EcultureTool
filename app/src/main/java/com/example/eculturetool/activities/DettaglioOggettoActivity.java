@@ -58,7 +58,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Button eliminaOggetto;
     private Context context;
     private Uri imgUri;
-    private Oggetto oggetto;
     private String idOggetto, idZona, luogoCorrente;
     private ProgressBar progressBar;
     private List<Zona> zoneList;

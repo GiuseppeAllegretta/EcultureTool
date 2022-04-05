@@ -68,7 +68,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
 
-        connection.getRefLuogo().child(idLuogo).addValueEventListener(new ValueEventListener() {
+        connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Luogo.class) != null) {
@@ -157,9 +157,9 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        connection.getRefLuogo().child(idLuogo).child("nome").setValue(nome);
-        connection.getRefLuogo().child(idLuogo).child("descrizione").setValue(descrizione);
-        connection.getRefLuogo().child(idLuogo).child("tipologia").setValue(tipologia);
+        connection.getRefLuoghi().child(idLuogo).child("nome").setValue(nome);
+        connection.getRefLuoghi().child(idLuogo).child("descrizione").setValue(descrizione);
+        connection.getRefLuoghi().child(idLuogo).child("tipologia").setValue(tipologia);
 
         finish();
     }
@@ -170,7 +170,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     private List getListLuoghiCreati() {
         List<Luogo> luoghi = new ArrayList<>();
 
-        connection.getRefLuogo().addValueEventListener(new ValueEventListener() {
+        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> iteratore = snapshot.getChildren();

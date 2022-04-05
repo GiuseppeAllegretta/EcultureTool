@@ -55,9 +55,14 @@ public class Connection {
         return databaseReference.child("curatori").child(user.getUid());
     }
 
-    public DatabaseReference getRefLuogo() {
+    /**
+     *
+     * @return restituisce il riferimento a tutti i luoghi del curatore
+     */
+    public DatabaseReference getRefLuoghi() {
         return databaseReference.child("luoghi").child(user.getUid());
     }
+
 
     public DatabaseReference getRefOggetti() {
         return databaseReference.child("oggetti").child(user.getUid());
