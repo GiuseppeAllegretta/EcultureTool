@@ -173,7 +173,13 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-                    Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+                    if(curatore.getImg() != null){
+                        Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+                    }
+                    else{
+                        progressBar.setVisibility(View.GONE);
+                        Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
+                    }
                 }
             }
 
