@@ -1,6 +1,8 @@
 package com.example.eculturetool.entities;
 
-public class Zona {
+import java.io.Serializable;
+
+public class Zona implements Serializable {
     private String id;
     private String nome;
     private String descrizione;
@@ -49,8 +51,18 @@ public class Zona {
         this.numeroOggetti = numeroOggetti;
     }
 
+    @Override
+    public String toString() {
+        return "Zona{" +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", numeroOggetti=" + numeroOggetti +
+                '}';
+    }
 
     public interface Keys{
         final static String ID = "ID_ZONA";
     }
+
 }

@@ -24,31 +24,39 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Zona;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener {
     private final Connection connection = new Connection();
 
-    private ArrayList<Oggetto> oggettiList;
+    private ArrayList<Oggetto> oggettiList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerAdapterOggetto adapter;
 
     //luogo corrente che sta gestendo il curatore
     private String luogoCorrente;
-
-
+    private List<Zona> zoneList = new ArrayList<>();
+    private ValueEventListener valueEventListenerZone;
     private FloatingActionButton fabAddOggetto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oggetti);
         fabAddOggetto = findViewById(R.id.addOggetto);
+        recyclerView = findViewById(R.id.recyclerViewOggetti);
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarOggetti);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
@@ -65,13 +73,47 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             }
         });
 
-        recyclerView = findViewById(R.id.recyclerViewOggetti);
-        oggettiList = new ArrayList<>();
-
+        retrieveZone();
         setOggettoInfo();
         setAdapter();
-
     }
+
+    /**
+     * Metodo che recupera le zone
+     */
+    private void retrieveZone() {
+        valueEventListenerZone = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int count = (int) snapshot.getChildrenCount();
+                Iterable<DataSnapshot> iteratoreZone = snapshot.getChildren();
+
+                for (int i = 0; i < count; i++) {
+                    zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+
+        connection.getRefCuratore().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(Curatore.class) != null) {
+                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    connection.getRefZone().child(luogoCorrente).addValueEventListener(valueEventListenerZone);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     @Override
     protected void onStart() {
@@ -87,7 +129,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     }
 
     private void setAdapter() {
-        System.out.println("OGGETTI --> " + oggettiList);
         adapter = new RecyclerAdapterOggetto(oggettiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -96,35 +137,27 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     }
 
     private void setOggettoInfo() {
-        //popolo array di oggetti
-        /*oggettiList.add(new Oggetto("id1", "Monnalisa", "descrizione", "urlImmagine"));
-        oggettiList.add(new Oggetto("id2", "Lorenzo", "descrizione", "urlImmagine"));
-        oggettiList.add(new Oggetto("id3", "Matteo", "descrizione", "urlImmagine"));
-        oggettiList.add(new Oggetto("id4", "Giovanni", "descrizione", "urlImmagine"));
-        oggettiList.add(new Oggetto("id5", "Giuseppe", "descrizione", "urlImmagine"));
-        oggettiList.add(new Oggetto("id6", "Domenico", "descrizione", "urlImmagine"));*/
-
-        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
+        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
+                if (snapshot.getValue(String.class) != null) {
+                    luogoCorrente = snapshot.getValue(String.class).toString();
 
-                    //Ottengo il luogo corrente del curatore
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-
+                    //popolo array di oggetti
                     connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                            int count = (int) snapshot.getChildrenCount();
-                            System.out.println("count: " + count);
 
                             oggettiList.clear();
-                            for (int i = 0; i < count; i++) {
-                                oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
-                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
-                                //luoghiList.add(luogoprova);
-                                System.out.println(oggettiList.get(i));
+                            for (Zona zona : zoneList) {
+                                Iterable<DataSnapshot> iteratore = snapshot.child(zona.getId()).getChildren();
+                                int count = (int) snapshot.child(zona.getId()).getChildrenCount();
+
+                                if (count != 0) {
+                                    for (int i = 0; i < count; i++) {
+                                        oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
+                                    }
+                                }
                             }
                             setAdapter();
                         }
@@ -134,6 +167,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
                         }
                     });
+
                 }
             }
 
@@ -168,10 +202,16 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     @Override
     public void onOggettoClick(int position) {
         String oggettoSelezionato = oggettiList.get(position).getId();
-        oggettiList.get(position);
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-        intent.putExtra( Oggetto.Keys.ID, oggettoSelezionato);
+        intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
         intent.putExtra(Luogo.Keys.ID, luogoCorrente);
+        intent.putExtra("ZONELIST", (Serializable) zoneList);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        connection.getRefZone().child(luogoCorrente).removeEventListener(valueEventListenerZone);
     }
 }

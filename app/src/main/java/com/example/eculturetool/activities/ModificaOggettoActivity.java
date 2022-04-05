@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModificaOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ModificaOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Connection connection = new Connection();
 
@@ -46,14 +47,15 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     private List<Zona> zoneList = new ArrayList<>();
     private ArrayAdapter<String> nomiZoneListAdapter;
     private int countZone;
-    private String zonaSelezionata;
+    private String zonaSelezionata, idZona, idZonaSelezionata;
+    private String imgUri;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_oggetto);
-
 
         nomeOggetto = findViewById(R.id.edit_name_oggetto);
         descrizioneOggetto = findViewById(R.id.editDescrizione);
@@ -66,35 +68,15 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         Intent intent = getIntent();
         luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
         idOggetto = intent.getStringExtra(Oggetto.Keys.ID);
+        idZona = intent.getStringExtra(Zona.Keys.ID);
 
-        oggettiList = getListOggettiCreati();
-
-    }
-
-    /**
-     * @return: ritorna la lista degli oggetti memorizzati su firebase in riferimento a un determinato curatore tranne quello che si è selezionato
-     */
-    private List<Oggetto> getListOggettiCreati() {
-
-        List<Oggetto> oggetti = new ArrayList<>();
-
-        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+        connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                int count = (int) snapshot.getChildrenCount();
-                System.out.println("count: " + count);
-
-                Oggetto oggetto;
-
-                for (int i = 0; i < count; i++) {
-                    oggetto = iteratore.iterator().next().getValue(Oggetto.class);
-
-                    if (oggetto.getId().compareTo(idOggetto) != 0) {
-                        oggetti.add(oggetto);
-                    }
+                if(snapshot.exists()){
+                    if(snapshot.getValue(String.class) != null)
+                    imgUri = snapshot.getValue(String.class);
                 }
-                System.out.println(oggetti);
             }
 
             @Override
@@ -103,6 +85,59 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             }
         });
 
+        oggettiList = getListOggettiCreati();
+    }
+
+
+    /**
+     * @return: ritorna la lista degli oggetti memorizzati su firebase in riferimento a un determinato curatore tranne quello che si è selezionato
+     */
+    private List<Oggetto> getListOggettiCreati() {
+        List<Oggetto> oggetti = new ArrayList<>();
+
+        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot != null) {
+
+                    int countZone = (int) snapshot.getChildrenCount(); //contatore delle zone
+                    Iterable<DataSnapshot> iterableIdZone = snapshot.getChildren();
+                    List<String> keysZone = new ArrayList<>();
+
+                    for (int z = 0; z < countZone; z++) {
+                        keysZone.add(iterableIdZone.iterator().next().getKey());
+                    }
+                    System.out.println("ID ZONE: " + keysZone);
+
+                    for (int j = 0; j < countZone; j++) {
+                        String zona = keysZone.get(j); //ID DELLA ZONA
+
+                        Iterable<DataSnapshot> iteratore = snapshot.child(zona).getChildren();
+                        int count = (int) snapshot.child(zona).getChildrenCount();
+                        Oggetto oggetto;
+
+                        for (int i = 0; i < count; i++) {
+                            oggetto = iteratore.iterator().next().getValue(Oggetto.class);
+
+                            if (oggetto.getId().compareTo(idOggetto) != 0) {
+                                oggetti.add(oggetto);
+                            } else {
+                                //Settaggio dei dati nelle View
+                                nomeOggetto.setText(oggetto.getNome());
+                                descrizioneOggetto.setText(oggetto.getDescrizione());
+                                tipologiaOggetto.setSelection(getIndexSpinner(oggetto.getTipologiaOggetto()));
+                                //TODO aggiungere la zona di appartenenza
+                                idZona = zona;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         return oggetti;
     }
 
@@ -120,28 +155,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         // Apply the adapter to the spinner
         tipologiaOggetto.setAdapter(adapter);
         tipologiaOggetto.setOnItemSelectedListener(this);
-
-
-        //Questa operazione va a settare nelle EditText i valori attuali dell'oggetto
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Oggetto.class) != null) {
-                    Oggetto oggetto = snapshot.getValue(Oggetto.class);
-                    nomeOggetto.setText(oggetto.getNome());
-                    descrizioneOggetto.setText(oggetto.getDescrizione());
-                    tipologiaOggetto.setSelection(getIndexSpinner(oggetto.getTipologiaOggetto()));
-                    //TODO aggiungere la zona di appartenenza
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
 
 
         //Istruzioni legate al click sulla freccia back
@@ -190,11 +203,31 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("nome").setValue(nome);
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("descrizione").setValue(descrizione);
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);
+        if(idZona.compareTo(idZonaSelezionata) == 0){
+            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("nome").setValue(nome);
+            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("descrizione").setValue(descrizione);
+            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
+            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);
+        }else {
+            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue();
 
+            System.out.println("Uri: " + imgUri);
+            if(imgUri != null){
+                //connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("url").setValue(imgUri.toString());
+                Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
+                connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
+            }else{
+                Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, null, tipologia, zonaSelezionata);
+                connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
+            }
+
+
+            /*connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("id").setValue(idOggetto);
+            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("nome").setValue(nome);
+            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("descrizione").setValue(descrizione);
+            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
+            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);*/
+        }
 
         finish();
     }
@@ -224,7 +257,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     }
 
     /**
-     *
      * @param nomeOggetto nome dell'oggetto inserito nel campo della EditText
      * @return true se il nome esiste già, cioè se c'è già un altro oggetto con lo stesso nome, false altrimenti
      */
@@ -285,26 +317,26 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class) != null) {
+                if (snapshot.getValue(String.class) != null) {
                     luogoCorrente = snapshot.getValue(String.class).toString();
 
                     connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.getValue(Zona.class) != null){
+                            if (snapshot.getValue(Zona.class) != null) {
                                 Iterable<DataSnapshot> iteratoreZone = snapshot.getChildren();
                                 countZone = (int) snapshot.getChildrenCount();
                                 System.out.println("countZone: " + countZone);
 
                                 zoneList.clear(); //pulisce la lista prima di riempirla
                                 //Avvalora zoneList con tutte le zone prese da db
-                                for(int i = 0; i < countZone; i++){
+                                for (int i = 0; i < countZone; i++) {
                                     zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
                                 }
 
                                 nomiZoneList.clear(); //pulisce la lista prima di riempirla
                                 //Avvalora nomiZoneList con i nomi di ogni singola zona
-                                for(int i = 0; i < countZone; i++){
+                                for (int i = 0; i < countZone; i++) {
                                     nomiZoneList.add(zoneList.get(i).getNome());
                                 }
 
@@ -325,7 +357,12 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         zonaSelezionata = nomiZoneList.get(i);
-                        System.out.println("Zona selezionata: " + zonaSelezionata);
+
+                        for(Zona zona: zoneList){
+                            if(zona.getNome().compareTo(zonaSelezionata) == 0){
+                                idZonaSelezionata = zona.getId();
+                            }
+                        }
                     }
 
                     @Override

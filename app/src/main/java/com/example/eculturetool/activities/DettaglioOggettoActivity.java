@@ -35,6 +35,7 @@ import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.TipologiaOggetto;
+import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +43,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class DettaglioOggettoActivity extends AppCompatActivity {
 
@@ -56,8 +59,9 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Context context;
     private Uri imgUri;
     private Oggetto oggetto;
-    private String idOggetto, luogoCorrente;
+    private String idOggetto, idZona, luogoCorrente;
     private ProgressBar progressBar;
+    private List<Zona> zoneList;
 
 
     @Override
@@ -91,6 +95,8 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idOggetto = intent.getStringExtra(Oggetto.Keys.ID);
         luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
+        zoneList = (List<Zona>) intent.getSerializableExtra("ZONELIST");
+
 
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -101,7 +107,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         imgUri = uri;
-                        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).child("url").setValue(imgUri.toString());
+                        connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").setValue(imgUri.toString());
                         Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -124,49 +130,13 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        connection.getRefOggetti().child(luogoCorrente).child(idOggetto).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                oggetto = snapshot.getValue(Oggetto.class);
-                if (oggetto != null) {
-                    Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
-                    getSupportActionBar().setTitle(oggetto.getNome());
-                    nomeOggetto.setText(oggetto.getNome());
-                    descrizioneOggetto.setText(oggetto.getDescrizione());
-                    tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
-                    zonaAppartenenza.setText(snapshot.getValue(Oggetto.class).getZonaAppartenenza());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        setDatiOggetto();
 
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
-
-        eliminaOggetto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                connection.getRefOggetti().child(luogoCorrente).child(idOggetto).removeValue();
-
-                Snackbar.make(findViewById(R.id.dettaglioOggettiActivity), "Oggetto eliminato", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("chiudi", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finish();
-                    }
-                }).setBackgroundTint(getResources().getColor(R.color.verdePrimario))
-                        .setActionTextColor(getResources().getColor(R.color.white))
-                        .show();
-            }
-
         });
 
         eliminaOggetto.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +153,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ModificaOggettoActivity.class);
                 intent.putExtra(Luogo.Keys.ID, luogoCorrente);
                 intent.putExtra(Oggetto.Keys.ID, idOggetto);
+                intent.putExtra(Zona.Keys.ID, idZona);
                 startActivity(intent);
             }
         });
@@ -191,6 +162,47 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
             uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
             startForObjectImageUpload.launch(uploadImageIntent);
+        });
+
+    }
+
+    private void setDatiOggetto() {
+
+        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> iterable; //iteratore di oggetti
+                int count; //contatore di oggetti
+                Oggetto oggetto;
+
+                if(snapshot != null){
+                    for(Zona zona: zoneList){
+
+                        iterable = snapshot.child(zona.getId()).getChildren();
+                        count = (int) snapshot.child(zona.getId()).getChildrenCount();
+
+                        for(int i = 0; i < count; i++){
+                            oggetto = iterable.iterator().next().getValue(Oggetto.class);
+
+                            if(oggetto.getId().compareTo(idOggetto) == 0 && oggetto != null){
+                                Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
+                                getSupportActionBar().setTitle(oggetto.getNome());
+                                nomeOggetto.setText(oggetto.getNome());
+                                descrizioneOggetto.setText(oggetto.getDescrizione());
+                                tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
+                                zonaAppartenenza.setText(oggetto.getZonaAppartenenza());
+                                idZona = zona.getId();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
 
     }
@@ -233,18 +245,9 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         dialog.show();
 
         conferma.setOnClickListener(onClickListener ->
-                connection.getRefOggetti().child(luogoCorrente).child(idOggetto).removeValue().
+                connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue().
                         addOnCompleteListener(onCompleteListener -> {
                             if (onCompleteListener.isSuccessful()) {
-                        /*Snackbar.make(findViewById(R.id.dettaglioOggettiActivity), "Oggetto eliminato", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("chiudi", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        finish();
-                                    }
-                                }).setBackgroundTint(getResources().getColor(R.color.verdePrimario))
-                                .setActionTextColor(getResources().getColor(R.color.white))
-                                .show();*/
                                 dialog.dismiss();
                                 finish();
                             }
