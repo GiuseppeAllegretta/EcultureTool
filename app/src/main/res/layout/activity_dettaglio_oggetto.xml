@@ -245,7 +245,7 @@
                         android:id="@+id/eliminaOggetto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/verdePrimario"
+                        android:backgroundTint="#DB311F"
                         android:padding="10dp"
                         android:text="Elimina Oggetto"
                         android:textColor="@color/white"

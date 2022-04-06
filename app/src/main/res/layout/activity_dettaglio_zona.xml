@@ -139,7 +139,7 @@
                     android:id="@+id/eliminaZona"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/verdePrimario"
+                    android:backgroundTint="#DB311F"
                     android:padding="10dp"
                     android:text="Elimina Zona"
                     android:textColor="@color/white"
