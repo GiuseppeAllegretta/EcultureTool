@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -238,6 +239,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
+        if(imgUri == null){
+            Toast.makeText(this, "Devi inserire un'immagine", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.VISIBLE);
