@@ -45,9 +45,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.PercorsiActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ModificaZonaActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.DettaglioZonaActivity"
             android:exported="false"
