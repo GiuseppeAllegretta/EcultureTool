@@ -90,6 +90,9 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         eliminaOggetto = findViewById(R.id.eliminaOggetto);
         progressBar = findViewById(R.id.progress);
 
+        //Metodo di scroll per la textView
+        descrizioneOggetto.setMovementMethod(new ScrollingMovementMethod());
+
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
