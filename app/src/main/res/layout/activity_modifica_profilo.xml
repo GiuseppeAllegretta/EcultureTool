@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modifica Profilo"
+                android:text="@string/modifica_profilo"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
@@ -89,7 +89,7 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nome"
+                        android:text="@string/nome"
                         android:textColor="@color/headings"
                         android:textSize="13sp" />
 
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cognome"
+                        android:text="@string/cognome"
                         android:textColor="@color/headings"
                         android:textSize="13sp" />
 

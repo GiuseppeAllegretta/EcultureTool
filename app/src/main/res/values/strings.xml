@@ -57,6 +57,19 @@
     <string name="elimina_oggetto">Elimina Oggetto</string>
     <string name="aggiungi_oggetti">Aggiungi oggetti</string>
     <string name="elimina_zona">Elimina Zona</string>
+    <string name="password_dimenticata">Password dimenticata?</string>
+    <string name="luoghi">Luoghi</string>
+    <string name="modifica_luogo">Modifica Luogo</string>
+    <string name="modifica_oggetto">Modifica Oggetto</string>
+    <string name="modifica_password">Modifica Password</string>
+    <string name="password_attuale">Password Attuale</string>
+    <string name="nuova_password">Nuova Password</string>
+    <string name="conferma_password">Conferma password</string>
+    <string name="modifica_profilo">Modifica Profilo</string>
+    <string name="modifica_zona">Modifica Zona</string>
+    <string name="oggetti">Oggetti</string>
+    <string name="inserisci_email">Inserisci Email</string>
+    <string name="avanti">Avanti</string>
 
 
 </resources>

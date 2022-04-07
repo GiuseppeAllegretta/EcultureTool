@@ -3,6 +3,11 @@
     <string name="nome">Name</string>
     <string name="cognome">Surname</string>
     <string name="luogo_selezionato">Selected place</string>
+    <string name="modifica_password">Edit Password</string>
+    <string name="password_attuale">Current Password</string>
+    <string name="nuova_password">New Password</string>
+    <string name="conferma_password">Confirm password</string>
+    <string name="modifica_profilo">Edit Profile</string>
 
 
     <!-- Stringhe del luogo -->
@@ -12,6 +17,8 @@
     <string name="crea_luogo">Create place</string>
     <string name="seleziona_luogo">Select place</string>
     <string name="elimina_luogo">Delete Place</string>
+    <string name="luoghi">Places</string>
+    <string name="modifica_luogo">Edit place</string>
 
     <!-- Stringhe oggetto -->
     <string name="nome_oggetto">Object Name</string>
@@ -20,6 +27,8 @@
     <string name="zona_di_appartenenza">Area of belonging</string>
     <string name="crea_oggetto">Create object</string>
     <string name="elimina_oggetto">Delete Object</string>
+    <string name="modifica_oggetto">Edit Object</string>
+    <string name="oggetti">Objects</string>
 
     <!-- Stringhe zona -->
     <string name="nome_zona">Zone Name*</string>
@@ -29,10 +38,13 @@
     <string name="crea_zona">Create Zone</string>
     <string name="aggiungi_oggetti">Add objects</string>
     <string name="elimina_zona">Delete Zone</string>
+    <string name="modifica_zona">Edit Zone</string>
 
     <!-- Stringhe registrazione -->
     <string name="registrati">Sign in</string>
-
+    <string name="password_dimenticata">Forgot password?</string>
+    <string name="inserisci_email">Enter Email</string>
+    <string name="avanti">Next</string>
 
 
 </resources>
