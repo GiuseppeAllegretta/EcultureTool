@@ -87,18 +87,17 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeLuogo.setError("Il nome del luogo è richiesto");
+            nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             nomeLuogo.requestFocus();
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneLuogo.setError("La descrizione è richiesta");
+            descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
-        System.out.println("tipologia: " + tipologia);
         if (tipologia == null) {
             tipologiaLuogo.requestFocus();
             return;
@@ -140,14 +139,14 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
                                         }
                                     });
 
-                            Toast.makeText(CreazioneMuseoActivity.this, "Registrazione completata. Inviata email di verifica", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreazioneMuseoActivity.this, getResources().getString(R.string.registrazione_completata), Toast.LENGTH_SHORT).show();
 
                             //La progressBar diventa invisibile
                             progressBar.setVisibility(View.INVISIBLE);
                         } else {
 
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(CreazioneMuseoActivity.this, "Registrazione Fallita", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreazioneMuseoActivity.this, getResources().getString(R.string.registrazione_fallita), Toast.LENGTH_SHORT).show();
 
                             //La progressBar diventa invisibile
                             progressBar.setVisibility(View.INVISIBLE);
@@ -160,8 +159,6 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        System.out.println("entra in onItemSelected");
         String item = adapterView.getItemAtPosition(i).toString();
         System.out.println("item: " + item);
 

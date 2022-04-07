@@ -59,26 +59,6 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
-        /**
-         Intent intent = getIntent();
-         uid = intent.getStringExtra("uid");
-         myRef = database.getReference("curatori").child(uid);
-
-
-
-         myRef.addValueEventListener(new ValueEventListener() {
-
-        @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
-        tv = findViewById(R.id.nomeUtente);
-        curatore = snapshot.getValue(Curatore.class);
-        }
-
-        @Override public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-        });
-         **/
-
         replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {

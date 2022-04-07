@@ -179,7 +179,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
                 if (numeroLuoghi == MIN_LUOGHI) {
                     System.out.println("Primo if numero luoghi: " + numeroLuoghi);
-                    Toast.makeText(DettaglioLuogoActivity.this, "Ci deve essere almeno un luogo nell'app", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
                     if (idLuogo.compareTo(luogoCorrente) == 0) {
@@ -197,7 +197,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                             }
                         }
                     } else {
-                        System.out.println("if NON del break: ");
                         connection.getRefOggetti().child(idLuogo).removeValue();
                         connection.getRefZone().child(idLuogo).removeValue();
                         connection.getRefLuoghi().child(idLuogo).removeValue();
@@ -236,8 +235,8 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     public void showDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Avviso")
-                .setMessage("Il luogo e le zone associate sono stati eliminati")
+        alert.setTitle(getResources().getString(R.string.avviso))
+                .setMessage(getResources().getString(R.string.avviso_luoghi_zone))
                 .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
