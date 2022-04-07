@@ -1,11 +1,17 @@
 package com.example.eculturetool.fragments;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +46,7 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +54,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
 
@@ -61,6 +70,7 @@ public class ProfileFragment extends Fragment {
     private ImageView imgUser;
     private Uri imgUri;
     private ProgressBar progressBar;
+    private int lang_selected;
 
     //Variabile che tiene traccia del luogo corrente. Sarà avvalorata quando si otterrano i riferimenti del curatore attraverso snapshot
     private String luogoCorrente;
@@ -173,10 +183,9 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-                    if(curatore.getImg() != null){
+                    if (curatore.getImg() != null) {
                         Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
-                    }
-                    else{
+                    } else {
                         progressBar.setVisibility(View.GONE);
                         Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
                     }
@@ -213,7 +222,7 @@ public class ProfileFragment extends Fragment {
         FirebaseAuth.getInstance().signOut();//logout
 
         //delete sessione
-        SessionManagement sessionManagement=new SessionManagement(getActivity());
+        SessionManagement sessionManagement = new SessionManagement(getActivity());
         sessionManagement.removeSession();
 
         startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -231,6 +240,10 @@ public class ProfileFragment extends Fragment {
                     showCustomDialog();
                     return true;
 
+                case R.id.cambia_lingua_popup:
+                    gestioneLingua();
+                    return true;
+
                 default:
                     return false;
             }
@@ -238,6 +251,64 @@ public class ProfileFragment extends Fragment {
         popup.inflate(R.menu.settings_menu);
         popup.show();
     }
+
+    private void gestioneLingua() {
+
+        if (LocaleHelper.getLanguage(getContext()).equalsIgnoreCase("it")) {
+            context = LocaleHelper.setLocale(getContext(), "it");
+            lang_selected = 0;
+        } else if (LocaleHelper.getLanguage(getContext()).equalsIgnoreCase("en")) {
+            context = LocaleHelper.setLocale(getContext(), "en");
+            lang_selected = 1;
+        }
+
+        final String[] Language = {"Italiano", "Inglese"};
+        Log.d("Clicked", "Clicked");
+
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        dialogBuilder.setTitle("Seleziona una lingua...")
+                .setSingleChoiceItems(Language, lang_selected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (Language[i].equals("Italiano")) {
+                            context = LocaleHelper.setLocale(getContext(), "it");
+                            setLocale("it");
+                            lang_selected = 0;
+                        }
+                        if (Language[i].equals("Inglese")) {
+                            context = LocaleHelper.setLocale(getContext(), "en");
+                            setLocale("en");
+                            lang_selected = 1;
+                        }
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        getActivity().recreate();
+                    }
+                });
+        dialogBuilder.create().show();
+    }
+
+    private void setLocale(String lang) {
+        //inizialize resources
+        Resources resources = getResources();
+        //Inizialize metrics
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        //Inizialize configurations
+        Configuration configuration = resources.getConfiguration();
+        //inizialize Locale
+        configuration.locale = new Locale(lang);
+        //Update configurations
+        resources.updateConfiguration(configuration, metrics);
+        //notify configurations
+        onConfigurationChanged(configuration);
+
+
+    }
+
 
     /**
      * Metodo che gestisce il dialog di conferma eliminazione del profilo.
@@ -266,7 +337,7 @@ public class ProfileFragment extends Fragment {
                         dialog.dismiss();
 
                         //delete sessione
-                        SessionManagement sessionManagement=new SessionManagement(getActivity());
+                        SessionManagement sessionManagement = new SessionManagement(getActivity());
                         sessionManagement.removeSession();
 
                         startActivity(new Intent(getActivity(), SplashActivity.class));

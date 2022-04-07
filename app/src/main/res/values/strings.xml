@@ -17,8 +17,6 @@
     <string name="email">Email Curatore</string>
     <string name="place">Struttura Curatore</string>
 
-    <string name="twitterUsername">\@joeytribbiani</string>
-
 
     <string-array name="tipologie_luoghi">
         <item>Museo</item>
@@ -36,6 +34,9 @@
 
 
     <!-- String profilo/oggetto/zona/luogo -->
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="luogo_selezionato">Luogo selezionato</string>
 
 
 </resources>

@@ -159,7 +159,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nome"
+                    android:text="@string/nome"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
@@ -190,7 +190,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cognome"
+                    android:text="@string/cognome"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
@@ -222,7 +222,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Luogo selezionato"
+                    android:text="@string/luogo_selezionato"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
