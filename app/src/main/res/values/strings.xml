@@ -70,6 +70,20 @@
     <string name="oggetti">Oggetti</string>
     <string name="inserisci_email">Inserisci Email</string>
     <string name="avanti">Avanti</string>
+    <string name="scatta_una_foto">Scatta una foto</string>
+    <string name="seleziona_da_file">Seleziona da file</string>
+    <string name="salva">Salva</string>
+    <string name="cancella_oggetto">Vuoi cancellare definitivamente l\'oggetto?</string>
+    <string name="si">Si</string>
+    <string name="cancella_profilo">Vuoi cancellare definitivamente il tuo profilo?</string>
+    <string name="cancella_zona">Vuoi cancellare definitivamente la zona?</string>
+    <string name="NB_zona">N.B. se cancelli una zona anche tutti gli oggetti in essa contenuti saranno cancellati</string>
+    <string name="percorsi">Percorsi</string>
+    <string name="cambia_luogo">Cambia Luogo</string>
+    <string name="esci">Esci</string>
+    <string name="profilo">Profilo</string>
+    <string name="elimina_profilo">Elimina Profile</string>
+    <string name="cambia_lingua">Cambia Lingua</string>
 
 
 </resources>

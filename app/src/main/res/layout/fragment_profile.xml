@@ -254,7 +254,7 @@
                     android:id="@+id/cambia_luogo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Cambia Luogo"
+                    android:text="@string/cambia_luogo"
                     android:textColor="@color/white" />
 
 
@@ -271,7 +271,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="#D2D2D2"
-                    android:text="Esci"
+                    android:text="@string/esci"
                     android:textColor="@color/black"
                     android:layout_marginBottom="100dp" />
 

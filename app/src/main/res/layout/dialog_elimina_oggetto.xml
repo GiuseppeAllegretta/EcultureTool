@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Vuoi cancellare definitivamente l'oggetto?"
+        android:text="@string/cancella_oggetto"
         android:textColor="@color/black"
         android:textSize="24sp" />
 
@@ -22,7 +22,7 @@
             android:id="@+id/conferma_cancellazione_oggetto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Si"
+            android:text="@string/si"
             android:textAlignment="center"
             android:backgroundTint="@android:color/holo_red_light"
             android:layout_weight="1"

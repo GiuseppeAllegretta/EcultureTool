@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Vuoi cancellare definitivamente la zona?"
+        android:text="@string/cancella_zona"
         android:textColor="@color/black"
         android:textSize="24sp" />
 
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="N.B. se cancelli una zona anche tutti gli oggetti in essa contenuti saranno cancellati"
+        android:text="@string/NB_zona"
         android:textColor="@color/opacityBlack"
         android:textSize="18sp" />
 
@@ -30,7 +30,7 @@
             android:id="@+id/conferma_cancellazione_zona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Si"
+            android:text="@string/si"
             android:textAlignment="center"
             android:backgroundTint="@android:color/holo_red_light"
             android:layout_weight="1"

@@ -89,7 +89,7 @@
                             android:layout_marginVertical="30dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Percorsi"
+                            android:text="@string/percorsi"
                             android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -128,7 +128,7 @@
                             android:layout_marginVertical="30dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Luoghi"
+                            android:text="@string/luoghi"
                             android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -215,7 +215,7 @@
                             android:layout_marginVertical="30dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Oggetti"
+                            android:text="@string/oggetti"
                             android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold" />

@@ -8,6 +8,8 @@
     <string name="nuova_password">New Password</string>
     <string name="conferma_password">Confirm password</string>
     <string name="modifica_profilo">Edit Profile</string>
+    <string name="cambia_luogo">Change Place</string>
+    <string name="esci">Log out</string>
 
 
     <!-- Stringhe del luogo -->
@@ -30,6 +32,7 @@
     <string name="modifica_oggetto">Edit Object</string>
     <string name="oggetti">Objects</string>
 
+
     <!-- Stringhe zona -->
     <string name="nome_zona">Zone Name*</string>
     <string name="descrizione_zona">Description Zone*</string>
@@ -45,6 +48,28 @@
     <string name="password_dimenticata">Forgot password?</string>
     <string name="inserisci_email">Enter Email</string>
     <string name="avanti">Next</string>
+
+
+    <!-- Stringhe utilities -->
+    <string name="scatta_una_foto">Take a picture</string>
+    <string name="seleziona_da_file">Select from file</string>
+    <string name="salva">Save</string>
+
+    <!-- Stringhe Dialog -->
+    <string name="cancella_oggetto">Do you want to permanently delete the object?</string>
+    <string name="si">Yes</string>
+    <string name="cancella_profilo">Do you want to permanently delete your profile?</string>
+    <string name="cancella_zona">Do you want to permanently delete the area?</string>
+    <string name="NB_zona">N.B. if you delete a zone all the objects it contains will also be deleted</string>
+
+    <!-- Stringhe Menu -->
+    <string name="profilo">Profile</string>
+    <string name="elimina_profilo">Delete Profile</string>
+    <string name="cambia_lingua">Change Language</string>
+
+    <!-- Stringhe Percorsi -->
+    <string name="percorsi">Itineraries</string>
+
 
 
 </resources>

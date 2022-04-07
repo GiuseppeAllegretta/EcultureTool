@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/modifica_password_popup"
-        android:title="Modifica password" />
+        android:title="@string/modifica_password" />
 
     <item
         android:id="@+id/elimina_profilo_popup"
-        android:title="Elimina profilo" />
+        android:title="@string/elimina_profilo" />
 
     <item
         android:id="@+id/cambia_lingua_popup"
-        android:title="Cambia lingua" />
+        android:title="@string/cambia_lingua" />
 
 </menu>

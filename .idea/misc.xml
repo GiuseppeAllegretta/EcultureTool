@@ -28,14 +28,17 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_upload_image.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/activity_zone.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/dialog_elimina_oggetto.xml" value="0.30520833333333336" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/dialog_elimina_zona.xml" value="0.30520833333333336" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_places.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_q_r_scanner.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/fragment_second2.xml" value="0.17831813576494426" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/home.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/image_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/list_item_oggetto.xml" value="0.26481481481481484" />
+        <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/list_item_zona.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/list_items.xml" value="0.33" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/object_lower_menu.xml" value="0.36102564102564105" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/layout/switch_item.xml" value="0.36102564102564105" />
