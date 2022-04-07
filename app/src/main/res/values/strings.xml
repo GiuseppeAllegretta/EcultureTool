@@ -84,6 +84,13 @@
     <string name="profilo">Profilo</string>
     <string name="elimina_profilo">Elimina Profile</string>
     <string name="cambia_lingua">Cambia Lingua</string>
+    <string name="nome_luogo_richiesto">Il nome del luogo è richiesto</string>
+    <string name="nome_esistente">Nome già esistente</string>
+    <string name="descrizione_richiesta">La descrizione è richiesta</string>
+    <string name="nome_oggetto_richiesto">Il nome dell\'oggetto è richiesto</string>
+    <string name="inserimento_immagine">Devi inserire un\'immagine</string>
+    <string name="nome_zona_richiesto">Il nome della zona è richiesto</string>
+    <string name="numero_max"> Attenzione! Il numero massimo è 10</string>
 
 
 </resources>

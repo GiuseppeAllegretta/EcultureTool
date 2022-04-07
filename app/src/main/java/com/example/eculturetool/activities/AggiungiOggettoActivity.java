@@ -217,19 +217,19 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         String descrizione = descrizioneOggetto.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeOggetto.setError("Il nome dell'oggetto è richiesto");
+            nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
             nomeOggetto.requestFocus();
-            nomeOggetto.setError("Nome già esistente");
+            nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneOggetto.setError("La descrizione è richiesta");
+            descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
             return;
         }
@@ -240,7 +240,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         }
 
         if(imgUri == null){
-            Toast.makeText(this, "Devi inserire un'immagine", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -287,7 +287,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         for (int i = 0; i < oggettiList.size(); i++) {
             if (nomeOggetto.compareToIgnoreCase(oggettiList.get(i).getNome()) == 0) {
-                //System.out.println("nome corrente: " + oggettiList.get(i).getNome());
                 isEsistente = true;
             }
         }

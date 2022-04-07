@@ -71,5 +71,19 @@
     <string name="percorsi">Itineraries</string>
 
 
+    <!-- Stringhe Messaggi di errore -->
+    <string name="nome_luogo_richiesto">Place name is required</string>
+    <string name="nome_esistente">Name already exists</string>
+    <string name="descrizione_richiesta">Description is required</string>
+
+    <string name="nome_oggetto_richiesto">The object name is required</string>
+    <string name="inserimento_immagine">You must insert an image</string>
+
+    <string name="nome_zona_richiesto">The zone name is required</string>
+    <string name="numero_max">Attention! The maximum number is 10</string>
+
+
+
+
 
 </resources>

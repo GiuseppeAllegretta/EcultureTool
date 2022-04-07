@@ -73,18 +73,18 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         String numeroMaxString=numeroOggetti.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeZona.setError("Il nome della zona è richiesto");
+            nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
             nomeZona.requestFocus();
             return;
         }
         if (controlloEsistenzaNomeZona(nome)) {
             nomeZona.requestFocus();
-            nomeZona.setError("Nome già esistente");
+            nomeZona.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneZona.setError("La descrizione è richiesta");
+            descrizioneZona.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneZona.requestFocus();
             return;
         }
@@ -95,7 +95,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         }else
             numeroMax=Integer.parseInt(numeroMaxString);
             if(numeroMax>MAX_OGGETTI){
-                numeroOggetti.setError("Attenzione! Il numero massimo è 10");
+                numeroOggetti.setError(getResources().getString(R.string.numero_max));
                 numeroOggetti.requestFocus();
                 return;
             }
@@ -105,7 +105,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
 
         //scrittura della zona sul Realtime Database
         String key=connection.getRefZone().push().getKey();
-        System.out.println("KEY: " + key);
         Zona zona= new Zona(key,nome,descrizione,numeroMax);
 
         connection.getRefZone().child(luogoCorrente).child(key).setValue(zona);

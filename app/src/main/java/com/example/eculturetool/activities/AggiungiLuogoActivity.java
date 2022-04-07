@@ -75,24 +75,23 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeLuogo.setError("Il nome del luogo è richiesto");
+            nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             nomeLuogo.requestFocus();
             return;
         }
 
         if (controlloEsistenzaNomeLuogo(nome) == true) {
             nomeLuogo.requestFocus();
-            nomeLuogo.setError("Nome già esistente");
+            nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneLuogo.setError("La descrizione è richiesta");
+            descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
-        System.out.println("tipologia: " + tipologiaLuogo);
         if (tipologiaLuogo == null) {
             tipologiaLuogo.requestFocus();
             return;
@@ -143,7 +142,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> iteratore = snapshot.getChildren();
                 int count = (int) snapshot.getChildrenCount();
-                System.out.println("count: " + count);
 
                 for (int i = 0; i < count; i++) {
                     luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
