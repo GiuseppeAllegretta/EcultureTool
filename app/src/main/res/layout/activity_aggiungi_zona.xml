@@ -75,7 +75,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nome Zona*"
+                            android:text="@string/nome_zona"
                             android:textColor="@color/headings"
                             android:textSize="20sp" />
 
@@ -107,7 +107,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Descrizione Zona*"
+                            android:text="@string/descrizione_zona"
                             android:textColor="@color/headings"
                             android:textSize="20sp" />
 
@@ -140,7 +140,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Numero massimo di oggetti"
+                            android:text="@string/numero_massimo_di_oggetti"
                             android:textColor="@color/headings"
                             android:textSize="20sp" />
 
@@ -168,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="N.B. Se il campo sovrastante viene lasciato vuoto, il numero di oggetti viene settato di default a 10."
+                            android:text="@string/NB"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -188,7 +188,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/button_state"
                             android:gravity="center"
-                            android:text="Crea Zona"
+                            android:text="@string/crea_zona"
                             android:textColor="@color/white"
                             android:textSize="20dp" />
                     </LinearLayout>

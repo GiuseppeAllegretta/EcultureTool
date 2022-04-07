@@ -34,7 +34,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nome Luogo"
+                        android:text="@string/nome_luogo"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Descrizione"
+                        android:text="@string/descrizione_luogo"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -98,7 +98,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tipologia"
+                        android:text="@string/tipologia_del_luogo"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -132,7 +132,7 @@
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/verdePrimario"
                         android:padding="10dp"
-                        android:text="Seleziona luogo"
+                        android:text="@string/seleziona_luogo"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -144,7 +144,7 @@
                         android:layout_marginBottom="20dp"
                         android:backgroundTint="#DB311F"
                         android:padding="10dp"
-                        android:text="Elimina Luogo"
+                        android:text="@string/elimina_luogo"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 

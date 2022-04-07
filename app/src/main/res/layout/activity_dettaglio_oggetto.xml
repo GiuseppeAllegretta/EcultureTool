@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nome Oggetto"
+                        android:text="@string/nome_oggetto"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -149,7 +149,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Descrizione"
+                        android:text="@string/descrizione_oggetto"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -182,7 +182,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tipologia"
+                        android:text="@string/tipologia_oggetto"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -213,7 +213,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Zona di appartenenza"
+                        android:text="@string/zona_di_appartenenza"
                         android:textColor="@color/headings"
                         android:textSize="20sp" />
 
@@ -247,7 +247,7 @@
                         android:layout_height="match_parent"
                         android:backgroundTint="#DB311F"
                         android:padding="10dp"
-                        android:text="Elimina Oggetto"
+                        android:text="@string/elimina_oggetto"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 

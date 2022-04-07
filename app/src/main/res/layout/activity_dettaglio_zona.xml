@@ -30,7 +30,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nome Zona"
+                    android:text="@string/nome_zona"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descrizione"
+                    android:text="@string/descrizione_zona"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Numero massimo di oggetti"
+                    android:text="@string/numero_massimo_di_oggetti"
                     android:textColor="@color/headings"
                     android:textSize="20sp" />
 
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/verdePrimario"
                     android:padding="10dp"
-                    android:text="Aggiungi oggetti"
+                    android:text="@string/aggiungi_oggetti"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#DB311F"
                     android:padding="10dp"
-                    android:text="Elimina Zona"
+                    android:text="@string/elimina_zona"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

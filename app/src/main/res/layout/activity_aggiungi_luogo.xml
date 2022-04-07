@@ -27,7 +27,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome Luogo"
+                android:text="@string/nome_luogo"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descrizione Luogo"
+                android:text="@string/descrizione_luogo"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipologia del luogo"
+                android:text="@string/tipologia_del_luogo"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -129,7 +129,7 @@
             android:id="@+id/creaLuogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Crea luogo"
+            android:text="@string/crea_luogo"
             android:textSize="20dp"
             android:background="@drawable/button_state"
             android:textColor="@color/white"

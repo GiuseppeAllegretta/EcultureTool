@@ -3,4 +3,36 @@
     <string name="nome">Name</string>
     <string name="cognome">Surname</string>
     <string name="luogo_selezionato">Selected place</string>
+
+
+    <!-- Stringhe del luogo -->
+    <string name="nome_luogo">Place name</string>
+    <string name="descrizione_luogo">Place description</string>
+    <string name="tipologia_del_luogo">Type of place</string>
+    <string name="crea_luogo">Create place</string>
+    <string name="seleziona_luogo">Select place</string>
+    <string name="elimina_luogo">Delete Place</string>
+
+    <!-- Stringhe oggetto -->
+    <string name="nome_oggetto">Object Name</string>
+    <string name="descrizione_oggetto">Description Object</string>
+    <string name="tipologia_oggetto">Type of object</string>
+    <string name="zona_di_appartenenza">Area of belonging</string>
+    <string name="crea_oggetto">Create object</string>
+    <string name="elimina_oggetto">Delete Object</string>
+
+    <!-- Stringhe zona -->
+    <string name="nome_zona">Zone Name*</string>
+    <string name="descrizione_zona">Description Zone*</string>
+    <string name="numero_massimo_di_oggetti">Maximum number of objects</string>
+    <string name="NB">N.B. If the above field is left blank, the number of objects is set by default to 10.</string>
+    <string name="crea_zona">Create Zone</string>
+    <string name="aggiungi_oggetti">Add objects</string>
+    <string name="elimina_zona">Delete Zone</string>
+
+    <!-- Stringhe registrazione -->
+    <string name="registrati">Sign in</string>
+
+
+
 </resources>

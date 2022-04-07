@@ -105,7 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Nome Oggetto"
+                            android:text="@string/nome_oggetto"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -138,7 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Descrizione Oggetto"
+                            android:text="@string/descrizione_oggetto"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -172,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Tipologia oggetto"
+                            android:text="@string/tipologia_oggetto"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -203,7 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
-                            android:text="Zona di appartenenza"
+                            android:text="@string/zona_di_appartenenza"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -240,7 +240,7 @@
                             android:backgroundTint="@color/gialloSecondario"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:gravity="center"
-                            android:text="Crea oggetto"
+                            android:text="@string/crea_oggetto"
                             android:textColor="@color/white"
                             android:textSize="20dp" />
                     </LinearLayout>

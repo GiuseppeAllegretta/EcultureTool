@@ -37,6 +37,26 @@
     <string name="nome">Nome</string>
     <string name="cognome">Cognome</string>
     <string name="luogo_selezionato">Luogo selezionato</string>
+    <string name="nome_luogo">Nome Luogo</string>
+    <string name="descrizione_luogo">Descrizione Luogo</string>
+    <string name="tipologia_del_luogo">Tipologia del luogo</string>
+    <string name="crea_luogo">Crea luogo</string>
+    <string name="nome_oggetto">Nome Oggetto</string>
+    <string name="descrizione_oggetto">Descrizione Oggetto</string>
+    <string name="tipologia_oggetto">Tipologia oggetto</string>
+    <string name="zona_di_appartenenza">Zona di appartenenza</string>
+    <string name="crea_oggetto">Crea oggetto</string>
+    <string name="nome_zona">Nome Zona*</string>
+    <string name="descrizione_zona">Descrizione Zona*</string>
+    <string name="numero_massimo_di_oggetti">Numero massimo di oggetti</string>
+    <string name="NB">N.B. Se il campo sovrastante viene lasciato vuoto, il numero di oggetti viene settato di default a 10.</string>
+    <string name="crea_zona">Crea Zona</string>
+    <string name="registrati">Registrati</string>
+    <string name="seleziona_luogo">Seleziona luogo</string>
+    <string name="elimina_luogo">Elimina Luogo</string>
+    <string name="elimina_oggetto">Elimina Oggetto</string>
+    <string name="aggiungi_oggetti">Aggiungi oggetti</string>
+    <string name="elimina_zona">Elimina Zona</string>
 
 
 </resources>
