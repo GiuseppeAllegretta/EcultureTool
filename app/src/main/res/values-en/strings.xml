@@ -44,23 +44,23 @@
     <string name="modifica_luogo">Edit place</string>
 
     <!-- Stringhe oggetto -->
-    <string name="nome_oggetto">Object Name</string>
-    <string name="descrizione_oggetto">Description Object</string>
-    <string name="tipologia_oggetto">Type of object</string>
+    <string name="nome_oggetto">Item Name</string>
+    <string name="descrizione_oggetto">Description Item</string>
+    <string name="tipologia_oggetto">Type of Item</string>
     <string name="zona_di_appartenenza">Area of belonging</string>
-    <string name="crea_oggetto">Create object</string>
-    <string name="elimina_oggetto">Delete Object</string>
-    <string name="modifica_oggetto">Edit Object</string>
-    <string name="oggetti">Objects</string>
+    <string name="crea_oggetto">Create Item</string>
+    <string name="elimina_oggetto">Delete Item</string>
+    <string name="modifica_oggetto">Edit Item</string>
+    <string name="oggetti">Items</string>
 
 
     <!-- Stringhe zona -->
     <string name="nome_zona">Zone Name*</string>
     <string name="descrizione_zona">Description Zone*</string>
-    <string name="numero_massimo_di_oggetti">Maximum number of objects</string>
-    <string name="NB">N.B. If the above field is left blank, the number of objects is set by default to 10.</string>
+    <string name="numero_massimo_di_oggetti">Maximum number of Item</string>
+    <string name="NB">N.B. If the above field is left blank, the number of Items is set by default to 10.</string>
     <string name="crea_zona">Create Zone</string>
-    <string name="aggiungi_oggetti">Add objects</string>
+    <string name="aggiungi_oggetti">Add Items</string>
     <string name="elimina_zona">Delete Zone</string>
     <string name="modifica_zona">Edit Zone</string>
 
@@ -77,11 +77,11 @@
     <string name="salva">Save</string>
 
     <!-- Stringhe Dialog -->
-    <string name="cancella_oggetto">Do you want to permanently delete the object?</string>
+    <string name="cancella_oggetto">Do you want to permanently delete the Item?</string>
     <string name="si">Yes</string>
     <string name="cancella_profilo">Do you want to permanently delete your profile?</string>
     <string name="cancella_zona">Do you want to permanently delete the area?</string>
-    <string name="NB_zona">N.B. if you delete a zone all the objects it contains will also be deleted</string>
+    <string name="NB_zona">N.B. if you delete a zone all the Items it contains will also be deleted</string>
 
     <!-- Stringhe Menu -->
     <string name="profilo">Profile</string>
@@ -97,7 +97,7 @@
     <string name="nome_esistente">Name already exists</string>
     <string name="descrizione_richiesta">Description is required</string>
 
-    <string name="nome_oggetto_richiesto">The object name is required</string>
+    <string name="nome_oggetto_richiesto">The Item name is required</string>
     <string name="inserimento_immagine">You must insert an image</string>
 
     <string name="nome_zona_richiesto">The zone name is required</string>
