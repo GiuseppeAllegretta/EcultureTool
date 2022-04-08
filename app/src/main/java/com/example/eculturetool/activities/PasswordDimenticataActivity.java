@@ -40,13 +40,13 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
 
         if (email.isEmpty()) {
-            emailEditText.setError("L'email è richiesta");
+            emailEditText.setError(getResources().getString(R.string.email_richiesta));
             emailEditText.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError("L'email deve essere valida");
+            emailEditText.setError(getResources().getString(R.string.email_valida));
             emailEditText.requestFocus();
             return;
         }
@@ -58,10 +58,10 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
 
             if (onCompleteListener.isSuccessful()) {
-                Toast.makeText(PasswordDimenticataActivity.this, "Controlla la casella di posta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PasswordDimenticataActivity.this, getString(R.string.controlla_la_casella), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(PasswordDimenticataActivity.this, LoginActivity.class));
             } else {
-                Toast.makeText(PasswordDimenticataActivity.this, "Prova di nuovo. Qualcosa è andato storto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PasswordDimenticataActivity.this, getString(R.string.prova_di_nuovo), Toast.LENGTH_SHORT).show();
             }
 
         });

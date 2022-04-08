@@ -124,7 +124,7 @@ public class UploadImageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(UploadImageActivity.this, "Caricamento in corso...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadImageActivity.this, getString(R.string.caricamento_in_corso), Toast.LENGTH_SHORT).show();
                 } else {
                     uploadFile();
                 }
@@ -210,7 +210,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(getApplicationContext(), "Upload effettuato con successo", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.upload_effettuato), Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(taskSnapshot.getTask().toString());
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
@@ -239,7 +239,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(getApplicationContext(), "Nessun file selezionato!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.nessun_file_selezionato), Toast.LENGTH_SHORT).show();
         }
     }
 

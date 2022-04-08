@@ -28,6 +28,9 @@
     <string name="inserisci_nome_valido">Please enter valid name</string>
     <string name="inserisci_cognome">Please enter your surname</string>
     <string name="inserisci_cognome_valido">Please enter valid surname</string>
+    <string name="controlla_la_casella">Check your inbox</string>
+    <string name="prova_di_nuovo">Try again. Something went wrong</string>
+    <string name="stai_gestendo">You\'re managing</string>
 
 
     <!-- Stringhe del luogo -->
@@ -105,7 +108,13 @@
     <string name="min_luoghi">There must be at least one place in the app</string>
     <string name="avviso">Warning</string>
     <string name="avviso_luoghi_zone">The place and associated zones have been deleted</string>
-
+    <string name="caricamento_in_corso">Loading...</string>
+    <string name="upload_effettuato">Upload successful</string>
+    <string name="nessun_file_selezionato">No file selected!</string>
+    <string name="informazione">Information</string>
+    <string name="seleziona_lingua">Select a language ...</string>
+    <string name="italiano">Italian</string>
+    <string name="inglese">English</string>
 
 
 </resources>

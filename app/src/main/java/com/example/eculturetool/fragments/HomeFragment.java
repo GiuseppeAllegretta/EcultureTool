@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment {
                             System.out.println("snapshot: " + snapshot);
                             Luogo luogo = snapshot.getValue(Luogo.class);
                             System.out.println(luogo.toString());
-                            luogoGestito.setText(Html.fromHtml("Stai gestendo " + "<b>" + luogo.getNome() + "</b>", 0));
+                            luogoGestito.setText(Html.fromHtml(getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
                         }
                     }
 

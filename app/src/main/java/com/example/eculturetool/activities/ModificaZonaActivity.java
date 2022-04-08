@@ -126,18 +126,18 @@ public class ModificaZonaActivity extends AppCompatActivity {
         String numeroMaxString = numeroMaxOggettiZona.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeZona.setError("Il nome della zona è richiesto");
+            nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
             nomeZona.requestFocus();
             return;
         }
         if (controlloEsistenzaNomeZona(nome)) {
             nomeZona.requestFocus();
-            nomeZona.setError("Nome già esistente");
+            nomeZona.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneZona.setError("La descrizione è richiesta");
+            descrizioneZona.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneZona.requestFocus();
             return;
         }
@@ -148,7 +148,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
         } else
             numeroMax = Integer.parseInt(numeroMaxString);
         if (numeroMax > MAX_OGGETTI) {
-            numeroMaxOggettiZona.setError("Attenzione! Il numero massimo è 10");
+            numeroMaxOggettiZona.setError(getResources().getString(R.string.numero_max));
             numeroMaxOggettiZona.requestFocus();
             return;
         }

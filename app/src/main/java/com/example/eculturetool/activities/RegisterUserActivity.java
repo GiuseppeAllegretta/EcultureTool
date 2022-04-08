@@ -63,37 +63,37 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         String password = editTextPassword.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            editTextNome.setError("Il nome è richiesto");
+            editTextNome.setError(getResources().getString(R.string.inserisci_nome));
             editTextNome.requestFocus();
             return;
         }
 
         if (cognome.isEmpty()) {
-            editTextCognome.setError("Il cognome è richiesto");
+            editTextCognome.setError(getResources().getString(R.string.inserisci_cognome));
             editTextCognome.requestFocus();
             return;
         }
 
         if (email.isEmpty()) {
-            editTextEmail.setError("L'email è richiesta");
+            editTextEmail.setError(getResources().getString(R.string.email_richiesta));
             editTextEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("L'email deve essere valida");
+            editTextEmail.setError(getResources().getString(R.string.email_valida));
             editTextEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            editTextPassword.setError("La password è richiesta");
+            editTextPassword.setError(getResources().getString(R.string.password_richiesta));
             editTextPassword.requestFocus();
             return;
         }
 
         if (password.length() < PASSWORD_LENGTH) {
-            editTextPassword.setError("La password deve avere almeno " + PASSWORD_LENGTH + " caratteri");
+            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) +  PASSWORD_LENGTH  + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
             return;
         }

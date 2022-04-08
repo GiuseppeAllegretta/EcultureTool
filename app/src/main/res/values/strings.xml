@@ -114,6 +114,16 @@
     <string name="inserisci_nome_valido">Inserisci nome valido</string>
     <string name="inserisci_cognome">Inserisci il cognome</string>
     <string name="inserisci_cognome_valido">Inserisci cognome valido</string>
+    <string name="controlla_la_casella">Controlla la casella di posta</string>
+    <string name="prova_di_nuovo">Prova di nuovo. Qualcosa è andato storto</string>
+    <string name="caricamento_in_corso">Caricamento in corso...</string>
+    <string name="upload_effettuato">Upload effettuato con successo</string>
+    <string name="nessun_file_selezionato">Nessun file selezionato!</string>
+    <string name="informazione">Informazione</string>
+    <string name="stai_gestendo">Stai gestendo</string>
+    <string name="seleziona_lingua">Seleziona una lingua...</string>
+    <string name="italiano">Italiano</string>
+    <string name="inglese">Inglese</string>
 
 
 </resources>
