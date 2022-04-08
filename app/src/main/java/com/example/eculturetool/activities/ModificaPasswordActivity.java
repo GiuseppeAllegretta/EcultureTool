@@ -51,27 +51,27 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         passNuovaConf = confirmPassword.getText().toString();
 
         if (passAttuale.isEmpty()) {
-            oldPassword.setError("Inserisci la password attuale");
+            oldPassword.setError(getResources().getString(R.string.password_attuale));
             oldPassword.requestFocus();
             return false;
         }
 
         if (passNuova.isEmpty()) {
-            newPassword.setError("Inserisci la nuova password");
+            newPassword.setError(getResources().getString(R.string.nuova_password));
             newPassword.requestFocus();
             return false;
         }
 
         if (passNuovaConf.isEmpty()) {
-            confirmPassword.setError("Conferma la password");
+            confirmPassword.setError(getResources().getString(R.string.conferma_password));
             confirmPassword.requestFocus();
             return false;
         }
 
         if (passNuova.compareTo(passNuovaConf) != 0) {
-            Toast.makeText(this, "Le due password non coincidono", Toast.LENGTH_SHORT).show();
-            newPassword.setError("Le due password non coincidono");
-            confirmPassword.setError("Le due password non coincidono");
+            Toast.makeText(this, getResources().getString(R.string.password_non_coincidenti), Toast.LENGTH_SHORT).show();
+            newPassword.setError(getResources().getString(R.string.password_non_coincidenti));
+            confirmPassword.setError(getResources().getString(R.string.password_non_coincidenti));
             newPassword.requestFocus();
             return false;
         }
@@ -85,24 +85,23 @@ public class ModificaPasswordActivity extends AppCompatActivity {
 
         connection.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, onCompleteListener -> {
-                    System.out.println("prima dell'if: " + flagPassword);
                     if (onCompleteListener.isSuccessful()) {
                         connection.getUser().updatePassword(passNuova)
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ModificaPasswordActivity.this, "Password Aggiornata", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_aggiornata), Toast.LENGTH_SHORT).show();
                                         onBackPressed();
                                         flagPassword = true;
 
                                     } else {
-                                        Toast.makeText(ModificaPasswordActivity.this, "Password non aggiornata", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_non_aggiornata), Toast.LENGTH_SHORT).show();
                                         flagPassword = false;
                                     }
                                     progressBar.setVisibility(View.INVISIBLE);
                                 });
                     } else {
-                        Toast.makeText(getApplicationContext(), "La password attuale non coincide", Toast.LENGTH_SHORT).show();
-                        oldPassword.setError("Password non corretta");
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.password_non_coincide), Toast.LENGTH_SHORT).show();
+                        oldPassword.setError(getString(R.string.password_non_corretta));
                         oldPassword.requestFocus();
                         progressBar.setVisibility(View.INVISIBLE);
                         flagPassword = false;

@@ -109,8 +109,6 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
                             luoghiList.clear();
                             for (int i = 0; i < count; i++) {
                                 luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                                //Luogo luogoprova= new Luogo("scavo","ciao", Tipologia.SITO_CULTURALE,Connection.getUidCuratore());
-                                //luoghiList.add(luogoprova);
                                 System.out.println(luoghiList.get(i));
                             }
                             setAdapter();

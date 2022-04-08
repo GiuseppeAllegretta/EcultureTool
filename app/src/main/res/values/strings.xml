@@ -96,6 +96,24 @@
     <string name="min_luoghi">Ci deve essere almeno un luogo nell\'app</string>
     <string name="avviso">Avviso</string>
     <string name="avviso_luoghi_zone">Il luogo e le zone associate sono stati eliminati</string>
+    <string name="email_richiesta">L\'email è richiesta</string>
+    <string name="email_valida">L\'email deve essere valida</string>
+    <string name="password_richiesta">La password è richiesta</string>
+    <string name="password_min_caratteri">La password deve avere almeno di</string>
+    <string name="caratteri">caratteri</string>
+    <string name="autenticazione_corretta">Autenticazione corretta</string>
+    <string name="verifica_email">Verifica l\'email</string>
+    <string name="autenticazione_fallita">Autenticazione fallita</string>
+    <string name="password_non_coincidenti">Le due password non coincidono</string>
+    <string name="password_aggiornata">Password Aggiornata</string>
+    <string name="password_non_aggiornata">Password non aggiornata</string>
+    <string name="password_non_coincide">La password attuale non coincide</string>
+    <string name="password_non_corretta">Password non corretta</string>
+    <string name="campo_vuoto">Campo vuoto</string>
+    <string name="inserisci_nome">Inserisci il nome</string>
+    <string name="inserisci_nome_valido">Inserisci nome valido</string>
+    <string name="inserisci_cognome">Inserisci il cognome</string>
+    <string name="inserisci_cognome_valido">Inserisci cognome valido</string>
 
 
 </resources>

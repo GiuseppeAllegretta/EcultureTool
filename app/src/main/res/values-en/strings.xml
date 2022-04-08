@@ -10,6 +10,24 @@
     <string name="modifica_profilo">Edit Profile</string>
     <string name="cambia_luogo">Change Place</string>
     <string name="esci">Log out</string>
+    <string name="email_richiesta">Email is required</string>
+    <string name="email_valida">The email must be valid</string>
+    <string name="password_richiesta">Password is required</string>
+    <string name="password_min_caratteri">The password must have at least</string>
+    <string name="caratteri">characters</string>
+    <string name="autenticazione_corretta">Successful authentication</string>
+    <string name="verifica_email">Check the email</string>
+    <string name="autenticazione_fallita">Failed authentication</string>
+    <string name="password_non_coincidenti">The two passwords do not match</string>
+    <string name="password_aggiornata">Password Updated</string>
+    <string name="password_non_aggiornata">Password not Updated</string>
+    <string name="password_non_coincide">The current password does not match</string>
+    <string name="password_non_corretta">Incorrect password</string>
+    <string name="campo_vuoto">Empty field</string>
+    <string name="inserisci_nome">Enter your name</string>
+    <string name="inserisci_nome_valido">Please enter valid name</string>
+    <string name="inserisci_cognome">Please enter your surname</string>
+    <string name="inserisci_cognome_valido">Please enter valid surname</string>
 
 
     <!-- Stringhe del luogo -->
@@ -87,12 +105,6 @@
     <string name="min_luoghi">There must be at least one place in the app</string>
     <string name="avviso">Warning</string>
     <string name="avviso_luoghi_zone">The place and associated zones have been deleted</string>
-
-
-
-
-
-
 
 
 

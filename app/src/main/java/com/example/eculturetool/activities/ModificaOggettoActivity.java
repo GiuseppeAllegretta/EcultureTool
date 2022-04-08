@@ -180,24 +180,23 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         String descrizione = descrizioneOggetto.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeOggetto.setError("Il nome dell'oggetto è richiesto");
+            nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome) == true) {
             nomeOggetto.requestFocus();
-            nomeOggetto.setError("Nome già esistente");
+            nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneOggetto.setError("La descrizione è richiesta");
+            descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
             return;
         }
 
-        System.out.println("tipologia: " + tipologiaOggetto);
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
             return;
@@ -213,20 +212,12 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
             System.out.println("Uri: " + imgUri);
             if(imgUri != null){
-                //connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("url").setValue(imgUri.toString());
                 Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
                 connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
             }else{
                 Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, null, tipologia, zonaSelezionata);
                 connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
             }
-
-
-            /*connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("id").setValue(idOggetto);
-            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("nome").setValue(nome);
-            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("descrizione").setValue(descrizione);
-            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
-            connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);*/
         }
 
         finish();
@@ -266,7 +257,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
         for (int i = 0; i < oggettiList.size(); i++) {
             if (nomeOggetto.compareToIgnoreCase(oggettiList.get(i).getNome()) == 0) {
-                //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }
         }

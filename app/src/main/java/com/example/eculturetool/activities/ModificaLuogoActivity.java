@@ -134,24 +134,23 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
 
         if (nome.isEmpty()) {
-            nomeLuogo.setError("Il nome del luogo è richiesto");
+            nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             nomeLuogo.requestFocus();
             return;
         }
 
         if (controlloEsistenzaNomeLuogo(nome) == true) {
             nomeLuogo.requestFocus();
-            nomeLuogo.setError("Nome già esistente");
+            nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneLuogo.setError("La descrizione è richiesta");
+            descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
-        System.out.println("tipologia: " + tipologiaLuogo);
         if (tipologiaLuogo == null) {
             tipologiaLuogo.requestFocus();
             return;
@@ -204,7 +203,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
         for (int i = 0; i < luoghiList.size(); i++) {
             if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
-                //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }
         }
@@ -215,7 +213,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
-        System.out.println("item: " + item);
 
         switch (item) {
             case "Museo":

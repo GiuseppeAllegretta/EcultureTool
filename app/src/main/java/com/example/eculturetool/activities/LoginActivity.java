@@ -81,26 +81,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = editTextPassword.getText().toString().trim();
 
         if (email.isEmpty()) {
-            editTextEmail.setError("L'email è richiesta");
+            editTextEmail.setError(getResources().getString(R.string.email_richiesta));
             editTextEmail.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("L'email deve essere valida");
+            editTextEmail.setError(getResources().getString(R.string.email_valida));
             editTextEmail.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            editTextPassword.setError("La password è richiesta");
+            editTextPassword.setError(getResources().getString(R.string.password_richiesta));
             editTextPassword.requestFocus();
             return;
         }
 
         int PASSWORD_LENGTH = 6;
         if (password.length() < PASSWORD_LENGTH) {
-            editTextPassword.setError("La password deve avere almeno " + PASSWORD_LENGTH + " caratteri");
+            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
             return;
         }
@@ -114,12 +114,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if (user.isEmailVerified()) {
                     Log.d(TAG, "signInWithEmail:success");
-                    Toast.makeText(LoginActivity.this, "Autenticazione corretta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_corretta), Toast.LENGTH_SHORT).show();
 
 
                     //Gestione sessione
                     SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
-                    System.out.println("UID -->>>>>" +user.getUid());
                     sessionManagement.saveSession(user.getUid());
 
 
@@ -129,14 +128,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     progressBar.setVisibility(View.INVISIBLE);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Verifica l'email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.verifica_email), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 }
 
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w(TAG, "signInWithEmail:failure", onCompleteListener.getException());
-                Toast.makeText(LoginActivity.this, "Autenticazione fallita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_fallita), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
 

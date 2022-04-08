@@ -73,7 +73,7 @@ public class ModificaProfiloActivity extends AppCompatActivity {
                 if (modificaDati())
                     onBackPressed();
                 else
-                    Toast.makeText(ModificaProfiloActivity.this, "Campo vuoto", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModificaProfiloActivity.this, getResources().getString(R.string.campo_vuoto), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,26 +84,26 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         //TODO controllare venga usato
 
         if (nome.getText().toString().isEmpty()) {
-            nome.setError("Inserisci il nome");
+            nome.setError(getString(R.string.inserisci_nome));
             nome.requestFocus();
             return false;
         }
 
         if (!Pattern.matches(NO_ALPHA_REGEX, nome.getText().toString())) {
-            nome.setError("Inserisci nome valido");
+            nome.setError(getString(R.string.inserisci_nome_valido));
             nome.requestFocus();
             return false;
         }
 
 
         if (cognome.getText().toString().isEmpty()) {
-            cognome.setError("Inserisci il cognome");
+            cognome.setError(getString(R.string.inserisci_cognome));
             cognome.requestFocus();
             return false;
         }
 
         if (!Pattern.matches(NO_ALPHA_REGEX, cognome.getText().toString())) {
-            cognome.setError("Inserisci cognome valido");
+            cognome.setError(getString(R.string.inserisci_cognome_valido));
             cognome.requestFocus();
             return false;
         }
