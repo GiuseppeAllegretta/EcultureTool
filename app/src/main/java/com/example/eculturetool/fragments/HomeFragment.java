@@ -1,5 +1,6 @@
 package com.example.eculturetool.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment {
     private TextView tv, luogoGestito;
     private CardView percorsi, luoghi, zone, oggetti;
     private String luogoCorrente;
+    private Context context;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -67,6 +69,11 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -96,10 +103,8 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue(Luogo.class) != null) {
-                            System.out.println("snapshot: " + snapshot);
                             Luogo luogo = snapshot.getValue(Luogo.class);
-                            System.out.println(luogo.toString());
-                            luogoGestito.setText(Html.fromHtml(getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
+                            luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
                         }
                     }
 

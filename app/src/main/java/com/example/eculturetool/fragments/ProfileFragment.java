@@ -255,10 +255,10 @@ public class ProfileFragment extends Fragment {
     private void gestioneLingua() {
 
         if (LocaleHelper.getLanguage(getContext()).equalsIgnoreCase("it")) {
-            context = LocaleHelper.setLocale(getContext(), "it");
+            LocaleHelper.setLocale(getContext(), "it");
             lang_selected = 0;
         } else if (LocaleHelper.getLanguage(getContext()).equalsIgnoreCase("en")) {
-            context = LocaleHelper.setLocale(getContext(), "en");
+            LocaleHelper.setLocale(getContext(), "en");
             lang_selected = 1;
         }
 
@@ -271,12 +271,12 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (Language[i].equals("Italiano")) {
-                            context = LocaleHelper.setLocale(getContext(), "it");
+                            LocaleHelper.setLocale(getContext(), "it");
                             setLocale("it");
                             lang_selected = 0;
                         }
                         if (Language[i].equals("Inglese")) {
-                            context = LocaleHelper.setLocale(getContext(), "en");
+                            LocaleHelper.setLocale(getContext(), "en");
                             setLocale("en");
                             lang_selected = 1;
                         }
