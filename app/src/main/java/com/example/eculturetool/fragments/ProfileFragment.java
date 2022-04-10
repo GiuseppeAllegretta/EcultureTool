@@ -272,12 +272,10 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (Language[i].equals("Italiano")) {
                             LocaleHelper.setLocale(getContext(), "it");
-                            setLocale("it");
                             lang_selected = 0;
                         }
                         if (Language[i].equals("Inglese")) {
                             LocaleHelper.setLocale(getContext(), "en");
-                            setLocale("en");
                             lang_selected = 1;
                         }
                     }

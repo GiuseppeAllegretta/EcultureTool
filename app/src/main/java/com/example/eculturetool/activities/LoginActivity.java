@@ -1,6 +1,10 @@
 package com.example.eculturetool.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -18,6 +22,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +36,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     private static final String TAG = "EmailPassword";
+
+    private TextView language_dialog;
+    private Context context;
+    private Resources resources;
+    private int lang_selected;
 
 
     @Override
@@ -53,6 +63,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         TextView passwordDimenticata = findViewById(R.id.passwordDimenticata);
         passwordDimenticata.setOnClickListener(this);
+
+        //TextView con nome nella lingua selezionata
+        language_dialog = findViewById(R.id.dialog_language);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -146,6 +159,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (LocaleHelper.getLanguage(getApplicationContext()).equalsIgnoreCase("it")) {
+            context = LocaleHelper.setLocale(getApplicationContext(), "it");
+            lang_selected = 0;
+            language_dialog.setText("Italiano");
+        } else if (LocaleHelper.getLanguage(getApplicationContext()).equalsIgnoreCase("en")) {
+            context = LocaleHelper.setLocale(getApplicationContext(), "en");
+            lang_selected = 1;
+            language_dialog.setText("English");
+        }
+
+        language_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //lista delle lingue disponibili
+                final String[] language = {"Italiano", "Inglese"};
+
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+                dialogBuilder.setTitle("Seleziona una lingua...")
+                        .setSingleChoiceItems(language, lang_selected, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                language_dialog.setText(language[i]);
+
+                                if (language[i].equals("Italiano")) {
+                                    LocaleHelper.setLocale(LoginActivity.this, "it");
+                                    lang_selected = 0;
+                                }
+                                if (language[i].equals("Inglese")) {
+                                    LocaleHelper.setLocale(LoginActivity.this, "en");
+                                    lang_selected = 1;
+                                }
+                            }
+                        })
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                recreate();
+                            }
+                        });
+                dialogBuilder.create().show();
+
+            }
+        });
+
+
     }
 
 
