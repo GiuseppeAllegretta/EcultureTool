@@ -161,11 +161,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
 
         if (LocaleHelper.getLanguage(getApplicationContext()).equalsIgnoreCase("it")) {
-            context = LocaleHelper.setLocale(getApplicationContext(), "it");
+            context = LocaleHelper.setLocale(LoginActivity.this, "it");
             lang_selected = 0;
             language_dialog.setText("Italiano");
         } else if (LocaleHelper.getLanguage(getApplicationContext()).equalsIgnoreCase("en")) {
-            context = LocaleHelper.setLocale(getApplicationContext(), "en");
+            context = LocaleHelper.setLocale(LoginActivity.this, "en");
             lang_selected = 1;
             language_dialog.setText("English");
         }
