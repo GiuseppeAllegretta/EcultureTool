@@ -90,6 +90,9 @@
 
     <!-- Stringhe Percorsi -->
     <string name="percorsi">Itineraries</string>
+    <string name="nuovo">New</string>
+    <string name="modifica">Edit</string>
+    <string name="lista">List</string>
 
 
     <!-- Stringhe Messaggi di errore -->
@@ -115,6 +118,7 @@
     <string name="seleziona_lingua">Select a language ...</string>
     <string name="italiano">Italian</string>
     <string name="inglese">English</string>
+
 
 
 </resources>

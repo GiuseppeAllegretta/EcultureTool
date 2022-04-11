@@ -46,7 +46,10 @@
         android:theme="@style/Theme.EcultureTool">
         <activity
             android:name=".activities.PercorsiActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/percorsi"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.ModificaZonaActivity"
             android:exported="false"

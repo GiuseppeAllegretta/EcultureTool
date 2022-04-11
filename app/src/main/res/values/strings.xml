@@ -124,6 +124,9 @@
     <string name="seleziona_lingua">Seleziona una lingua...</string>
     <string name="italiano">Italiano</string>
     <string name="inglese">Inglese</string>
+    <string name="nuovo">Nuovo</string>
+    <string name="modifica">Modifica</string>
+    <string name="lista">Lista</string>
 
 
 </resources>
