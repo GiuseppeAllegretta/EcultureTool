@@ -92,8 +92,6 @@ public class HomeFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("--->" + snapshot);
-                //System.out.println(snapshot.getValue(Curatore.class).toString());
                 if (snapshot.getValue(Curatore.class) != null) {
                     luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
