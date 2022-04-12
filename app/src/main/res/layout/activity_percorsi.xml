@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarpercorsi"
+        android:id="@+id/toolbarPercorsi"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -25,7 +25,7 @@
         android:id="@+id/recyclerViewPercorsi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarpercorsi" />
+        android:layout_below="@id/toolbarPercorsi" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addPercorso"

@@ -23,8 +23,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@drawable/itinerary"
@@ -36,11 +36,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginVertical="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/posterama_1927_regular"
                 android:text="Nome Percorso"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:singleLine="true"
                 android:ellipsize="end"/>

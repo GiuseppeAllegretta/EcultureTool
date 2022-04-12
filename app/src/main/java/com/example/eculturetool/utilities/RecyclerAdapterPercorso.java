@@ -3,6 +3,8 @@ package com.example.eculturetool.utilities;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,14 +14,19 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Percorso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapterPercorso.PercorsoViewHolder> {
+public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapterPercorso.PercorsoViewHolder> implements Filterable {
 
     private ArrayList<Percorso> percorsiList;
+    private ArrayList<Percorso> percorsiListAll;
 
     public RecyclerAdapterPercorso (ArrayList<Percorso> percorsiList){
         this.percorsiList = percorsiList;
+        this.percorsiListAll = new ArrayList<>(percorsiList);
     }
+
 
     public class PercorsoViewHolder extends RecyclerView.ViewHolder{
         private TextView nomePercorsoTxt;
@@ -47,4 +54,39 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
     public int getItemCount() {
         return percorsiList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        //run on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            List<Percorso> filteredList = new ArrayList<>();
+            if(charSequence.toString().isEmpty()){
+                filteredList.addAll(percorsiListAll);
+            }else {
+                for(Percorso percorso: percorsiListAll){
+                    if(percorso.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filteredList.add(percorso);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        //runs on a un thread
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            percorsiList.clear();
+            percorsiList.addAll((Collection<? extends Percorso>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }
