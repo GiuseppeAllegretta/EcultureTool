@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 public class Curatore implements Serializable {
 
-    // TODO capire se serve ancora email o va eliminata
-    // TODO capire se uid è un campo o non è necessario
-    private String nome, cognome, email;
-    //TODO vedere se fare string o URI
+    private String nome, cognome, email, password;
     private String img;
     private ArrayList<Luogo> luoghi = new ArrayList<>();
     private String luogoCorrente;
@@ -46,6 +43,10 @@ public class Curatore implements Serializable {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public String getImg() {
         return img;
     }
@@ -56,6 +57,10 @@ public class Curatore implements Serializable {
 
     public void setLuogoCorrente(String luogoCorrente) {
         this.luogoCorrente = luogoCorrente;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public ArrayList<Luogo> getLuoghi() {
