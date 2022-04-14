@@ -72,6 +72,8 @@ public class Curatore implements Serializable {
                 "nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", luogoCorrente=" + luogoCorrente +
                 '}';
     }
 

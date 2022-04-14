@@ -110,6 +110,34 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Curatore getCuratore(){
+        Curatore curatore = null;
+        String email = null;
+        String nome = null;
+        String cognome = null;
+        String password = null;
+
+        String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                email = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_EMAIL));
+                nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_NOME));
+                cognome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_COGNOME));
+                password = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_PASSWORD));
+
+                curatore = new Curatore(nome, cognome, email, password);
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return curatore;
+    }
+
     public boolean checkEmailExist(String email){
         boolean risultato = false;
 
