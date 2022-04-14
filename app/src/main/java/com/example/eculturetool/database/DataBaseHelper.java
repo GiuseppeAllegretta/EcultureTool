@@ -24,6 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_CURATORE_LUOGO_CORRENTE = "CURATORE_LUOGO_CORRENTE";
     public static final String COLONNA_EMAIL = "EMAIL";
     public static final String COLONNA_CURATORE_PASSWORD = "CURATORE_PASSWORD";
+    public static final String COLONNA_CURATORE_IMG = "CURATORE_IMMAGINE";
 
     //VARIABILI INERENTI I LUOGHI
     public static final String TABLE_LUOGHI = "LUOGHI";
@@ -50,7 +51,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + COLONNA_CURATORE_PASSWORD + " TEXT," +
                 " " + COLONNA_CURATORE_NOME + " TEXT," +
                 " " + COLONNA_CURATORE_COGNOME + " TEXT," +
-                " " + COLONNA_CURATORE_LUOGO_CORRENTE + " INT)";
+                " " + COLONNA_CURATORE_LUOGO_CORRENTE + " INT," +
+                " " + COLONNA_CURATORE_IMG + " TEXT" + ")";
 
         String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
                 " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -139,6 +141,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return curatore;
     }
 
+    public boolean setImageCuratore(String uri){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_CURATORE_IMG, uri);
+
+        long insert = db.insert(TABLE_CURATORI, null, contentValues);
+
+        if(insert == -1){
+            db.close();
+            risultato = false;
+        }else {
+            db.close();
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
+    public String getImageCuratore(){
+        String uri = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                uri = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_IMG));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return uri;
+    }
+
     public Luogo getLuogoCorrente(){
         Luogo luogo = null;
 
@@ -170,6 +212,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }
 
+        cursor.close();
+        db.close();
         return luogo;
     }
 

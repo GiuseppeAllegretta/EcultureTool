@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     private DataBaseHelper dataBaseHelper;
     private TextView tv, luogoGestito;
     private CardView percorsi, luoghi, zone, oggetti;
-    private String luogoCorrente;
     private Context context;
 
 

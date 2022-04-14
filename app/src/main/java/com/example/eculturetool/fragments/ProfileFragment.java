@@ -43,6 +43,7 @@ import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
@@ -63,17 +64,19 @@ public class ProfileFragment extends Fragment {
     private final Connection connection = new Connection();
     private Context context;
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
-    protected static Curatore curatore;
-    private TextView nomeFoto, email, nome, cognome, nomeLuogo;
-    private Button cambiaLuogo;
-    private Toolbar myToolbar;
-    private ImageView imgUser;
     private Uri imgUri;
-    private ProgressBar progressBar;
+    protected static Curatore curatore;
     private int lang_selected;
 
-    //Variabile che tiene traccia del luogo corrente. Sarà avvalorata quando si otterrano i riferimenti del curatore attraverso snapshot
-    private String luogoCorrente;
+    private DataBaseHelper dataBaseHelper;
+    private TextView nomeFoto, email, nome, cognome, nomeLuogo;
+    private Button cambiaLuogo, logout;
+    private Toolbar myToolbar;
+    private ImageView imgUser;
+    private ProgressBar progressBar;
+    private FloatingActionButton changeImg, editButton;
+    private ImageButton settingsButton;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -83,6 +86,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = requireActivity().getApplicationContext();
+
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
@@ -93,13 +97,11 @@ public class ProfileFragment extends Fragment {
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         //Riferimento a realtime database
                         FirebaseDatabase mFirebaseInstance = connection.getDatabase();
-                        // get reference to 'curatori' node
-                        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                         //aggiorno l'url dell'immagine
                         if (uri != null) {
                             imgUri = uri;
-                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(imgUri.toString());
-                            Glide.with(context).load(curatore.getImg()).listener(new RequestListener<Drawable>() {
+                            dataBaseHelper.setImageCuratore(imgUri.toString());
+                            Glide.with(context).load(dataBaseHelper.getImageCuratore()).listener(new RequestListener<Drawable>() {
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                     progressBar.setVisibility(View.GONE);
@@ -130,17 +132,20 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.progress);
         myToolbar = view.findViewById(R.id.toolbarOggetto);
-        Button logout = view.findViewById(R.id.logout);
+        logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
-        FloatingActionButton changeImg = view.findViewById(R.id.change_imgUser);
+        changeImg = view.findViewById(R.id.change_imgUser);
         nomeFoto = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
         nome = view.findViewById(R.id.nome_profilo);
         cognome = view.findViewById(R.id.cognome_profilo);
         nomeLuogo = view.findViewById(R.id.luogo_selezionato);
         cambiaLuogo = view.findViewById(R.id.cambia_luogo);
-        ImageButton settingsButton = view.findViewById(R.id.settings_button);
-        FloatingActionButton editButton = view.findViewById(R.id.fab);
+        settingsButton = view.findViewById(R.id.settings_button);
+        editButton = view.findViewById(R.id.fab);
+
+        //Inizializzazione del database
+        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,55 +154,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        DatabaseReference myRef = connection.getRefCuratore();
-
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
-                    curatore = snapshot.getValue(Curatore.class);
-                    if (curatore != null) {
-                        nomeFoto.setText(String.format("%s %s", curatore.getNome(), curatore.getCognome()));
-                        email.setText(curatore.getEmail());
-                        nome.setText(curatore.getNome());
-                        cognome.setText(curatore.getCognome());
-                        //luogoCorrente = curatore.getLuogoCorrente();
-                    }
-
-                    connection.getRefLuoghi().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getValue(Luogo.class) != null) {
-                                System.out.println("snapshot: " + snapshot);
-                                Luogo luogo = snapshot.getValue(Luogo.class);
-                                if (luogo != null) {
-                                    System.out.println(luogo);
-                                    nomeLuogo.setText(luogo.getNome());
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    if (curatore.getImg() != null) {
-                        Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        //Popola i campi del profilo
+        popolaCampi();
 
         changeImg.setOnClickListener(onClickListener -> {
             Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
@@ -216,6 +174,28 @@ public class ProfileFragment extends Fragment {
         settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));
 
         logout.setOnClickListener(onClickListener -> logout());
+    }
+
+    private void popolaCampi() {
+        Curatore curatore = dataBaseHelper.getCuratore();
+        Luogo luogo = dataBaseHelper.getLuogoCorrente();
+
+        if(curatore != null){
+            email.setText(curatore.getEmail());
+            nome.setText(curatore.getNome());
+            cognome.setText(curatore.getCognome());
+
+            if(luogo != null){
+                nomeLuogo.setText(luogo.getNome());
+            }
+        }
+
+        if (curatore.getImg() != null) {
+            Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
+        }
     }
 
     public void logout() {

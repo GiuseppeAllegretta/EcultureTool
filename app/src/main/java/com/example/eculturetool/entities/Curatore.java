@@ -62,9 +62,14 @@ public class Curatore implements Serializable {
         this.password = password;
     }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public ArrayList<Luogo> getLuoghi() {
         return luoghi;
     }
+
 
     @Override
     public String toString() {
