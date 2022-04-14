@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.entities.Tipologia;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -136,6 +137,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return curatore;
+    }
+
+    public Luogo getLuogoCorrente(){
+        Luogo luogo = null;
+
+        String nome = null;
+        String descrizione = null;
+        Tipologia tipologia = null;
+        String emailCuratore = null;
+
+        int luogoCorrente = getIdLuogoCorrente();
+
+        String stringQuery = "SELECT " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_NOME + "," +
+                TABLE_LUOGHI + "." + COLONNA_LUOGHI_DESCRIZIONE + "," +
+                TABLE_LUOGHI + "." + COLONNA_LUOGHI_TIPOLOGIA + "," +
+                TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE +
+                " FROM (" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") " +
+                "WHERE " + COLONNA_CURATORE_LUOGO_CORRENTE + " = " + luogoCorrente;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(stringQuery, null);
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_NOME));
+                descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_DESCRIZIONE));
+                tipologia = Tipologia.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_TIPOLOGIA)));
+                emailCuratore = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_EMAIL_CURATORE));
+
+                luogo = new Luogo(nome, descrizione, tipologia, emailCuratore);
+            }
+        }
+
+        return luogo;
+    }
+
+    public int getIdLuogoCorrente(){
+        int luogoCorrente =  0;
+
+        String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                luogoCorrente = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_LUOGO_CORRENTE));
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return luogoCorrente;
     }
 
     public boolean checkEmailExist(String email){

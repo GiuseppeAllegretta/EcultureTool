@@ -42,13 +42,17 @@ public class Luogo implements Serializable {
         return emailCuratore;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Luogo{" +
                 "nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", tipologia=" + tipologia +
-                ", id='" + id + '\'' +
+                ", emailCuratore='" + emailCuratore + '\'' +
                 '}';
     }
 
