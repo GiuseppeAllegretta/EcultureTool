@@ -83,6 +83,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             emailCuratore = email;
         }
 
+        cursor.close();
+        db.close();
         return risultato;
     }
 
@@ -100,8 +102,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long insert = db.insert(TABLE_CURATORI, null, contentValues);
 
         if(insert == -1){
+            db.close();
             return false;
         }else {
+            db.close();
             return true;
         }
     }
@@ -143,6 +147,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             risultato = true;
         }
 
+        db.close();
         return risultato;
     }
 
