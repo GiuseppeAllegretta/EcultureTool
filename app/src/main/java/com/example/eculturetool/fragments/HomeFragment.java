@@ -20,6 +20,7 @@ import com.example.eculturetool.activities.PercorsiActivity;
 import com.example.eculturetool.activities.ZoneActivity;
 import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
 
-    private Connection connection = new Connection();
-    private DatabaseReference myRef;
-
+    private DataBaseHelper dataBaseHelper;
     private TextView tv, luogoGestito;
     private CardView percorsi, luoghi, zone, oggetti;
     private String luogoCorrente;
@@ -85,40 +84,21 @@ public class HomeFragment extends Fragment {
         zone = view.findViewById(R.id.zoneCard);
         oggetti = view.findViewById(R.id.oggettiCard);
         luogoGestito = view.findViewById(R.id.nomeLuogoHome);
+        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
 
-        myRef = connection.getRefCuratore();
-        System.out.println("--->" + myRef);
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-                    tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
-                }
+        //Operazioni che settano il nome del curatore nella home
+        Curatore curatore = dataBaseHelper.getCuratore();
+        if(curatore != null){
+            tv.setText(curatore.getNome() + " " + curatore.getCognome());
+        }
 
-                connection.getRefLuoghi().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getValue(Luogo.class) != null) {
-                            Luogo luogo = snapshot.getValue(Luogo.class);
-                            luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
-                        }
-                    }
+        //Operazioni che settano il nome del luogo corrente nella home
+        Luogo luogo = dataBaseHelper.getLuogoCorrente();
+        if(luogo != null){
+            luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
+        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         percorsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
