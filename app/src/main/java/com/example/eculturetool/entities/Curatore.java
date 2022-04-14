@@ -8,21 +8,20 @@ public class Curatore implements Serializable {
     private String nome, cognome, email, password;
     private String img;
     private ArrayList<Luogo> luoghi = new ArrayList<>();
-    private String luogoCorrente;
+    private int luogoCorrente;
 
     public Curatore() {
     }
 
-    public Curatore(String nome, String cognome, String email) {
+    public Curatore(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.password = password;
     }
 
-    public Curatore(String nome, String cognome, String email, String luogoCorrente) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
+    public Curatore(String nome, String cognome, String email, String password, int luogoCorrente) {
+        this(nome, cognome, email, password);
         this.luogoCorrente = luogoCorrente;
     }
 
@@ -51,11 +50,11 @@ public class Curatore implements Serializable {
         return img;
     }
 
-    public String getLuogoCorrente() {
+    public int getLuogoCorrente() {
         return luogoCorrente;
     }
 
-    public void setLuogoCorrente(String luogoCorrente) {
+    public void setLuogoCorrente(int luogoCorrente) {
         this.luogoCorrente = luogoCorrente;
     }
 

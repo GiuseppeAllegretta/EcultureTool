@@ -102,7 +102,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Curatore.class) != null) {
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     connection.getRefZone().child(luogoCorrente).addValueEventListener(valueEventListenerZone);
                 }
             }

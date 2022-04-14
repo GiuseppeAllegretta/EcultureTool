@@ -13,17 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
 
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
     private TextView registerUser;
     private final int PASSWORD_LENGTH = 6;
     private ProgressBar progressBar;
+    DataBaseHelper dataBaseHelper;
 
 
     @Override
@@ -32,7 +34,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_register_user);
 
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         registerUser = (Button) findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
@@ -40,6 +42,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         editTextCognome = (EditText) findViewById(R.id.cognomeCuratore);
         editTextEmail = (EditText) findViewById(R.id.emailCuratore);
         editTextPassword = (EditText) findViewById(R.id.passwordCuratore);
+
+        dataBaseHelper = new DataBaseHelper(this);
 
         progressBar = findViewById(R.id.progressBarRegister);
         progressBar.setVisibility(View.INVISIBLE);
@@ -100,17 +104,22 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Curatore curatore = new Curatore(nome, cognome, email);
+        if(dataBaseHelper.checkEmailExist(email)){
+            editTextEmail.setError(getResources().getString(R.string.email_esistente));
+            editTextEmail.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        Curatore curatore = new Curatore(nome, cognome, email, password);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(Curatore.Keys.CURATORE_KEY, curatore);
-        bundle.putString(Curatore.Keys.PASSWORD_KEY, password);
 
         Intent intent = new Intent(this, CreazioneMuseoActivity.class);
         intent.putExtras(bundle);
 
         startActivity(intent);
-
     }
 
 

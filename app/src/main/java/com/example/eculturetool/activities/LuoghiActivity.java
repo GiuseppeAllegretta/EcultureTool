@@ -97,7 +97,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
                 if (snapshot.getValue(Curatore.class) != null) {
 
                     //Ottengo il luogo corrente del curatore
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
 
                     connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
                         @Override

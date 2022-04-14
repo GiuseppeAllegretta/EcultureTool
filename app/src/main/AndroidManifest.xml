@@ -157,7 +157,7 @@
             android:parentActivityName=".activities.LoginActivity" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"

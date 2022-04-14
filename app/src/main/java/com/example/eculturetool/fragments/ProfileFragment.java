@@ -162,7 +162,7 @@ public class ProfileFragment extends Fragment {
                         email.setText(curatore.getEmail());
                         nome.setText(curatore.getNome());
                         cognome.setText(curatore.getCognome());
-                        luogoCorrente = curatore.getLuogoCorrente();
+                        //luogoCorrente = curatore.getLuogoCorrente();
                     }
 
                     connection.getRefLuoghi().child(luogoCorrente).addValueEventListener(new ValueEventListener() {

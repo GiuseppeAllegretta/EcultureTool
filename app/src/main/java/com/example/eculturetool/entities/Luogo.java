@@ -7,17 +7,18 @@ public class Luogo implements Serializable {
     private String nome, descrizione;
     private Tipologia tipologia;
     private String id;
+    private String emailCuratore;
 
 
     public Luogo() {
 
     }
 
-    public Luogo(String nome, String descrizione, Tipologia tipologia, String id) {
+    public Luogo(String nome, String descrizione, Tipologia tipologia, String emailCuratore) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipologia = tipologia;
-        this.id = id;
+        this.emailCuratore = emailCuratore;
     }
 
 
@@ -37,6 +38,9 @@ public class Luogo implements Serializable {
         return id;
     }
 
+    public String getEmailCuratore() {
+        return emailCuratore;
+    }
 
     @Override
     public String toString() {

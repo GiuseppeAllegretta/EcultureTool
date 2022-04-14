@@ -25,12 +25,14 @@
     <string name="password_non_corretta">Incorrect password</string>
     <string name="campo_vuoto">Empty field</string>
     <string name="inserisci_nome">Enter your name</string>
-    <string name="inserisci_nome_valido">Please enter valid name</string>
+    <string name="inserisci_nome_valido">Please enter a valid name</string>
     <string name="inserisci_cognome">Please enter your surname</string>
     <string name="inserisci_cognome_valido">Please enter valid surname</string>
     <string name="controlla_la_casella">Check your inbox</string>
     <string name="prova_di_nuovo">Try again. Something went wrong</string>
     <string name="stai_gestendo">You\'re managing</string>
+    <string name="email_esistente">Email already exist</string>
+    <string name="email_errata">Wrong email</string>
 
 
     <!-- Stringhe del luogo -->

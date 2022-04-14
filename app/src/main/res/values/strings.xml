@@ -127,6 +127,8 @@
     <string name="nuovo">Nuovo</string>
     <string name="modifica">Modifica</string>
     <string name="lista">Lista</string>
+    <string name="email_esistente">Email già esistente</string>
+    <string name="email_errata">Email errata</string>
 
 
 </resources>

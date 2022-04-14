@@ -78,7 +78,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
                 if (snapshot.getValue(Curatore.class) != null) {
 
                     //Ottengo il luogo corrente del curatore
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     connection.getRefZone().child(luogoCorrente).child(idZona).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

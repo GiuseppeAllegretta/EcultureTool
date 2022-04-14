@@ -112,7 +112,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Curatore.class) != null) {
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     oggettiList = getListOggettiCreati();
                 }
             }

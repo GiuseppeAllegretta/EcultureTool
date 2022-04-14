@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Curatore.class) != null) {
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
                     tv.setText(snapshot.getValue(Curatore.class).getNome() + " " + snapshot.getValue(Curatore.class).getCognome());
                 }
 

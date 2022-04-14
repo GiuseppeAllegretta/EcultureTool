@@ -118,7 +118,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
                 if (snapshot.getValue(Curatore.class) != null) {
 
                     //Ottengo il luogo corrente del curatore
-                    luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
+                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
 
                     connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
                         @Override

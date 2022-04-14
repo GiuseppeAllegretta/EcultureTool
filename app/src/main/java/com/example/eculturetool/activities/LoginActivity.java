@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.LocaleHelper;
@@ -31,16 +32,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Connection connection = new Connection();
+    DataBaseHelper dataBaseHelper;
     private EditText editTextEmail, editTextPassword;
-    private FirebaseAuth mAuth;
+    private Button signIn;
     private ProgressBar progressBar;
-    private static final String TAG = "EmailPassword";
-
-    private TextView language_dialog;
+    private TextView language_dialog, register, passwordDimenticata;
     private Context context;
-    private Resources resources;
     private int lang_selected;
+    private static final String TAG = "EmailPassword";
+    private final int PASSWORD_LENGTH = 6;
 
 
     @Override
@@ -48,11 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        TextView register = findViewById(R.id.registrati);
+        register = findViewById(R.id.registrati);
         register.setOnClickListener(this);
 
-        Button signIn = findViewById(R.id.logInButton);
+        signIn = findViewById(R.id.logInButton);
         signIn.setOnClickListener(this);
 
         editTextEmail = findViewById(R.id.email);
@@ -61,14 +60,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = findViewById(R.id.progressBarLogin);
         progressBar.setVisibility(View.INVISIBLE);
 
-        TextView passwordDimenticata = findViewById(R.id.passwordDimenticata);
+        passwordDimenticata = findViewById(R.id.passwordDimenticata);
         passwordDimenticata.setOnClickListener(this);
 
         //TextView con nome nella lingua selezionata
         language_dialog = findViewById(R.id.dialog_language);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        //Riferimento al db SQLite
+        dataBaseHelper = new DataBaseHelper(this);
     }
 
     @Override
@@ -86,7 +85,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, PasswordDimenticataActivity.class));
                 break;
         }
-
     }
 
     private void userLogin() {
@@ -111,7 +109,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        int PASSWORD_LENGTH = 6;
         if (password.length() < PASSWORD_LENGTH) {
             editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
@@ -120,39 +117,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(onCompleteListener -> {
-            if (onCompleteListener.isSuccessful()) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                FirebaseUser user = auth.getCurrentUser();
+        if(dataBaseHelper.login(email, password)){
+            Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_corretta), Toast.LENGTH_SHORT).show();
 
-                if (user.isEmailVerified()) {
-                    Log.d(TAG, "signInWithEmail:success");
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_corretta), Toast.LENGTH_SHORT).show();
+            //Gestione sessione
+            SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+            sessionManagement.saveSession(email);
 
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
-                    //Gestione sessione
-                    SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
-                    sessionManagement.saveSession(user.getUid());
+            progressBar.setVisibility(View.INVISIBLE);
+            finish();
+        }else {
 
-
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-
-                    progressBar.setVisibility(View.INVISIBLE);
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.verifica_email), Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "signInWithEmail:failure", onCompleteListener.getException());
+            if(!dataBaseHelper.checkEmailExist(email)){
+                Toast.makeText(LoginActivity.this, getResources().getString(R.string.verifica_email), Toast.LENGTH_SHORT).show();
+                editTextEmail.requestFocus();
+                editTextEmail.setError(getString(R.string.email_errata));
+                progressBar.setVisibility(View.INVISIBLE);
+            }else {
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_fallita), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
-
-        });
+        }
 
     }
 
@@ -205,8 +192,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-
-
     }
 
 
