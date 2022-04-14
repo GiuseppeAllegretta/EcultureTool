@@ -49,12 +49,7 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
@@ -117,12 +112,12 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
+
         setHasOptionsMenu(true);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
@@ -181,6 +176,7 @@ public class ProfileFragment extends Fragment {
         Luogo luogo = dataBaseHelper.getLuogoCorrente();
 
         if(curatore != null){
+            nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
             email.setText(curatore.getEmail());
             nome.setText(curatore.getNome());
             cognome.setText(curatore.getCognome());
@@ -199,11 +195,12 @@ public class ProfileFragment extends Fragment {
     }
 
     public void logout() {
-        FirebaseAuth.getInstance().signOut();//logout
-
         //delete sessione
         SessionManagement sessionManagement = new SessionManagement(getActivity());
         sessionManagement.removeSession();
+
+        //Imposta a null la variabile statica che indica il login di un curatore
+        DataBaseHelper.setEmailCuratore(null);
 
         startActivity(new Intent(getActivity(), LoginActivity.class));
         requireActivity().finish();
@@ -283,8 +280,6 @@ public class ProfileFragment extends Fragment {
         resources.updateConfiguration(configuration, metrics);
         //notify configurations
         onConfigurationChanged(configuration);
-
-
     }
 
 
