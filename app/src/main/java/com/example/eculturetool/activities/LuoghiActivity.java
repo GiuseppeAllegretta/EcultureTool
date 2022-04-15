@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterLuogo;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,12 +31,10 @@ import java.util.ArrayList;
 
 public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapterLuogo.OnLuogoListener {
 
-    private final Connection connection = new Connection();
-
+    private DataBaseHelper dataBaseHelper;
     private ArrayList<Luogo> luoghiList;
     private RecyclerView recyclerView;
 
-    private String luogoCorrente;
     private RecyclerAdapterLuogo adapter;
 
     private FloatingActionButton fabAddLuogo;
@@ -91,49 +90,17 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
     private void setLuogoInfo() {
-        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
+        dataBaseHelper = new DataBaseHelper(this);
 
-                    //Ottengo il luogo corrente del curatore
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-
-                    connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                            int count = (int) snapshot.getChildrenCount();
-                            System.out.println("count: " + count);
-
-                            luoghiList.clear();
-                            for (int i = 0; i < count; i++) {
-                                luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                                System.out.println(luoghiList.get(i));
-                            }
-                            setAdapter();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        luoghiList.clear();
+        luoghiList = (ArrayList<Luogo>) dataBaseHelper.getLuoghi();
+        setAdapter();
     }
 
 
     @Override
     public void onLuogoClick(int position) {
-        String luogoSelezionato = luoghiList.get(position).getId();
+        int luogoSelezionato = luoghiList.get(position).getId();
         Intent intent = new Intent(this, DettaglioLuogoActivity.class);
         intent.putExtra("LUOGO", luogoSelezionato);
         startActivity(intent);
