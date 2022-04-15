@@ -145,6 +145,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return curatore;
     }
 
+    public boolean modificaCuratore(String nome, String cognome){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLONNA_CURATORE_NOME, nome);
+        contentValues.put(COLONNA_CURATORE_COGNOME, cognome);
+        final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
+
+        if(update == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
     public boolean setImageCuratore(String uri){
         boolean risultato = false;
 
@@ -319,4 +339,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
 }

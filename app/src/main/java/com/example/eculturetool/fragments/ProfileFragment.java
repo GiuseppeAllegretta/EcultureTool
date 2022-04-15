@@ -320,6 +320,12 @@ public class ProfileFragment extends Fragment {
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        popolaCampi();
+    }
 }
 
 

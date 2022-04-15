@@ -119,5 +119,4 @@ public class HomeActivity extends AppCompatActivity {
         ogg++;
     }
 
-
 }
