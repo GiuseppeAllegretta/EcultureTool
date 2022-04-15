@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     private long mStartTime = -1L;
     private boolean mIsDone;
     private Connection connection = new Connection();
-    private boolean flag = false;
+    private DataBaseHelper dataBaseHelper;
 
     private static class UiHandler extends Handler {
         private final WeakReference<SplashActivity> mActivityRef;
@@ -51,8 +52,8 @@ public class SplashActivity extends AppCompatActivity {
             if (elapsedTime >= MIN_WAIT_INTERVAL && !srcActivity.mIsDone) {
                 srcActivity.mIsDone = true;
                 if (srcActivity.checkSession()) {
-
                     srcActivity.nextSessionActivity();
+
                 } else {
                     srcActivity.nextActivity();
                 }
@@ -67,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
@@ -98,32 +100,14 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private boolean checkSession() {
+        boolean flag = false;
         SessionManagement sessionManagement = new SessionManagement(SplashActivity.this);
-        String userID = sessionManagement.getSession();
-
-
-        //Database funziona
-        if (connection.getAuth() != null) {
-            connection.getDatabase().getReference().child("curatori").child(userID).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        if (userID.compareTo("-1") != 0) {
-                            flag = true;
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    sessionManagement.removeSession();
-                }
-            });
+        String emailCuratore = sessionManagement.getSession();
+        if (emailCuratore.compareTo("-1") != 0) {
+            flag = true;
+            dataBaseHelper.setEmailCuratore(sessionManagement.getSession());
         }
-        //Database non funziona
-        else {
-            sessionManagement.removeSession();
-        }
+
         return flag;
     }
 }

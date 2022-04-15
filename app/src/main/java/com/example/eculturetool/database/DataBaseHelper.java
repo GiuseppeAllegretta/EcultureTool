@@ -42,7 +42,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return emailCuratore;
     }
 
-    public static void setEmailCuratore(String emailCuratore) {
+    public void setEmailCuratore(String emailCuratore) {
         DataBaseHelper.emailCuratore = emailCuratore;
     }
 

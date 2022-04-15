@@ -200,7 +200,7 @@ public class ProfileFragment extends Fragment {
         sessionManagement.removeSession();
 
         //Imposta a null la variabile statica che indica il login di un curatore
-        DataBaseHelper.setEmailCuratore(null);
+        //DataBaseHelper.setEmailCuratore(null);
 
         startActivity(new Intent(getActivity(), LoginActivity.class));
         requireActivity().finish();

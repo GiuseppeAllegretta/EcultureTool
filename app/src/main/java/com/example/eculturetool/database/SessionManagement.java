@@ -14,8 +14,8 @@ public class SessionManagement {
         editor = sharedPreferences.edit();
     }
 
-    public void saveSession(String idCuratore) {
-        editor.putString(SESSION_KEY, idCuratore).commit();
+    public void saveSession(String emailCuratore) {
+        editor.putString(SESSION_KEY, emailCuratore).commit();
     }
 
     public String getSession() {
