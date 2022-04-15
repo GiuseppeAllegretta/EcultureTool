@@ -11,14 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.Curatore;
 
 public class ModificaPasswordActivity extends AppCompatActivity {
 
+    private DataBaseHelper dataBaseHelper;
     private EditText oldPassword, newPassword, confirmPassword;
-    private final Connection connection = new Connection();
+    private ImageView frecciaBack, tastoConferma;
     private ProgressBar progressBar;
-
-    boolean flagPassword = false;
+    private boolean flagPassword = false;
+    private String passNuova;
+    private Curatore curatore;
 
 
     @Override
@@ -30,9 +34,11 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         oldPassword = findViewById(R.id.password_attuale);
         newPassword = findViewById(R.id.nuova_password);
         confirmPassword = findViewById(R.id.conferma_nuova_password);
-        ImageView frecciaBack = findViewById(R.id.freccia_back_modifica_password);
-        ImageView tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
+        frecciaBack = findViewById(R.id.freccia_back_modifica_password);
+        tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
         progressBar = findViewById(R.id.pb);
+        dataBaseHelper = new DataBaseHelper(this);
+        curatore = dataBaseHelper.getCuratore();
 
         frecciaBack.setOnClickListener(onClickListener -> onBackPressed());
 
@@ -42,7 +48,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         });
     }
 
-    private String passNuova;
 
     public boolean modificaPassword() {
         String passAttuale, passNuovaConf;
@@ -76,37 +81,39 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             return false;
         }
 
-        return passwordVerificata(connection.getUser().getEmail(), passAttuale);
+        System.out.println("Modifica password: " + curatore.toString());
+
+        return passwordVerificata(passAttuale, curatore.getPassword());
 
     }
 
-    public boolean passwordVerificata(String email, String password) {
+    public boolean passwordVerificata(String passwordAttuale, String password) {
         progressBar.setVisibility(View.VISIBLE);
 
-        connection.getAuth().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, onCompleteListener -> {
-                    if (onCompleteListener.isSuccessful()) {
-                        connection.getUser().updatePassword(passNuova)
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_aggiornata), Toast.LENGTH_SHORT).show();
-                                        onBackPressed();
-                                        flagPassword = true;
+        System.out.println("passNuova " + passNuova);
+        System.out.println("passwordAttuale " + passwordAttuale);
+        System.out.println("password " + password);
 
-                                    } else {
-                                        Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_non_aggiornata), Toast.LENGTH_SHORT).show();
-                                        flagPassword = false;
-                                    }
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                });
-                    } else {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.password_non_coincide), Toast.LENGTH_SHORT).show();
-                        oldPassword.setError(getString(R.string.password_non_corretta));
-                        oldPassword.requestFocus();
-                        progressBar.setVisibility(View.INVISIBLE);
-                        flagPassword = false;
-                    }
-                });
+        if(passwordAttuale.compareTo(password) == 0){
+            if(dataBaseHelper.updatePassword(passNuova)){
+                Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_aggiornata), Toast.LENGTH_SHORT).show();
+                flagPassword = true;
+            }else {
+                Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_non_aggiornata), Toast.LENGTH_SHORT).show();
+                flagPassword = false;
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.password_non_coincide), Toast.LENGTH_SHORT).show();
+            oldPassword.setError(getString(R.string.password_non_corretta));
+            oldPassword.requestFocus();
+            flagPassword = false;
+        }
+        progressBar.setVisibility(View.INVISIBLE);
+
+        curatore = dataBaseHelper.getCuratore();
+        System.out.println("Modifica password2: " + curatore.toString());
+
+
         return flagPassword;
     }
 }

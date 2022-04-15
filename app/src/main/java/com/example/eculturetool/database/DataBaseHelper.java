@@ -42,6 +42,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return emailCuratore;
     }
 
+    public static void setEmailCuratore(String emailCuratore) {
+        DataBaseHelper.emailCuratore = emailCuratore;
+    }
+
     //this is called the first time a database is accessed. There should be code in here to create a new database
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -149,9 +153,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(COLONNA_CURATORE_IMG, uri);
 
-        long insert = db.insert(TABLE_CURATORI, null, contentValues);
+        int update = db.update(TABLE_CURATORI, contentValues, COLONNA_CURATORE_IMG + " = ?", new String[]{emailCuratore});
 
-        if(insert == -1){
+        if(update == -1){
             db.close();
             risultato = false;
         }else {
@@ -298,5 +302,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return luogoCorrente;
+    }
+
+    public boolean updatePassword(String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLONNA_CURATORE_PASSWORD, password);
+        final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
+
+        if(update == -1){
+            db.close();
+            return false;
+        }else {
+            db.close();
+            return true;
+        }
     }
 }
