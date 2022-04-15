@@ -12,6 +12,9 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Email del curatore che si è loggato
@@ -338,6 +341,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.close();
             return true;
         }
+    }
+
+
+    public List<Luogo> getLuoghi(){
+        List<Luogo> list = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringQuery = "SELECT * FROM " + TABLE_LUOGHI + " WHERE " + COLONNA_LUOGHI_EMAIL_CURATORE + " = ?";
+        Cursor cursor = db.rawQuery(stringQuery, new String[]{emailCuratore});
+
+        if(cursor.moveToFirst()){
+
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_DESCRIZIONE));
+                Tipologia tipologia = Tipologia.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_TIPOLOGIA)));
+                String emailCuratore = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_EMAIL_CURATORE));
+
+                Luogo luogo = new Luogo(nome, descrizione, tipologia, emailCuratore );
+                luogo.setId(id);
+                list.add(luogo);
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return list;
     }
 
 }

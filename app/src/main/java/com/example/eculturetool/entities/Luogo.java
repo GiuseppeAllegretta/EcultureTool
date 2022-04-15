@@ -6,7 +6,7 @@ public class Luogo implements Serializable {
 
     private String nome, descrizione;
     private Tipologia tipologia;
-    private String id;
+    private int id;
     private String emailCuratore;
 
 
@@ -34,7 +34,7 @@ public class Luogo implements Serializable {
         return tipologia;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -42,7 +42,7 @@ public class Luogo implements Serializable {
         return emailCuratore;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
