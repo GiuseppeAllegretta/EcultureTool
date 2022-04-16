@@ -258,8 +258,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }
 
-        System.out.println("Id del luogo corrente: " + luogoCorrente);
-
         cursor.close();
         db.close();
         return luogoCorrente;
