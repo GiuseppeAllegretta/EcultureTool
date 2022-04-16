@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaZonaActivity extends AppCompatActivity {
-    private final Connection connection = new Connection();
+    // private final Connection connection = new Connection();
     private String idZona;
     private EditText nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
@@ -34,6 +35,8 @@ public class ModificaZonaActivity extends AppCompatActivity {
     List<Zona> zoneList = new ArrayList<>();
     private static final int MAX_OGGETTI = 10;
     private ProgressBar progressBar;
+    private Zona z1,z2;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,12 @@ public class ModificaZonaActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressModificaZona);
 
 
-        Intent intent = getIntent();
-        luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
-        idZona = intent.getStringExtra(Zona.Keys.ID);
+        //recupero dati dall'intent
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
 
+        z1= (Zona) bundle.getSerializable("ZONE");
+/*
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -66,12 +71,16 @@ public class ModificaZonaActivity extends AppCompatActivity {
             }
         });
 
+*/
+        dataBaseHelper = new DataBaseHelper(this);
+        zoneList = dataBaseHelper.zoneQuery();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+/*
         connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,7 +112,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
             }
         });
-
+*/
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,17 +128,26 @@ public class ModificaZonaActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void editZona() {
         int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
+
         String numeroMaxString = numeroMaxOggettiZona.getText().toString().trim();
+
+
+
+
+
 
         if (nome.isEmpty()) {
             nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
             nomeZona.requestFocus();
             return;
         }
+
         if (controlloEsistenzaNomeZona(nome)) {
             nomeZona.requestFocus();
             nomeZona.setError(getResources().getString(R.string.nome_esistente));
@@ -153,19 +171,24 @@ public class ModificaZonaActivity extends AppCompatActivity {
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        z2= new Zona(0,nome,descrizione,Integer.parseInt(numeroMaxString),0);
 
+        progressBar.setVisibility(View.VISIBLE);
+/*
         connection.getRefZone().child(luogoCorrente).child(idZona).child("nome").setValue(nome);
         connection.getRefZone().child(luogoCorrente).child(idZona).child("descrizione").setValue(descrizione);
         connection.getRefZone().child(luogoCorrente).child(idZona).child("numeroOggetti").setValue(numeroMax);
-
+*/
         progressBar.setVisibility(View.INVISIBLE);
+
+        dataBaseHelper.modifica(z1,z2);
         finish();
     }
 
     private boolean controlloEsistenzaNomeZona(String nomeZona) {
         boolean isEsistente = false;
-        nomeZona = this.nomeZona.getText().toString();
+        //nomeZona = this.nomeZona.getText().toString();
+
 
         for (int i = 0; i < zoneList.size(); i++) {
             if (nomeZona.compareToIgnoreCase(zoneList.get(i).getNome()) == 0) {
@@ -174,11 +197,16 @@ public class ModificaZonaActivity extends AppCompatActivity {
         }
 
         return isEsistente;
+
+
     }
 
+/*
     private List<Zona> getListZoneCreate() {
 
         List<Zona> zone = new ArrayList<>();
+
+        zone = dataBaseHelper.zoneQuery();
 
         System.out.println("Luogo corrente" + luogoCorrente);
         connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
@@ -191,7 +219,8 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
                 for (int i = 0; i < count; i++) {
                     zona=iteratore.iterator().next().getValue(Zona.class);
-                    if(zona.getId().compareTo(idZona)!=0){
+                   // if(zona.getId().compareTo(idZona)!=0)
+                    {
                         zone.add(zona);
                     }
 
@@ -205,6 +234,8 @@ public class ModificaZonaActivity extends AppCompatActivity {
         });
 
         return zone;
-    }
 
+
+    }
+*/
 }

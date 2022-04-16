@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -27,7 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class DettaglioZonaActivity extends AppCompatActivity {
-    private final Connection connection = new Connection();
+    // private final Connection connection = new Connection();
 
     private TextView nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
@@ -35,6 +36,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     private FloatingActionButton modificaZona;
     private Button aggiungiOggettoButton;
     private Button eliminaZonaButton;
+    private Zona z, zM ;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,57 +55,47 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         descrizioneZona.setMovementMethod(new ScrollingMovementMethod());
 
         //recupero dati dall'intent
-        Intent intent = getIntent();
-        idZona = intent.getStringExtra("ZONA");
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+
+        z= (Zona) bundle.getSerializable("ZONE");
+
+        nomeZona.setText(z.getNome().toString());
+        descrizioneZona.setText(z.getDescrizione().toString());
+        numeroMaxOggettiZona.setText(String.valueOf(z.getNumeroOggetti()));
+
+
+        dataBaseHelper = new DataBaseHelper(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        zM = dataBaseHelper.recuperoZonaModificata(z.getId());
+        nomeZona.setText(zM.getNome().toString());
+        descrizioneZona.setText(zM.getDescrizione().toString());
+        numeroMaxOggettiZona.setText(String.valueOf(zM.getNumeroOggetti()));
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
-
-                    //Ottengo il luogo corrente del curatore
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-                    connection.getRefZone().child(luogoCorrente).child(idZona).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getValue(Zona.class) != null) {
-                                getSupportActionBar().setTitle(snapshot.getValue(Zona.class).getNome());
-                                nomeZona.setText(snapshot.getValue(Zona.class).getNome());
-                                descrizioneZona.setText(snapshot.getValue(Zona.class).getDescrizione());
-                                numeroMaxOggettiZona.setText(String.valueOf(snapshot.getValue(Zona.class).getNumeroOggetti()));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
         modificaZona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ModificaZonaActivity.class);
-                intent.putExtra(Luogo.Keys.ID, luogoCorrente);
-                intent.putExtra(Zona.Keys.ID, idZona);
-                startActivity(intent);
+
+                Bundle b = new Bundle();
+                b.putSerializable("ZONE",z);
+                intent.putExtras(b);
+                startActivityForResult(intent,123);
             }
         });
+
+
 
         aggiungiOggettoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +113,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
     }
 
+
+
     private void showCustomDialog() {
         final Dialog dialog = new Dialog(this);
 
@@ -131,7 +126,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_zona);
 
         dialog.show();
-
+/*
         conferma.setOnClickListener(onClickListener ->
                 connection.getRefOggetti().child(luogoCorrente).child(idZona).removeValue().
                         addOnCompleteListener(onCompleteListener -> {
@@ -142,6 +137,16 @@ public class DettaglioZonaActivity extends AppCompatActivity {
                             }
                         }));
 
+ */
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataBaseHelper.rimuoviZona(z);
+                onBackPressed();
+            }
+        });
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
+
+
 }

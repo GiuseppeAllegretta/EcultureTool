@@ -3,27 +3,37 @@ package com.example.eculturetool.entities;
 import java.io.Serializable;
 
 public class Zona implements Serializable {
-    private String id;
+    private int id;
     private String nome;
     private String descrizione;
     private int numeroOggetti;
+    private int riferimentoLuogo;
 
-    private Zona(){
+    public Zona(){
 
     }
 
-    public Zona(String id,String nome, String descrizione, int numeroOggetti) {
+    public int getRiferimentoLuogo() {
+        return riferimentoLuogo;
+    }
+
+    public void setRiferimentoLuogo(int riferimentoLuogo) {
+        this.riferimentoLuogo = riferimentoLuogo;
+    }
+
+    public Zona(int id, String nome, String descrizione, int numeroOggetti, int riferimentoLuogo) {
         this.id=id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.numeroOggetti = numeroOggetti;
+        this.riferimentoLuogo= riferimentoLuogo;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

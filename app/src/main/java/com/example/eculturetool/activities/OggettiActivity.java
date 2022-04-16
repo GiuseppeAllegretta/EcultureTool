@@ -149,7 +149,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             oggettiList.clear();
-                            for (Zona zona : zoneList) {
+                            for (Zona zona : zoneList) {/*
                                 Iterable<DataSnapshot> iteratore = snapshot.child(zona.getId()).getChildren();
                                 int count = (int) snapshot.child(zona.getId()).getChildrenCount();
 
@@ -158,6 +158,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
                                         oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
                                     }
                                 }
+                                */
                             }
                             setAdapter();
                         }

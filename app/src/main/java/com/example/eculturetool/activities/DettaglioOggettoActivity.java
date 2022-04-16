@@ -170,6 +170,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     }
 
     private void setDatiOggetto() {
+        /*
 
         connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -207,6 +208,8 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
             }
         });
+        
+         */
 
     }
 

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.Zona;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_LUOGHI_TIPOLOGIA = "LUOGHI_TIPOLOGIA";
     public static final String COLONNA_LUOGHI_EMAIL_CURATORE = "LUOGHI_EMAIL_CURATORE";
 
+    //Tabella Zone
+    public static final String TABLE_ZONE = "ZONE";
+    public static final String COLONNA_ZONE_ID = "ZONE_ID";
+    public static final String COLONNA_ZONE_NOME = "ZONE_NOME";
+    public static final String COLONNA_ZONE_DESCRIZIONE = "ZONE_DESCRIZIONE";
+    public static final String COLONNA_ZONE_NUMERO_OGGETTI = "ZONE_NUMERO_OGGETTI";
+    public static final String COLONNA_LUOGO_RIFERIMENTO = "LUOGHI_RIF";
+
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "e-cultureTool.db", null, 1);
+        super(context, "e-cultureTool.db",null , 3);
     }
 
     public static String getEmailCuratore() {
@@ -70,9 +79,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + "CONSTRAINT fk_curatori " +
                 " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + ")" + " ON DELETE CASCADE " + " )";
 
+        String createTableZona = "CREATE TABLE " + TABLE_ZONE +
+                " (" + COLONNA_ZONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " " + COLONNA_ZONE_NOME + " TEXT," +
+                " " + COLONNA_ZONE_DESCRIZIONE + " TEXT," +
+                " " + COLONNA_ZONE_NUMERO_OGGETTI + " INT," +
+                " " + COLONNA_LUOGO_RIFERIMENTO + " INT," +
+
+                " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + "))";
 
         sqLiteDatabase.execSQL(createTableCuratore);
         sqLiteDatabase.execSQL(createTableLuogo);
+        sqLiteDatabase.execSQL(createTableZona);
     }
 
     //this is called if the databse version number changes. It prevents previous users apps from breaking whe you change the database design
@@ -461,5 +479,107 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
+    public ArrayList<Zona> zoneQuery (){
+        ArrayList<Zona> info = new ArrayList<>();
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        //String stringQuery = "SELECT * FROM "+ TABLE_ZONE + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + "=" + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID;
+        String stringQuery = "SELECT * FROM ZONE JOIN CURATORI ON ZONE.LUOGHI_RIF = CURATORI.CURATORE_LUOGO_CORRENTE AND CURATORI.EMAIL = ?";
+        Cursor cursor = db.rawQuery(stringQuery, new String[]{getEmailCuratore()});
+        try {
+            int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
+            int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
+            int descrizione= cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
+            int nOggetti= cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
+            int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
+
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                info.add(new Zona(cursor.getInt(id),cursor.getString(nome),cursor.getString(descrizione),cursor.getInt(nOggetti),cursor.getInt(riferimentoLuogo)));
+                cursor.moveToNext();
+            }
+        }catch (Exception e){
+            System.out.println("errore database");
+        }
+        cursor.close();
+        db.close();
+
+        return info;
+    }
+
+    public boolean aggiungiZona(Zona z){
+        boolean risultato=false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+
+
+        contentValues.put(COLONNA_ZONE_NOME,z.getNome());
+        contentValues.put(COLONNA_ZONE_DESCRIZIONE,z.getDescrizione());
+        contentValues.put(COLONNA_ZONE_NUMERO_OGGETTI,z.getNumeroOggetti());
+        contentValues.put(COLONNA_LUOGO_RIFERIMENTO,z.getRiferimentoLuogo());
+        long insert = db.insert(TABLE_ZONE, null, contentValues);
+
+        if(insert == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+
+        db.close();
+
+        return risultato;
+    }
+
+    public void rimuoviZona(Zona z){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String stringQuery = "DELETE  FROM ZONE WHERE  ZONE_NOME =?  AND ZONE_DESCRIZIONE = ?";
+
+        db.execSQL(stringQuery,new String[] {z.getNome(),z.getDescrizione()});
+
+
+        db.close();
+
+
+
+    }
+
+    public void modifica(Zona z1,Zona z2){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ?, ZONE_NUMERO_OGGETTI = ?  WHERE ZONE_NOME = ?";
+
+        db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(),String.valueOf(z2.getNumeroOggetti()), z1.getNome()});
+
+
+        db.close();
+
+
+
+    }
+
+    public Zona recuperoZonaModificata(int idz){
+        Zona zona = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringQuery = "SELECT * FROM ZONE WHERE ZONE_ID = "+ idz;
+        Cursor cursor = db.rawQuery(stringQuery, null);
+        try {
+            int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
+            int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
+            int descrizione = cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
+            int nOggetti = cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
+            int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
+
+            cursor.moveToFirst();
+            zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(nOggetti), cursor.getInt(riferimentoLuogo));
+        }catch (Exception e){
+            System.out.println("errore");
+        }
+        return  zona;
+    }
 }

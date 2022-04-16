@@ -300,7 +300,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     /**
      * Metodo per settare l'elenco delle zone nello spinner relativo
      */
-    private void setZoneSpinner() {
+    private void setZoneSpinner() {/*
 
         System.out.println("Luogo corrente: " + luogoCorrente);
 
@@ -368,6 +368,8 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
             }
         });
+
+        */
 
 
     }

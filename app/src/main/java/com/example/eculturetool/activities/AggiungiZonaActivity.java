@@ -2,6 +2,8 @@ package com.example.eculturetool.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.google.firebase.database.DataSnapshot;
@@ -21,14 +24,16 @@ import java.util.List;
 
 
 public class AggiungiZonaActivity extends AppCompatActivity {
-    private Connection connection = new Connection();
 
     private EditText nomeZona, descrizioneZona,numeroOggetti;
     private Button creaZona;
     private ProgressBar progressBar;
     private static final int MAX_OGGETTI = 10;
-    private String luogoCorrente;
-    List<Zona> zoneList = new ArrayList<>();
+    private List<Zona> zoneList = new ArrayList<>();
+    private DataBaseHelper dataBaseHelper;
+    private int luogoCorrente;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +44,11 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         numeroOggetti=findViewById(R.id.numeroOggetti_zona_add);
         progressBar=findViewById(R.id.progressAddZona);
         creaZona=findViewById(R.id.creaZona);
+        dataBaseHelper = new DataBaseHelper(this);
 
-
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class) != null){
-                    luogoCorrente = snapshot.getValue(String.class).toString();
-                    zoneList = getListZoneCreate();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        luogoCorrente = dataBaseHelper.getIdLuogoCorrente();
+        if (zoneList != null)
+            zoneList = dataBaseHelper.zoneQuery();
 
     }
 
@@ -94,51 +87,20 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             numeroMax = Integer.parseInt(numeroMaxString);
         }else
             numeroMax=Integer.parseInt(numeroMaxString);
-            if(numeroMax>MAX_OGGETTI){
-                numeroOggetti.setError(getResources().getString(R.string.numero_max));
-                numeroOggetti.requestFocus();
-                return;
-            }
+        if(numeroMax>MAX_OGGETTI){
+            numeroOggetti.setError(getResources().getString(R.string.numero_max));
+            numeroOggetti.requestFocus();
+            return;
+        }
 
         progressBar.setVisibility(View.VISIBLE);
-
-
-        //scrittura della zona sul Realtime Database
-        String key=connection.getRefZone().push().getKey();
-        Zona zona= new Zona(key,nome,descrizione,numeroMax);
-
-        connection.getRefZone().child(luogoCorrente).child(key).setValue(zona);
-
-        //CODICE ERRATO
-        /*connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class)!=null){
-                    String luogo=snapshot.getValue(String.class);
-                    if(luogo!=null){
-                        luogoCorrente=luogo;
-                        if(key!=null){
-                            connection.getRefZone().child(luogoCorrente).child(key).setValue(zona);
-                        }
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-
-
+        dataBaseHelper.aggiungiZona(new Zona(0,nome,descrizione,Integer.parseInt(numeroMaxString),luogoCorrente));
+        zoneList = dataBaseHelper.zoneQuery();
+        finish();
 
         progressBar.setVisibility(View.INVISIBLE);
 
-        finish();
-
-
+        onBackPressed();
     }
 
     private boolean controlloEsistenzaNomeZona(String nomeZona) {
@@ -153,35 +115,5 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         }
 
         return isEsistente;
-    }
-
-
-    private List<Zona> getListZoneCreate() {
-
-        List<Zona> zone = new ArrayList<>();
-
-        System.out.println("Luogo corrente" + luogoCorrente);
-        connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                int count = (int) snapshot.getChildrenCount();
-                System.out.println("count: " + count);
-
-                Zona zona;
-
-                for (int i = 0; i < count; i++) {
-                    zone.add(iteratore.iterator().next().getValue(Zona.class));
-                }
-                System.out.println(zone);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return zone;
     }
 }

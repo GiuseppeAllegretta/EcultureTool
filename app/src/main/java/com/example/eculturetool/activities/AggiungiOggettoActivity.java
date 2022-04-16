@@ -271,12 +271,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
      */
     private String retrieveZona(String zonaSelezionata) {
         String risultato = null;
-
+/*
         for (Zona zona : zoneList) {
             if (zona.getNome().compareTo(zonaSelezionata) == 0) {
                 risultato = zona.getId();
             }
         }
+
+ */
         return risultato;
     }
 
@@ -299,6 +301,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
      */
     private List<Oggetto> getListOggettiCreati() {
         List<Oggetto> oggetti = new ArrayList<>();
+        /*
 
         connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -317,6 +320,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+         */
         return oggetti;
     }
 

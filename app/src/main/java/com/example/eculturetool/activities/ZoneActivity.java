@@ -14,10 +14,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,16 +31,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener {
 
 
-    private final Connection connection = new Connection();
+    //  private final Connection connection = new Connection();
     private ArrayList<Zona> zoneList;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddLuogo;
     RecyclerAdapterZona adapter;
-    private String luogoCorrente;
+    DataBaseHelper dataBaseHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,11 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
         recyclerView = findViewById(R.id.recyclerViewZone);
         zoneList = new ArrayList<>();
+        dataBaseHelper = new DataBaseHelper(this);
+
+        dataBaseHelper.aggiungiZona(new Zona(0,"prova1","descrizione",1,0));
+
+
 
         setZoneInfo();
     }
@@ -68,8 +80,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     protected void onStart() {
         super.onStart();
-        fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
-
+        fabAddLuogo.setOnClickListener(view->startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
     }
 
 
@@ -84,10 +95,18 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
     @Override
     public void onZonaClick(int position) {
-        String zonaSelezionata=zoneList.get(position).getId();
+        Zona z = zoneList.get(position);
+
         Intent intent = new Intent(this, DettaglioZonaActivity.class);
-        intent.putExtra("ZONA",zonaSelezionata);
+
+
+        Bundle b = new Bundle();
+        b.putSerializable("ZONE",z);
+        intent.putExtras(b);
         startActivity(intent);
+
+
+
     }
 
     @Override
@@ -111,41 +130,15 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setZoneInfo();
+    }
+
     private void setZoneInfo() {
-        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
-
-                    //Ottengo il luogo corrente del curatore
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-
-                    connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                            int count = (int) snapshot.getChildrenCount();
-
-                            zoneList.clear();
-                            for (int i = 0; i < count; i++) {
-                                zoneList.add(iteratore.iterator().next().getValue(Zona.class));
-                            }
-                            setAdapter();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        zoneList.clear();
+        zoneList = dataBaseHelper.zoneQuery();
+        setAdapter();
     }
 }
