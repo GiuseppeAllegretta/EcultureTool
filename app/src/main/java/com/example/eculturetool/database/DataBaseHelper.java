@@ -61,14 +61,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + COLONNA_CURATORE_LUOGO_CORRENTE + " INT," +
                 " " + COLONNA_CURATORE_IMG + " TEXT" + ")";
 
-        /*String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
-                " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " " + COLONNA_LUOGHI_NOME + " TEXT," +
-                " " + COLONNA_LUOGHI_DESCRIZIONE + " TEXT," +
-                " " + COLONNA_LUOGHI_TIPOLOGIA + " TEXT," +
-                " " + COLONNA_LUOGHI_EMAIL_CURATORE + " TEXT," +
-                " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + "))";*/
-
         String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
                 " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " " + COLONNA_LUOGHI_NOME + " TEXT," +
