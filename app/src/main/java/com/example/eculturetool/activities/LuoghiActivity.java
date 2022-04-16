@@ -127,4 +127,10 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         });
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLuogoInfo();
+    }
 }

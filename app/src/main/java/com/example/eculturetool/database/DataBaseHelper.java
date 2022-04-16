@@ -223,7 +223,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_TIPOLOGIA + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE +
                 " FROM (" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") " +
-                "WHERE " + COLONNA_CURATORE_LUOGO_CORRENTE + " = " + luogoCorrente;
+                "WHERE " + COLONNA_LUOGHI_ID + " = " + luogoCorrente;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(stringQuery, null);
@@ -257,6 +257,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 luogoCorrente = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_LUOGO_CORRENTE));
             }
         }
+
+        System.out.println("Id del luogo corrente: " + luogoCorrente);
 
         cursor.close();
         db.close();

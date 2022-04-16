@@ -30,14 +30,14 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private final Connection connection = new Connection();
 
     private TextView nomeLuogo, descrizioneLuogo, tipologiaLuogo;
-    private String idLuogo;
+    private int idLuogo;
     private Button impostaLuogoCorrente;
     private Button eliminaLuogo;
     private FloatingActionButton editLuogo;
 
     private ValueEventListener mListenerDeleteLuogo;
     private int numeroLuoghi;
-    private String luogoCorrente;
+    private int luogoCorrente;
     private static final int MIN_LUOGHI = 1;
     private List<Luogo> luoghiList = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
-        idLuogo = intent.getStringExtra("LUOGO");
+        //idLuogo = intent.getStringExtra("LUOGO");
 
         searchLuogoCorrente();
 
@@ -91,7 +91,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
+        /*connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(Luogo.class) != null) {
@@ -106,7 +106,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         impostaLuogoCorrente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +126,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         });
 
-        eliminaLuogo();
+        //eliminaLuogo();
 
     }
 
@@ -135,8 +135,10 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class) != null)
-                    luogoCorrente = snapshot.getValue(String.class).toString();
+                if(snapshot.getValue(String.class) != null){
+                    //luogoCorrente = snapshot.getValue(String.class).toString();
+                }
+
             }
 
             @Override
@@ -171,7 +173,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     }
 
 
-    private void eliminaLuogo() {
+    /*private void eliminaLuogo() {
 
         eliminaLuogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,12 +184,12 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                     Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
-                    if (idLuogo.compareTo(luogoCorrente) == 0) {
+                    if (idLuogo == luogoCorrente) {
 
-                        String luogoSelezionato;
+                        int luogoSelezionato;
                         for (int i = 0; i < numeroLuoghi; i++) {
                             luogoSelezionato = luoghiList.get(i).getId();
-                            if (idLuogo.compareTo(luogoSelezionato) != 0) {
+                            if (idLuogo == luogoSelezionato) {
                                 System.out.println("if del break: ");
                                 connection.getRefCuratore().child("luogoCorrente").setValue(luogoSelezionato);
                                 connection.getRefOggetti().child(idLuogo).removeValue();
@@ -207,7 +209,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
     @Override
     protected void onDestroy() {

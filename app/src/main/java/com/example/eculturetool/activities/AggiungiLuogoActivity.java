@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +26,7 @@ import java.util.List;
 
 public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Connection connection = new Connection();
-
+    private DataBaseHelper dataBaseHelper;
     private EditText nomeLuogo, descrizioneLuogo;
     private Spinner tipologiaLuogo;
     private Button creaLuogo;
@@ -34,7 +34,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     private Tipologia tipologia;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
-    List<Luogo> luoghiList;
+    private List<Luogo> luoghiList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,9 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         tipologiaLuogo = findViewById(R.id.spinner_tipologia_luoghi_add);
         creaLuogo = findViewById(R.id.creaLuogo);
         progressBar = findViewById(R.id.progressAddLuogo);
+        dataBaseHelper = new DataBaseHelper(this);
 
-        luoghiList = getListLuoghiCreati();
+        luoghiList = dataBaseHelper.getLuoghi();
     }
 
     @Override
@@ -97,22 +98,18 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-
         //La progressbar diventa visibile
         progressBar.setVisibility(View.VISIBLE);
 
-        //Scrittura del luogo sul Realtime Database
-        String key = connection.getRefLuoghi().push().getKey();
-        System.out.println("KEY: " + key);
-        Luogo luogo = new Luogo(nome, descrizione, tipologia, key);
+        Luogo luogo = new Luogo(nome, descrizione, tipologia, DataBaseHelper.getEmailCuratore());
+        if(dataBaseHelper.addLuogo(luogo)){
+            //La progressbar diventa visibile
+            progressBar.setVisibility(View.INVISIBLE);
+            finish();
+        }else {
+            return;
+        }
 
-
-        connection.getRefLuoghi().child(key).setValue(luogo);
-
-        //La progressbar diventa visibile
-        progressBar.setVisibility(View.INVISIBLE);
-
-        finish();
     }
 
 
@@ -122,41 +119,12 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
         for (int i = 0; i < luoghiList.size(); i++) {
             if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
-                //System.out.println("nome corrente: " + luoghiList.get(i).getNome());
                 isEsistente = true;
             }
         }
-
         return isEsistente;
     }
 
-
-    /**
-     * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
-     */
-    private List getListLuoghiCreati() {
-        List<Luogo> luoghi = new ArrayList<>();
-
-        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                int count = (int) snapshot.getChildrenCount();
-
-                for (int i = 0; i < count; i++) {
-                    luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                    System.out.println(luoghiList.get(i));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return luoghi;
-    }
 
 
     @Override
@@ -189,4 +157,5 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }

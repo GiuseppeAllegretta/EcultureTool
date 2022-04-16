@@ -169,7 +169,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     private List getListLuoghiCreati() {
         List<Luogo> luoghi = new ArrayList<>();
 
-        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
+        /*connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> iteratore = snapshot.getChildren();
@@ -192,7 +192,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         return luoghi;
     }
