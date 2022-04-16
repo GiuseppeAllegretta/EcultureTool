@@ -372,4 +372,75 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    public Luogo getLuogoById(int id){
+        Luogo luogo = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringQuery = "SELECT * FROM " + TABLE_LUOGHI + " WHERE " + COLONNA_LUOGHI_ID + " = " + id;
+        Cursor cursor = db.rawQuery(stringQuery, null);
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_DESCRIZIONE));
+                Tipologia tipologia = Tipologia.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_TIPOLOGIA)));
+                String emailCuratore = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_EMAIL_CURATORE));
+
+                luogo = new Luogo(nome, descrizione, tipologia, emailCuratore );
+                luogo.setId(id);
+            }
+
+        }
+
+        cursor.close();
+        db.close();
+        return luogo;
+    }
+
+    public boolean setLuogoCorrente(int id){
+        boolean risultato;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_CURATORE_LUOGO_CORRENTE, id);
+
+        int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
+
+        if(update == -1){
+            db.close();
+            risultato = false;
+        }else {
+            db.close();
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
+    public boolean updateLuogo(int id, String nome, String descrizione, Tipologia tipologia){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_LUOGHI_NOME, nome);
+        contentValues.put(COLONNA_LUOGHI_DESCRIZIONE, descrizione);
+        contentValues.put(COLONNA_LUOGHI_TIPOLOGIA, tipologia.name());
+
+        int update = db.update(TABLE_LUOGHI, contentValues, COLONNA_LUOGHI_ID + " = " + id, null);
+
+        if(update == -1){
+            db.close();
+            risultato = false;
+        }else {
+            db.close();
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
 }

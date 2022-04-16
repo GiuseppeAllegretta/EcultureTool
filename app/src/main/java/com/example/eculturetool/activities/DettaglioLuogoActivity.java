@@ -8,13 +8,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,17 +26,18 @@ import java.util.List;
 
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
-    private final Connection connection = new Connection();
 
+    private DataBaseHelper dataBaseHelper;  //oggetto che consente di interrogare il database per reperire dati
+    private Luogo luogoSelezionato;         //luogo selezionato dalla recyclerView precedente
+    private int idLuogo;                    //id del luogo selezioanto nella recyclerview prededente e ottenuto tramite intent
     private TextView nomeLuogo, descrizioneLuogo, tipologiaLuogo;
-    private int idLuogo;
+
     private Button impostaLuogoCorrente;
     private Button eliminaLuogo;
     private FloatingActionButton editLuogo;
 
-    private ValueEventListener mListenerDeleteLuogo;
     private int numeroLuoghi;
-    private int luogoCorrente;
+    private int idLuogoCorrente;
     private static final int MIN_LUOGHI = 1;
     private List<Luogo> luoghiList = new ArrayList<>();
 
@@ -54,6 +54,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         impostaLuogoCorrente = findViewById(R.id.impostaLuogoCorrente);
         editLuogo = findViewById(R.id.editLuogo);
         eliminaLuogo = findViewById(R.id.eliminaLuogo);
+        dataBaseHelper = new DataBaseHelper(this);
 
         //Metodo di scroll per la textView
         descrizioneLuogo.setMovementMethod(new ScrollingMovementMethod());
@@ -61,29 +62,11 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
-        //idLuogo = intent.getStringExtra("LUOGO");
+        idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);     //id del luogo selezionato nella recyclerView precedente
 
-        searchLuogoCorrente();
-
-        mListenerDeleteLuogo = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                numeroLuoghi = (int) snapshot.getChildrenCount();
-                System.out.println("numeroLuoghi: " + numeroLuoghi);
-
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-
-                for(int i = 0; i < numeroLuoghi; i++){
-                    luoghiList.add(iteratore.iterator().next().getValue(Luogo.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        connection.getRefLuoghi().addValueEventListener(mListenerDeleteLuogo);
+        luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
+        idLuogoCorrente = dataBaseHelper.getIdLuogoCorrente();          //id del luogo corrente
+        luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
     }
 
@@ -91,27 +74,12 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        /*connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Luogo.class) != null) {
-                    getSupportActionBar().setTitle(snapshot.getValue(Luogo.class).getNome());
-                    nomeLuogo.setText(snapshot.getValue(Luogo.class).getNome());
-                    descrizioneLuogo.setText(snapshot.getValue(Luogo.class).getDescrizione());
-                    tipologiaLuogo.setText(setTipologia(snapshot.getValue(Luogo.class).getTipologia()));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
+        popolaCampi();
 
         impostaLuogoCorrente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                connection.getRefCuratore().child("luogoCorrente").setValue(idLuogo);
+                dataBaseHelper.setLuogoCorrente(idLuogo);
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
             }
@@ -121,7 +89,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
-                intent.putExtra("LUOGO", idLuogo);
+                intent.putExtra(Luogo.Keys.ID, idLuogo);
                 startActivity(intent);
             }
         });
@@ -130,23 +98,15 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     }
 
-    private void searchLuogoCorrente() {
-        //Ricerca del luogo corrente
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class) != null){
-                    //luogoCorrente = snapshot.getValue(String.class).toString();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private void popolaCampi() {
+        if(luogoSelezionato != null){
+            getSupportActionBar().setTitle(luogoSelezionato.getNome());
+            nomeLuogo.setText(luogoSelezionato.getNome());
+            descrizioneLuogo.setText(luogoSelezionato.getDescrizione());
+            tipologiaLuogo.setText(setTipologia(luogoSelezionato.getTipologia()));
+        }
     }
+
 
     private String setTipologia(Tipologia tipologia) {
         String risultato = null;
@@ -211,27 +171,18 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     }*/
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         super.onDestroy();
         connection.getRefLuoghi().removeEventListener(mListenerDeleteLuogo);
 
     }
-
+*/
     @Override
     protected void onResume() {
         super.onResume();
-        connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                numeroLuoghi = (int) snapshot.getChildrenCount();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
+        popolaCampi();
 
     }
 

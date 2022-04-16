@@ -129,6 +129,8 @@
     <string name="lista">Lista</string>
     <string name="email_esistente">Email già esistente</string>
     <string name="email_errata">Email errata</string>
+    <string name="aggiornati_dati">Aggiornati dati</string>
+    <string name="no_aggiornati_dati">Aggiornamento fallito</string>
 
 
 </resources>

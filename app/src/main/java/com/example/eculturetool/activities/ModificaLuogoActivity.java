@@ -8,12 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 import com.google.firebase.database.DataSnapshot;
@@ -25,12 +27,13 @@ import java.util.List;
 
 public class ModificaLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Connection connection = new Connection();
-
+    private DataBaseHelper dataBaseHelper;
+    private int idLuogo;                         //id del luogo selezionato nella recyclerview prededente e ottenuto tramite intent
+    private Luogo luogo;
     private EditText nomeLuogo, descrizioneLuogo;
     private Spinner tipologiaLuogo;
     private ImageView frecciaBack, conferma;
-    private String idLuogo;
+
 
     //Si recupera questa lista per fare in modo che l'utente non crei/modifichi un luogo con lo stesso nome di uno già creato
     private List<Luogo> luoghiList;
@@ -48,12 +51,14 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         frecciaBack = findViewById(R.id.freccia_back_modifica_luogo);
         conferma = findViewById(R.id.icona_conferma_luoghi);
 
+
         //Ottengo i dati del luogo selezionato
         Intent intent = getIntent();
-        idLuogo = intent.getStringExtra("LUOGO");
-        System.out.println("Luogo id:" + idLuogo);
+        idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);
 
+        dataBaseHelper = new DataBaseHelper(this);
         luoghiList = getListLuoghiCreati();
+        luogo = dataBaseHelper.getLuogoById(idLuogo);
     }
 
     @Override
@@ -68,22 +73,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
 
-        connection.getRefLuoghi().child(idLuogo).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Luogo.class) != null) {
-                    Luogo luogo = snapshot.getValue(Luogo.class);
-                    nomeLuogo.setText(luogo.getNome());
-                    descrizioneLuogo.setText(luogo.getDescrizione());
-                    tipologiaLuogo.setSelection(getIndexSpinner(luogo.getTipologia()));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        popolaCampi();
 
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +89,14 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+    }
+
+    private void popolaCampi() {
+        if(luogo != null){
+            nomeLuogo.setText(luogo.getNome());
+            descrizioneLuogo.setText(luogo.getDescrizione());
+            tipologiaLuogo.setSelection(getIndexSpinner(luogo.getTipologia()));
+        }
     }
 
 
@@ -128,10 +126,8 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
 
     private void editLuogo() {
-
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
-
 
         if (nome.isEmpty()) {
             nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
@@ -156,9 +152,11 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        connection.getRefLuoghi().child(idLuogo).child("nome").setValue(nome);
-        connection.getRefLuoghi().child(idLuogo).child("descrizione").setValue(descrizione);
-        connection.getRefLuoghi().child(idLuogo).child("tipologia").setValue(tipologia);
+        if(dataBaseHelper.updateLuogo(idLuogo, nome, descrizione, tipologia)){
+            Toast.makeText(this, getResources().getString(R.string.aggiornati_dati), Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, getResources().getString(R.string.no_aggiornati_dati), Toast.LENGTH_SHORT).show();
+        }
 
         finish();
     }
@@ -167,34 +165,17 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
      * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
      */
     private List getListLuoghiCreati() {
-        List<Luogo> luoghi = new ArrayList<>();
+        List<Luogo> returnList = new ArrayList<>();
 
-        /*connection.getRefLuoghi().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                int count = (int) snapshot.getChildrenCount();
-                System.out.println("count: " + count);
+        returnList = dataBaseHelper.getLuoghi();
 
-                Luogo luogo;
-
-                for (int i = 0; i < count; i++) {
-                    luogo = iteratore.iterator().next().getValue(Luogo.class);
-
-                    if (luogo.getId().compareTo(idLuogo) != 0) {
-                        luoghiList.add(luogo);
-                    }
-                }
-                System.out.println(luoghiList);
+        for(int i = 0; i < returnList.size(); i++){
+            if(returnList.get(i).getId() == idLuogo){
+                returnList.remove(i);
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-        return luoghi;
+        return returnList;
     }
 
     private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {

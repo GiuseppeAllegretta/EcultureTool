@@ -44,6 +44,8 @@
     <string name="elimina_luogo">Delete Place</string>
     <string name="luoghi">Places</string>
     <string name="modifica_luogo">Edit place</string>
+    <string name="aggiornati_dati">update successfully</string>
+    <string name="no_aggiornati_dati">update failed</string>
 
     <!-- Stringhe oggetto -->
     <string name="nome_oggetto">Item Name</string>
