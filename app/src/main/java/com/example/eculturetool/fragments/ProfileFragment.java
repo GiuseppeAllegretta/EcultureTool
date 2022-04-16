@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -303,20 +304,25 @@ public class ProfileFragment extends Fragment {
 
         dialog.show();
 
-        conferma.setOnClickListener(onClickListener -> connection.getUser().delete()
-                .addOnCompleteListener(onCompleteListener -> {
-                    if (onCompleteListener.isSuccessful()) {
-                        connection.getRefCuratore().removeValue();
-                        dialog.dismiss();
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
 
-                        //delete sessione
-                        SessionManagement sessionManagement = new SessionManagement(getActivity());
-                        sessionManagement.removeSession();
+                if(dataBaseHelper.deleteCuratore()){
+                    //delete sessione
+                    SessionManagement sessionManagement = new SessionManagement(getActivity());
+                    sessionManagement.removeSession();
 
-                        startActivity(new Intent(getActivity(), SplashActivity.class));
-                        requireActivity().finish();
-                    }
-                }));
+                    Toast.makeText(context, getString(R.string.cancellazione_successo), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), SplashActivity.class));
+                    requireActivity().finish();
+                }else {
+                    Toast.makeText(context, getString(R.string.cancellazione_fallita), Toast.LENGTH_SHORT).show();
+                }
+                
+            }
+        });
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }

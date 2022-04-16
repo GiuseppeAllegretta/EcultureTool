@@ -122,7 +122,8 @@
     <string name="seleziona_lingua">Select a language ...</string>
     <string name="italiano">Italian</string>
     <string name="inglese">English</string>
-
+    <string name="cancellazione_successo">Cancellation successful</string>
+    <string name="cancellazione_fallita">Cancellation failed</string>
 
 
 </resources>

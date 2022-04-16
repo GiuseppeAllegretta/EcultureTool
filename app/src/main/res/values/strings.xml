@@ -131,6 +131,8 @@
     <string name="email_errata">Email errata</string>
     <string name="aggiornati_dati">Aggiornati dati</string>
     <string name="no_aggiornati_dati">Aggiornamento fallito</string>
+    <string name="cancellazione_successo">Cancellazione avvenuta con successo</string>
+    <string name="cancellazione_fallita">Cancellazione fallita</string>
 
 
 </resources>

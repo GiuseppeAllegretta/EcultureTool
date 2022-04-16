@@ -61,13 +61,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + COLONNA_CURATORE_LUOGO_CORRENTE + " INT," +
                 " " + COLONNA_CURATORE_IMG + " TEXT" + ")";
 
+        /*String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
+                " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " " + COLONNA_LUOGHI_NOME + " TEXT," +
+                " " + COLONNA_LUOGHI_DESCRIZIONE + " TEXT," +
+                " " + COLONNA_LUOGHI_TIPOLOGIA + " TEXT," +
+                " " + COLONNA_LUOGHI_EMAIL_CURATORE + " TEXT," +
+                " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + "))";*/
+
         String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
                 " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " " + COLONNA_LUOGHI_NOME + " TEXT," +
                 " " + COLONNA_LUOGHI_DESCRIZIONE + " TEXT," +
                 " " + COLONNA_LUOGHI_TIPOLOGIA + " TEXT," +
                 " " + COLONNA_LUOGHI_EMAIL_CURATORE + " TEXT," +
-                " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + "))";
+                " " + "CONSTRAINT fk_curatori " +
+                " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + ")" + " ON DELETE CASCADE " + " )";
 
 
         sqLiteDatabase.execSQL(createTableCuratore);
@@ -432,10 +441,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int update = db.update(TABLE_LUOGHI, contentValues, COLONNA_LUOGHI_ID + " = " + id, null);
 
         if(update == -1){
-            db.close();
             risultato = false;
         }else {
-            db.close();
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
+    public boolean deleteCuratore(){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //bisogna impostare a true il metodo per permettere a SQLite di tener conto delle foreign key
+        db.setForeignKeyConstraintsEnabled(true);
+
+        int delete = db.delete(TABLE_CURATORI, COLONNA_EMAIL + " = ?", new String[] {emailCuratore});
+
+        if(delete == -1){
+            risultato = false;
+        }else {
             risultato = true;
         }
 
