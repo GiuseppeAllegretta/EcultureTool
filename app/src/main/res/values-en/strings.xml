@@ -110,7 +110,7 @@
     <string name="nome_zona_richiesto">The zone name is required</string>
     <string name="numero_max">Attention! The maximum number is 10</string>
 
-    <string name="registrazione_completata">Registration completed. Verification email sent</string>
+    <string name="registrazione_completata">Registration completed</string>
     <string name="registrazione_fallita">Registration Failed</string>
     <string name="min_luoghi">There must be at least one place in the app</string>
     <string name="avviso">Warning</string>
