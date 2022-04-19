@@ -31,6 +31,7 @@ import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -43,6 +44,7 @@ import java.util.Date;
 
 public class UploadImageActivity extends AppCompatActivity {
 
+    public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
     private final Connection connection = new Connection();
     private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
@@ -70,7 +72,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
         mProgressBar = findViewById(R.id.progressBar);
 
-        mStorageRef = connection.getStorage().getReference("uploads").child(getIntent().getStringExtra("directory"));
+        mStorageRef = FirebaseStorage.getInstance(STORAGE_REF).getReference().child("uploads").child(getIntent().getStringExtra("directory"));
         mDatabaseRef = connection.getDatabase().getReference("uploads").child(getIntent().getStringExtra("directory"));
 
         chooseFileResultLaunch = registerForActivityResult(
