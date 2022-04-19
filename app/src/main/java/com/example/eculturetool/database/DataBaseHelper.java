@@ -227,7 +227,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(COLONNA_CURATORE_IMG, uri);
 
-        int update = db.update(TABLE_CURATORI, contentValues, COLONNA_CURATORE_IMG + " = ?", new String[]{emailCuratore});
+        int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
         if(update == -1){
             risultato = false;
