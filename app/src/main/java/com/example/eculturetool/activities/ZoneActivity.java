@@ -70,10 +70,6 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         zoneList = new ArrayList<>();
         dataBaseHelper = new DataBaseHelper(this);
 
-        dataBaseHelper.aggiungiZona(new Zona(0,"prova1","descrizione",1,0));
-
-
-
         setZoneInfo();
     }
 
@@ -99,14 +95,10 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
         Intent intent = new Intent(this, DettaglioZonaActivity.class);
 
-
         Bundle b = new Bundle();
         b.putSerializable("ZONE",z);
         intent.putExtras(b);
         startActivity(intent);
-
-
-
     }
 
     @Override

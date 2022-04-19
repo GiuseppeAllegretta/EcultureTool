@@ -87,6 +87,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             numeroMax = Integer.parseInt(numeroMaxString);
         }else
             numeroMax=Integer.parseInt(numeroMaxString);
+
         if(numeroMax>MAX_OGGETTI){
             numeroOggetti.setError(getResources().getString(R.string.numero_max));
             numeroOggetti.requestFocus();
@@ -94,13 +95,11 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        dataBaseHelper.aggiungiZona(new Zona(0,nome,descrizione,Integer.parseInt(numeroMaxString),luogoCorrente));
+        dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, Integer.parseInt(numeroMaxString), luogoCorrente));
         zoneList = dataBaseHelper.zoneQuery();
         finish();
 
         progressBar.setVisibility(View.INVISIBLE);
-
-        onBackPressed();
     }
 
     private boolean controlloEsistenzaNomeZona(String nomeZona) {
@@ -109,7 +108,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
 
         for (int i = 0; i < zoneList.size(); i++) {
             if (nomeZona.compareToIgnoreCase(zoneList.get(i).getNome()) == 0) {
-                System.out.println("nome corrente: " + zoneList.get(i).getNome());
                 isEsistente = true;
             }
         }

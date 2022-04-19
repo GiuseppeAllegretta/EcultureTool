@@ -55,7 +55,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
 
-        z1= (Zona) bundle.getSerializable("ZONE");
+        z1 = (Zona) bundle.getSerializable("ZONE");
 /*
         connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,39 +80,12 @@ public class ModificaZonaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-/*
-        connection.getRefCuratore().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
+        //Popolamento dei campi
+        nomeZona.setText(z1.getNome());
+        descrizioneZona.setText(z1.getDescrizione());
+        numeroMaxOggettiZona.setText(String.valueOf(z1.getNumeroOggetti()));
 
-                    //Ottengo il luogo corrente del curatore
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-                    connection.getRefZone().child(luogoCorrente).child(idZona).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getValue(Zona.class) != null) {
-                                nomeZona.setText(snapshot.getValue(Zona.class).getNome());
-                                descrizioneZona.setText(snapshot.getValue(Zona.class).getDescrizione());
-                                numeroMaxOggettiZona.setText(String.valueOf(snapshot.getValue(Zona.class).getNumeroOggetti()));
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-*/
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,12 +107,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
         int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
-
         String numeroMaxString = numeroMaxOggettiZona.getText().toString().trim();
-
-
-
-
 
 
         if (nome.isEmpty()) {
@@ -174,11 +142,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
         z2= new Zona(0,nome,descrizione,Integer.parseInt(numeroMaxString),0);
 
         progressBar.setVisibility(View.VISIBLE);
-/*
-        connection.getRefZone().child(luogoCorrente).child(idZona).child("nome").setValue(nome);
-        connection.getRefZone().child(luogoCorrente).child(idZona).child("descrizione").setValue(descrizione);
-        connection.getRefZone().child(luogoCorrente).child(idZona).child("numeroOggetti").setValue(numeroMax);
-*/
         progressBar.setVisibility(View.INVISIBLE);
 
         dataBaseHelper.modifica(z1,z2);

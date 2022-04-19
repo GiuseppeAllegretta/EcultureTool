@@ -104,7 +104,6 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         Intent intent = new Intent(this, DettaglioLuogoActivity.class);
         intent.putExtra(Luogo.Keys.ID, luogoSelezionato);
         startActivity(intent);
-
     }
 
     @Override

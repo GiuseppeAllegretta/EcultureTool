@@ -38,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_LUOGHI_TIPOLOGIA = "LUOGHI_TIPOLOGIA";
     public static final String COLONNA_LUOGHI_EMAIL_CURATORE = "LUOGHI_EMAIL_CURATORE";
 
-    //Tabella Zone
+    //VARIABILI INERENTI LE ZONE
     public static final String TABLE_ZONE = "ZONE";
     public static final String COLONNA_ZONE_ID = "ZONE_ID";
     public static final String COLONNA_ZONE_NOME = "ZONE_NOME";
@@ -501,6 +501,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }catch (Exception e){
             System.out.println("errore database");
         }
+
         cursor.close();
         db.close();
 
@@ -511,8 +512,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         boolean risultato=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
-
 
         contentValues.put(COLONNA_ZONE_NOME,z.getNome());
         contentValues.put(COLONNA_ZONE_DESCRIZIONE,z.getDescrizione());
@@ -550,17 +549,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void modifica(Zona z1,Zona z2){
 
         SQLiteDatabase db = this.getWritableDatabase();
-
-
         String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ?, ZONE_NUMERO_OGGETTI = ?  WHERE ZONE_NOME = ?";
 
         db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(),String.valueOf(z2.getNumeroOggetti()), z1.getNome()});
 
-
         db.close();
-
-
-
     }
 
     public Zona recuperoZonaModificata(int idz){
@@ -580,6 +573,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }catch (Exception e){
             System.out.println("errore");
         }
+
+        cursor.close();
+        db.close();
         return  zona;
     }
 }
