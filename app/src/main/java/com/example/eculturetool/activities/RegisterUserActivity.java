@@ -111,7 +111,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             return;
         }
 
-        Curatore curatore = new Curatore(nome, cognome, email, password);
+        Curatore curatore = new Curatore(nome, cognome, email, password, null);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(Curatore.Keys.CURATORE_KEY, curatore);
