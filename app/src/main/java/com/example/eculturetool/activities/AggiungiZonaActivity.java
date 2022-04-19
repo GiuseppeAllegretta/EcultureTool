@@ -1,9 +1,7 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,13 +9,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +41,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
 
         luogoCorrente = dataBaseHelper.getIdLuogoCorrente();
         if (zoneList != null)
-            zoneList = dataBaseHelper.zoneQuery();
+            zoneList = dataBaseHelper.getZone();
 
     }
 
@@ -96,7 +89,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, Integer.parseInt(numeroMaxString), luogoCorrente));
-        zoneList = dataBaseHelper.zoneQuery();
+        zoneList = dataBaseHelper.getZone();
         finish();
 
         progressBar.setVisibility(View.INVISIBLE);

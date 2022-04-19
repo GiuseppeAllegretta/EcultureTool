@@ -249,13 +249,13 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
         //Scrittura dell'oggetto sul Realtime Database
         String key = connection.getRefOggetti().push().getKey();
-        Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
+        //Oggetto oggetto = new Oggetto(key, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
 
 
         //Metodo che recupare l'id della zona
         String idZona = retrieveZona(zonaSelezionata);
 
-        connection.getRefOggetti().child(luogoCorrente).child(idZona).child(key).setValue(oggetto);
+        //connection.getRefOggetti().child(luogoCorrente).child(idZona).child(key).setValue(oggetto);
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);

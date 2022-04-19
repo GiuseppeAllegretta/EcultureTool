@@ -95,7 +95,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     private List<Oggetto> getListOggettiCreati() {
         List<Oggetto> oggetti = new ArrayList<>();
 
-        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
+        /*connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot != null) {
@@ -137,7 +137,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-        });
+        });*/
         return oggetti;
     }
 
@@ -208,7 +208,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
             connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);
         }else {
-            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue();
+            /*connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue();
 
             System.out.println("Uri: " + imgUri);
             if(imgUri != null){
@@ -217,7 +217,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             }else{
                 Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, null, tipologia, zonaSelezionata);
                 connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
-            }
+            }*/
         }
 
         finish();

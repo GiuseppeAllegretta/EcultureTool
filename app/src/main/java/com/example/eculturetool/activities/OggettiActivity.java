@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterOggetto;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -37,8 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener {
-    private final Connection connection = new Connection();
 
+    private DataBaseHelper dataBaseHelper;
     private ArrayList<Oggetto> oggettiList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerAdapterOggetto adapter;
@@ -73,7 +74,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             }
         });
 
-        retrieveZone();
+
+        //retrieveZone();
         setOggettoInfo();
         setAdapter();
     }
@@ -98,20 +100,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             }
         };
 
-        connection.getRefCuratore().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(Curatore.class) != null) {
-                    //luogoCorrente = snapshot.getValue(Curatore.class).getLuogoCorrente();
-                    connection.getRefZone().child(luogoCorrente).addValueEventListener(valueEventListenerZone);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 
@@ -137,46 +125,11 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     }
 
     private void setOggettoInfo() {
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(String.class) != null) {
-                    luogoCorrente = snapshot.getValue(String.class).toString();
+        dataBaseHelper = new DataBaseHelper(this);
+        oggettiList.clear();
+        oggettiList = (ArrayList<Oggetto>) dataBaseHelper.getOggetti();
+        setAdapter();
 
-                    //popolo array di oggetti
-                    connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                            oggettiList.clear();
-                            for (Zona zona : zoneList) {/*
-                                Iterable<DataSnapshot> iteratore = snapshot.child(zona.getId()).getChildren();
-                                int count = (int) snapshot.child(zona.getId()).getChildrenCount();
-
-                                if (count != 0) {
-                                    for (int i = 0; i < count; i++) {
-                                        oggettiList.add(iteratore.iterator().next().getValue(Oggetto.class));
-                                    }
-                                }
-                                */
-                            }
-                            setAdapter();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 
@@ -202,17 +155,12 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     @Override
     public void onOggettoClick(int position) {
-        String oggettoSelezionato = oggettiList.get(position).getId();
+        //String oggettoSelezionato = oggettiList.get(position).getId();
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-        intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
+        //intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
         intent.putExtra(Luogo.Keys.ID, luogoCorrente);
         intent.putExtra("ZONELIST", (Serializable) zoneList);
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        connection.getRefZone().child(luogoCorrente).removeEventListener(valueEventListenerZone);
-    }
 }

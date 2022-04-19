@@ -3,18 +3,19 @@ package com.example.eculturetool.entities;
 import java.util.Objects;
 
 public class Oggetto {
-    private String id, idCuratore, idLuogo;
+    private int id;
+    private String idCuratore, idLuogo;
     private String nome, descrizione;
     private String urlImmagine;
     private String urlQrcode;
     private TipologiaOggetto tipologiaOggetto;
-    private String zonaAppartenenza;
+    private int zonaAppartenenza;
 
     public Oggetto() {
 
     }
 
-    public Oggetto(String id, String nome, String descrizione, String urlImmagine) {
+    public Oggetto(int id, String nome, String descrizione, String urlImmagine) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -22,21 +23,21 @@ public class Oggetto {
         //TODO generare il qr
     }
 
-    public Oggetto(String id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto){
+    public Oggetto(int id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto){
         this(id, nome, descrizione, urlImmagine);
         this.tipologiaOggetto = tipologiaOggetto;
     }
 
-    public Oggetto (String id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, String zonaAppartenenza){
+    public Oggetto (int id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, int zonaAppartenenza){
         this(id, nome, descrizione, urlImmagine, tipologiaOggetto);
         this.zonaAppartenenza = zonaAppartenenza;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -78,20 +79,8 @@ public class Oggetto {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Oggetto that = (Oggetto) o;
-        return id.equals(that.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public String getZonaAppartenenza() {
+    public int getZonaAppartenenza() {
         return zonaAppartenenza;
     }
 

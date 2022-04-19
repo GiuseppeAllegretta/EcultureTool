@@ -1,6 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -14,24 +13,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener {
 
@@ -130,7 +119,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
     private void setZoneInfo() {
         zoneList.clear();
-        zoneList = dataBaseHelper.zoneQuery();
+        zoneList = dataBaseHelper.getZone();
         setAdapter();
     }
 }

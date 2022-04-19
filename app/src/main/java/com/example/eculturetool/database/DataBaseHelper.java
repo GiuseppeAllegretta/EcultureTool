@@ -12,6 +12,7 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 
 import java.util.ArrayList;
@@ -19,13 +20,14 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
+    //VARIABILI INERENTI AGLI OGGETTI
     public static final String TABLE_OGGETTI = "OGGETTI";
     public static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
     public static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
     public static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
     public static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
     public static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
-    public static final String COLONNAOGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
+    public static final String COLONNA_OGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
     public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
 
 
@@ -106,7 +108,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLONNA_OGGETTO_DESCRIZIONE + " TEXT," +
                 COLONNA_OGGETTO_URL_IMMAGINE + " TEXT," +
                 COLONNA_OGGETTO_URL_QRCODE + " TEXT, " +
-                COLONNAOGGETTO_TIPOLOGIA + " TEXT," +
+                COLONNA_OGGETTO_TIPOLOGIA + " TEXT," +
                 COLONNA_OGGETTO_ZONA_ID + " INT NOT NULL," +
                 "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + ")";
 
@@ -253,6 +255,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Luogo getLuogoCorrente(){
         Luogo luogo = null;
 
+        int id;
         String nome = null;
         String descrizione = null;
         Tipologia tipologia = null;
@@ -263,6 +266,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String stringQuery = "SELECT " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_NOME + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_DESCRIZIONE + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_TIPOLOGIA + "," +
+                TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE +
                 " FROM (" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") " +
                 "WHERE " + COLONNA_LUOGHI_ID + " = " + luogoCorrente;
@@ -272,12 +276,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
+                id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_ID));
                 nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_NOME));
                 descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_DESCRIZIONE));
                 tipologia = Tipologia.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_TIPOLOGIA)));
                 emailCuratore = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_EMAIL_CURATORE));
 
                 luogo = new Luogo(nome, descrizione, tipologia, emailCuratore);
+                luogo.setId(id);
             }
         }
 
@@ -502,7 +508,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
-    public ArrayList<Zona> zoneQuery (){
+    public ArrayList<Zona> getZone(){
         ArrayList<Zona> info = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -604,14 +610,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public List<Oggetto> getOggetti(){
-        List<Oggetto> returnList = null;
+        List<Oggetto> returnList = new ArrayList<>();
+        int idLuogoCorrente = getLuogoCorrente().getId();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        //String stringQuery = "SELECT ";
+        String stringQuery = "SELECT * FROM "
+                + "(" + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
+                + " INNER JOIN " + TABLE_ZONE + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
+                + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
+                + " WHERE " + COLONNA_EMAIL + " = ? and " + COLONNA_CURATORE_LUOGO_CORRENTE + " = " + idLuogoCorrente;
 
-        //db.rawQuery(stringQuery, null);
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.moveToFirst()){
+
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_DESCRIZIONE));
+                TipologiaOggetto tipologia = TipologiaOggetto.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_TIPOLOGIA)));
+                String urlImg = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_IMMAGINE));
+                String urlQrCode = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_QRCODE));
+                int idZona = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ZONA_ID));
 
 
+                Oggetto oggetto = new Oggetto(id, nome, descrizione, urlImg, tipologia, idZona);
+                returnList.add(oggetto);
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
         return returnList;
     }
 }
