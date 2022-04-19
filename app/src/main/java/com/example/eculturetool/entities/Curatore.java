@@ -13,15 +13,16 @@ public class Curatore implements Serializable {
     public Curatore() {
     }
 
-    public Curatore(String nome, String cognome, String email, String password) {
+    public Curatore(String nome, String cognome, String email, String password, String img) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
+        this.img = img;
     }
 
-    public Curatore(String nome, String cognome, String email, String password, int luogoCorrente) {
-        this(nome, cognome, email, password);
+    public Curatore(String nome, String cognome, String email, String password, String img, int luogoCorrente) {
+        this(nome, cognome, email, password, img);
         this.luogoCorrente = luogoCorrente;
     }
 
