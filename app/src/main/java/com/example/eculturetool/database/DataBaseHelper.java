@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.Zona;
 
@@ -17,6 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+
+    public static final String TABLE_OGGETTI = "OGGETTI";
+    public static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
+    public static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
+    public static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
+    public static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
+    public static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
+    public static final String COLONNAOGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
+    public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
+
 
     //Email del curatore che si è loggato
     private static String emailCuratore;
@@ -88,9 +99,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
                 " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + "))";
 
+
+        String createTableOggetti = "CREATE TABLE " + TABLE_OGGETTI + " " +
+                "(" + COLONNA_OGGETTO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLONNA_OGGETTO_NOME + " TEXT," +
+                COLONNA_OGGETTO_DESCRIZIONE + " TEXT," +
+                COLONNA_OGGETTO_URL_IMMAGINE + " TEXT," +
+                COLONNA_OGGETTO_URL_QRCODE + " TEXT, " +
+                COLONNAOGGETTO_TIPOLOGIA + " TEXT," +
+                COLONNA_OGGETTO_ZONA_ID + " INT NOT NULL," +
+                "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + ")";
+
         sqLiteDatabase.execSQL(createTableCuratore);
         sqLiteDatabase.execSQL(createTableLuogo);
         sqLiteDatabase.execSQL(createTableZona);
+        sqLiteDatabase.execSQL(createTableOggetti);
     }
 
     //this is called if the databse version number changes. It prevents previous users apps from breaking whe you change the database design
@@ -577,5 +600,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return  zona;
+    }
+
+
+    public List<Oggetto> getOggetti(){
+        List<Oggetto> returnList = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //String stringQuery = "SELECT ";
+
+        //db.rawQuery(stringQuery, null);
+
+
+        return returnList;
     }
 }
