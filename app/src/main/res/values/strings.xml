@@ -91,7 +91,7 @@
     <string name="inserimento_immagine">Devi inserire un\'immagine</string>
     <string name="nome_zona_richiesto">Il nome della zona è richiesto</string>
     <string name="numero_max"> Attenzione! Il numero massimo è 10</string>
-    <string name="registrazione_completata">Registrazione completata. Inviata email di verifica</string>
+    <string name="registrazione_completata">Registrazione completata</string>
     <string name="registrazione_fallita">Registrazione Fallita</string>
     <string name="min_luoghi">Ci deve essere almeno un luogo nell\'app</string>
     <string name="avviso">Avviso</string>
