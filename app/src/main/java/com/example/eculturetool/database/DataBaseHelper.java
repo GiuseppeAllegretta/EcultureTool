@@ -2,6 +2,7 @@ package com.example.eculturetool.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,6 +32,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
 
 
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "session";
+    private static final String SESSION_KEY = "session_user";
     //Email del curatore che si è loggato
     private static String emailCuratore;
 
@@ -61,6 +65,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "e-cultureTool.db",null , 3);
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        emailCuratore = sharedPreferences.getString(SESSION_KEY, "null");
     }
 
     public static String getEmailCuratore() {

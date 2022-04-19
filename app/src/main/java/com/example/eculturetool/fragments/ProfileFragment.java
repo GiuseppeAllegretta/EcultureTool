@@ -83,6 +83,9 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = requireActivity().getApplicationContext();
 
+        //Inizializzazione del database
+        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
@@ -140,9 +143,6 @@ public class ProfileFragment extends Fragment {
         settingsButton = view.findViewById(R.id.settings_button);
         editButton = view.findViewById(R.id.fab);
 
-        //Inizializzazione del database
-        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,13 +185,13 @@ public class ProfileFragment extends Fragment {
             if(luogo != null){
                 nomeLuogo.setText(luogo.getNome());
             }
-        }
 
-        if (curatore.getImg() != null) {
-            Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
-        } else {
-            progressBar.setVisibility(View.GONE);
-            Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
+            if (curatore.getImg() != null) {
+                Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+            } else {
+                progressBar.setVisibility(View.GONE);
+                Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
+            }
         }
     }
 
