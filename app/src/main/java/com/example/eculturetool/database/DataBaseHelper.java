@@ -170,6 +170,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String nome = null;
         String cognome = null;
         String password = null;
+        String img = null;
 
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -182,8 +183,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_NOME));
                 cognome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_COGNOME));
                 password = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_PASSWORD));
-
-                curatore = new Curatore(nome, cognome, email, password);
+                img = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_IMG));
+                curatore = new Curatore(nome, cognome, email, password, img);
             }
         }
 
