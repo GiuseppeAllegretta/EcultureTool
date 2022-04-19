@@ -224,10 +224,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int update = db.update(TABLE_CURATORI, contentValues, COLONNA_CURATORE_IMG + " = ?", new String[]{emailCuratore});
 
         if(update == -1){
-            db.close();
             risultato = false;
         }else {
-            db.close();
             risultato = true;
         }
 
