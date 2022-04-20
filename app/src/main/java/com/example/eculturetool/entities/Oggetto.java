@@ -23,6 +23,15 @@ public class Oggetto {
         //TODO generare il qr
     }
 
+    public Oggetto(String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, int zonaAppartenenza){
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.urlImmagine = urlImmagine;
+        this.tipologiaOggetto = tipologiaOggetto;
+        this.zonaAppartenenza = zonaAppartenenza;
+    }
+
+
     public Oggetto(int id, String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto){
         this(id, nome, descrizione, urlImmagine);
         this.tipologiaOggetto = tipologiaOggetto;

@@ -47,7 +47,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     //luogo corrente che sta gestendo il curatore
     private String luogoCorrente;
     private List<Zona> zoneList = new ArrayList<>();
-    private ValueEventListener valueEventListenerZone;
     private FloatingActionButton fabAddOggetto;
 
 
@@ -75,8 +74,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         });
 
 
-        //retrieveZone();
         setOggettoInfo();
+        retrieveZone();
         setAdapter();
     }
 
@@ -84,22 +83,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
      * Metodo che recupera le zone
      */
     private void retrieveZone() {
-        valueEventListenerZone = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int count = (int) snapshot.getChildrenCount();
-                Iterable<DataSnapshot> iteratoreZone = snapshot.getChildren();
-
-                for (int i = 0; i < count; i++) {
-                    zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-
+        zoneList.clear();
+        zoneList = dataBaseHelper.getZone();
     }
 
 
@@ -155,12 +140,21 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     @Override
     public void onOggettoClick(int position) {
-        //String oggettoSelezionato = oggettiList.get(position).getId();
+        int oggettoSelezionato = oggettiList.get(position).getId();
+
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-        //intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
-        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
+        intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
         intent.putExtra("ZONELIST", (Serializable) zoneList);
+        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
         startActivity(intent);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setOggettoInfo();
+        retrieveZone();
+        setAdapter();
+    }
 }
