@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
@@ -29,27 +30,25 @@ import java.util.List;
 
 public class ModificaOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Connection connection = new Connection();
+    private DataBaseHelper dataBaseHelper;
+    private int idOggetto;
+    private TipologiaOggetto tipologia;
+
+    //Si recupera questa lista per fare in modo che l'utente non crei/modifichi un luogo con lo stesso nome di uno già creato
+    private List<Oggetto> oggettiList;
 
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Spinner zonaAppartenenza;
     private ImageView frecciaBack, conferma;
 
-    //Si recupera questa lista per fare in modo che l'utente non crei/modifichi un luogo con lo stesso nome di uno già creato
-    private List<Oggetto> oggettiList;
-
-    private String luogoCorrente, idOggetto;
-    private TipologiaOggetto tipologia;
-
     //VARIABILI GESTIONE SPINNER PER LE ZONE
     private List<String> nomiZoneList = new ArrayList<>();
     private List<Zona> zoneList = new ArrayList<>();
     private ArrayAdapter<String> nomiZoneListAdapter;
-    private int countZone;
-    private String zonaSelezionata, idZona, idZonaSelezionata;
+    private String zonaSelezionata;     //nome della zona selezionata dallo spinner
+    private int idZonaSelezionata;      //id della zona selezionata nella spinner
     private String imgUri;
-
 
 
     @Override
@@ -66,11 +65,10 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
 
         //Ottengo i dati del luogo selezionato
         Intent intent = getIntent();
-        luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
-        idOggetto = intent.getStringExtra(Oggetto.Keys.ID);
-        idZona = intent.getStringExtra(Zona.Keys.ID);
+        idOggetto = intent.getIntExtra(Oggetto.Keys.ID, 0);
+        zoneList = (List<Zona>) intent.getSerializableExtra("ZoneList");
 
-        connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").addValueEventListener(new ValueEventListener() {
+        /*connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -83,7 +81,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
         oggettiList = getListOggettiCreati();
     }
@@ -94,50 +92,20 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
      */
     private List<Oggetto> getListOggettiCreati() {
         List<Oggetto> oggetti = new ArrayList<>();
+        dataBaseHelper = new DataBaseHelper(this);
+        oggetti = dataBaseHelper.getOggetti();
 
-        /*connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot != null) {
-
-                    int countZone = (int) snapshot.getChildrenCount(); //contatore delle zone
-                    Iterable<DataSnapshot> iterableIdZone = snapshot.getChildren();
-                    List<String> keysZone = new ArrayList<>();
-
-                    for (int z = 0; z < countZone; z++) {
-                        keysZone.add(iterableIdZone.iterator().next().getKey());
-                    }
-                    System.out.println("ID ZONE: " + keysZone);
-
-                    for (int j = 0; j < countZone; j++) {
-                        String zona = keysZone.get(j); //ID DELLA ZONA
-
-                        Iterable<DataSnapshot> iteratore = snapshot.child(zona).getChildren();
-                        int count = (int) snapshot.child(zona).getChildrenCount();
-                        Oggetto oggetto;
-
-                        for (int i = 0; i < count; i++) {
-                            oggetto = iteratore.iterator().next().getValue(Oggetto.class);
-
-                            if (oggetto.getId().compareTo(idOggetto) != 0) {
-                                oggetti.add(oggetto);
-                            } else {
-                                //Settaggio dei dati nelle View
-                                nomeOggetto.setText(oggetto.getNome());
-                                descrizioneOggetto.setText(oggetto.getDescrizione());
-                                tipologiaOggetto.setSelection(getIndexSpinner(oggetto.getTipologiaOggetto()));
-                                //TODO aggiungere la zona di appartenenza
-                                idZona = zona;
-                            }
-                        }
-                    }
-                }
+        //rimuove dalla lista l'oggetto che è stato selezionato dalla recyclerView e setta i valori nella view
+        for (int i = 0; i < oggetti.size(); i++) {
+            if (oggetti.get(i).getId() == idOggetto) {
+                //Settaggio dei dati nelle View
+                nomeOggetto.setText(oggetti.get(i).getNome());
+                descrizioneOggetto.setText(oggetti.get(i).getDescrizione());
+                tipologiaOggetto.setSelection(getIndexSpinner(oggetti.get(i).getTipologiaOggetto()));
+                oggetti.remove(i);
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });*/
         return oggetti;
     }
 
@@ -202,23 +170,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        if(idZona.compareTo(idZonaSelezionata) == 0){
-            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("nome").setValue(nome);
-            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("descrizione").setValue(descrizione);
-            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("tipologiaOggetto").setValue(tipologia);
-            connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("zonaAppartenenza").setValue(zonaSelezionata);
-        }else {
-            /*connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue();
-
-            System.out.println("Uri: " + imgUri);
-            if(imgUri != null){
-                Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, imgUri.toString(), tipologia, zonaSelezionata);
-                connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
-            }else{
-                Oggetto oggetto = new Oggetto(idOggetto, nome, descrizione, null, tipologia, zonaSelezionata);
-                connection.getRefOggetti().child(luogoCorrente).child(idZonaSelezionata).child(idOggetto).setValue(oggetto);
-            }*/
-        }
+        dataBaseHelper.updateOggetto(idOggetto, nome, descrizione, null, tipologia, idZonaSelezionata);
 
         finish();
     }
@@ -286,9 +238,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             case Oggetto.KeysTipologiaOggetto.ALTRO:
                 tipologia = TipologiaOggetto.ALTRO;
                 break;
-
         }
-
     }
 
     @Override
@@ -300,77 +250,30 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     /**
      * Metodo per settare l'elenco delle zone nello spinner relativo
      */
-    private void setZoneSpinner() {/*
+    private void setZoneSpinner() {
+        for (int i = 0; i < zoneList.size(); i++) {
+            nomiZoneList.add(zoneList.get(i).getNome());
+        }
 
-        System.out.println("Luogo corrente: " + luogoCorrente);
+        nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+        zonaAppartenenza.setAdapter(nomiZoneListAdapter);
 
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
+        zonaAppartenenza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(String.class) != null) {
-                    luogoCorrente = snapshot.getValue(String.class).toString();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                zonaSelezionata = nomiZoneList.get(i);
 
-                    connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getValue(Zona.class) != null) {
-                                Iterable<DataSnapshot> iteratoreZone = snapshot.getChildren();
-                                countZone = (int) snapshot.getChildrenCount();
-                                System.out.println("countZone: " + countZone);
-
-                                zoneList.clear(); //pulisce la lista prima di riempirla
-                                //Avvalora zoneList con tutte le zone prese da db
-                                for (int i = 0; i < countZone; i++) {
-                                    zoneList.add(iteratoreZone.iterator().next().getValue(Zona.class));
-                                }
-
-                                nomiZoneList.clear(); //pulisce la lista prima di riempirla
-                                //Avvalora nomiZoneList con i nomi di ogni singola zona
-                                for (int i = 0; i < countZone; i++) {
-                                    nomiZoneList.add(zoneList.get(i).getNome());
-                                }
-
-                                nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
-                                zonaAppartenenza.setAdapter(nomiZoneListAdapter);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
+                for(Zona zona: zoneList){
+                    if(zona.getNome().compareTo(zonaSelezionata) == 0){
+                        idZonaSelezionata = zona.getId();
+                    }
                 }
-
-                zonaAppartenenza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        zonaSelezionata = nomiZoneList.get(i);
-
-                        for(Zona zona: zoneList){
-                            if(zona.getNome().compareTo(zonaSelezionata) == 0){
-                                idZonaSelezionata = zona.getId();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-
-        */
-
-
     }
 }

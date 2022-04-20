@@ -46,6 +46,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DettaglioOggettoActivity extends AppCompatActivity {
@@ -158,9 +159,10 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ModificaOggettoActivity.class);
+
                 intent.putExtra(Luogo.Keys.ID, luogoCorrente);
                 intent.putExtra(Oggetto.Keys.ID, idOggetto);
-                intent.putExtra(Zona.Keys.ID, idZona);
+                intent.putExtra("ZoneList", (Serializable) zoneList);
                 startActivity(intent);
             }
         });
