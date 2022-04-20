@@ -35,7 +35,7 @@ public class Permissions extends AppCompatActivity {
     public boolean checkCameraPermission(Activity activity, View parentLayout) {
         boolean res = false;
         if(ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
-            Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
+            Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
             snackBar.show();
         }
         else{
