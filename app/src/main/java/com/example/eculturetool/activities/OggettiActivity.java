@@ -140,11 +140,12 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     @Override
     public void onOggettoClick(int position) {
-        //String oggettoSelezionato = oggettiList.get(position).getId();
+        int oggettoSelezionato = oggettiList.get(position).getId();
+
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-        //intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
-        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
+        intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
         intent.putExtra("ZONELIST", (Serializable) zoneList);
+        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
         startActivity(intent);
     }
 

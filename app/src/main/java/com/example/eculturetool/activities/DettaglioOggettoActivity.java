@@ -31,6 +31,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -49,8 +50,13 @@ import java.util.List;
 
 public class DettaglioOggettoActivity extends AppCompatActivity {
 
-    private Connection connection = new Connection();
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
+
+    private DataBaseHelper dataBaseHelper;          //riferimento del database
+    private Oggetto oggetto;                        //oggetto di cui si vedono i dati a schermo
+    private List<Zona> zoneList;                    //L'insieme di tutte le zone
+    private int idOggetto, idZona, luogoCorrente;   //identificativi dell'oggetto, zona e luogo
+
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private TextView nomeOggetto, descrizioneOggetto, tipologiaOggetto, zonaAppartenenza;
     private ImageView immagineOggetto;
@@ -59,9 +65,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Button eliminaOggetto;
     private Context context;
     private Uri imgUri;
-    private String idOggetto, idZona, luogoCorrente;
     private ProgressBar progressBar;
-    private List<Zona> zoneList;
 
 
     @Override
@@ -96,12 +100,12 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
-        idOggetto = intent.getStringExtra(Oggetto.Keys.ID);
-        luogoCorrente = intent.getStringExtra(Luogo.Keys.ID);
+        idOggetto = intent.getIntExtra(Oggetto.Keys.ID, 0);     //id dell'oggetto selezionato dalla recyclerView
+        luogoCorrente = intent.getIntExtra(Luogo.Keys.ID, 0);
         zoneList = (List<Zona>) intent.getSerializableExtra("ZONELIST");
 
 
-        startForObjectImageUpload = registerForActivityResult(
+        /*startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
                     Uri uri = null;
@@ -125,7 +129,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                             }
                         }).circleCrop().into(immagineOggetto);
                     }
-                });
+                });*/
 
     }
 
@@ -170,47 +174,34 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     }
 
     private void setDatiOggetto() {
-        /*
+        dataBaseHelper = new DataBaseHelper(this);
+        oggetto = dataBaseHelper.getOggettoById(idOggetto);
 
-        connection.getRefOggetti().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iterable; //iteratore di oggetti
-                int count; //contatore di oggetti
-                Oggetto oggetto;
+        if(oggetto != null){
+            Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
+            getSupportActionBar().setTitle(oggetto.getNome());
+            nomeOggetto.setText(oggetto.getNome());
+            descrizioneOggetto.setText(oggetto.getDescrizione());
+            tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
+            zonaAppartenenza.setText(getNomeZona(oggetto.getZonaAppartenenza()));
+            idZona = oggetto.getZonaAppartenenza();
+        }
+    }
 
-                if(snapshot != null){
-                    for(Zona zona: zoneList){
+    /**
+     * Metodo che recupera il nome di una zona in base all'id della zona fornito in input
+     * @param id id della zona in cui è contenuto l'oggetto
+     * @return nomeZona cioè il nome di una zona sotto forma di stringa
+     */
+    private String getNomeZona(int id){
+        String nomeZona = null;
 
-                        iterable = snapshot.child(zona.getId()).getChildren();
-                        count = (int) snapshot.child(zona.getId()).getChildrenCount();
-
-                        for(int i = 0; i < count; i++){
-                            oggetto = iterable.iterator().next().getValue(Oggetto.class);
-
-                            if(oggetto.getId().compareTo(idOggetto) == 0 && oggetto != null){
-                                Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
-                                getSupportActionBar().setTitle(oggetto.getNome());
-                                nomeOggetto.setText(oggetto.getNome());
-                                descrizioneOggetto.setText(oggetto.getDescrizione());
-                                tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
-                                zonaAppartenenza.setText(oggetto.getZonaAppartenenza());
-                                idZona = zona.getId();
-                                break;
-                            }
-                        }
-                    }
-                }
+        for(Zona zona: zoneList){
+            if(zona.getId() == id){
+                nomeZona = zona.getNome();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        
-         */
-
+        }
+        return nomeZona;
     }
 
     private String setTipologia(TipologiaOggetto tipologiaOggetto) {
@@ -250,14 +241,14 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         dialog.show();
 
-        conferma.setOnClickListener(onClickListener ->
+        /*conferma.setOnClickListener(onClickListener ->
                 connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue().
                         addOnCompleteListener(onCompleteListener -> {
                             if (onCompleteListener.isSuccessful()) {
                                 dialog.dismiss();
                                 finish();
                             }
-                        }));
+                        }));*/
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }

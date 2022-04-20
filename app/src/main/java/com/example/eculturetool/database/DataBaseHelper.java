@@ -695,4 +695,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
+
+
+    public Oggetto getOggettoById(int id){
+        Oggetto oggetto = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String stringQuery = "SELECT * FROM " + TABLE_OGGETTI + " WHERE " + COLONNA_OGGETTO_ID + " = " + id;
+        Cursor cursor = db.rawQuery(stringQuery, null);
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                int idOggetto = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_DESCRIZIONE));
+                TipologiaOggetto tipologia = TipologiaOggetto.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_TIPOLOGIA)));
+                String imgUri = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_IMMAGINE));
+                int idZona = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ZONA_ID));
+
+                oggetto = new Oggetto(idOggetto, nome, descrizione, imgUri, tipologia, idZona);
+            }
+
+        }
+
+        cursor.close();
+        db.close();
+
+        return oggetto;
+    }
 }
