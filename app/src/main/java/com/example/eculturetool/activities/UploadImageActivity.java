@@ -98,12 +98,12 @@ public class UploadImageActivity extends AppCompatActivity {
                     }
                 });
 
-        Permissions permissions = Permissions.getInstance();
+        Permissions permissions = new Permissions();
         btnSeleziona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
-                    permissions.requestStoragePermission(UploadImageActivity.this);
+                    permissions.requestStoragePermission(UploadImageActivity.this, parentLayout);
                 } else {
                     openFileChooser();
                 }
@@ -114,7 +114,7 @@ public class UploadImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
-                    permissions.requestCameraPermission(UploadImageActivity.this);
+                    permissions.requestCameraPermission(UploadImageActivity.this, parentLayout);
                 } else {
                     openCamera();
                 }
