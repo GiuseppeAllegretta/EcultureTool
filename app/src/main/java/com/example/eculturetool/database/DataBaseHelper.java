@@ -104,8 +104,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + COLONNA_ZONE_DESCRIZIONE + " TEXT," +
                 " " + COLONNA_ZONE_NUMERO_OGGETTI + " INT," +
                 " " + COLONNA_LUOGO_RIFERIMENTO + " INT," +
-
-                " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + "))";
+                " " + "CONSTRAINT fk_luoghi " +
+                " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + ")" + " ON DELETE CASCADE" + ")";
 
 
         String createTableOggetti = "CREATE TABLE " + TABLE_OGGETTI + " " +
@@ -589,6 +589,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void rimuoviZona(Zona z){
 
         SQLiteDatabase db = this.getWritableDatabase();
+        db.setForeignKeyConstraintsEnabled(true);
 
         String stringQuery = "DELETE  FROM ZONE WHERE  ZONE_NOME =?  AND ZONE_DESCRIZIONE = ?";
 
@@ -596,9 +597,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
         db.close();
-
-
-
     }
 
     public void modifica(Zona z1,Zona z2){
