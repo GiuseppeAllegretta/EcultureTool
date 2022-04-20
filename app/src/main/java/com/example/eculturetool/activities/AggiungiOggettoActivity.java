@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -180,17 +181,16 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        //Non cancellare commento
-        /*if(imgUri == null){
+        if(imgUri == null){
             Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
             return;
-        }*/
+        }
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.VISIBLE);
 
         //Scrittura dell'oggetto sul Realtime Database
-        Oggetto oggetto = new Oggetto(nome, descrizione, null, tipologia, zona.getId());
+        Oggetto oggetto = new Oggetto(nome, descrizione, imgUri.toString(), tipologia, zona.getId());
 
         //aggiundo l'oggetto al database
         dataBaseHelper.addOggetto(oggetto);
