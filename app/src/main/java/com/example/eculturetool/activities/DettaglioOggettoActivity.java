@@ -235,20 +235,17 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_oggetto);
         final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_oggetto);
 
-        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
-        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
-        //successivamente all'eleminazione dello stesso nell'authentication db
-
         dialog.show();
 
-        /*conferma.setOnClickListener(onClickListener ->
-                connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).removeValue().
-                        addOnCompleteListener(onCompleteListener -> {
-                            if (onCompleteListener.isSuccessful()) {
-                                dialog.dismiss();
-                                finish();
-                            }
-                        }));*/
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(dataBaseHelper.deleteOggetto(idOggetto)){
+                    dialog.dismiss();
+                    finish();
+                }
+            }
+        });
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }

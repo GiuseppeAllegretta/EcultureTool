@@ -724,4 +724,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return oggetto;
     }
+
+
+    public boolean deleteOggetto(int id){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int delete = db.delete(TABLE_OGGETTI, COLONNA_OGGETTO_ID + " = " + id, null);
+
+        if(delete == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
 }
