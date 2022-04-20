@@ -743,7 +743,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
-    public boolean updateOggetto(int id, String nome, String descrizione, String url, TipologiaOggetto tipologiaOggetto, int zona){
+    public boolean updateOggetto(int id, String nome, String descrizione, TipologiaOggetto tipologiaOggetto, int zona){
         boolean risultato = false;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -752,7 +752,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_OGGETTO_NOME, nome);
         contentValues.put(COLONNA_OGGETTO_DESCRIZIONE, descrizione);
         contentValues.put(COLONNA_OGGETTO_TIPOLOGIA, tipologiaOggetto.name());
-        contentValues.put(COLONNA_OGGETTO_URL_IMMAGINE, url);
         contentValues.put(COLONNA_OGGETTO_ZONA_ID, zona);
 
         int update = db.update(TABLE_OGGETTI, contentValues, COLONNA_OGGETTO_ID + " = " + id, null);

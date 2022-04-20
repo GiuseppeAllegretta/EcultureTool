@@ -170,7 +170,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        dataBaseHelper.updateOggetto(idOggetto, nome, descrizione, null, tipologia, idZonaSelezionata);
+        dataBaseHelper.updateOggetto(idOggetto, nome, descrizione, tipologia, idZonaSelezionata);
 
         finish();
     }
