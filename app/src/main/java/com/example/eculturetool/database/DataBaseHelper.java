@@ -519,8 +519,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         //String stringQuery = "SELECT * FROM "+ TABLE_ZONE + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + "=" + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID;
         String stringQuery = "SELECT * FROM ZONE JOIN CURATORI ON ZONE.LUOGHI_RIF = CURATORI.CURATORE_LUOGO_CORRENTE AND CURATORI.EMAIL = ?";
-        Cursor cursor = db.rawQuery(stringQuery, new String[]{getEmailCuratore()});
-        try {
+        Cursor cursor = db.rawQuery(stringQuery, new String[]{emailCuratore});
+
+        if (cursor.moveToFirst()) {
+
+                do {
+                    try {
+                        int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
+                        int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
+                        int descrizione = cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
+                        int nOggetti = cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
+                        int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
+
+                        Zona zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(nOggetti), cursor.getInt(riferimentoLuogo));
+                        info.add(zona);
+
+                    } catch (Exception e) {
+                        System.out.println("errore");
+                    }
+
+                } while (cursor.moveToNext());
+        }
+
+        /*try {
             int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
             int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
             int descrizione= cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
@@ -534,7 +555,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }catch (Exception e){
             System.out.println("errore database");
-        }
+        }*/
 
         cursor.close();
         db.close();
@@ -595,6 +616,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String stringQuery = "SELECT * FROM ZONE WHERE ZONE_ID = "+ idz;
         Cursor cursor = db.rawQuery(stringQuery, null);
+
         try {
             int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
             int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
@@ -648,5 +670,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
+
+    public boolean addOggetto(Oggetto oggetto){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_OGGETTO_NOME, oggetto.getNome());
+        contentValues.put(COLONNA_OGGETTO_DESCRIZIONE, oggetto.getDescrizione());
+        contentValues.put(COLONNA_OGGETTO_TIPOLOGIA, oggetto.getTipologiaOggetto().name());
+        contentValues.put(COLONNA_OGGETTO_URL_IMMAGINE, oggetto.getUrl());
+        contentValues.put(COLONNA_OGGETTO_ZONA_ID, oggetto.getZonaAppartenenza());
+
+        long insert = db.insert(TABLE_OGGETTI, null, contentValues);
+
+        if(insert == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
     }
 }
