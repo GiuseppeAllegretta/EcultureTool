@@ -113,6 +113,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         dataBaseHelper = new DataBaseHelper(this);
         oggettiList.clear();
         oggettiList = (ArrayList<Oggetto>) dataBaseHelper.getOggetti();
+
+        System.out.println("oggettiList" + oggettiList);
         setAdapter();
 
     }
