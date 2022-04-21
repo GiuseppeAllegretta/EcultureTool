@@ -116,7 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLONNA_OGGETTO_URL_QRCODE + " TEXT, " +
                 COLONNA_OGGETTO_TIPOLOGIA + " TEXT," +
                 COLONNA_OGGETTO_ZONA_ID + " INT NOT NULL," +
-                "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + ")";
+                "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + " ON DELETE CASCADE" + ")";
 
         sqLiteDatabase.execSQL(createTableCuratore);
         sqLiteDatabase.execSQL(createTableLuogo);
@@ -494,6 +494,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    public boolean deleteLuogo(int id){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //bisogna impostare a true il metodo per permettere a SQLite di tener conto delle foreign key
+        db.setForeignKeyConstraintsEnabled(true);
+
+        int delete = db.delete(TABLE_LUOGHI, COLONNA_LUOGHI_ID + " = " + id, null);
+
+        if(delete == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+
+    }
+
     public boolean deleteCuratore(){
         boolean risultato = false;
 
@@ -513,6 +534,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
+
+
     public ArrayList<Zona> getZone(){
         ArrayList<Zona> info = new ArrayList<>();
 
@@ -765,6 +788,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.close();
         return risultato;
-
     }
 }

@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Oggetto {
     private int id;
-    private String idCuratore, idLuogo;
     private String nome, descrizione;
     private String urlImmagine;
     private String urlQrcode;

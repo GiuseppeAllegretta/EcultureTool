@@ -8,6 +8,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,19 +27,19 @@ import java.util.List;
 
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
+    private static final int MIN_LUOGHI = 1;    //numero minimo di luoghi che devono essere presenti
 
-    private DataBaseHelper dataBaseHelper;  //oggetto che consente di interrogare il database per reperire dati
-    private Luogo luogoSelezionato;         //luogo selezionato dalla recyclerView precedente
-    private int idLuogo;                    //id del luogo selezioanto nella recyclerview prededente e ottenuto tramite intent
+    private DataBaseHelper dataBaseHelper;      //oggetto che consente di interrogare il database per reperire dati
+    private Luogo luogoSelezionato;             //luogo selezionato dalla recyclerView precedente
+    private int idLuogo;                        //id del luogo selezioanto nella recyclerview prededente e ottenuto tramite intent
     private TextView nomeLuogo, descrizioneLuogo, tipologiaLuogo;
 
     private Button impostaLuogoCorrente;
     private Button eliminaLuogo;
     private FloatingActionButton editLuogo;
 
-    private int numeroLuoghi;
     private int idLuogoCorrente;
-    private static final int MIN_LUOGHI = 1;
+    private int numeroLuoghi;
     private List<Luogo> luoghiList = new ArrayList<>();
 
 
@@ -94,7 +95,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         });
 
-        //eliminaLuogo();
+        eliminaLuogo();
 
     }
 
@@ -133,35 +134,32 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     }
 
 
-    /*private void eliminaLuogo() {
+    private void eliminaLuogo() {
+
+        //Ottengo il numero di luoghi creato da un certo curatore
+        numeroLuoghi = luoghiList.size();
+        int luogoCorrente = dataBaseHelper.getLuogoCorrente().getId();
 
         eliminaLuogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (numeroLuoghi == MIN_LUOGHI) {
-                    System.out.println("Primo if numero luoghi: " + numeroLuoghi);
                     Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
                     if (idLuogo == luogoCorrente) {
 
-                        int luogoSelezionato;
-                        for (int i = 0; i < numeroLuoghi; i++) {
-                            luogoSelezionato = luoghiList.get(i).getId();
-                            if (idLuogo == luogoSelezionato) {
-                                System.out.println("if del break: ");
-                                connection.getRefCuratore().child("luogoCorrente").setValue(luogoSelezionato);
-                                connection.getRefOggetti().child(idLuogo).removeValue();
-                                connection.getRefZone().child(idLuogo).removeValue();
-                                connection.getRefLuoghi().child(idLuogo).removeValue();
+                        for(int i = 0; i < numeroLuoghi; i++){
+                            if(luogoCorrente != luoghiList.get(i).getId()){
+                                dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
+                                dataBaseHelper.deleteLuogo(idLuogo);
                                 break;
                             }
                         }
+
                     } else {
-                        connection.getRefOggetti().child(idLuogo).removeValue();
-                        connection.getRefZone().child(idLuogo).removeValue();
-                        connection.getRefLuoghi().child(idLuogo).removeValue();
+                        dataBaseHelper.deleteLuogo(idLuogo);
                     }
                     showDialog();
                 }
@@ -169,7 +167,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
             }
         });
 
-    }*/
+    }
 
     /*@Override
     protected void onDestroy() {
