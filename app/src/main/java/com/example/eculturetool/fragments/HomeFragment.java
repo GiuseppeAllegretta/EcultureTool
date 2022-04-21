@@ -147,5 +147,13 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Operazioni che settano il nome del luogo corrente nella home
+        Luogo luogo = dataBaseHelper.getLuogoCorrente();
+        if(luogo != null){
+            luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
+        }
+    }
 }
