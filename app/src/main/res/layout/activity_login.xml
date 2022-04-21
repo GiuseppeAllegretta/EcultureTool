@@ -49,7 +49,7 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="40dp"
                 android:text="E-Culture"
                 android:textAlignment="center"
                 android:textSize="60sp"
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30sp"
-                android:layout_marginTop="80sp"
+                android:layout_marginTop="45sp"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
@@ -92,12 +92,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50sp"
-                android:layout_marginTop="80sp"
+                android:layout_marginTop="50sp"
                 android:background="@drawable/button_state"
                 android:text="Login"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintTop_toBottomOf="@id/password" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:text="OPPURE"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logInButton" />
+
+            <Button
+                android:id="@+id/accessoOspite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50sp"
+                android:layout_marginTop="30sp"
+                android:background="@drawable/button_state"
+                android:text="Accedi come ospite"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:onClick="popolaDBmodalitaOspite"
+                app:layout_constraintTop_toBottomOf="@id/password" />
+
+
 
             <TextView
                 android:id="@+id/registrati"
@@ -116,7 +142,7 @@
                 android:id="@+id/passwordDimenticata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30sp"
+                android:layout_marginTop="15sp"
                 android:text="@string/password_dimenticata"
                 android:textAlignment="center"
                 android:textSize="20sp"
