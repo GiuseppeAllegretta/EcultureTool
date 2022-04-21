@@ -106,7 +106,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         zoneList = (List<Zona>) intent.getSerializableExtra("ZONELIST");
 
 
-        /*startForObjectImageUpload = registerForActivityResult(
+        startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
                     Uri uri = null;
@@ -115,7 +115,8 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         imgUri = uri;
-                        connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").setValue(imgUri.toString());
+                        dataBaseHelper.setImageOggetto(idOggetto, imgUri.toString());
+
                         Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -130,7 +131,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                             }
                         }).circleCrop().into(immagineOggetto);
                     }
-                });*/
+                });
 
     }
 
