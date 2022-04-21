@@ -16,33 +16,18 @@ public class Permissions extends AppCompatActivity {
 
     public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
     public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
+    public static final int STORAGE_REQUEST_CODE = 100;
+    public static final int CAMERA_REQUEST_CODE = 110;
 
     public Permissions() {
-
     }
 
     public boolean checkStoragePermission(Activity activity, View parentLayout) {
-        boolean res = false;
-        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-            Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
-            snackBar.show();
-        }
-        else{
-            res = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        }
-        return res;
+        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED);
     }
 
     public boolean checkCameraPermission(Activity activity, View parentLayout) {
-        boolean res = false;
-        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
-            Snackbar snackBar = getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
-            snackBar.show();
-        }
-        else{
-            res = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;;
-        }
-        return res;
+        return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -55,7 +40,8 @@ public class Permissions extends AppCompatActivity {
 
                 if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-
+                        Snackbar snackBar = getPermanentSnackBarWithOkAction(findViewById(android.R.id.content), STORAGE_PERMISSION_MSG);
+                        snackBar.show();
                     }
                 }
             }
@@ -67,7 +53,8 @@ public class Permissions extends AppCompatActivity {
 
                 if (permission.equals(Manifest.permission.CAMERA)) {
                     if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-
+                        Snackbar snackBar = getPermanentSnackBarWithOkAction(findViewById(android.R.id.content), CAMERA_PERMISSION_MSG);
+                        snackBar.show();
                     }
                 }
             }
@@ -86,11 +73,11 @@ public class Permissions extends AppCompatActivity {
     }
 
     public void requestStoragePermission(Activity activity, View parentLayout) {
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE);
     }
 
     public void requestCameraPermission(Activity activity, View parentLayout) {
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
     }
 
 }

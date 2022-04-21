@@ -1,8 +1,14 @@
 package com.example.eculturetool.activities;
 
+import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE;
+import static com.example.eculturetool.utilities.Permissions.STORAGE_REQUEST_CODE;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +27,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +37,7 @@ import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -45,6 +53,9 @@ import java.util.Date;
 public class UploadImageActivity extends AppCompatActivity {
 
     public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
+    public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
+    public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
+    Permissions permission = new Permissions();
     private final Connection connection = new Connection();
     private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
@@ -98,12 +109,12 @@ public class UploadImageActivity extends AppCompatActivity {
                     }
                 });
 
-        Permissions permissions = new Permissions();
+
         btnSeleziona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!permissions.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
-                    permissions.requestStoragePermission(UploadImageActivity.this, parentLayout);
+                if (!permission.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
+                    permission.requestStoragePermission(UploadImageActivity.this, parentLayout);
                 } else {
                     openFileChooser();
                 }
@@ -113,8 +124,8 @@ public class UploadImageActivity extends AppCompatActivity {
         btnScatta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!permissions.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
-                    permissions.requestCameraPermission(UploadImageActivity.this, parentLayout);
+                if (!permission.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
+                    permission.requestCameraPermission(UploadImageActivity.this, parentLayout);
                 } else {
                     openCamera();
                 }
@@ -242,6 +253,38 @@ public class UploadImageActivity extends AppCompatActivity {
                     });
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.nessun_file_selezionato), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Permissions perm = new Permissions();
+        if (requestCode == STORAGE_REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
+
+                if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
+                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
+                        snackBar.show();
+                    }
+                }
+            }
+        }
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
+
+                if (permission.equals(Manifest.permission.CAMERA)) {
+                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
+                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
+                        snackBar.show();
+                    }
+                }
+            }
         }
     }
 
