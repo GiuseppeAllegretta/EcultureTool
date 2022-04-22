@@ -56,6 +56,8 @@ import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
 
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
+
     public static final String PROFILE_IMAGES_DIR = "profile_images";
     private final Connection connection = new Connection();
     private Context context;
@@ -120,6 +122,7 @@ public class ProfileFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -170,6 +173,8 @@ public class ProfileFragment extends Fragment {
         settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));
 
         logout.setOnClickListener(onClickListener -> logout());
+
+        nascondiView();
     }
 
     private void popolaCampi() {
@@ -331,6 +336,23 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         popolaCampi();
+    }
+
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            changeImg.setVisibility(View.INVISIBLE);
+            editButton.setVisibility(View.INVISIBLE);
+            cambiaLuogo.setVisibility(View.INVISIBLE);
+            settingsButton.setVisibility(View.INVISIBLE);
+            email.setVisibility(View.INVISIBLE);
+            cognome.setVisibility(View.INVISIBLE);
+        }
     }
 }
 

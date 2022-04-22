@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(!dataBaseHelper.checkEmailExist(emailOspite)){
             //Creazione Curatore
-            Curatore curatore = new Curatore("admin", "admin", emailOspite, "123456", null, -1);
+            Curatore curatore = new Curatore("Ospite", "", emailOspite, "123456", null, -1);
             dataBaseHelper.addCuratore(curatore);
 
             //effettuo login
