@@ -11,7 +11,9 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp">
 
         <ImageView
             android:id="@+id/iconaZona"
@@ -57,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"/>
 
