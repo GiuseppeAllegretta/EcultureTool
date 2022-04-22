@@ -39,6 +39,8 @@ import java.util.List;
 
 public class OggettiActivity extends AppCompatActivity implements RecyclerAdapterOggetto.OnOggettoListener {
 
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
+
     private DataBaseHelper dataBaseHelper;
     private ArrayList<Oggetto> oggettiList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -77,6 +79,23 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         setOggettoInfo();
         retrieveZone();
         setAdapter();
+
+        //metodo che nasconde le view in caso di accesso con account ospite
+        nascondiView();
+    }
+
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            fabAddOggetto.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**

@@ -31,6 +31,8 @@ import java.util.ArrayList;
 
 public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapterLuogo.OnLuogoListener {
 
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
+
     private DataBaseHelper dataBaseHelper;
     private ArrayList<Luogo> luoghiList;
     private RecyclerView recyclerView;
@@ -65,6 +67,21 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         luoghiList = new ArrayList<>();
 
         setLuogoInfo();
+
+        nascondiView();
+    }
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            fabAddLuogo.setVisibility(View.INVISIBLE);
+        }
     }
 
 

@@ -33,8 +33,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
 
-    private DataBaseHelper dataBaseHelper;      //Riferimento al database
-    private Zona zona;                          //zona che verrà selezionata nello spinner
+    private DataBaseHelper dataBaseHelper;          //Riferimento al database
+    private Zona zona;                              //zona che verrà selezionata nello spinner
 
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
@@ -71,6 +71,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         spinnerZone = findViewById(R.id.spinner_zona_add);
         dataBaseHelper = new DataBaseHelper(this);
 
+
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
@@ -94,6 +95,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         oggettiList = getListOggettiCreati();
         setZoneSpinner();
     }
+
 
     @Override
     protected void onStart() {

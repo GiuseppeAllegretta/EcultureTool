@@ -57,6 +57,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Oggetto oggetto;                        //oggetto di cui si vedono i dati a schermo
     private List<Zona> zoneList;                    //L'insieme di tutte le zone
     private int idOggetto, idZona, luogoCorrente;   //identificativi dell'oggetto, zona e luogo
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private TextView nomeOggetto, descrizioneOggetto, tipologiaOggetto, zonaAppartenenza;
@@ -133,6 +134,23 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     }
                 });
 
+        nascondiView();
+
+    }
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            cambiaImmagine.setVisibility(View.INVISIBLE);
+            eliminaOggetto.setVisibility(View.INVISIBLE);
+            modificaOggetto.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

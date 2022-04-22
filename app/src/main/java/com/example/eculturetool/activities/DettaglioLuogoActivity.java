@@ -27,6 +27,7 @@ import java.util.List;
 
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
     private static final int MIN_LUOGHI = 1;    //numero minimo di luoghi che devono essere presenti
 
     private DataBaseHelper dataBaseHelper;      //oggetto che consente di interrogare il database per reperire dati
@@ -69,6 +70,22 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         idLuogoCorrente = dataBaseHelper.getIdLuogoCorrente();          //id del luogo corrente
         luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
+        nascondiView();
+    }
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            impostaLuogoCorrente.setVisibility(View.INVISIBLE);
+            eliminaLuogo.setVisibility(View.INVISIBLE);
+            editLuogo.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

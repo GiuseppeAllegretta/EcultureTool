@@ -28,7 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class DettaglioZonaActivity extends AppCompatActivity {
-    // private final Connection connection = new Connection();
+
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
     private TextView nomeZona, descrizioneZona, numeroMaxOggettiZona;
     private String luogoCorrente;
@@ -67,6 +68,22 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         dataBaseHelper = new DataBaseHelper(this);
 
+        nascondiView();
+    }
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            aggiungiOggettoButton.setVisibility(View.INVISIBLE);
+            eliminaZonaButton.setVisibility(View.INVISIBLE);
+            modificaZona.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

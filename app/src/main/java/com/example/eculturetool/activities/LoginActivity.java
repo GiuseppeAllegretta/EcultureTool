@@ -309,10 +309,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             progressBar.setVisibility(View.INVISIBLE);
             finish();
-        }else {
-            Toast.makeText(context, "Fallito", Toast.LENGTH_SHORT).show();
         }
-
 
     }
 }

@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 
 public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZona.OnZonaListener {
 
+    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
-    //  private final Connection connection = new Connection();
     private ArrayList<Zona> zoneList;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddLuogo;
@@ -60,7 +61,23 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         dataBaseHelper = new DataBaseHelper(this);
 
         setZoneInfo();
+
+        nascondiView();
     }
+
+    /**
+     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+     */
+    private void nascondiView() {
+        dataBaseHelper = new DataBaseHelper(this);
+
+        String emailCuratore = dataBaseHelper.getCuratore().getEmail();
+
+        if(emailCuratore.compareTo(emailOspite) == 0){
+            fabAddLuogo.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     @Override
     protected void onStart() {
