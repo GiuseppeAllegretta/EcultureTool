@@ -4,8 +4,6 @@ import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE
 import static com.example.eculturetool.utilities.Permissions.STORAGE_REQUEST_CODE;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -30,7 +28,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
@@ -263,15 +260,6 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
-    private void showMessageOkCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", okListener)
-                .create()
-                .show();
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -286,7 +274,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                                showMessageOkCancel(STORAGE_PERMISSION_MSG,
+                                perm.showMessageOkCancel(STORAGE_PERMISSION_MSG,
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -302,7 +290,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         break;
                                                 }
                                             }
-                                        });
+                                        }, this);
                             } else {
                                 Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso a risorse esterne dalle impostazioni per usare questa funzionalità");
                                 snackBar.show();
@@ -320,7 +308,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                                showMessageOkCancel(CAMERA_PERMISSION_MSG,
+                                perm.showMessageOkCancel(CAMERA_PERMISSION_MSG,
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -336,7 +324,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         break;
                                                 }
                                             }
-                                        });
+                                        }, this);
                             } else {
                                 Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso alla fotocamera dalle impostazioni per usare questa funzionalità");
                                 snackBar.show();
