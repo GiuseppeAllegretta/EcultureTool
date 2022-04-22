@@ -21,6 +21,13 @@ public class Zona implements Serializable {
         this.riferimentoLuogo = riferimentoLuogo;
     }
 
+    public Zona(String nome, String descrizione, int numeroOggetti, int riferimentoLuogo) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.numeroOggetti = numeroOggetti;
+        this.riferimentoLuogo= riferimentoLuogo;
+    }
+
     public Zona(int id, String nome, String descrizione, int numeroOggetti, int riferimentoLuogo) {
         this.id=id;
         this.nome = nome;
