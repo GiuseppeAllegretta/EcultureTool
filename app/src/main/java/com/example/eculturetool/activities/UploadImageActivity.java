@@ -5,8 +5,10 @@ import static com.example.eculturetool.utilities.Permissions.STORAGE_REQUEST_COD
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
@@ -256,35 +259,88 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
+    private void showMessageOkCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", okListener)
+                .create()
+                .show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Permissions perm = new Permissions();
-        if (requestCode == STORAGE_REQUEST_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                String permission = permissions[i];
-                int grantResult = grantResults[i];
+        switch (requestCode){
+            case STORAGE_REQUEST_CODE:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
 
-                if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
-                        snackBar.show();
+                    if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                                showMessageOkCancel(STORAGE_PERMISSION_MSG,
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                switch (which) {
+                                                    case DialogInterface.BUTTON_POSITIVE:
+                                                        perm.requestStoragePermission(UploadImageActivity.this, parentLayout);
+                                                        break;
+                                                    case DialogInterface.BUTTON_NEGATIVE:
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
+                                                        snackBar.show();
+                                                        break;
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso a risorse esterne dalle impostazioni per usare questa funzionalità");
+                                snackBar.show();
+                            }
+                        }
                     }
                 }
-            }
-        }
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                String permission = permissions[i];
-                int grantResult = grantResults[i];
+                break;
+            case CAMERA_REQUEST_CODE:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
 
-                if (permission.equals(Manifest.permission.CAMERA)) {
-                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
-                        snackBar.show();
+                    if (permission.equals(Manifest.permission.CAMERA)) {
+                        if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+                                showMessageOkCancel(CAMERA_PERMISSION_MSG,
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                switch (which) {
+                                                    case DialogInterface.BUTTON_POSITIVE:
+                                                        perm.requestCameraPermission(UploadImageActivity.this, parentLayout);
+                                                        break;
+                                                    case DialogInterface.BUTTON_NEGATIVE:
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
+                                                        snackBar.show();
+                                                        break;
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso alla fotocamera dalle impostazioni per usare questa funzionalità");
+                                snackBar.show();
+                            }
+                        }
                     }
                 }
-            }
+                break;
         }
     }
 

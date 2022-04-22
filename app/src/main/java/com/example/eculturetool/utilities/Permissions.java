@@ -23,42 +23,11 @@ public class Permissions extends AppCompatActivity {
     }
 
     public boolean checkStoragePermission(Activity activity, View parentLayout) {
-        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED);
+        return (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
     }
 
     public boolean checkCameraPermission(Activity activity, View parentLayout) {
         return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 110) {
-            for (int i = 0; i < permissions.length; i++) {
-                String permission = permissions[i];
-                int grantResult = grantResults[i];
-
-                if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-                        Snackbar snackBar = getPermanentSnackBarWithOkAction(findViewById(android.R.id.content), STORAGE_PERMISSION_MSG);
-                        snackBar.show();
-                    }
-                }
-            }
-        }
-        if (requestCode == 110) {
-            for (int i = 0; i < permissions.length; i++) {
-                String permission = permissions[i];
-                int grantResult = grantResults[i];
-
-                if (permission.equals(Manifest.permission.CAMERA)) {
-                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
-                        Snackbar snackBar = getPermanentSnackBarWithOkAction(findViewById(android.R.id.content), CAMERA_PERMISSION_MSG);
-                        snackBar.show();
-                    }
-                }
-            }
-        }
     }
 
     public Snackbar getPermanentSnackBarWithOkAction(View parentLayout, String text) {
