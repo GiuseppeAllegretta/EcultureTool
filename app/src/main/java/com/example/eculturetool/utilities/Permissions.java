@@ -2,6 +2,8 @@ package com.example.eculturetool.utilities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.eculturetool.activities.UploadImageActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class Permissions extends AppCompatActivity {
@@ -49,4 +52,12 @@ public class Permissions extends AppCompatActivity {
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
     }
 
+    public void showMessageOkCancel(String message, DialogInterface.OnClickListener okListener, Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", okListener)
+                .create()
+                .show();
+    }
 }
