@@ -95,8 +95,10 @@ public class UploadImageActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
-                            mImageUri = result.getData().getData();
-                            Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
+                            if (result.getData() != null) {
+                                mImageUri = result.getData().getData();
+                                Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
+                            }
                         }
                     }
                 });
@@ -107,8 +109,10 @@ public class UploadImageActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         mImageUri = Uri.fromFile(photoFile);
-                        Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
-                        imagePlaceHolder.setImageResource(android.R.color.transparent);
+                        if(result.getData() != null){
+                            Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
+                            imagePlaceHolder.setImageResource(android.R.color.transparent);
+                        }
                     }
                 });
 
