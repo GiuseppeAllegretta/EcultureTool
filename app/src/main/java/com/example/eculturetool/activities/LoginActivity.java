@@ -22,13 +22,21 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
+import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.TipologiaOggetto;
+import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -197,7 +205,113 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void popolaDBmodalitaOspite(View view) {
 
+        //Stringhe relative alle zone del museo
+        final String dipintiItaliani = "Dipinti Italiani";
+        final String antichitàGrecheEtruscheRomane = "Antichità greche, etrusche e romane";
+        final String sculture = "Sculture";
+        final String antichitàEgizie = "Antichità Egizie";
+        final String artiGrafiche = "Arti grafiche";
 
+        final String emailOspite = "admin@gmail.com";
+        final String passwordOspite = "123456";
+
+
+        if(!dataBaseHelper.checkEmailExist(emailOspite)){
+            //Creazione Curatore
+            Curatore curatore = new Curatore("admin", "admin", emailOspite, "123456", null, -1);
+            dataBaseHelper.addCuratore(curatore);
+
+            //effettuo login
+            //dataBaseHelper.login("admin", "123456");
+            dataBaseHelper.setEmailCuratore(emailOspite);
+
+
+            //Creazione Luogo
+            Luogo museoLouvre = new Luogo("Museo del Louvre", "Il museo del Louvre di Parigi, in Francia, è uno dei più celebri musei del mondo e il primo per numero di visitatori. Si trova sulla rive droite, nel I arrondissement, tra la Senna e rue de Rivoli. L'accesso principale al museo è la Hall Napoléon sotto la piramide, dove si trovano le biglietterie e gli accessi alle tre ali del museo. La collezione del Museo del Louvre comprende oltre 380 000 oggetti e opere d'arte. Sono in esposizione permanente 35 000 opere, scelte dai curatori delle sue otto sezioni, ed esibite nei 60600 m² a loro dedicati", Tipologia.MUSEO, emailOspite);
+            dataBaseHelper.addLuogo(museoLouvre);
+
+            //valore fittizio assegnato
+            int idLuogo = 0;
+
+            List<Luogo> luoghi = dataBaseHelper.getLuoghi();
+            for(Luogo luogo: luoghi){
+                if(luogo.getEmailCuratore().compareTo(emailOspite) == 0){
+                    idLuogo = luogo.getId();
+                    dataBaseHelper.setLuogoCorrente(idLuogo);
+                }
+            }
+
+
+            //Creazione Zone
+            List<Zona> zone = new ArrayList<>();
+            zone.add(new Zona(dipintiItaliani, "In quest'area si ha l'opportunità di ammirare opere dei pittori da Giotto, Carracci, Caravaggio, Raffaello,Tiziano, Cimabue e Veronese fino all'Ottocento.", 10, idLuogo));
+            zone.add(new Zona(antichitàGrecheEtruscheRomane, "Questo dipartimento del Louvre raccoglie le antichità di tre grandi civiltà: Roma, Grecia ed Etruria. Sono raccolte alcune delle opere più famose dell'arte di questi tre popoli, alcune simbolo universale di bellezza e che attirano visitatori e appassionati da tutto il mondo. Ecco alcune di queste opere divise per civiltà.", 10, idLuogo));
+            zone.add(new Zona(sculture, "In ques'area sono presenti le più importanti sculture da vedere dell'intero museo e che attirano l'attenzione dei visitatori", 10, idLuogo));
+            zone.add(new Zona(antichitàEgizie, " Dipartimento delle Antichità Egizie del Museo del Louvre conserva una delle principali collezioni egiziane del mondo fuori dal territorio egiziano, insieme al Museo Egizio di Torino e al British Museum e, in Egitto, al Museo Egizio del Cairo . La sua storia risale all'ordinanza reale di Carlo  X di15 maggio 1826", 10, idLuogo));
+            zone.add(new Zona(artiGrafiche, "l dipartimento di arti grafiche è il settimo dipartimento del museo del Louvre . È stata fondata nel 1989 . In precedenza l'ufficio di disegno era annesso al reparto di verniciatura .", 10, idLuogo));
+
+            for(Zona zona: zone){
+                dataBaseHelper.aggiungiZona(zona);
+            }
+
+            //creazione oggetti
+            zone = dataBaseHelper.getZone();
+
+            for(Zona zona: zone){
+
+                switch (zona.getNome()){
+                    case dipintiItaliani:
+
+                        dataBaseHelper.addOggetto(new Oggetto("Gioconda", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", null, TipologiaOggetto.QUADRO, zona.getId()));
+                        dataBaseHelper.addOggetto( new Oggetto("Le nozze di Cana", "Le Nozze di Cana è un dipinto di Paolo Caliari detto il Veronese del 1563, custodito al Louvre di Parigi.", null, TipologiaOggetto.QUADRO, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("Le vergine delle rocce", "La prima versione della Vergine delle Rocce è un dipinto a olio su tavola trasportato su tela (198x123 cm) di Leonardo da Vinci, databile al 1483-1486 e conservato nel Musée du Louvre di Parigi, mentre la seconda versione è conservata alla National Gallery di Londra.", null, TipologiaOggetto.QUADRO, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("San Sebastiano", "San Sebastiano è un dipinto, tempera su tela (257 × 142 cm), di Andrea Mantegna, databile al 1481 circa e conservata nel Museo del Louvre a Parigi.", null, TipologiaOggetto.QUADRO, zona.getId()));
+
+                        break;
+
+                    case antichitàGrecheEtruscheRomane:
+                        dataBaseHelper.addOggetto(new Oggetto("Venere di Milo", "L’Afrodite di Milo, meglio conosciuta come Venere di Milo, è una delle più celebri statue greche. Si tratta di una scultura di marmo pario alta 202 cm priva delle braccia e del basamento originale ed è conservata al Museo del Louvre di Parigi.", null, TipologiaOggetto.STATUA, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("Schiavo morente", "Lo Schiavo morente è una scultura marmorea (h 215 cm) di Michelangelo, databile al 1513 circa e conservata nel Museo del Louvre a Parigi.", null, TipologiaOggetto.STATUA, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("Nike di Samotracia", "La Nike di Samotracia è una scultura in marmo pario (h. 245 cm) di scuola rodia, dalla discussa attribuzione a Pitocrito, databile al 200-180 a.C. circa e oggi conservata al Museo del Louvre di Parigi.", null, TipologiaOggetto.STATUA, zona.getId()));
+
+                        break;
+
+                    case sculture:
+                        dataBaseHelper.addOggetto(new Oggetto("Amore e psiche", "Una famosa scultura in marmo, 'Psiche ravvivato da Cupido bacio', da Antonio Canova presso il Museo del Louvre, Parigi, Francia", null, TipologiaOggetto.SCULTURA, zona.getId()));
+
+                        break;
+
+                    case antichitàEgizie:
+                        dataBaseHelper.addOggetto(new Oggetto("Lo scriba accovacciato", "Statua Calcare dipinto che rappresenta una scriba egiziano seduto a gambe incrociate, probabilmente risalente al IV ° o V ° dinastia . Trovato a Saqqarah nel 1850 da Auguste Mariette , in una tomba nel vicolo delle sfingi del Serapeo. Lo scriba, seduto a gambe incrociate su un piedistallo dipinto di nero, è rappresentato nell'atto di scrivere. È vestito con un perizoma bianco. Teneva un calamo nella mano destra e sul perizoma si vede un papiro parzialmente srotolato.", null, TipologiaOggetto.STATUA, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("Testa in quarzite di Djédefrê", "Questa testa di Djedefrê , figlio e successore di Cheope , alta 26 cm, in quarzite , con tracce di pittura, è più probabilmente un frammento di sfinge che una statua del re in piedi o seduto. Proviene dal sito della piramide in rovina di Djedefrê ad Abu Roach , pochi chilometri a nord delle piramidi di Giza .", null, TipologiaOggetto.STATUA, zona.getId()));
+                        dataBaseHelper.addOggetto(new Oggetto("La Grande Sfinge di Tanis", "Il mostro dal volto reale, protegge la vita eterna dopo la morte ed è anche il guardiano immortale dei luoghi sacri! La sua posizione nel Louvre, lasciando la fortezza medievale, è impressionante, in quanto accoglie i visitatori nel dipartimento egizio del museo e alla scoperta dei suoi oggetti sacri.", null, TipologiaOggetto.STATUA, zona.getId()));
+
+                        break;
+
+                    case artiGrafiche:
+                        dataBaseHelper.addOggetto(new Oggetto("La lotta per lo Stendardo", "Si tratta di una copia tratta dall'unica scena, quella centrale, dell'affresco con la Battaglia d'Anghiari eseguita da Leonardo nella sala del Consiglio di Palazzo Vecchio e andata distrutta verso il 1557 quando Vasari iniziò i lavori nel Palazzo.", null, TipologiaOggetto.QUADRO, zona.getId()));
+                        break;
+                }
+
+            }
+
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        if(dataBaseHelper.login(emailOspite, passwordOspite)){
+            Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_corretta), Toast.LENGTH_SHORT).show();
+
+            //Gestione sessione
+            SessionManagement sessionManagement=new SessionManagement(LoginActivity.this);
+            sessionManagement.saveSession(emailOspite);
+
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+            progressBar.setVisibility(View.INVISIBLE);
+            finish();
+        }else {
+            Toast.makeText(context, "Fallito", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

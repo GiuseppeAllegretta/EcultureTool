@@ -21,20 +21,10 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    //VARIABILI INERENTI AGLI OGGETTI
-    public static final String TABLE_OGGETTI = "OGGETTI";
-    public static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
-    public static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
-    public static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
-    public static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
-    public static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
-    public static final String COLONNA_OGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
-    public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
-
-
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "session";
     private static final String SESSION_KEY = "session_user";
+
     //Email del curatore che si è loggato
     private static String emailCuratore;
 
@@ -62,6 +52,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_ZONE_DESCRIZIONE = "ZONE_DESCRIZIONE";
     public static final String COLONNA_ZONE_NUMERO_OGGETTI = "ZONE_NUMERO_OGGETTI";
     public static final String COLONNA_LUOGO_RIFERIMENTO = "LUOGHI_RIF";
+
+    //VARIABILI INERENTI AGLI OGGETTI
+    public static final String TABLE_OGGETTI = "OGGETTI";
+    public static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
+    public static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
+    public static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
+    public static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
+    public static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
+    public static final String COLONNA_OGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
+    public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "e-cultureTool.db",null , 3);
@@ -181,6 +181,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
 
+        System.out.println(stringQuery);
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
         if(cursor.getCount() == 1){
@@ -316,6 +317,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return luogoCorrente;
     }
 
+    /**
+     *
+     * @param email
+     * @return true se la mail in input esiste nel database, false altrimenti
+     */
     public boolean checkEmailExist(String email){
         boolean risultato = false;
 
@@ -809,4 +815,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
+
+
 }
