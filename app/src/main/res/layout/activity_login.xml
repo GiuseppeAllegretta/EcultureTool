@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity"
-    android:orientation="vertical">
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".activities.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,11 +20,11 @@
             <RelativeLayout
                 android:layout_width="120dp"
                 android:layout_height="40dp"
+                android:layout_gravity="end"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_gravity="right"
                 android:background="@drawable/shape_background"
+                android:backgroundTint="@color/orangeAction"
                 android:orientation="horizontal">
 
                 <TextView
@@ -39,76 +40,126 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/drop"
-                    android:layout_marginRight="10dp"/>
+                    android:contentDescription="arrow down" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/posterama_1927_regular"
                 android:text="E-Culture"
                 android:textAlignment="center"
-                android:textSize="60sp"
-                android:textStyle="italic"
+                android:textColor="@color/white"
+                android:textSize="56sp"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/bannerLow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/posterama_1927_regular"
+                android:text="Tool"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30sp"
-                android:layout_marginTop="45sp"
+                android:layout_marginTop="35sp"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/banner" />
+                app:layout_constraintTop_toBottomOf="@+id/banner"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30sp"
-                android:layout_marginTop="30sp"
+                android:layout_marginTop="25sp"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
+                app:layout_constraintTop_toBottomOf="@+id/email"
+                android:autofillHints="" />
+
 
             <Button
                 android:id="@+id/logInButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50sp"
-                android:layout_marginTop="50sp"
+                android:layout_marginTop="25sp"
                 android:background="@drawable/button_state"
+                android:backgroundTint="@color/orangeAction"
                 android:text="Login"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30sp"
-                android:text="OPPURE"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logInButton" />
+                android:layout_height="0dp"
+                android:layout_marginTop="60dp"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="38"
+                    android:background="@color/opacityBlack" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="OPPURE"
+                    android:textAlignment="center"
+                    android:textColor="@color/opacityBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/logInButton" />
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="38"
+                    android:background="@color/opacityBlack" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/accessoOspite"
@@ -117,46 +168,56 @@
                 android:layout_marginHorizontal="50sp"
                 android:layout_marginTop="30sp"
                 android:background="@drawable/button_state"
+                android:backgroundTint="@color/orangeAction"
+                android:onClick="popolaDBmodalitaOspite"
                 android:text="Accedi come ospite"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:onClick="popolaDBmodalitaOspite"
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
-
-
-            <TextView
-                android:id="@+id/registrati"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30sp"
-                android:text="@string/registrati"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logInButton" />
+                android:layout_marginTop="50dp"
 
-            <TextView
-                android:id="@+id/passwordDimenticata"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:text="@string/password_dimenticata"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrati" />
+                >
+
+                <TextView
+                    android:id="@+id/registrati"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="40dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:text="@string/registrati"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/passwordDimenticata"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"
+                    android:fontFamily="@font/posterama_1927_regular"
+                    android:lines="2"
+                    android:text="@string/password_dimenticata"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:id="@+id/progressBarLogin"
                 style="@style/SpinKitView.Large.Circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:visibility="visible"
                 app:SpinKit_Color="@color/verdePrimario"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -166,15 +227,10 @@
                 tools:ignore="MissingConstraints" />
 
 
-
         </LinearLayout>
 
 
-
-
     </ScrollView>
-
-
 
 
 </LinearLayout>
