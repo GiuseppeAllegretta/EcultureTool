@@ -1,6 +1,8 @@
 package com.example.eculturetool.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,13 +21,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
+import com.example.eculturetool.Upload;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,6 +168,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private void creazioneOggetto() {
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
+        int idOggettoCreato;
+        Upload upload = new Upload(this, nome);
 
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
@@ -194,13 +205,55 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         //Scrittura dell'oggetto sul Realtime Database
         Oggetto oggetto = new Oggetto(nome, descrizione, imgUri.toString(), tipologia, zona.getId());
 
+
         //aggiundo l'oggetto al database
-        dataBaseHelper.addOggetto(oggetto);
+        if(dataBaseHelper.addOggetto(oggetto)){
+            List<Oggetto> oggettiUpdate = dataBaseHelper.getOggetti(); //lista di oggetti aggiornata con l'ultimo oggetto creato
+            for(Oggetto oggetto1: oggettiUpdate){
+                if(oggetto1.getNome().compareTo(nome) == 0){
+                    idOggettoCreato = oggetto1.getId();
+                    Bitmap bitmap = qrCodeGenerator(idOggettoCreato);
+                    upload.uploadFile(idOggettoCreato, bitmap);
+                    break;
+                }
+            }
+
+
+        }
 
         //La progressbar diventa visibile
         progressBar.setVisibility(View.INVISIBLE);
 
         finish();
+    }
+
+
+    /**
+     * Metodo che si occupa di generare il QRcode dell'oggetto appena creato
+     * @param idOggetto identificativo dell'oggetto appena creato
+     * @return bitmap: ovvero l'oggetto di tipo Bitmap che rappresenta il QRcode
+     */
+    private Bitmap qrCodeGenerator(int idOggetto) {
+        Bitmap bitmap = null;
+
+        //inizializzazione multi format writer
+        MultiFormatWriter writer = new MultiFormatWriter();
+
+        try {
+            //inizializzazione bit matrix
+            BitMatrix matrix = writer.encode(String.valueOf(idOggetto), BarcodeFormat.QR_CODE, 350, 350);
+
+            //inizializzazione barcode encoder
+            BarcodeEncoder encoder = new BarcodeEncoder();
+
+            //inizializzazione bitmap
+            bitmap = encoder.createBitmap(matrix);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
 

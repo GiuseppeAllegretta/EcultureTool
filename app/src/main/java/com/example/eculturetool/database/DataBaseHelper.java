@@ -817,4 +817,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean setQRCode(int id, String url){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_OGGETTO_URL_QRCODE, url);
+        int update = db.update(TABLE_OGGETTI, contentValues, COLONNA_OGGETTO_ID + " = " + id, null);
+
+        if(update == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
 }

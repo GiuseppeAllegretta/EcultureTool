@@ -52,6 +52,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.github.yuriy-budiyev:code-scanner:2.1.1' // Qr Scanner
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0' //genera QRcode
 
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
