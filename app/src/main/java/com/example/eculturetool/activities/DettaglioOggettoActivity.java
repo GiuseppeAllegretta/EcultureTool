@@ -212,25 +212,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         Glide.with(dialog.getContext()).load(uri.toString()).into(image);
 
         dialog.show();
-
-
-       /* Drawable image = null;
-        AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
-        ImageView imageView = new ImageView(this);
-        ContentResolver cr = getContentResolver();
-        try {
-            InputStream is = cr.openInputStream(uri);
-            image = Drawable.createFromStream(is, uri.toString());
-            Glide.with(alertadd.getContext()).load(uri.toString()).into(imageView);
-            imageView.setImageDrawable(image);
-        } catch (FileNotFoundException e) {
-            alertadd.setTitle(getResources().getString(R.string.avviso)).setMessage("Nessun QR CODE");
-            e.printStackTrace();
-        }
-
-        alertadd.setView(imageView).create().show();*/
-
-
     }
 
     private void setDatiOggetto() {
