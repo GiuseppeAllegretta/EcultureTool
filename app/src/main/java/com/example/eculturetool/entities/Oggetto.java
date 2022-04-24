@@ -77,6 +77,14 @@ public class Oggetto {
         this.urlImmagine = url;
     }
 
+    public String getUrlQrcode() {
+        return urlQrcode;
+    }
+
+    public void setUrlQrcode(String urlQrcode) {
+        this.urlQrcode = urlQrcode;
+    }
+
     @Override
     public String toString() {
         return "EntityOggetto{" +

@@ -692,6 +692,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
                 Oggetto oggetto = new Oggetto(id, nome, descrizione, urlImg, tipologia, idZona);
+                oggetto.setUrlQrcode(urlQrCode);
                 returnList.add(oggetto);
 
             }while (cursor.moveToNext());
@@ -742,9 +743,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_DESCRIZIONE));
                 TipologiaOggetto tipologia = TipologiaOggetto.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_TIPOLOGIA)));
                 String imgUri = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_IMMAGINE));
+                String qrCode = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_QRCODE));
                 int idZona = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ZONA_ID));
 
+
                 oggetto = new Oggetto(idOggetto, nome, descrizione, imgUri, tipologia, idZona);
+                oggetto.setUrlQrcode(qrCode);
             }
 
         }
