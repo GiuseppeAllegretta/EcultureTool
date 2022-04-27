@@ -3,14 +3,15 @@ package com.example.eculturetool.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -143,7 +144,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
-        if(emailCuratore.compareTo(emailOspite) == 0){
+        if (emailCuratore.compareTo(emailOspite) == 0) {
             cambiaImmagine.setVisibility(View.INVISIBLE);
             eliminaOggetto.setVisibility(View.INVISIBLE);
             modificaOggetto.setVisibility(View.INVISIBLE);
@@ -193,15 +194,28 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse(oggetto.getUrlQrcode());
-                //Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                displayPopupImage(uri);
+                if (oggetto.getUrlQrcode() != null) {
+                    Uri uri = Uri.parse(oggetto.getUrlQrcode());
+                    displayPopupImage(uri);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DettaglioOggettoActivity.this);
+                    builder.setTitle(getResources().getString(R.string.avviso));
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setMessage("Nessun QR code trovato");
+                    builder.create().show();
+                }
             }
         });
 
     }
 
-    public void displayPopupImage(Uri uri){
+    public void displayPopupImage(Uri uri) {
+
         final Dialog dialog = new Dialog(DettaglioOggettoActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -218,7 +232,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         dataBaseHelper = new DataBaseHelper(this);
         oggetto = dataBaseHelper.getOggettoById(idOggetto);
 
-        if(oggetto != null){
+        if (oggetto != null) {
             Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
             getSupportActionBar().setTitle(oggetto.getNome());
             nomeOggetto.setText(oggetto.getNome());
@@ -231,14 +245,15 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
     /**
      * Metodo che recupera il nome di una zona in base all'id della zona fornito in input
+     *
      * @param id id della zona in cui è contenuto l'oggetto
      * @return nomeZona cioè il nome di una zona sotto forma di stringa
      */
-    private String getNomeZona(int id){
+    private String getNomeZona(int id) {
         String nomeZona = null;
 
-        for(Zona zona: zoneList){
-            if(zona.getId() == id){
+        for (Zona zona : zoneList) {
+            if (zona.getId() == id) {
                 nomeZona = zona.getNome();
             }
         }
@@ -281,7 +296,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(dataBaseHelper.deleteOggetto(idOggetto)){
+                if (dataBaseHelper.deleteOggetto(idOggetto)) {
                     dialog.dismiss();
                     finish();
                 }
