@@ -148,6 +148,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             cambiaImmagine.setVisibility(View.INVISIBLE);
             eliminaOggetto.setVisibility(View.INVISIBLE);
             modificaOggetto.setVisibility(View.INVISIBLE);
+            qrCodeBtn.setVisibility(View.INVISIBLE);
         }
     }
 
