@@ -45,6 +45,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_creazione_percorso);
         //btnAdd = findViewById(R.id.btnAddZona);
 
+/*
 
         //Simulazione dati
         luogo.addZona(new Zona(1, "Stanza delle cere", "Nella stanza si possono trovare cere di vario tipo", 1));
@@ -53,6 +54,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         luogo.addZona(new Zona(6, "Retro", "Finalmente ce ne andiamo", 1));
         luogo.addZona(new Zona(9, "Salone principale", "Grande quasi quanto il mio sgabuzzino", 1));
         data.addAll(luogo.getZoneAsStringList());
+*/
 
         init();
         generateItem();

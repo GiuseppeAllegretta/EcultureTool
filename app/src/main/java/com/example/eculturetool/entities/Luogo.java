@@ -10,8 +10,6 @@ public class Luogo implements Serializable {
     private Tipologia tipologia;
     private int id;
     private String emailCuratore;
-    private ArrayList<Zona> elencoZone = new ArrayList<>();
-
 
     public Luogo() {
 
@@ -22,7 +20,6 @@ public class Luogo implements Serializable {
         this.descrizione = descrizione;
         this.tipologia = tipologia;
         this.emailCuratore = emailCuratore;
-        //this.id = id;
     }
 
 
@@ -44,22 +41,13 @@ public class Luogo implements Serializable {
         return id;
     }
 
-    public ArrayList<Zona> getElencoZone(){
-        return elencoZone;
-    }
-
-    public void addZona(Zona zona){
-        elencoZone.add(zona);
-    }
-
-    public ArrayList<String> getZoneAsStringList(){
+    /*public ArrayList<String> getZoneAsStringList(){
         ArrayList<String> result = new ArrayList<>();
         for(int i = 0; i < elencoZone.size(); i++){
             result.add(i, elencoZone.get(i).getNome());
         }
         return result;
-    }
-
+    }*/
 
 
     public void setId(int id) {

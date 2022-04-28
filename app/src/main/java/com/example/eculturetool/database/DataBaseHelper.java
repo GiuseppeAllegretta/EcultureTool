@@ -50,7 +50,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLONNA_ZONE_ID = "ZONE_ID";
     public static final String COLONNA_ZONE_NOME = "ZONE_NOME";
     public static final String COLONNA_ZONE_DESCRIZIONE = "ZONE_DESCRIZIONE";
-    public static final String COLONNA_ZONE_NUMERO_OGGETTI = "ZONE_NUMERO_OGGETTI";
     public static final String COLONNA_LUOGO_RIFERIMENTO = "LUOGHI_RIF";
 
     //VARIABILI INERENTI AGLI OGGETTI
@@ -102,7 +101,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " (" + COLONNA_ZONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " " + COLONNA_ZONE_NOME + " TEXT," +
                 " " + COLONNA_ZONE_DESCRIZIONE + " TEXT," +
-                " " + COLONNA_ZONE_NUMERO_OGGETTI + " INT," +
                 " " + COLONNA_LUOGO_RIFERIMENTO + " INT," +
                 " " + "CONSTRAINT fk_luoghi " +
                 " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + ")" + " ON DELETE CASCADE" + ")";
@@ -557,7 +555,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
                         int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
                         int descrizione = cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
-                        int nOggetti = cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
                         int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
 
                         Zona zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(riferimentoLuogo));
@@ -630,7 +627,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void modifica(Zona z1,Zona z2){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ?, ZONE_NUMERO_OGGETTI = ?  WHERE ZONE_NOME = ?";
+        String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ? WHERE ZONE_NOME = ?";
 
         db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(), z1.getNome()});
 
@@ -647,7 +644,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
             int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
             int descrizione = cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
-            int nOggetti = cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
             int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
 
             cursor.moveToFirst();
@@ -876,4 +872,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return risultato;
     }
+
+
+    /**
+     * Metodo che restituisce tutte le zone che vengono utilizzate per la demo
+     * @return
+     */
+    public ArrayList<Zona> getZoneDemo() {
+        ArrayList<Zona> info = new ArrayList<>();
+
+        final String emailOspite = "admin@gmail.com";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //String stringQuery = "SELECT * FROM "+ TABLE_ZONE + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + "=" + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID;
+        String stringQuery = "SELECT * FROM ZONE JOIN CURATORI ON ZONE.LUOGHI_RIF = CURATORI.CURATORE_LUOGO_CORRENTE AND CURATORI.EMAIL = ?";
+        Cursor cursor = db.rawQuery(stringQuery, new String[]{emailOspite});
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                try {
+                    int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
+                    int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
+                    int descrizione = cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
+                    int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
+
+                    Zona zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(riferimentoLuogo));
+                    info.add(zona);
+
+                } catch (Exception e) {
+                    System.out.println("errore");
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return info;
+    }
+
+
 }

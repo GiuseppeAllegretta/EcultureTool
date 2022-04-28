@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AggiungiZonaActivity extends AppCompatActivity {
 
-    private EditText nomeZona, descrizioneZona,numeroOggetti;
+    private EditText nomeZona, descrizioneZona;
     private Button creaZona;
     private ProgressBar progressBar;
     private static final int MAX_OGGETTI = 10;
@@ -34,7 +34,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aggiungi_zona);
         nomeZona=findViewById(R.id.nome_zona_add);
         descrizioneZona=findViewById(R.id.descrizione_zona_add);
-        numeroOggetti=findViewById(R.id.numeroOggetti_zona_add);
         progressBar=findViewById(R.id.progressAddZona);
         creaZona=findViewById(R.id.creaZona);
         dataBaseHelper = new DataBaseHelper(this);
@@ -56,7 +55,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
-        String numeroMaxString=numeroOggetti.getText().toString().trim();
 
         if (nome.isEmpty()) {
             nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
@@ -75,17 +73,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             return;
         }
 
-        if(numeroMaxString.isEmpty()){
-            numeroMaxString=String.valueOf(MAX_OGGETTI);
-            numeroMax = Integer.parseInt(numeroMaxString);
-        }else
-            numeroMax=Integer.parseInt(numeroMaxString);
-
-        if(numeroMax>MAX_OGGETTI){
-            numeroOggetti.setError(getResources().getString(R.string.numero_max));
-            numeroOggetti.requestFocus();
-            return;
-        }
 
         progressBar.setVisibility(View.VISIBLE);
         dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente));

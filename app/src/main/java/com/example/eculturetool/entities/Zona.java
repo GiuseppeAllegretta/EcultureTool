@@ -8,7 +8,6 @@ public class Zona implements Serializable {
     private String nome;
     private String descrizione;
     private int riferimentoLuogo;
-    private ArrayList<Oggetto> elencoOggetti = new ArrayList<>();
 
     public Zona(){
 
@@ -60,14 +59,6 @@ public class Zona implements Serializable {
         this.riferimentoLuogo = riferimentoLuogo;
     }
 
-    public ArrayList<Oggetto> getElencoOggetti(){
-        return elencoOggetti;
-    }
-
-    public void addOggetto(Oggetto oggetto){
-        elencoOggetti.add(oggetto);
-    }
-
 
     @Override
     public String toString() {
@@ -75,7 +66,6 @@ public class Zona implements Serializable {
                 "id='" + id + '\'' +
                 ", nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
-                ", numeroOggetti=" + elencoOggetti.size() +
                 '}';
     }
 

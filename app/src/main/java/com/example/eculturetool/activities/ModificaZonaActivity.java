@@ -19,7 +19,7 @@ import java.util.List;
 public class ModificaZonaActivity extends AppCompatActivity {
     // private final Connection connection = new Connection();
     private String idZona;
-    private EditText nomeZona, descrizioneZona, numeroMaxOggettiZona;
+    private EditText nomeZona, descrizioneZona;
     private String luogoCorrente;
     private ImageView frecciaBack, conferma;
     List<Zona> zoneList = new ArrayList<>();
@@ -35,7 +35,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
         nomeZona = findViewById(R.id.nomeZonaModifica);
         descrizioneZona = findViewById(R.id.descrizioneZonaModifica);
-        numeroMaxOggettiZona = findViewById(R.id.numeroOggettiModifica);
         frecciaBack = findViewById(R.id.freccia_back_modifica_zona);
         conferma = findViewById(R.id.icona_conferma_modifica_zona);
         progressBar=findViewById(R.id.progressModificaZona);
@@ -73,7 +72,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
         //Popolamento dei campi
         nomeZona.setText(z1.getNome());
         descrizioneZona.setText(z1.getDescrizione());
-        numeroMaxOggettiZona.setText("rimuovere");
 
 
         frecciaBack.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +95,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
         int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
-        String numeroMaxString = numeroMaxOggettiZona.getText().toString().trim();
 
 
         if (nome.isEmpty()) {
@@ -118,16 +115,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
             return;
         }
 
-        if (numeroMaxString.isEmpty()) {
-            numeroMaxString = String.valueOf(MAX_OGGETTI);
-            numeroMax = Integer.parseInt(numeroMaxString);
-        } else
-            numeroMax = Integer.parseInt(numeroMaxString);
-        if (numeroMax > MAX_OGGETTI) {
-            numeroMaxOggettiZona.setError(getResources().getString(R.string.numero_max));
-            numeroMaxOggettiZona.requestFocus();
-            return;
-        }
 
         z2= new Zona(0,nome,descrizione,0);
 
