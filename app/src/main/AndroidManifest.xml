@@ -159,6 +159,10 @@
             android:name=".activities.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".activities.CreazionePercorsoActivity"
+            android:exported="true"/>
+
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"

@@ -1,38 +1,30 @@
 package com.example.eculturetool.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Zona implements Serializable {
     private int id;
     private String nome;
     private String descrizione;
-    private int numeroOggetti;
     private int riferimentoLuogo;
+    private ArrayList<Oggetto> elencoOggetti = new ArrayList<>();
 
     public Zona(){
 
     }
 
-    public int getRiferimentoLuogo() {
-        return riferimentoLuogo;
-    }
 
-    public void setRiferimentoLuogo(int riferimentoLuogo) {
-        this.riferimentoLuogo = riferimentoLuogo;
-    }
-
-    public Zona(String nome, String descrizione, int numeroOggetti, int riferimentoLuogo) {
+    public Zona(String nome, String descrizione, int riferimentoLuogo) {
         this.nome = nome;
         this.descrizione = descrizione;
-        this.numeroOggetti = numeroOggetti;
         this.riferimentoLuogo= riferimentoLuogo;
     }
 
-    public Zona(int id, String nome, String descrizione, int numeroOggetti, int riferimentoLuogo) {
+    public Zona(int id, String nome, String descrizione, int riferimentoLuogo) {
         this.id=id;
         this.nome = nome;
         this.descrizione = descrizione;
-        this.numeroOggetti = numeroOggetti;
         this.riferimentoLuogo= riferimentoLuogo;
     }
 
@@ -60,13 +52,22 @@ public class Zona implements Serializable {
         this.descrizione = descrizione;
     }
 
-    public int getNumeroOggetti() {
-        return numeroOggetti;
+    public int getRiferimentoLuogo() {
+        return riferimentoLuogo;
     }
 
-    public void setNumeroOggetti(int numeroOggetti) {
-        this.numeroOggetti = numeroOggetti;
+    public void setRiferimentoLuogo(int riferimentoLuogo) {
+        this.riferimentoLuogo = riferimentoLuogo;
     }
+
+    public ArrayList<Oggetto> getElencoOggetti(){
+        return elencoOggetti;
+    }
+
+    public void addOggetto(Oggetto oggetto){
+        elencoOggetti.add(oggetto);
+    }
+
 
     @Override
     public String toString() {
@@ -74,7 +75,7 @@ public class Zona implements Serializable {
                 "id='" + id + '\'' +
                 ", nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
-                ", numeroOggetti=" + numeroOggetti +
+                ", numeroOggetti=" + elencoOggetti.size() +
                 '}';
     }
 

@@ -244,11 +244,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             //Creazione Zone
             List<Zona> zone = new ArrayList<>();
-            zone.add(new Zona(dipintiItaliani, "In quest'area si ha l'opportunità di ammirare opere dei pittori da Giotto, Carracci, Caravaggio, Raffaello,Tiziano, Cimabue e Veronese fino all'Ottocento.", 10, idLuogo));
-            zone.add(new Zona(antichitàGrecheEtruscheRomane, "Questo dipartimento del Louvre raccoglie le antichità di tre grandi civiltà: Roma, Grecia ed Etruria. Sono raccolte alcune delle opere più famose dell'arte di questi tre popoli, alcune simbolo universale di bellezza e che attirano visitatori e appassionati da tutto il mondo. Ecco alcune di queste opere divise per civiltà.", 10, idLuogo));
-            zone.add(new Zona(sculture, "In ques'area sono presenti le più importanti sculture da vedere dell'intero museo e che attirano l'attenzione dei visitatori", 10, idLuogo));
-            zone.add(new Zona(antichitàEgizie, " Dipartimento delle Antichità Egizie del Museo del Louvre conserva una delle principali collezioni egiziane del mondo fuori dal territorio egiziano, insieme al Museo Egizio di Torino e al British Museum e, in Egitto, al Museo Egizio del Cairo . La sua storia risale all'ordinanza reale di Carlo  X di15 maggio 1826", 10, idLuogo));
-            zone.add(new Zona(artiGrafiche, "l dipartimento di arti grafiche è il settimo dipartimento del museo del Louvre . È stata fondata nel 1989 . In precedenza l'ufficio di disegno era annesso al reparto di verniciatura .", 10, idLuogo));
+            zone.add(new Zona("dipintiItaliani", "In quest'area si ha l'opportunità di ammirare opere dei pittori da Giotto, Carracci, Caravaggio, Raffaello,Tiziano, Cimabue e Veronese fino all'Ottocento.", idLuogo));
+            zone.add(new Zona("antichitàGrecheEtruscheRomane", "Questo dipartimento del Louvre raccoglie le antichità di tre grandi civiltà: Roma, Grecia ed Etruria. Sono raccolte alcune delle opere più famose dell'arte di questi tre popoli, alcune simbolo universale di bellezza e che attirano visitatori e appassionati da tutto il mondo. Ecco alcune di queste opere divise per civiltà.", idLuogo));
+            zone.add(new Zona("sculture", "In ques'area sono presenti le più importanti sculture da vedere dell'intero museo e che attirano l'attenzione dei visitatori", idLuogo));
+            zone.add(new Zona("antichitàEgizie", " Dipartimento delle Antichità Egizie del Museo del Louvre conserva una delle principali collezioni egiziane del mondo fuori dal territorio egiziano, insieme al Museo Egizio di Torino e al British Museum e, in Egitto, al Museo Egizio del Cairo . La sua storia risale all'ordinanza reale di Carlo  X di15 maggio 1826", idLuogo));
+            zone.add(new Zona("artiGrafiche", "l dipartimento di arti grafiche è il settimo dipartimento del museo del Louvre . È stata fondata nel 1989 . In precedenza l'ufficio di disegno era annesso al reparto di verniciatura .", idLuogo));
 
             for(Zona zona: zone){
                 dataBaseHelper.aggiungiZona(zona);

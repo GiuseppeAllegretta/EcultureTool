@@ -419,7 +419,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 Tipologia tipologia = Tipologia.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_TIPOLOGIA)));
                 String emailCuratore = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_EMAIL_CURATORE));
 
-                Luogo luogo = new Luogo(nome, descrizione, tipologia, emailCuratore );
+                Luogo luogo = new Luogo(nome, descrizione, tipologia, emailCuratore);
                 luogo.setId(id);
                 list.add(luogo);
 
@@ -560,7 +560,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         int nOggetti = cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
                         int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
 
-                        Zona zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(nOggetti), cursor.getInt(riferimentoLuogo));
+                        Zona zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(riferimentoLuogo));
                         info.add(zona);
 
                     } catch (Exception e) {
@@ -599,7 +599,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(COLONNA_ZONE_NOME,z.getNome());
         contentValues.put(COLONNA_ZONE_DESCRIZIONE,z.getDescrizione());
-        contentValues.put(COLONNA_ZONE_NUMERO_OGGETTI,z.getNumeroOggetti());
         contentValues.put(COLONNA_LUOGO_RIFERIMENTO,z.getRiferimentoLuogo());
         long insert = db.insert(TABLE_ZONE, null, contentValues);
 
@@ -633,7 +632,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ?, ZONE_NUMERO_OGGETTI = ?  WHERE ZONE_NOME = ?";
 
-        db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(),String.valueOf(z2.getNumeroOggetti()), z1.getNome()});
+        db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(), z1.getNome()});
 
         db.close();
     }
@@ -652,7 +651,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
 
             cursor.moveToFirst();
-            zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(nOggetti), cursor.getInt(riferimentoLuogo));
+            zona = new Zona(cursor.getInt(id), cursor.getString(nome), cursor.getString(descrizione), cursor.getInt(riferimentoLuogo));
         }catch (Exception e){
             System.out.println("errore");
         }

@@ -73,7 +73,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
         //Popolamento dei campi
         nomeZona.setText(z1.getNome());
         descrizioneZona.setText(z1.getDescrizione());
-        numeroMaxOggettiZona.setText(String.valueOf(z1.getNumeroOggetti()));
+        numeroMaxOggettiZona.setText("rimuovere");
 
 
         frecciaBack.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
             return;
         }
 
-        z2= new Zona(0,nome,descrizione,Integer.parseInt(numeroMaxString),0);
+        z2= new Zona(0,nome,descrizione,0);
 
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);

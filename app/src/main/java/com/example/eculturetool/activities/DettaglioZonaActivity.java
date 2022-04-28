@@ -63,7 +63,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         nomeZona.setText(z.getNome().toString());
         descrizioneZona.setText(z.getDescrizione().toString());
-        numeroMaxOggettiZona.setText(String.valueOf(z.getNumeroOggetti()));
+        numeroMaxOggettiZona.setText("rimuovere");
 
 
         dataBaseHelper = new DataBaseHelper(this);
@@ -92,7 +92,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         zM = dataBaseHelper.recuperoZonaModificata(z.getId());
         nomeZona.setText(zM.getNome().toString());
         descrizioneZona.setText(zM.getDescrizione().toString());
-        numeroMaxOggettiZona.setText(String.valueOf(zM.getNumeroOggetti()));
+        numeroMaxOggettiZona.setText("rimuovere");
 
     }
 
@@ -109,6 +109,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
                 b.putSerializable("ZONE",z);
                 intent.putExtras(b);
                 startActivityForResult(intent,123);
+                //TODO deprecation, che bella sensation
             }
         });
 

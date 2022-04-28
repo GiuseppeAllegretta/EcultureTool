@@ -1,6 +1,8 @@
 package com.example.eculturetool.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Luogo implements Serializable {
 
@@ -8,6 +10,7 @@ public class Luogo implements Serializable {
     private Tipologia tipologia;
     private int id;
     private String emailCuratore;
+    private ArrayList<Zona> elencoZone = new ArrayList<>();
 
 
     public Luogo() {
@@ -19,6 +22,7 @@ public class Luogo implements Serializable {
         this.descrizione = descrizione;
         this.tipologia = tipologia;
         this.emailCuratore = emailCuratore;
+        //this.id = id;
     }
 
 
@@ -34,13 +38,29 @@ public class Luogo implements Serializable {
         return tipologia;
     }
 
+    public String getEmailCuratore() { return emailCuratore; }
+
     public int getId() {
         return id;
     }
 
-    public String getEmailCuratore() {
-        return emailCuratore;
+    public ArrayList<Zona> getElencoZone(){
+        return elencoZone;
     }
+
+    public void addZona(Zona zona){
+        elencoZone.add(zona);
+    }
+
+    public ArrayList<String> getZoneAsStringList(){
+        ArrayList<String> result = new ArrayList<>();
+        for(int i = 0; i < elencoZone.size(); i++){
+            result.add(i, elencoZone.get(i).getNome());
+        }
+        return result;
+    }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -52,7 +72,7 @@ public class Luogo implements Serializable {
                 "nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", tipologia=" + tipologia +
-                ", emailCuratore='" + emailCuratore + '\'' +
+                ", emailCuratore=" + emailCuratore +
                 '}';
     }
 

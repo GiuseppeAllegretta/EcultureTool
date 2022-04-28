@@ -88,7 +88,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, Integer.parseInt(numeroMaxString), luogoCorrente));
+        dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente));
         zoneList = dataBaseHelper.getZone();
         finish();
 
