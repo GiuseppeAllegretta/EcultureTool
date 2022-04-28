@@ -88,23 +88,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-                if (x1 < x2) {
-                    replaceFragment(new QRScannerFragment());
-                }
-                break;
-        }
-        return false;
-    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
