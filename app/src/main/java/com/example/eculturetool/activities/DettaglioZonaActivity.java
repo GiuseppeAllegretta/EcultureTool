@@ -62,6 +62,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         nomeZona.setText(z.getNome().toString());
         descrizioneZona.setText(z.getDescrizione().toString());
+        getSupportActionBar().setTitle(z.getNome());
 
 
         dataBaseHelper = new DataBaseHelper(this);
