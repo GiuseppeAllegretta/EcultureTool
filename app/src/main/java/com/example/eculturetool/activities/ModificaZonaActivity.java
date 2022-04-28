@@ -92,7 +92,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
 
     private void editZona() {
-        int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
 
@@ -127,11 +126,16 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
     private boolean controlloEsistenzaNomeZona(String nomeZona) {
         boolean isEsistente = false;
-        //nomeZona = this.nomeZona.getText().toString();
 
+        List<Zona> zoneAppoggio = new ArrayList<>();
+        for(Zona zona: zoneList){
+            if(!(zona.getId() == z1.getId())){
+                zoneAppoggio.add(zona);
+            }
+        }
 
-        for (int i = 0; i < zoneList.size(); i++) {
-            if (nomeZona.compareToIgnoreCase(zoneList.get(i).getNome()) == 0) {
+        for (int i = 0; i < zoneAppoggio.size(); i++) {
+            if (nomeZona.compareToIgnoreCase(zoneAppoggio.get(i).getNome()) == 0) {
                 isEsistente = true;
             }
         }
