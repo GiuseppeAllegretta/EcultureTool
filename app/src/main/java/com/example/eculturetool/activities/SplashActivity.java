@@ -30,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     private boolean mIsDone;
     private Connection connection = new Connection();
     private DataBaseHelper dataBaseHelper;
+    final String emailOspite = "admin@gmail.com";
 
     private static class UiHandler extends Handler {
         private final WeakReference<SplashActivity> mActivityRef;
@@ -82,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
         final Message goAheadMessage = mHandler.obtainMessage(GO_AHEAD_WHAT);
         mHandler.sendMessageAtTime(goAheadMessage, mStartTime + MAX_WAIT_INTERVAL);
         Log.d(TAG_LOG, "Handler message sent!");
-        checkSession();
+        //checkSession();
 
     }
 
@@ -104,9 +105,16 @@ public class SplashActivity extends AppCompatActivity {
         SessionManagement sessionManagement = new SessionManagement(SplashActivity.this);
         String emailCuratore = sessionManagement.getSession();
         if (emailCuratore.compareTo("-1") != 0) {
-            flag = true;
-            dataBaseHelper.setEmailCuratore(sessionManagement.getSession());
+            if (emailCuratore.compareTo(emailOspite) == 0) {
+                sessionManagement.removeSession();
+                dataBaseHelper.setEmailCuratore(emailOspite);
+                flag = false;
+            } else {
+                flag = true;
+                dataBaseHelper.setEmailCuratore(sessionManagement.getSession());
+            }
         }
+
 
         return flag;
     }
