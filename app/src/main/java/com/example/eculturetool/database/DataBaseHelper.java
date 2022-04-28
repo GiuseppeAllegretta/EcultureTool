@@ -702,6 +702,44 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+
+    public List<Oggetto> getAllOggetti(){
+        List<Oggetto> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String stringQuery = "SELECT * FROM "
+                + "(" + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
+                + " INNER JOIN " + TABLE_ZONE + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
+                + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
+                + " WHERE " + COLONNA_EMAIL + " = ? ";
+
+        System.out.println("getOggetti: " + stringQuery);
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.moveToFirst()){
+
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_DESCRIZIONE));
+                TipologiaOggetto tipologia = TipologiaOggetto.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_TIPOLOGIA)));
+                String urlImg = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_IMMAGINE));
+                String urlQrCode = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_QRCODE));
+                int idZona = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ZONA_ID));
+
+
+                Oggetto oggetto = new Oggetto(id, nome, descrizione, urlImg, tipologia, idZona);
+                oggetto.setUrlQrcode(urlQrCode);
+                returnList.add(oggetto);
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
     public boolean addOggetto(Oggetto oggetto){
         boolean risultato = false;
 
