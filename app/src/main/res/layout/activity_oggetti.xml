@@ -29,6 +29,47 @@
         android:layout_below="@+id/toolbarOggetti" />
 
 
+    <LinearLayout
+        android:id="@+id/layout_no_zone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarOggetti"
+        android:layout_marginTop="-1dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/esclamativo"
+            android:clickable="false"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="Per aggiungere nuovi oggetti, devi prima inserire almeno una zona"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/addZonaNoZone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/verdePrimario"
+            android:text="Aggiungi Zona"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addOggetto"
         android:layout_width="wrap_content"

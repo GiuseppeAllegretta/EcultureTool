@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,11 +47,13 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     private ArrayList<Oggetto> oggettiList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerAdapterOggetto adapter;
+    private LinearLayout layoutNoZone;
 
     //luogo corrente che sta gestendo il curatore
     private String luogoCorrente;
     private List<Zona> zoneList = new ArrayList<>();
     private FloatingActionButton fabAddOggetto;
+    private Button addZona;
 
 
     @Override
@@ -58,8 +62,11 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         setContentView(R.layout.activity_oggetti);
         fabAddOggetto = findViewById(R.id.addOggetto);
         recyclerView = findViewById(R.id.recyclerViewOggetti);
+        layoutNoZone=findViewById(R.id.layout_no_zone);
+        addZona=findViewById(R.id.addZonaNoZone);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarOggetti);
+        dataBaseHelper = new DataBaseHelper(this);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -74,14 +81,26 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
                 finish();
             }
         });
-
-
-        setOggettoInfo();
+        layoutNoZone.setVisibility(View.INVISIBLE);
         retrieveZone();
-        setAdapter();
 
-        //metodo che nasconde le view in caso di accesso con account ospite
-        nascondiView();
+        if(zoneList.isEmpty()){
+            recyclerView.setVisibility(View.INVISIBLE);
+            fabAddOggetto.setVisibility(View.INVISIBLE);
+            layoutNoZone.setVisibility(View.VISIBLE);
+
+
+        } else{
+            setOggettoInfo();
+
+            setAdapter();
+
+            //metodo che nasconde le view in caso di accesso con account ospite
+            nascondiView();
+        }
+
+
+
     }
 
 
@@ -115,6 +134,14 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
+            }
+        });
+
+        addZona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AggiungiZonaActivity.class));
+                finish();
             }
         });
 
