@@ -5,8 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,11 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     private Integer ogg = 0;
     //private EditText numeroPercorso, anno, tipologia;
 
-    private String uid;
-    private String nome;
-    private TextView tv;
-    float x1, x2, y1, y2;
-
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * Metodo che riceve in input i dati che si raccolgono dal QR code
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -124,13 +122,13 @@ public class HomeActivity extends AppCompatActivity {
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        if(intentResult.getContents() != null){
-            if(Pattern.matches(regex_id, intentResult.getContents())){
+        if (intentResult.getContents() != null) {
+            if (Pattern.matches(regex_id, intentResult.getContents())) {
                 int idOggetto = Integer.parseInt(intentResult.getContents());
                 System.out.println("Valore risultante: " + idOggetto);
 
-                for(Oggetto oggetto: oggettiList){
-                    if(oggetto.getId() == idOggetto){
+                for (Oggetto oggetto : oggettiList) {
+                    if (oggetto.getId() == idOggetto) {
                         List<Zona> zoneList = dataBaseHelper.getZone();
 
                         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
@@ -140,12 +138,12 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
-            }else{
+            } else {
                 dialogOggettoNonTrovato();
             }
 
 
-        }else {
+        } else {
             dialogOggettoNonTrovato();
 
         }
@@ -165,5 +163,38 @@ public class HomeActivity extends AppCompatActivity {
         //show alert dialog
         builder.create().show();
     }
+
+
+//funzione per uscire dall'app al doppio click
+    @Override
+    public void onBackPressed() {
+        if (isInFragment() && !doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "press double tap to exit", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else if (isInFragment()) {
+            finishAffinity();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private boolean isInFragment() {
+        for (Fragment item : getSupportFragmentManager().getFragments()) {
+            if (item.isVisible() && (
+                    "ProfileFragment".equals(item.getClass().getSimpleName()) ||
+                            "HomeFragment".equals(item.getClass().getSimpleName()) ||
+                            "QRcodeScannerFragment".equals(item.getClass().getSimpleName()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
