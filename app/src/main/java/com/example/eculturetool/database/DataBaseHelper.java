@@ -914,4 +914,43 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public void uploadZoneOggettiTest(){
+        int idLuogo = getIdLuogoCorrente();
+
+        //Stringhe Zone
+        final String anfiteatro = "Anfiteatro";
+        final String velario = "Il velario";
+
+        //Stringhe Oggetti
+        final String gallerie = "Gallerie sotterranee";
+        final String arcate = "Arcate";
+        final String telo = "Telo";
+        final String mensole = "Mensola";
+
+        this.aggiungiZona(new Zona(anfiteatro, "Vasta costruzione ovale costituita da vari ordini di gradinate con un'area al centro (detta arena ) destinata allo svolgimento di spettacoli, giochi, ecc.", idLuogo));
+        this.aggiungiZona(new Zona(velario, "Il Colosseo aveva una copertura in tessuto (velarium in latino) formata da molti teli che coprivano gli spalti degli spettatori ma lasciavano scoperta l'arena centrale. Il velarium era usato per proteggere le persone dal sole ed era manovrato da un distaccamento di marinai della flotta di Miseno, stanziata accanto al Colosseo. ", idLuogo));
+
+        //creazione oggetti
+        List<Zona> zone = this.getZone();
+
+        for(Zona zona: zone){
+
+            switch (zona.getNome()){
+                case anfiteatro:
+                    this.addOggetto(new Oggetto(gallerie, "Gallerie sotterranee all'estremità dell'asse principale davano accesso al passaggio centrale sotto l'arena, ed erano utilizzate per l'ingresso di animali e macchinari;", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fgall-colosseo.jpeg?alt=media&token=1960ea59-32c1-4c0b-bdf3-fa11f04c2e23", TipologiaOggetto.ALTRO, zona.getId()));
+                    this.addOggetto(new Oggetto(arcate, "Fra le arcate del secondo e del terzo ordine, come dimostrano alcune monete coniate al tempo degli imperatori Tito e Vespasiano, erano collocate delle statue. In totale sarebbero state circa 80 statue di bronzo, il cui colore scuro faceva da contrasto al bianchissimo travertino che riveste la struttura del più famoso monumento della Capitale. ", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F220px-ColosseoKikko.jpeg?alt=media&token=60d1e9c2-345c-4faf-9d56-bc191d6d3b10", TipologiaOggetto.SCULTURA, zona.getId()));
+
+                    break;
+
+                case velario:
+                    this.addOggetto(new Oggetto(telo, "L'utilizzo del velarium è ricordato da numerosi storici: Plinio, quando gli spettacoli si svolgevano ancora nel Foro romano, ricorda la realizzazione di un enorme telo steso a copertura di tutta la piazza", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F1velarium-770x480.jpeg?alt=media&token=89398d31-32e5-448f-80d2-c88eda372bab", TipologiaOggetto.ALTRO, zona.getId()));
+                    this.addOggetto(new Oggetto(mensole, "erano presenti 240 mensole sporgenti di pietra in corrispondenza delle quali, nella cornice terminale, si trovavano dei fori quadrangolari; al loro interno venivano inseriti dei pali che, appoggiandosi sulle mensole e sporgendo sopra l'edificio, costituivano i sostegni dell'immenso velarium.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fmensole2.jpeg?alt=media&token=5b78b104-94f8-4768-b338-3f487d2bda67", TipologiaOggetto.ALTRO, zona.getId()));
+                    break;
+            }
+
+
+        }
+
+    }
+
 }
