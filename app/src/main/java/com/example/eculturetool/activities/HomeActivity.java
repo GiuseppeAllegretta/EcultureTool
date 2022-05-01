@@ -1,16 +1,22 @@
 package com.example.eculturetool.activities;
 
+import static com.example.eculturetool.utilities.Permissions.CAMERA_PERMISSION_MSG;
+import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE;
+
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,7 +29,9 @@ import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
-import com.example.eculturetool.fragments.QRcodeScannerFragment;
+import com.example.eculturetool.fragments.QRScannerFragment;
+import com.example.eculturetool.utilities.Permissions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -43,8 +51,9 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
-
+    private View parentLayout;
     protected Curatore curatore;
+    private Permissions permission = new Permissions();
 
 
     private Integer perc = 0;
@@ -58,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = HomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        parentLayout = findViewById(android.R.id.content);
         replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -71,13 +81,57 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.qr_scanner:
                     //replaceFragment(new QRScannerFragment());
-                    replaceFragment(new QRcodeScannerFragment());
+                    if(permission.checkCameraPermission(this, parentLayout)){
+                        //replaceFragment(new QRcodeScannerFragment());
+                        replaceFragment(new QRScannerFragment());
+                    }else{
+                        permission.requestCameraPermission(this, parentLayout);
+                    }
                     break;
             }
-
             return true;
         });
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Permissions perm = new Permissions();
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
+
+                if (permission.equals(Manifest.permission.CAMERA)) {
+                    if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+                            perm.showMessageOkCancel(CAMERA_PERMISSION_MSG,
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            switch (which) {
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    perm.requestCameraPermission(HomeActivity.this, parentLayout);
+                                                    break;
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
+                                                    snackBar.show();
+                                                    break;
+                                            }
+                                        }
+                                    }, this);
+                        } else {
+                            Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso alla fotocamera dalle impostazioni per usare questa funzionalità");
+                            snackBar.show();
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
