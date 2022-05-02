@@ -20,6 +20,7 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
 
     //Bottone per l'esportazione di un grafo
     private Button esportaBtn;
+    private Button cancellaBtn;
     private DataBaseHelper dataBaseHelper;
 
     @Override
@@ -28,6 +29,7 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_esportazione_percorso);
 
         esportaBtn = findViewById(R.id.esporta);
+        cancellaBtn = findViewById(R.id.cancellaPercorso);
         dataBaseHelper = new DataBaseHelper(this);
     }
 
@@ -42,6 +44,14 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
                 IoHelper graphToJson = new IoHelper(EsportazionePercorsoActivity.this);
                 graphToJson.serializzaPercorso(grafoProva(), 1);
                 Graph<Zona, DefaultEdge> graphReturned = graphToJson.deserializzaPercorso(1);
+            }
+        });
+
+        cancellaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IoHelper ioHelper = new IoHelper(EsportazionePercorsoActivity.this);
+                ioHelper.cancellaPercorso(1);
             }
         });
     }
