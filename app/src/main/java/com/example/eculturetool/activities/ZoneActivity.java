@@ -8,16 +8,22 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -73,7 +79,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
-        if(emailCuratore.compareTo(emailOspite) == 0){
+        if (emailCuratore.compareTo(emailOspite) == 0) {
             fabAddLuogo.setVisibility(View.INVISIBLE);
         }
     }
@@ -82,7 +88,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     protected void onStart() {
         super.onStart();
-        fabAddLuogo.setOnClickListener(view->startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
+        fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
     }
 
 
@@ -102,10 +108,16 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         Intent intent = new Intent(this, DettaglioZonaActivity.class);
 
         Bundle b = new Bundle();
-        b.putSerializable("ZONE",z);
+        b.putSerializable("ZONE", z);
         intent.putExtras(b);
         startActivity(intent);
     }
+
+    @Override
+    public void onZonaLongClick(int position) {
+        showCustomDialog(position);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,5 +150,33 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         zoneList.clear();
         zoneList = dataBaseHelper.getZone();
         setAdapter();
+    }
+
+
+    private void showCustomDialog(int p) {
+        final Dialog dialog = new Dialog(this);
+
+        Zona zonaEliminare = zoneList.get(p);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_elimina_zona);
+
+        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_zona);
+        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_zona);
+
+        dialog.show();
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataBaseHelper.rimuoviZona(zonaEliminare);
+                zoneList.remove(p);
+                dialog.dismiss();
+                finish();
+                startActivity(getIntent());
+
+            }
+        });
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }

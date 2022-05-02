@@ -25,8 +25,8 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
 
     public RecyclerAdapterZona(ArrayList<Zona> zoneList, OnZonaListener onZonaListener) {
         this.zoneList = zoneList;
-        this.mOnZonaListener=onZonaListener;
-        this.zoneListAll= new ArrayList<>(zoneList);
+        this.mOnZonaListener = onZonaListener;
+        this.zoneListAll = new ArrayList<>(zoneList);
     }
 
     @Override
@@ -34,17 +34,17 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
         return filter;
     }
 
-    Filter filter= new Filter() {
+    Filter filter = new Filter() {
         //run on background thread
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Zona> filteredList = new ArrayList<>();
 
-            if(charSequence.toString().isEmpty()){
+            if (charSequence.toString().isEmpty()) {
                 filteredList.addAll(zoneListAll);
-            }else {
-                for(Zona zona: zoneListAll){
-                    if(zona.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())){
+            } else {
+                for (Zona zona : zoneListAll) {
+                    if (zona.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(zona);
                     }
                 }
@@ -53,6 +53,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
             filterResults.values = filteredList;
             return filterResults;
         }
+
         //runs on a UI thread
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
@@ -64,7 +65,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
     };
 
 
-    public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView nomeZona, descrizioneZona;
         OnZonaListener onZonaListener;
 
@@ -75,11 +76,19 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
             this.onZonaListener = onZonaListener;
 
             view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
             onZonaListener.onZonaClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onZonaListener.onZonaLongClick(getAdapterPosition());
+            return false;
         }
     }
 
@@ -87,7 +96,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
     @Override
     public RecyclerAdapterZona.ZoneViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_zona, parent, false);
-        return new ZoneViewHolder(itemView,mOnZonaListener);
+        return new ZoneViewHolder(itemView, mOnZonaListener);
     }
 
     @Override
@@ -106,5 +115,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
 
     public interface OnZonaListener {
         void onZonaClick(int position);
+
+        void onZonaLongClick(int position);
     }
 }
