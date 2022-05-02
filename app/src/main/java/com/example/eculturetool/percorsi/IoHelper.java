@@ -36,7 +36,6 @@ import java.util.List;
 
 public class IoHelper {
 
-    private DataBaseHelper dataBaseHelper;
     private Context context;
 
     /**
@@ -44,7 +43,6 @@ public class IoHelper {
      * @param context Il contex dell'activity
      */
     public IoHelper(Context context){
-        dataBaseHelper = new DataBaseHelper(context);
         this.context = context;
     }
 
