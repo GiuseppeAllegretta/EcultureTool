@@ -39,8 +39,9 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
         esportaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GraphToJson graphToJson = new GraphToJson(EsportazionePercorsoActivity.this);
-                graphToJson.exportedGraphToJson(grafoProva());
+                IoHelper graphToJson = new IoHelper(EsportazionePercorsoActivity.this);
+                graphToJson.serializzaPercorso(grafoProva(), 1);
+                Graph<Zona, DefaultEdge> graphReturned = graphToJson.deserializzaPercorso(1);
             }
         });
     }
@@ -55,9 +56,8 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
             graph.addVertex(zoneList.get(i));
         }
 
-        for (int i = 0; i < zoneList.size(); i++) {
-
-            graph.addEdge(zoneList.get(i), zoneList.get(i + 1));
+        for (int i = 0; i < zoneList.size()-1; i++) {
+            graph.addEdge(zoneList.get(i), zoneList.get(i+1));
         }
         return graph;
     }

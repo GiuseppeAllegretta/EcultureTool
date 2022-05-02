@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
@@ -29,38 +30,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static String emailCuratore;
 
     //VARIABILI INERENTI I CURATORI
-    public static final String TABLE_CURATORI = "CURATORI";
-    public static final String COLONNA_CURATORE_NOME = "CURATORE_NOME";
-    public static final String COLONNA_CURATORE_COGNOME = "CURATORE_COGNOME";
-    public static final String COLONNA_CURATORE_LUOGO_CORRENTE = "CURATORE_LUOGO_CORRENTE";
-    public static final String COLONNA_EMAIL = "EMAIL";
-    public static final String COLONNA_CURATORE_PASSWORD = "CURATORE_PASSWORD";
-    public static final String COLONNA_CURATORE_IMG = "CURATORE_IMMAGINE";
+    private static final String TABLE_CURATORI = "CURATORI";
+    private static final String COLONNA_CURATORE_NOME = "CURATORE_NOME";
+    private static final String COLONNA_CURATORE_COGNOME = "CURATORE_COGNOME";
+    private static final String COLONNA_CURATORE_LUOGO_CORRENTE = "CURATORE_LUOGO_CORRENTE";
+    private static final String COLONNA_EMAIL = "EMAIL";
+    private static final String COLONNA_CURATORE_PASSWORD = "CURATORE_PASSWORD";
+    private static final String COLONNA_CURATORE_IMG = "CURATORE_IMMAGINE";
 
     //VARIABILI INERENTI I LUOGHI
-    public static final String TABLE_LUOGHI = "LUOGHI";
-    public static final String COLONNA_LUOGHI_ID = "LUOGHI_ID";
-    public static final String COLONNA_LUOGHI_NOME = "LUOGHI_NOME";
-    public static final String COLONNA_LUOGHI_DESCRIZIONE = "LUOGHI_DESCRIZIONE";
-    public static final String COLONNA_LUOGHI_TIPOLOGIA = "LUOGHI_TIPOLOGIA";
-    public static final String COLONNA_LUOGHI_EMAIL_CURATORE = "LUOGHI_EMAIL_CURATORE";
+    private static final String TABLE_LUOGHI = "LUOGHI";
+    private static final String COLONNA_LUOGHI_ID = "LUOGHI_ID";
+    private static final String COLONNA_LUOGHI_NOME = "LUOGHI_NOME";
+    private static final String COLONNA_LUOGHI_DESCRIZIONE = "LUOGHI_DESCRIZIONE";
+    private static final String COLONNA_LUOGHI_TIPOLOGIA = "LUOGHI_TIPOLOGIA";
+    private static final String COLONNA_LUOGHI_EMAIL_CURATORE = "LUOGHI_EMAIL_CURATORE";
 
     //VARIABILI INERENTI LE ZONE
-    public static final String TABLE_ZONE = "ZONE";
-    public static final String COLONNA_ZONE_ID = "ZONE_ID";
-    public static final String COLONNA_ZONE_NOME = "ZONE_NOME";
-    public static final String COLONNA_ZONE_DESCRIZIONE = "ZONE_DESCRIZIONE";
-    public static final String COLONNA_LUOGO_RIFERIMENTO = "LUOGHI_RIF";
+    private static final String TABLE_ZONE = "ZONE";
+    private static final String COLONNA_ZONE_ID = "ZONE_ID";
+    private static final String COLONNA_ZONE_NOME = "ZONE_NOME";
+    private static final String COLONNA_ZONE_DESCRIZIONE = "ZONE_DESCRIZIONE";
+    private static final String COLONNA_LUOGO_RIFERIMENTO = "LUOGHI_RIF";
 
     //VARIABILI INERENTI AGLI OGGETTI
-    public static final String TABLE_OGGETTI = "OGGETTI";
-    public static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
-    public static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
-    public static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
-    public static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
-    public static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
-    public static final String COLONNA_OGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
-    public static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
+    private static final String TABLE_OGGETTI = "OGGETTI";
+    private static final String COLONNA_OGGETTO_ID = "OGGETTO_ID";
+    private static final String COLONNA_OGGETTO_NOME = "OGGETTO_NOME";
+    private static final String COLONNA_OGGETTO_DESCRIZIONE = "OGGETTO_DESCRIZIONE";
+    private static final String COLONNA_OGGETTO_URL_IMMAGINE = "OGGETTO_URL_IMMAGINE";
+    private static final String COLONNA_OGGETTO_URL_QRCODE = "OGGETTO_URL_QRCODE";
+    private static final String COLONNA_OGGETTO_TIPOLOGIA = "OGGETTO_TIPOLOGIA";
+    private static final String COLONNA_OGGETTO_ZONA_ID = "OGGETTO_ZONA_ID";
+
+    //VARIABILI INERENTI AI PERCORSI
+    private static final String TABLE_PERCORSI = "PERCORSI";
+    private static final String COLONNA_PERCORSO_ID = "PERCORSO_ID";
+    private static final String COLONNA_PERCORSO_NOME = "PERCORSO_NOME";
+    private static final String COLONNA_PERCORSO_ID_LUOGO = COLONNA_PERCORSO_ID + "_LUOGO";
+    private static final String COLONNA_PERCORSO_DESCRIZIONE = "PERCORSO_DESCRIZIONE";
+    private static final String COLONNA_PERCORSO_JSON = "PERCORSO_JSON";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "e-cultureTool.db",null , 3);
@@ -116,10 +125,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLONNA_OGGETTO_ZONA_ID + " INT NOT NULL," +
                 "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + " ON DELETE CASCADE" + ")";
 
+
+        String createTablePercorsi = "CREATE TABLE " + TABLE_PERCORSI + " " +
+                "(" + COLONNA_PERCORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLONNA_PERCORSO_NOME + " TEXT," +
+                COLONNA_PERCORSO_DESCRIZIONE + " TEXT," +
+                COLONNA_PERCORSO_JSON + " TEXT," +
+                COLONNA_PERCORSO_ID_LUOGO + " INT, " +
+                " CONSTRAINT fk_luoghi_percorsi FOREIGN KEY (" + COLONNA_PERCORSO_ID_LUOGO + ") REFERENCES " + TABLE_LUOGHI + " (" + COLONNA_LUOGHI_ID + ")" + ")";
+
         sqLiteDatabase.execSQL(createTableCuratore);
         sqLiteDatabase.execSQL(createTableLuogo);
         sqLiteDatabase.execSQL(createTableZona);
         sqLiteDatabase.execSQL(createTableOggetti);
+        sqLiteDatabase.execSQL(createTablePercorsi);
     }
 
     //this is called if the databse version number changes. It prevents previous users apps from breaking whe you change the database design
@@ -947,10 +966,58 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     this.addOggetto(new Oggetto(mensole, "erano presenti 240 mensole sporgenti di pietra in corrispondenza delle quali, nella cornice terminale, si trovavano dei fori quadrangolari; al loro interno venivano inseriti dei pali che, appoggiandosi sulle mensole e sporgendo sopra l'edificio, costituivano i sostegni dell'immenso velarium.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fmensole2.jpeg?alt=media&token=5b78b104-94f8-4768-b338-3f487d2bda67", TipologiaOggetto.ALTRO, zona.getId()));
                     break;
             }
+        }
+    }
 
+
+
+    public boolean addPercorso(Percorso percorso){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLONNA_PERCORSO_NOME, percorso.getNome());
+        //contentValues.put(COLONNA_PERCORSO_DESCRIZIONE, percorso.getDescrizione());
+        contentValues.put(COLONNA_PERCORSO_JSON, percorso.getJsonPercorso());
+        //contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
+
+
+        long insert = db.insert(TABLE_PERCORSI, null, contentValues);
+
+        if(!(insert == -1)){
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
+
+    public Percorso getPercorsoById(int id){
+        Percorso percorso = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringQuery = "SELECT * FROM " + TABLE_PERCORSI + " WHERE " + COLONNA_PERCORSO_ID + " = " + id;
+        Cursor cursor = db.rawQuery(stringQuery, null);
+
+        if(cursor.getCount() == 1){
+            if(cursor.moveToFirst()){
+                int idPercorso = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_NOME));
+                String percorsoJson = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_JSON));
+                //String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
+                //int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
+
+                percorso = new Percorso(nome, percorsoJson);
+                //percorso.setId(idPercorso);
+            }
 
         }
 
+        cursor.close();
+        db.close();
+        return percorso;
     }
 
 }
