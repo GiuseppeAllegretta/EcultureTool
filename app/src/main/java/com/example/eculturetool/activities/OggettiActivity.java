@@ -1,12 +1,14 @@
 package com.example.eculturetool.activities;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -53,8 +55,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         setContentView(R.layout.activity_oggetti);
         fabAddOggetto = findViewById(R.id.addOggetto);
         recyclerView = findViewById(R.id.recyclerViewOggetti);
-        layoutNoZone=findViewById(R.id.layout_no_zone);
-        addZona=findViewById(R.id.addZonaNoZone);
+        layoutNoZone = findViewById(R.id.layout_no_zone);
+        addZona = findViewById(R.id.addZonaNoZone);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarOggetti);
         dataBaseHelper = new DataBaseHelper(this);
@@ -75,13 +77,13 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         layoutNoZone.setVisibility(View.INVISIBLE);
         retrieveZone();
 
-        if(zoneList.isEmpty()){
+        if (zoneList.isEmpty()) {
             recyclerView.setVisibility(View.INVISIBLE);
             fabAddOggetto.setVisibility(View.INVISIBLE);
             layoutNoZone.setVisibility(View.VISIBLE);
 
 
-        } else{
+        } else {
             setOggettoInfo();
 
             setAdapter();
@@ -89,7 +91,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             //metodo che nasconde le view in caso di accesso con account ospite
             nascondiView();
         }
-
 
 
     }
@@ -103,7 +104,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
-        if(emailCuratore.compareTo(emailOspite) == 0){
+        if (emailCuratore.compareTo(emailOspite) == 0) {
             fabAddOggetto.setVisibility(View.INVISIBLE);
         }
     }
@@ -131,7 +132,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         addZona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),AggiungiZonaActivity.class));
+                startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class));
                 finish();
             }
         });
@@ -188,6 +189,11 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         startActivity(intent);
     }
 
+    @Override
+    public void onOggettoLongClick(int position) {
+        showCustomDialog(position);
+    }
+
 
     @Override
     protected void onResume() {
@@ -195,5 +201,33 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         setOggettoInfo();
         retrieveZone();
         setAdapter();
+    }
+
+    void showCustomDialog(int p) {
+        final Dialog dialog = new Dialog(this);
+        int idOggettoEliminare = oggettiList.get(p).getId();
+
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_elimina_oggetto);
+
+        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_oggetto);
+        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_oggetto);
+
+        dialog.show();
+
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataBaseHelper.deleteOggetto(idOggettoEliminare);
+                oggettiList.remove(p);
+                dialog.dismiss();
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }

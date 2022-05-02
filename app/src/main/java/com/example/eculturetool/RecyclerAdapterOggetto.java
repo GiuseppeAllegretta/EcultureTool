@@ -33,20 +33,20 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     private ArrayList<Oggetto> oggettiListAll;
     private OnOggettoListener mOnOggettoListener;
 
-    public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList, OnOggettoListener onOggettoListener){
+    public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList, OnOggettoListener onOggettoListener) {
         this.oggettiList = oggettiList;
         this.oggettiListAll = new ArrayList<>(oggettiList);
         this.mOnOggettoListener = onOggettoListener;
     }
 
 
-    public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView nomeOggetto,descrizioneOggetto;
+    public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private TextView nomeOggetto, descrizioneOggetto;
         private ImageView immagineOggetto;
         private OnOggettoListener onOggettoListener;
 
 
-        public OggettiViewHolder(final View view, OnOggettoListener onOggettoListener){
+        public OggettiViewHolder(final View view, OnOggettoListener onOggettoListener) {
             super(view);
             nomeOggetto = view.findViewById(R.id.nomeOggetto);
             descrizioneOggetto = view.findViewById(R.id.descrizioneOggetto);
@@ -54,12 +54,19 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
 
             this.onOggettoListener = onOggettoListener;
             view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
 
         }
 
         @Override
         public void onClick(View view) {
             onOggettoListener.onOggettoClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onOggettoListener.onOggettoLongClick(getAdapterPosition());
+            return false;
         }
     }
 
@@ -97,11 +104,11 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Oggetto> filteredList = new ArrayList<>();
 
-            if(charSequence.toString().isEmpty()){
+            if (charSequence.toString().isEmpty()) {
                 filteredList.addAll(oggettiListAll);
-            }else {
-                for(Oggetto oggetto: oggettiListAll){
-                    if(oggetto.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())){
+            } else {
+                for (Oggetto oggetto : oggettiListAll) {
+                    if (oggetto.getNome().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(oggetto);
                     }
                 }
@@ -123,8 +130,10 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
     };
 
 
-    public interface OnOggettoListener{
+    public interface OnOggettoListener {
         void onOggettoClick(int position);
+
+        void onOggettoLongClick(int position);
     }
 
 }
