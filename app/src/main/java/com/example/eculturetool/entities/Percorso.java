@@ -6,9 +6,17 @@ import java.util.ArrayList;
 
 public class Percorso {
 
+    /**
+     * Id del percorso univoco
+     */
     private int id;
+
+    /**
+     * id del luogo a cui fa riferimento il percorso
+     */
+    private int idLuogo;
     private String nome;
-    private String jsonPercorso;
+    private String descrizione;
     private ArrayList<Zona> zone;
 
     public Percorso(int id, String nome) {
@@ -17,14 +25,12 @@ public class Percorso {
         zone = new ArrayList<>();
     }
 
-    public Percorso(String nome, String jsonPercorso) {
+    public Percorso(String nome, String descrizione, int idLuogo) {
+        this.idLuogo = idLuogo;
         this.nome = nome;
-        this.jsonPercorso = jsonPercorso;
+        this.descrizione = descrizione;
     }
 
-    public String getJsonPercorso() {
-        return jsonPercorso;
-    }
 
     public int getId() {
         return id;
@@ -36,10 +42,6 @@ public class Percorso {
 
     public ArrayList<Zona> getZone() {
         return zone;
-    }
-
-    public void setJsonPercorso(String jsonPercorso) {
-        this.jsonPercorso = jsonPercorso;
     }
 
     public void setId(int id) {

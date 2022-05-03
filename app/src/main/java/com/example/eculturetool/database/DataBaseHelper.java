@@ -130,7 +130,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "(" + COLONNA_PERCORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLONNA_PERCORSO_NOME + " TEXT," +
                 COLONNA_PERCORSO_DESCRIZIONE + " TEXT," +
-                COLONNA_PERCORSO_JSON + " TEXT," +
                 COLONNA_PERCORSO_ID_LUOGO + " INT, " +
                 " CONSTRAINT fk_luoghi_percorsi FOREIGN KEY (" + COLONNA_PERCORSO_ID_LUOGO + ") REFERENCES " + TABLE_LUOGHI + " (" + COLONNA_LUOGHI_ID + ")" + ")";
 
@@ -979,7 +978,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(COLONNA_PERCORSO_NOME, percorso.getNome());
         //contentValues.put(COLONNA_PERCORSO_DESCRIZIONE, percorso.getDescrizione());
-        contentValues.put(COLONNA_PERCORSO_JSON, percorso.getJsonPercorso());
         //contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
 
 
@@ -1005,12 +1003,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToFirst()){
                 int idPercorso = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID));
                 String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_NOME));
-                String percorsoJson = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_JSON));
-                //String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
-                //int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
+                int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
 
-                percorso = new Percorso(nome, percorsoJson);
-                //percorso.setId(idPercorso);
+                percorso = new Percorso(nome, descrizione, idLuogo);
+                percorso.setId(idPercorso);
             }
 
         }
