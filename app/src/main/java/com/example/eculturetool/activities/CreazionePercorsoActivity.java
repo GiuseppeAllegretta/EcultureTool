@@ -1,7 +1,6 @@
 package com.example.eculturetool.activities;
 
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Zona;
-import com.example.eculturetool.utility_percorsi.MyRecyclerAdapter;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
+import com.example.eculturetool.utility_percorsi.MyRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerViewZone)
     RecyclerView recyclerView;
-    ImageButton btnAdd;
 
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
@@ -47,7 +44,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
 
         luogo = dataBaseHelper.getLuogoCorrente();
-        //btnAdd = findViewById(R.id.btnAddZona);
 
         // Metodo corretto, per testare uso la demo
         /*listaZone.addAll(dataBaseHelper.getZone());
@@ -61,7 +57,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         init();
         generateItems();
 
-        //btnAdd.setOnClickListener(view -> addCard());
 
     }
 
@@ -76,9 +71,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         overridePendingTransition( 0, 0);
     }
 
-    private void showButton(){
-        //TODO creare un altro adapter per il bottone
-    }
+
 
     /**
      * Metodo che permette la creazione delle cards

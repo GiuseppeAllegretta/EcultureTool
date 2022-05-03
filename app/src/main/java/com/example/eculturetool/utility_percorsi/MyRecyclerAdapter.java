@@ -1,10 +1,7 @@
 package com.example.eculturetool.utility_percorsi;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,22 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.CreazionePercorsoActivity;
-import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.InfoZonaActivity;
-import com.example.eculturetool.fragments.InfoZonaFragment;
-import com.example.eculturetool.fragments.ProfileFragment;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +32,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     OnStartDragListener listener;
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cardZona)
         CardView cardZona;
         @BindView(R.id.cardDescription)
@@ -123,12 +111,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         });
 
 
-        holder.closeCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeAt(holder.getAdapterPosition());
-            }
-        });
+        holder.closeCard.setOnClickListener(v -> removeAt(holder.getAdapterPosition()));
 
 
     }
@@ -157,15 +140,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         return stringList.get(position).hashCode();
     }
 
-    private void deleteCard(){
 
-    }
-
+    /**
+     * Nuova activity per vedere info di una zona
+     */
     private void openInfoZona(){
         Intent intent = new Intent (context, InfoZonaActivity.class);
         context.startActivity(intent);
     }
 
+    /**
+     * Rimuove la card passata come parametro
+     * @param position, la posizione della card
+     */
     public void removeAt(int position) {
         stringList.remove(position);
         notifyItemRemoved(position);

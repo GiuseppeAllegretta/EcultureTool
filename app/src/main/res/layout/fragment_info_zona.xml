@@ -6,7 +6,7 @@
     android:padding="8dp"
     android:background="@color/lightWhiteGreen"
     android:elevation="20pt"
-    tools:context=".fragments.InfoZonaFragment"
+    tools:context=".fragments.InfoZonaActivity"
     android:id="@+id/fragment_container">
 
     <ImageView
