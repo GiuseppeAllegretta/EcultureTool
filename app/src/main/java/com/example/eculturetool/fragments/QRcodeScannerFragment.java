@@ -3,6 +3,7 @@ package com.example.eculturetool.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.DettaglioOggettoActivity;
@@ -21,6 +24,9 @@ import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.Capture;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -37,6 +43,7 @@ public class QRcodeScannerFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     Button scanBtn;
+    ImageView showTutorial;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -78,8 +85,16 @@ public class QRcodeScannerFragment extends Fragment {
 
         //Bottone per la scansione del QR code
         scanBtn = view.findViewById(R.id.scanBtn);
+        showTutorial=view.findViewById(R.id.showTutorialQr);
 
         scanQRcode();
+
+        showTutorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTutorial();
+            }
+        });
     }
 
     private void scanQRcode() {
@@ -107,5 +122,38 @@ public class QRcodeScannerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_q_rcode_scanner, container, false);
+    }
+
+
+
+    private void showTutorial(){
+
+
+        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+                TapTarget.forView(scanBtn, "Scansiona QR Code", "Inquadra un Qr code di un\n" +
+                        "oggetto per visualizzarlo,\n modificarlo o eliminarlo")
+                        // All options below are optional
+                        .outerCircleColor(R.color.gialloSecondario)
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.verdePrimario)
+                        .titleTextSize(15)
+                        .titleTextColor(R.color.white)
+                        .descriptionTextSize(12)
+                        .descriptionTextColor(R.color.white)
+                        .textColor(R.color.black)
+                        .textTypeface(Typeface.SANS_SERIF)
+                        .dimColor(R.color.black)
+                        .drawShadow(true)
+                        .cancelable(false)
+                        .tintTarget(false)
+                        .transparentTarget(false)
+                        .targetRadius(100),
+                new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                    }
+                });
+
     }
 }
