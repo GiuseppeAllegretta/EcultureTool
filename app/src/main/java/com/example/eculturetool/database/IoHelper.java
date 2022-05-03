@@ -1,4 +1,4 @@
-package com.example.eculturetool.percorsi;
+package com.example.eculturetool.database;
 
 import android.content.Context;
 import android.widget.Toast;

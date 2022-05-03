@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Zona;
 
 import org.jgrapht.Graph;
