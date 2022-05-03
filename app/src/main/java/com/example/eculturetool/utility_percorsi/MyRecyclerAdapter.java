@@ -123,8 +123,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         });
 
 
-        //Clickando sulla singola card si aprono le info
-        //TODO metterlo nel double tap?
+        holder.closeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAt(holder.getAdapterPosition());
+            }
+        });
 
 
     }
@@ -160,6 +164,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     private void openInfoZona(){
         Intent intent = new Intent (context, InfoZonaActivity.class);
         context.startActivity(intent);
+    }
+
+    public void removeAt(int position) {
+        stringList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, stringList.size());
     }
 
 }
