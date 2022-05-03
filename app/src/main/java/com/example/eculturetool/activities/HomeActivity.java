@@ -30,6 +30,7 @@ import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRScannerFragment;
+import com.example.eculturetool.fragments.QRcodeScannerFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,8 +83,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.qr_scanner:
                     //replaceFragment(new QRScannerFragment());
                     if(permission.checkCameraPermission(this, parentLayout)){
-                        //replaceFragment(new QRcodeScannerFragment());
-                        replaceFragment(new QRScannerFragment());
+                        replaceFragment(new QRcodeScannerFragment());
+                        //replaceFragment(new QRScannerFragment());
                     }else{
                         permission.requestCameraPermission(this, parentLayout);
                     }
