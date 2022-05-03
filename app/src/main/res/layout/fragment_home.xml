@@ -37,6 +37,13 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
+        <ImageView
+            android:id="@+id/showTutorialHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/question"/>
+
     </RelativeLayout>
 
     <ScrollView

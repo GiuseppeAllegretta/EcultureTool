@@ -51,22 +51,13 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.2635416666666667" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/upload_image_options.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.18333333333333332" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.2171875" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.23981481481481481" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/home.xml" value="0.1814814814814815" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/info_zona_activity.xml" value="0.20989583333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/layout_card_add_zona_percorso.xml" value="0.1814814814814815" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.2484375" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/main_recycler_row_item.xml" value="0.36102564102564105" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/prova.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/zona_row_items.xml" value="0.23981481481481481" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/ic_action_settings.xml" value="0.229" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1675" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/btn_tondo.xml" value="0.116" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_focused_color.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_normal.xml" value="0.1675" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_tondo.xml" value="0.116" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/font/le_chant_des_albatros.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_museo.xml" value="0.18425925925925926" />
@@ -95,6 +86,7 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_zone.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_oggetto.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.20854700854700856" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_zona.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_places.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
@@ -141,7 +133,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
