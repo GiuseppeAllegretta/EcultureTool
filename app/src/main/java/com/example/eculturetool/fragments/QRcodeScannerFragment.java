@@ -121,7 +121,7 @@ public class QRcodeScannerFragment extends Fragment {
 
         TapTargetView.showFor(getActivity(),                 // `this` is an Activity
                 TapTarget.forView(scanBtn, "Scansiona QR Code", "Inquadra un Qr code di un\n" +
-                        "oggetto per visualizzarlo,\n modificarlo o eliminarlo")
+                        "oggetto per visualizzarlo,\nmodificarlo o eliminarlo")
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

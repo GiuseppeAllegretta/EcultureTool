@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
 
     private void showTutorial(){
         new TapTargetSequence(getActivity()).targets(
-                TapTarget.forView(luoghi,"Pulsante Luoghi","Potrai gestire da qui\n i tuoi luoghi")
+                TapTarget.forView(luoghi,"Pulsante Luoghi","Potrai gestire da qui\ni tuoi luoghi")
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
 
-                TapTarget.forView(zone,"Pulsante Zone","Potrai gestire da qui\n le tue zone")
+                TapTarget.forView(zone,"Pulsante Zone","Potrai gestire da qui\nle tue zone")
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
 
-                TapTarget.forView(oggetti,"Pulsante Oggetti","Potrai gestire da qui\n i tuoi oggetti")
+                TapTarget.forView(oggetti,"Pulsante Oggetti","Potrai gestire da qui\ni tuoi oggetti")
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -238,7 +238,7 @@ public class HomeFragment extends Fragment {
                         .tintTarget(false)
                         .transparentTarget(true)
                         .targetRadius(60),
-                TapTarget.forView(percorsi,"Pulsante Percorsi","Potrai creare e gestire \n i tuoi percorsi da qui")
+                TapTarget.forView(percorsi,"Pulsante Percorsi","Potrai creare e gestire\ni tuoi percorsi da qui")
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

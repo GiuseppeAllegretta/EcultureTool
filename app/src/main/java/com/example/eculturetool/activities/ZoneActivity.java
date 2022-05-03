@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,7 +25,10 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
+import com.example.eculturetool.databinding.HomeBinding;
 import com.example.eculturetool.entities.Zona;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -47,7 +51,6 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
         fabAddLuogo = findViewById(R.id.addZona);
 
-
         Toolbar myToolbar = findViewById(R.id.toolbarZone);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
@@ -69,6 +72,10 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         setZoneInfo();
 
         nascondiView();
+
+        if(zoneList.isEmpty()){
+            showTutorial();
+        }
     }
 
     /**
@@ -178,5 +185,37 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
             }
         });
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
+    }
+
+
+    private void showTutorial(){
+
+
+        TapTargetView.showFor(this,
+                TapTarget.forView(fabAddLuogo, "Aggiungi zona", "Per iniziare, aggiungi\n" +
+                        " una nuova zona")
+                        // All options below are optional
+                        .outerCircleColor(R.color.gialloSecondario)
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(15)
+                        .titleTextColor(R.color.white)
+                        .descriptionTextSize(12)
+                        .descriptionTextColor(R.color.white)
+                        .textColor(R.color.black)
+                        .textTypeface(Typeface.SANS_SERIF)
+                        .dimColor(R.color.black)
+                        .drawShadow(true)
+                        .cancelable(false)
+                        .tintTarget(false)
+                        .transparentTarget(true)
+                        .targetRadius(60),
+                new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                    }
+                });
+
     }
 }
