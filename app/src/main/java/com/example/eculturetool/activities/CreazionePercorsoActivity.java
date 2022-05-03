@@ -1,27 +1,23 @@
 package com.example.eculturetool.activities;
 
 import android.os.Bundle;
-import android.text.Layout;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.MyRecyclerAdapter;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,35 +29,44 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageButton btnAdd;
 
+    DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
 
+
+
     //Dati simulati, TODO prenderli da database
-    Luogo luogo = new Luogo("Museo di Matt", "Descrizione", Tipologia.MUSEO, "emailacaso");
+    Luogo luogo;
+    ArrayList<Zona> listaZone = new ArrayList<>();
     static List<String> data = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creazione_percorso);
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
+
+        luogo = dataBaseHelper.getLuogoCorrente();
         //btnAdd = findViewById(R.id.btnAddZona);
 
-/*
+        // Metodo corretto, per testare uso la demo
+        /*listaZone.addAll(dataBaseHelper.getZone());
+        for(int i = 0; i < listaZone.size(); i++){
+            listaZone.get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(listaZone.get(i)));
+        }*/
 
-        //Simulazione dati
-        luogo.addZona(new Zona(1, "Stanza delle cere", "Nella stanza si possono trovare cere di vario tipo", 1));
-        luogo.addZona(new Zona(2, "Stanza delle statue ma con un nome lungo", "Molte statue, poco da dire", 1));
-        luogo.addZona(new Zona(4, "Camera rossa", "E' una camera rossa", 1));
-        luogo.addZona(new Zona(6, "Retro", "Finalmente ce ne andiamo", 1));
-        luogo.addZona(new Zona(9, "Salone principale", "Grande quasi quanto il mio sgabuzzino", 1));
-        data.addAll(luogo.getZoneAsStringList());
-*/
+        listaZone.addAll(dataBaseHelper.getZoneDemo());
+
 
         init();
-        generateItem();
+        generateItems();
 
         //btnAdd.setOnClickListener(view -> addCard());
 
     }
+
+
+
 
     private void addCard() {
         data.add("Sette");
@@ -75,7 +80,14 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         //TODO creare un altro adapter per il bottone
     }
 
-    private void generateItem() {
+    /**
+     * Metodo che permette la creazione delle cards
+     */
+    private void generateItems() {
+        //Preparazione dei nomi delle card
+        for (int i = 0; i < listaZone.size(); i++){
+            data.add(i, listaZone.get(i).getNome());
+        }
         MyRecyclerAdapter adapter = new MyRecyclerAdapter(this, data, viewHolder -> itemTouchHelper.startDrag(viewHolder));
 
         recyclerView.setAdapter(adapter);
@@ -85,6 +97,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo che inizializza la recycler view (griglia)
+     */
     private void init(){
         ButterKnife.bind(this);
 

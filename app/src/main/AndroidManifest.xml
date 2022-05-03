@@ -45,9 +45,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
-            android:name=".percorsi.EsportazionePercorsoActivity"
-            android:exported="true" />
-        <activity
             android:name=".utilities.Capture"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
@@ -169,6 +166,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity android:name=".activities.CreazionePercorsoActivity"
+            android:exported="true"/>
+
+        <activity android:name=".fragments.InfoZonaActivity"
             android:exported="true"/>
 
         <activity

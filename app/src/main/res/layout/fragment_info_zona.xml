@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp"
+    android:background="@color/lightWhiteGreen"
+    android:elevation="20pt"
+    tools:context=".fragments.InfoZonaFragment"
+    android:id="@+id/fragment_container">
+
+    <ImageView
+        android:id="@+id/ic_close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_close" />
+
+
+    <TextView
+        android:id="@+id/titolo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/posterama_1927_regular"
+        android:gravity="center"
+        android:text="Titolo"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descrizione"
+        android:layout_below="@+id/titolo"
+        android:text="Descrizione"
+        android:fontFamily="@font/posterama_1927_light"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="8dp"/>
+
+
+    <ListView
+        android:id="@+id/list_oggetti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descrizione"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>

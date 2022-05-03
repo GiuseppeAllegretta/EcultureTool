@@ -196,9 +196,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
 
-        System.out.println(stringQuery);
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
-
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 email = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_EMAIL));
@@ -807,6 +805,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return oggetto;
+    }
+
+    public List<Oggetto> getOggettiByZona(Zona zona){
+        List<Oggetto> returnList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String stringQuery = "SELECT * FROM " + TABLE_OGGETTI + " WHERE " + COLONNA_OGGETTO_ZONA_ID + " = " + zona.getId();
+        Cursor cursor = db.rawQuery(stringQuery, null);
+
+        if(cursor.moveToFirst()){
+
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_DESCRIZIONE));
+                TipologiaOggetto tipologia = TipologiaOggetto.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_TIPOLOGIA)));
+                String urlImg = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_IMMAGINE));
+                String urlQrCode = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_URL_QRCODE));
+                int idZona = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ZONA_ID));
+
+
+                Oggetto oggetto = new Oggetto(id, nome, descrizione, urlImg, tipologia, idZona);
+                oggetto.setUrlQrcode(urlQrCode);
+                returnList.add(oggetto);
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+
     }
 
 

@@ -2,21 +2,32 @@ package com.example.eculturetool.utility_percorsi;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.fragments.InfoZonaActivity;
+import com.example.eculturetool.fragments.InfoZonaFragment;
+import com.example.eculturetool.fragments.ProfileFragment;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +43,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     List<String> stringList;
     OnStartDragListener listener;
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cardZona)
         CardView cardZona;
@@ -39,6 +51,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         TextView cardText;
         @BindView(R.id.cardNumber)
         TextView cardNumber;
+        @BindView(R.id.ic_close)
+        ImageView closeCard;
 
         Unbinder unbinder;
 
@@ -73,26 +87,30 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                 @Override
                 public void onLongPress(MotionEvent e) {
                     long eventDuration = e.getEventTime() - e.getDownTime();
-                    //Se una card viene premuta per almeno 1s può essere spostata
-                    if (eventDuration > 1000) {
+                    //Se una card viene premuta per almeno 800ms può essere spostata
+                    if (eventDuration > 800) {
                         listener.onStartDrag(holder);
                     }
                 }
 
-                //Apertura informazioni sul duoble tap
+                //Eliminazione card
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    Toast.makeText(context, "double tap", Toast.LENGTH_SHORT).show();
+                    if(holder.closeCard.getVisibility() == View.INVISIBLE)
+                        holder.closeCard.setVisibility(View.VISIBLE);
+                    else
+                        holder.closeCard.setVisibility(View.INVISIBLE);
                     return super.onDoubleTap(e);
                 }
 
+
+
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    Toast.makeText(context, "Nuovo thread", Toast.LENGTH_SHORT).show();
-                    return super.onSingleTapConfirmed(e);
+                    openInfoZona();
+                    return true;
                 }
 
-                //TODO on single tap da impostare
             });
 
 
@@ -100,38 +118,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetector.onTouchEvent(event);
-                return false;
+                return true;
             }
         });
 
 
-        //Recupero posizione della card
-        holder.cardZona.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Clickando sulla singola card si aprono le info
+        //TODO metterlo nel double tap?
 
-                Handler handler = new Handler();
 
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (this){
-                            //showDialog();
-                        }
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context, "Nuovo thread", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        //postDelayed se si vuole ritardardare l'aggiornamento della UI
-                        //Log.i("boh", "waiting");
-                    }
-                };
-                Thread thread = new Thread(runnable);
-                thread.start();
-            }
-        });
     }
 
     @Override
@@ -157,11 +152,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     public long getItemId(int position) {
         return stringList.get(position).hashCode();
     }
-//TODO fare il dialog
-    /*private void showDialog(){
-        Dialog dialog = new Dialog(context.getApplicationContext());
-        dialog.setContentView(R.layout.dialog_select_zona);
-        dialog.show();
-    }*/
+
+    private void deleteCard(){
+
+    }
+
+    private void openInfoZona(){
+        Intent intent = new Intent (context, InfoZonaActivity.class);
+        context.startActivity(intent);
+    }
 
 }

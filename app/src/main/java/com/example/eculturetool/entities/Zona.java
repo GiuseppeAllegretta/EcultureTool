@@ -2,12 +2,14 @@ package com.example.eculturetool.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Zona implements Serializable {
     private int id;
     private String nome;
     private String descrizione;
     private int riferimentoLuogo;
+    private ArrayList<Oggetto> listaOggetti;
 
     public Zona(){
 
@@ -57,6 +59,14 @@ public class Zona implements Serializable {
 
     public void setRiferimentoLuogo(int riferimentoLuogo) {
         this.riferimentoLuogo = riferimentoLuogo;
+    }
+
+    public ArrayList<Oggetto> getListaOggetti(){
+        return listaOggetti;
+    }
+
+    public void addListaOggetti(List<Oggetto> list){
+        listaOggetti.addAll(list);
     }
 
 

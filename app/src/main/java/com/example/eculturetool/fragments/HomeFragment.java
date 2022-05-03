@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
 import com.example.eculturetool.activities.PercorsiActivity;
 import com.example.eculturetool.activities.ZoneActivity;
@@ -84,6 +85,7 @@ public class HomeFragment extends Fragment {
         oggetti = view.findViewById(R.id.oggettiCard);
         luogoGestito = view.findViewById(R.id.nomeLuogoHome);
         dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+        dataBaseHelper.getCuratore();
 
 
         //Operazioni che settano il nome del curatore nella home
@@ -101,7 +103,7 @@ public class HomeFragment extends Fragment {
         percorsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), PercorsiActivity.class));
+                startActivity(new Intent(getActivity(), CreazionePercorsoActivity.class));
             }
         });
 
@@ -134,7 +136,6 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -143,8 +144,6 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragments
         return inflater.inflate(R.layout.fragment_home, container, false);
-
-
     }
 
     @Override

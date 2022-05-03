@@ -17,7 +17,7 @@ public class Percorso {
     private int idLuogo;
     private String nome;
     private String descrizione;
-    private ArrayList<Zona> zone;
+    private ArrayList<ArrayList<Oggetto>> zone;
 
     public Percorso(int id, String nome) {
         this.id = id;
@@ -40,7 +40,7 @@ public class Percorso {
         return nome;
     }
 
-    public ArrayList<Zona> getZone() {
+    public ArrayList<ArrayList<Oggetto>> getZone() {
         return zone;
     }
 
