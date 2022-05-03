@@ -69,7 +69,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String COLONNA_PERCORSO_NOME = "PERCORSO_NOME";
     private static final String COLONNA_PERCORSO_ID_LUOGO = COLONNA_PERCORSO_ID + "_LUOGO";
     private static final String COLONNA_PERCORSO_DESCRIZIONE = "PERCORSO_DESCRIZIONE";
-    private static final String COLONNA_PERCORSO_JSON = "PERCORSO_JSON";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "e-cultureTool.db",null , 3);
