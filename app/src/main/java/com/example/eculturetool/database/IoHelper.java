@@ -204,9 +204,6 @@ public class IoHelper {
     public void shareFileTxt(int id){
         String stringFile = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files" + File.separator + id + "_TXT.txt";
 
-        //String directoryPath = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files";
-        //creaTempFile(stringFile);
-
         File file = new File(stringFile);
 
         if(!file.exists()){
@@ -218,10 +215,6 @@ public class IoHelper {
         intentShare.setType("text/*");
         intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
         context.startActivity(Intent.createChooser(intentShare, "Condividi file..."));
-    }
-
-    private void creaTempFile(String stringFile) {
-
     }
 
 
