@@ -95,7 +95,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    openInfoZona();
+                    openInfoZona(holder.cardText);
                     return true;
                 }
 
@@ -144,8 +144,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     /**
      * Nuova activity per vedere info di una zona
      */
-    private void openInfoZona(){
+    private void openInfoZona(TextView text){
         Intent intent = new Intent (context, InfoZonaActivity.class);
+        intent.putExtra("TITLE", text.getText());
         context.startActivity(intent);
     }
 
