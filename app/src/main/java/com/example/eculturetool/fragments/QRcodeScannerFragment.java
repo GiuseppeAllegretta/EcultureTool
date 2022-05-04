@@ -117,8 +117,6 @@ public class QRcodeScannerFragment extends Fragment {
 
 
     private void showTutorial(){
-
-
         TapTargetView.showFor(getActivity(),                 // `this` is an Activity
                 TapTarget.forView(scanBtn, "Scansiona QR Code", "Inquadra un Qr code di un\n" +
                         "oggetto per visualizzarlo,\nmodificarlo o eliminarlo")

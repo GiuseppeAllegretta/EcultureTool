@@ -169,7 +169,6 @@ public class HomeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //DA QUI
         String regex_id = "[0-9]*"; //espressione regolare utile per verificare che quanto letto dal qr code contenga solo numeri
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
@@ -177,31 +176,34 @@ public class HomeActivity extends AppCompatActivity {
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        if (intentResult.getContents() != null) {
-            if (Pattern.matches(regex_id, intentResult.getContents())) {
-                int idOggetto = Integer.parseInt(intentResult.getContents());
-                System.out.println("Valore risultante: " + idOggetto);
+        if(intentResult != null){
+            if (intentResult.getContents() != null) {
+                if (Pattern.matches(regex_id, intentResult.getContents())) {
+                    int idOggetto = Integer.parseInt(intentResult.getContents());
+                    System.out.println("Valore risultante: " + idOggetto);
 
-                for (Oggetto oggetto : oggettiList) {
-                    if (oggetto.getId() == idOggetto) {
-                        List<Zona> zoneList = dataBaseHelper.getZone();
+                    for (Oggetto oggetto : oggettiList) {
+                        if (oggetto.getId() == idOggetto) {
+                            List<Zona> zoneList = dataBaseHelper.getZone();
 
-                        Intent intent = new Intent(this, DettaglioOggettoActivity.class);
-                        intent.putExtra(Oggetto.Keys.ID, idOggetto);
-                        intent.putExtra("ZONELIST", (Serializable) zoneList);
+                            Intent intent = new Intent(this, DettaglioOggettoActivity.class);
+                            intent.putExtra(Oggetto.Keys.ID, idOggetto);
+                            intent.putExtra("ZONELIST", (Serializable) zoneList);
 
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
                     }
+                } else {
+                    dialogOggettoNonTrovato();
                 }
+
+
             } else {
                 dialogOggettoNonTrovato();
+
             }
-
-
-        } else {
-            dialogOggettoNonTrovato();
-
         }
+
     }
 
     private void dialogOggettoNonTrovato() {
