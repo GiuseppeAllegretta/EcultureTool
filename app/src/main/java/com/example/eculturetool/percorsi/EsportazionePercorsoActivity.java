@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -56,14 +57,13 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
 
     private void permessiCondivisioneFile() {
         ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE}, PERMISSION_GRANTED);
-        StrictMode.VmPolicy.Builder builder  = new StrictMode.VmPolicy.Builder();
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
 
         esportaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +101,11 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
             graph.addVertex(zoneList.get(i));
         }
 
-        for (int i = 0; i < zoneList.size()-1; i++) {
-            graph.addEdge(zoneList.get(i), zoneList.get(i+1));
+        for (int i = 0; i < zoneList.size() - 1; i++) {
+            graph.addEdge(zoneList.get(i), zoneList.get(i + 1));
         }
 
-        for(Zona zona: zoneList){
+        for (Zona zona : zoneList) {
             zona.addOggetto(new Oggetto("Gioconda", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F15296.jpg?alt=media&token=c8403eeb-838d-4497-b891-5af4015eaefa", TipologiaOggetto.QUADRO, zona.getId()));
             zona.addOggetto(new Oggetto("Venere di Milo", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F15296.jpg?alt=media&token=c8403eeb-838d-4497-b891-5af4015eaefa", TipologiaOggetto.QUADRO, zona.getId()));
         }

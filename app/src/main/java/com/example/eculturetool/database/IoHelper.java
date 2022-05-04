@@ -1,7 +1,9 @@
 package com.example.eculturetool.database;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
@@ -195,9 +197,16 @@ public class IoHelper {
         }
     }
 
+    /**
+     * Metodo che riceve in input l'identificativo di un percorso e condivide il file riepilogativo con un'altra app (Gmail, What's app...)
+     * @param id identificativo del percorso
+     */
     public void shareFileTxt(int id){
         String stringFile = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files" + File.separator + id + "_TXT.txt";
-        System.out.println("File path: " + stringFile);
+
+        //String directoryPath = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files";
+        //creaTempFile(stringFile);
+
         File file = new File(stringFile);
 
         if(!file.exists()){
@@ -210,6 +219,11 @@ public class IoHelper {
         intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
         context.startActivity(Intent.createChooser(intentShare, "Condividi file..."));
     }
+
+    private void creaTempFile(String stringFile) {
+
+    }
+
 
     private List<Zona> fromIteratorToArrayZone(Iterator<Zona> iterator) {
         List<Zona> returnList = new ArrayList<>();

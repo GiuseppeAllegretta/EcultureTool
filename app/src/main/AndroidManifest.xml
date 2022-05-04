@@ -53,7 +53,7 @@
 
         <activity
             android:name=".percorsi.EsportazionePercorsoActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".activities.PercorsiActivity"
             android:exported="false"
