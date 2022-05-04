@@ -1,20 +1,34 @@
 package com.example.eculturetool.percorsi;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
+import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EsportazionePercorsoActivity extends AppCompatActivity {
@@ -23,6 +37,8 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
     private Button esportaBtn;
     private Button cancellaBtn;
     private DataBaseHelper dataBaseHelper;
+    private CardView shareCrd;
+    private IoHelper ioHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +47,17 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
 
         esportaBtn = findViewById(R.id.esporta);
         cancellaBtn = findViewById(R.id.cancellaPercorso);
+        shareCrd = findViewById(R.id.share);
         dataBaseHelper = new DataBaseHelper(this);
+        ioHelper = new IoHelper(this);
+
+        permessiCondivisioneFile();
+    }
+
+    private void permessiCondivisioneFile() {
+        ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE}, PERMISSION_GRANTED);
+        StrictMode.VmPolicy.Builder builder  = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     @Override
@@ -45,14 +71,22 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
                 IoHelper graphToJson = new IoHelper(EsportazionePercorsoActivity.this);
                 graphToJson.serializzaPercorso(grafoProva(), 1);
                 Graph<Zona, DefaultEdge> graphReturned = graphToJson.deserializzaPercorso(1);
+                graphToJson.esportaTxt(grafoProva(), 1);
+
             }
         });
 
         cancellaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IoHelper ioHelper = new IoHelper(EsportazionePercorsoActivity.this);
                 ioHelper.cancellaPercorso(1);
+            }
+        });
+
+        shareCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ioHelper.shareFileTxt(1);
             }
         });
     }
@@ -70,6 +104,13 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
         for (int i = 0; i < zoneList.size()-1; i++) {
             graph.addEdge(zoneList.get(i), zoneList.get(i+1));
         }
+
+        for(Zona zona: zoneList){
+            zona.addOggetto(new Oggetto("Gioconda", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F15296.jpg?alt=media&token=c8403eeb-838d-4497-b891-5af4015eaefa", TipologiaOggetto.QUADRO, zona.getId()));
+            zona.addOggetto(new Oggetto("Venere di Milo", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F15296.jpg?alt=media&token=c8403eeb-838d-4497-b891-5af4015eaefa", TipologiaOggetto.QUADRO, zona.getId()));
+        }
+
+
         return graph;
     }
 }

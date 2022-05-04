@@ -290,6 +290,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " FROM (" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") " +
                 "WHERE " + COLONNA_LUOGHI_ID + " = " + luogoCorrente;
 
+        System.out.println(stringQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(stringQuery, null);
 
@@ -319,6 +320,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
+        System.out.println("email curatore: " + emailCuratore);
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 luogoCorrente = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_LUOGO_CORRENTE));

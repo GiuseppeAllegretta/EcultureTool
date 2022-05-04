@@ -1,9 +1,13 @@
 package com.example.eculturetool.database;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.widget.Toast;
 
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
 
@@ -154,5 +158,68 @@ public class IoHelper {
 
         return risultato;
     }
+
+
+    public void esportaTxt(Graph graph, int id){
+        final String FILE_NAME = id + "_TXT" + ".txt";
+        List<Zona> zone = new ArrayList<>();
+        Iterator<Zona> iterator = graph.vertexSet().iterator();
+
+        zone = fromIteratorToArrayZone(iterator);
+
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+
+            for(int i = 0; i < zone.size(); i++){
+                fileOutputStream.write((i + 1 + ") " + zone.get(i).getNome() + "\n").getBytes());
+
+                Iterator<Oggetto> iteratoreOggetti = zone.get(i).getListaOggetti().iterator();
+                while (iteratoreOggetti.hasNext()){
+                    fileOutputStream.write(("   - " + iteratoreOggetti.next().getNome() + "\n").getBytes());
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileOutputStream != null){
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void shareFileTxt(int id){
+        String stringFile = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files" + File.separator + id + "_TXT.txt";
+        System.out.println("File path: " + stringFile);
+        File file = new File(stringFile);
+
+        if(!file.exists()){
+            Toast.makeText(context, "Il file non esiste!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intentShare = new Intent(Intent.ACTION_SEND);
+        intentShare.setType("text/*");
+        intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
+        context.startActivity(Intent.createChooser(intentShare, "Condividi file..."));
+    }
+
+    private List<Zona> fromIteratorToArrayZone(Iterator<Zona> iterator) {
+        List<Zona> returnList = new ArrayList<>();
+
+        while (iterator.hasNext()){
+            returnList.add(iterator.next());
+        }
+
+        return returnList;
+    }
+
 
 }
