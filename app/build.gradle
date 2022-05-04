@@ -52,7 +52,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.github.yuriy-budiyev:code-scanner:2.1.1' // Qr Scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.4.0' //genera QRcode
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0' //genera QRcode
 
     implementation 'com.jakewharton:butterknife:10.2.3' //Dynamic gridview
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'

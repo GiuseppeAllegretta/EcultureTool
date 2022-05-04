@@ -1,26 +1,36 @@
 package com.example.eculturetool.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.eculturetool.R;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
+import com.example.eculturetool.R;
+import com.example.eculturetool.activities.DettaglioOggettoActivity;
+import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.Capture;
 import com.getkeepsafe.taptargetview.TapTarget;
-
 import com.getkeepsafe.taptargetview.TapTargetView;
-import com.google.zxing.integration.android.IntentIntegrator;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 /**
@@ -32,6 +42,7 @@ public class QRcodeScannerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
 
+    ActivityResultLauncher<ScanOptions> activityResultLaucher;
     Button scanBtn;
     ImageView showTutorial;
 
@@ -67,6 +78,50 @@ public class QRcodeScannerFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        String regex_id = "[0-9]*"; //espressione regolare utile per verificare che quanto letto dal qr code contenga solo numeri
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(requireContext());
+        List<Oggetto> oggettiList = dataBaseHelper.getAllOggetti();
+        activityResultLaucher = registerForActivityResult(new ScanContract(),
+                result -> {
+                    if (result.getContents() != null) {
+                        if (Pattern.matches(regex_id, result.getContents())) {
+                            int idOggetto = Integer.parseInt(result.getContents());
+                            System.out.println("Valore risultante: " + idOggetto);
+
+                            for (Oggetto oggetto : oggettiList) {
+                                if (oggetto.getId() == idOggetto) {
+                                    List<Zona> zoneList = dataBaseHelper.getZone();
+
+                                    Intent intent = new Intent(requireActivity(), DettaglioOggettoActivity.class);
+                                    intent.putExtra(Oggetto.Keys.ID, idOggetto);
+                                    intent.putExtra("ZONELIST", (Serializable) zoneList);
+
+                                    startActivity(intent);
+                                }
+                            }
+                        } else {
+                            dialogOggettoNonTrovato();
+                        }
+                    } else {
+                        dialogOggettoNonTrovato();
+                    }
+        });
+    }
+
+    private void dialogOggettoNonTrovato() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(getResources().getString(R.string.avviso));
+        builder.setMessage("Nessun oggetto trovato");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //dismiss dialog
+                dialogInterface.dismiss();
+            }
+        });
+        //show alert dialog
+        builder.create().show();
     }
 
     @Override
@@ -87,25 +142,24 @@ public class QRcodeScannerFragment extends Fragment {
         });
     }
 
+
     private void scanQRcode() {
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                ScanOptions options = new ScanOptions();
                 //set prompt
-                intentIntegrator.setPrompt("Per il flash usa il tasto volume su");
-                intentIntegrator.setBeepEnabled(true);
+                options.setPrompt("Per il flash usa il tasto volume su");
+                options.setBeepEnabled(true);
                 //looked orientation
-                intentIntegrator.setOrientationLocked(true);
+                options.setOrientationLocked(true);
                 //set campture activity
-                intentIntegrator.setCaptureActivity(Capture.class);
+                options.setCaptureActivity(Capture.class);
                 //initialize scan
-                intentIntegrator.initiateScan();
+                activityResultLaucher.launch(options);
             }
         });
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,8 +167,6 @@ public class QRcodeScannerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_q_rcode_scanner, container, false);
     }
-
-
 
     private void showTutorial(){
         TapTargetView.showFor(getActivity(),                 // `this` is an Activity
@@ -142,6 +194,5 @@ public class QRcodeScannerFragment extends Fragment {
                         super.onTargetClick(view);
                     }
                 });
-
     }
 }
