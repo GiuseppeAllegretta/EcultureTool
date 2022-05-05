@@ -715,6 +715,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public List<Zona> getZoneByIdLuogo(int idLuogo){
+        List<Zona> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String stringQuery = "SELECT * FROM " + TABLE_ZONE + " WHERE " + COLONNA_LUOGO_RIFERIMENTO + " = ? ";
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {"" + idLuogo});
+
+        if(cursor.moveToFirst()){
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_ZONE_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_ZONE_NOME));
+                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_ZONE_DESCRIZIONE));
+
+                Zona zona = new Zona(id, nome, descrizione, idLuogo);
+                returnList.add(zona);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
 
     public List<Oggetto> getAllOggetti(){
         List<Oggetto> returnList = new ArrayList<>();
@@ -1038,7 +1061,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
                 int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
 
-                percorso = new Percorso(nome, descrizione, idLuogo);
+                //TODO vedere con calma
+                //percorso = new Percorso(nome, descrizione, idLuogo);
                 percorso.setId(idPercorso);
             }
 

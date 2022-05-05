@@ -1,6 +1,5 @@
 package com.example.eculturetool.entities;
 
-import org.jgrapht.nio.json.JSONExporter;
 
 import java.util.ArrayList;
 
@@ -16,8 +15,7 @@ public class Percorso {
      */
     private int idLuogo;
     private String nome;
-    private String descrizione;
-    private ArrayList<ArrayList<Oggetto>> zone;
+    private ArrayList<Zona> zone = new ArrayList<>();
 
     public Percorso(int id, String nome) {
         this.id = id;
@@ -25,10 +23,11 @@ public class Percorso {
         zone = new ArrayList<>();
     }
 
-    public Percorso(String nome, String descrizione, int idLuogo) {
+
+    public Percorso(String nome, int idLuogo, ArrayList<Zona> zone) {
         this.idLuogo = idLuogo;
         this.nome = nome;
-        this.descrizione = descrizione;
+        this.zone = zone;
     }
 
 
@@ -40,7 +39,7 @@ public class Percorso {
         return nome;
     }
 
-    public ArrayList<ArrayList<Oggetto>> getZone() {
+    public ArrayList<Zona> getZone() {
         return zone;
     }
 

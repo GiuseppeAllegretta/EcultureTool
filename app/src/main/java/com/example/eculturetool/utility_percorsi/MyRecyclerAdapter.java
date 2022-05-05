@@ -15,10 +15,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.InfoZonaActivity;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     implements ItemTouchHelperAdapter {
 
     Context context;
-    List<String> stringList;
+    ArrayList<Zona> listZone;
     OnStartDragListener listener;
 
 
@@ -49,10 +50,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             unbinder = ButterKnife.bind(this, itemView);
         }
     }
-// TODO lista di int?
-    public MyRecyclerAdapter(Context context, List<String> stringList, OnStartDragListener listener) {
+
+    public MyRecyclerAdapter(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
         this.context = context;
-        this.stringList = stringList;
+        this.listZone = listZone;
         this.listener = listener;
         setHasStableIds(true);
     }
@@ -67,7 +68,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //Binding di testo e numero di una card
         holder.cardNumber.setText(new StringBuilder().append(position+1));
-        holder.cardText.setText(stringList.get(position));
+        holder.cardText.setText(listZone.get(position).getNome());
 
         //Touch listener, differenzia i tipi di tocco
         holder.cardZona.setOnTouchListener(new View.OnTouchListener() {
@@ -91,8 +92,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                     return super.onDoubleTap(e);
                 }
 
-
-
+                //Apertura info zona
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
                     openInfoZona(holder.cardText);
@@ -102,7 +102,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             });
 
 
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetector.onTouchEvent(event);
@@ -110,20 +109,18 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
             }
         });
 
-
+        //Eliminazione card
         holder.closeCard.setOnClickListener(v -> removeAt(holder.getAdapterPosition()));
-
-
     }
 
     @Override
     public int getItemCount() {
-        return stringList.size();
+        return listZone.size();
     }
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(stringList, fromPosition, toPosition);
+        Collections.swap(listZone, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         notifyDataSetChanged();
         return true;
@@ -131,13 +128,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
     @Override
     public void onItemDismiss(int position) {
-        stringList.remove(position);
+        listZone.remove(position);
         notifyItemRemoved(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return stringList.get(position).hashCode();
+        return listZone.get(position).hashCode();
     }
 
 
@@ -155,9 +152,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
      * @param position, la posizione della card
      */
     public void removeAt(int position) {
-        stringList.remove(position);
+        listZone.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, stringList.size());
+        notifyItemRangeChanged(position, listZone.size());
     }
 
 }

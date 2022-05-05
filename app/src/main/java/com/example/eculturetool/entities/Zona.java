@@ -10,6 +10,7 @@ public class Zona implements Serializable {
     private String descrizione;
     private int riferimentoLuogo;
     private ArrayList<Oggetto> listaOggetti = new ArrayList<>();
+    private ArrayList<Zona> diramazione = new ArrayList<>();
 
     public Zona(){
 
@@ -69,17 +70,6 @@ public class Zona implements Serializable {
         listaOggetti.addAll(list);
     }
 
-
-    public boolean addOggetto(Oggetto oggetto){
-        boolean risultato = false;
-
-        if(oggetto != null){
-            listaOggetti.add(oggetto);
-            risultato = true;
-        }
-
-        return risultato;
-    }
 
     @Override
     public String toString() {
