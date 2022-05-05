@@ -80,6 +80,15 @@ public class Zona implements Serializable {
                 '}';
     }
 
+    public boolean addOggetto(Oggetto oggetto) {
+        boolean risultato = false;
+        if(oggetto != null){
+            listaOggetti.add(oggetto);
+            risultato = true;
+        }
+        return risultato;
+    }
+
     public interface Keys{
         final static String ID = "ID_ZONA";
     }
