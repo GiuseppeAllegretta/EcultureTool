@@ -36,10 +36,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cardZona)
         CardView cardZona;
-        @BindView(R.id.cardDescription)
-        TextView cardText;
         @BindView(R.id.cardNumber)
         TextView cardNumber;
+        @BindView(R.id.cardTitle)
+        TextView cardTitle;
+        @BindView(R.id.cardDescription)
+        TextView cardDescription;
         @BindView(R.id.ic_close)
         ImageView closeCard;
 
@@ -68,7 +70,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //Binding di testo e numero di una card
         holder.cardNumber.setText(new StringBuilder().append(position+1));
-        holder.cardText.setText(listZone.get(position).getNome());
+        holder.cardTitle.setText(listZone.get(position).getNome());
+        holder.cardDescription.setText(listZone.get(position).getDescrizione());
 
         //Touch listener, differenzia i tipi di tocco
         holder.cardZona.setOnTouchListener(new View.OnTouchListener() {
@@ -95,7 +98,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                 //Apertura info zona
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    openInfoZona(holder.cardText);
+                    openInfoZona(holder.cardTitle, holder.cardDescription);
                     return true;
                 }
 
@@ -141,9 +144,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     /**
      * Nuova activity per vedere info di una zona
      */
-    private void openInfoZona(TextView text){
+    private void openInfoZona(TextView title, TextView description){
         Intent intent = new Intent (context, InfoZonaActivity.class);
-        intent.putExtra("TITLE", text.getText());
+        intent.putExtra("TITLE", title.getText());
+        intent.putExtra("DESCRIPTION", description.getText());
         context.startActivity(intent);
     }
 

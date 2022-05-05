@@ -12,6 +12,7 @@ public class InfoZonaActivity extends AppCompatActivity {
 
     ImageView close;
     TextView titolo;
+    TextView descrizione;
 
 
     public InfoZonaActivity() {
@@ -22,8 +23,10 @@ public class InfoZonaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_info_zona);
         titolo = findViewById(R.id.titolo);
-        String title = getIntent().getStringExtra("TITLE");
-        titolo.setText(title);
+        titolo.setText(getIntent().getStringExtra("TITLE"));
+
+        descrizione = findViewById(R.id.descrizione);
+        descrizione.setText(getIntent().getStringExtra("DESCRIPTION"));
 
         close = findViewById(R.id.ic_close);
         close.setOnClickListener(v -> finish());
