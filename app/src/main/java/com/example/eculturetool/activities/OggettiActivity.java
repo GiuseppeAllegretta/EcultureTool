@@ -3,6 +3,7 @@ package com.example.eculturetool.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +27,8 @@ import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -77,20 +80,24 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         layoutNoZone.setVisibility(View.INVISIBLE);
         retrieveZone();
 
+        setOggettoInfo();
+
         if (zoneList.isEmpty()) {
             recyclerView.setVisibility(View.INVISIBLE);
             fabAddOggetto.setVisibility(View.INVISIBLE);
             layoutNoZone.setVisibility(View.VISIBLE);
 
 
-        } else {
-            setOggettoInfo();
-
-            setAdapter();
-
-            //metodo che nasconde le view in caso di accesso con account ospite
-            nascondiView();
+        } else if (zoneList.size() != 0 && oggettiList.isEmpty()) {
+            showTutorial();
         }
+        //setOggettoInfo();
+
+        //setAdapter();
+
+
+        //metodo che nasconde le view in caso di accesso con account ospite
+        nascondiView();
 
 
     }
@@ -229,5 +236,36 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         });
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
+    }
+
+    private void showTutorial() {
+
+
+        TapTargetView.showFor(this,
+                TapTarget.forView(fabAddOggetto, "Aggiungi oggetto", "Aggiungi da qui\n" +
+                        " un nuovo oggetto")
+                        // All options below are optional
+                        .outerCircleColor(R.color.gialloSecondario)
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(15)
+                        .titleTextColor(R.color.white)
+                        .descriptionTextSize(12)
+                        .descriptionTextColor(R.color.white)
+                        .textColor(R.color.black)
+                        .textTypeface(Typeface.SANS_SERIF)
+                        .dimColor(R.color.black)
+                        .drawShadow(true)
+                        .cancelable(false)
+                        .tintTarget(false)
+                        .transparentTarget(true)
+                        .targetRadius(60),
+                new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                    }
+                });
+
     }
 }
