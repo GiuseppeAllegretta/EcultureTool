@@ -1,5 +1,6 @@
 package com.example.eculturetool.database;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
@@ -43,6 +46,7 @@ import java.util.List;
 public class IoHelper {
 
     private Context context;
+    private Uri contentUri;
 
     /**
      * Costruttore della classe IoHelper
@@ -169,9 +173,16 @@ public class IoHelper {
 
         zone = fromIteratorToArrayZone(iterator);
 
+        File fileOutputFolder = new File(context.getFilesDir(), "fileOutput"); //cartella in cui salvare i file da condividere
+
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fileOutputFolder.mkdirs(); //crea la cartella se non esiste
+            File file = new File(fileOutputFolder, FILE_NAME); //il file da salvare
+
+            fileOutputStream = new FileOutputStream(file);
+
+            //fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
 
             for(int i = 0; i < zone.size(); i++){
                 fileOutputStream.write((i + 1 + ") " + zone.get(i).getNome() + "\n").getBytes());
@@ -181,6 +192,8 @@ public class IoHelper {
                     fileOutputStream.write(("   - " + iteratoreOggetti.next().getNome() + "\n").getBytes());
                 }
             }
+
+            contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -202,19 +215,24 @@ public class IoHelper {
      * @param id identificativo del percorso
      */
     public void shareFileTxt(int id){
-        String stringFile = Environment.getDataDirectory().getPath() + "/user/0/com.example.eculturetool/files" + File.separator + id + "_TXT.txt";
+        String fileName = id + "_TXT.txt";
+        String stringFile = context.getFilesDir() +  "/fileOutput" +  File.separator + fileName;
 
         File file = new File(stringFile);
+        contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
 
         if(!file.exists()){
             Toast.makeText(context, "Il file non esiste!", Toast.LENGTH_LONG).show();
             return;
         }
 
+
         Intent intentShare = new Intent(Intent.ACTION_SEND);
         intentShare.setType("text/*");
-        intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
-        context.startActivity(Intent.createChooser(intentShare, "Condividi file..."));
+        intentShare.putExtra(Intent.EXTRA_SUBJECT, "Subject Here"); //per condividere con email app
+        intentShare.putExtra(Intent.EXTRA_STREAM, contentUri);
+        intentShare.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(Intent.createChooser(intentShare, "Condividi file"));
     }
 
 
