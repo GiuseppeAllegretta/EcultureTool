@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.AddZonaToPercorsoActivity;
+import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.InfoZonaActivity;
 
@@ -44,7 +47,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         TextView cardDescription;
         @BindView(R.id.ic_close)
         ImageView closeCard;
-
+        @BindView(R.id.creaDiramazione)
+        RelativeLayout creaDiramazione;
         Unbinder unbinder;
 
         public MyViewHolder(@NonNull View itemView){
@@ -114,6 +118,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
         //Eliminazione card
         holder.closeCard.setOnClickListener(v -> removeAt(holder.getAdapterPosition()));
+
+        //Area per creare la diramazione
+        holder.creaDiramazione.setOnClickListener(v -> {
+            DataHolder.getInstance().setData(listZone);
+            Intent intent = new Intent (context, AddZonaToPercorsoActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override

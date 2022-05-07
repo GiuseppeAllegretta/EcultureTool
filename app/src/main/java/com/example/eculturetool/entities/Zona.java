@@ -70,6 +70,14 @@ public class Zona implements Serializable {
         listaOggetti.addAll(list);
     }
 
+    public ArrayList<Zona> getDiramazione(){
+        return diramazione;
+    }
+
+    public void setDiramazione(ArrayList<Zona> diramazione){
+        this.diramazione = diramazione;
+    }
+
 
     @Override
     public String toString() {

@@ -2,8 +2,6 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
 import com.example.eculturetool.utility_percorsi.MyRecyclerAdapter;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +27,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     MaterialButton btnConferma;
+    MaterialButton btnAggiungiZona;
 
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
@@ -38,7 +35,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     //Lista di tutte le zone di un luogo
     ArrayList<Zona> listaZone = new ArrayList<>();
     //Lista di tutte le zone selezionate per la creazione del percorso
-    ArrayList<Zona> listaZoneSelezionate = new ArrayList<>();
+    ArrayList<Zona> listaDaActivity = new ArrayList<>();
     //Lista dei nomi delle zone selezionate
 
     @Override
@@ -47,6 +44,11 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_creazione_percorso);
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         btnConferma = findViewById(R.id.btnConfermaPercorso);
+        btnAggiungiZona = findViewById(R.id.btnAggiungiZona);
+
+        btnAggiungiZona.setOnClickListener(v ->{
+
+        });
 
         btnConferma.setOnClickListener(v -> {
             //savePercorso();
@@ -54,7 +56,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
         //Recupero zone del luogo corrente
         listaZone.addAll(dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
-        listaZoneSelezionate.addAll(listaZone);
+        //listaZoneSelezionate.addAll(listaZone);
 
         //Recupero oggetti per ogni zona
         for(int i = 0; i < listaZone.size(); i++){
@@ -66,13 +68,14 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     }
 
 
-   /* private void addCard() {
-        Intent intent = new Intent (this, SelectMissingZones.class);
+    private void addZona() {
+
+        Intent intent = new Intent (this, AddZonaToPercorsoActivity.class);
         intent.putExtra("zoneTotali", listaZone);
-        intent.putExtra("zoneSelezionate", listaZoneSelezionate);
+        intent.putExtra("zoneSelezionate", listaDaActivity);
         startActivity(intent);
 
-    }*/
+    }
 
 
     /**

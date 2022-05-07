@@ -52,10 +52,6 @@
             android:theme="@style/zxing_CaptureTheme" />
 
         <activity
-            android:name=".percorsi.EsportazionePercorsoActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
-        <activity
             android:name=".activities.PercorsiActivity"
             android:exported="false"
             android:label="@string/percorsi"
@@ -159,6 +155,8 @@
             android:name=".activities.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".activities.AddZonaToPercorsoActivity"
+            android:exported="false"/>
 
         <activity android:name=".activities.CreazionePercorsoActivity"
             android:exported="true"
