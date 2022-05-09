@@ -175,6 +175,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".percorsi.EsportazionePercorsoActivity"
+            android:screenOrientation="portrait"
+            android:exported="true" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />
