@@ -91,7 +91,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == UploadImageActivity.RESULT_OK) {
+                        if (result.getResultCode() == RESULT_OK) {
                             if (result.getData() != null) {
                                 mImageUri = result.getData().getData();
                                 Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
@@ -106,9 +106,9 @@ public class UploadImageActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         mImageUri = Uri.fromFile(photoFile);
-                        if(result.getData() != null){
-                            Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
+                        if (result.getResultCode() == RESULT_OK) {
                             imagePlaceHolder.setImageResource(android.R.color.transparent);
+                            Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
                         }
                     }
                 });
