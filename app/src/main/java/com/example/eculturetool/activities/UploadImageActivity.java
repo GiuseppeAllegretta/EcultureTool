@@ -94,6 +94,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         if (result.getResultCode() == RESULT_OK) {
                             if (result.getData() != null) {
                                 mImageUri = result.getData().getData();
+                                imagePlaceHolder.setImageResource(android.R.color.transparent);
                                 Glide.with(UploadImageActivity.this).load(mImageUri).placeholder(R.drawable.ic_profile).into(mImageView);
                             }
                         }
