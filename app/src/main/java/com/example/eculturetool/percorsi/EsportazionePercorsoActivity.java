@@ -75,6 +75,16 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
                 graphToJson.serializzaPercorso(grafoProva(), 1);
                 Graph<Zona, DefaultEdge> graphReturned = graphToJson.deserializzaPercorso(1);
                 graphToJson.esportaTxt(grafoProva(), 1);
+                graphToJson.listZoneSerializzazione(arrayProva(), 1);
+                List<Zona> returnZona = graphToJson.listZoneDeserializzazione(1);
+
+                System.out.println("Le zone ritornate");
+                for (Zona zona: returnZona){
+                    System.out.println(zona.toString() + "\n");
+                    for(Zona zona1: zona.getDiramazione()){
+                        System.out.println("     " + zona1.toString() + "\n");
+                    }
+                }
 
             }
         });

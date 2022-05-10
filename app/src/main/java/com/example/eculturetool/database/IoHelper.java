@@ -30,6 +30,7 @@ public class IoHelper {
     private static final String SHARE = "_SHARE";
     private static final String SHARE_FOLDER = "fileShare";
     private static final String GRAPH_FOLDER = "graphSerializzazione";
+    private static final String LIST_FOLDER = "listSerializzazione";
 
 
     private final Context context;
@@ -284,6 +285,87 @@ public class IoHelper {
         return returnGraph;
     }
 
+
+
+    public void listZoneSerializzazione(List<Zona> list, int id){
+        final String FILE_NAME = id + ".txt";
+        FileOutputStream outFile = null;
+        ObjectOutputStream outStream = null;
+
+        File fileOutputFolder = new File(context.getFilesDir(), LIST_FOLDER); //cartella in cui salvare i file da serializzare
+        File file;
+
+        try {
+
+            fileOutputFolder.mkdirs(); //crea la cartella se non esiste
+            file = new File(fileOutputFolder, FILE_NAME);
+            outFile = new FileOutputStream(file);
+
+            outStream = new ObjectOutputStream(outFile);
+            outStream.writeObject(list);
+            Toast.makeText(context, "Salvato in " + context.getFilesDir() + File.separator + LIST_FOLDER + File.separator + FILE_NAME, Toast.LENGTH_LONG).show();
+
+        }catch(FileNotFoundException e) {
+            System.err.println("Errore in scrittura: file non trovato");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(outFile != null && outStream != null){
+                try {
+                    outFile.close();
+                    outStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public List<Zona> listZoneDeserializzazione(int id){
+        List<Zona> returnList = null;
+        final String FILE_NAME = id + ".txt";
+        Object risultato;
+
+        FileInputStream inFile = null;							//stream di input da file
+        ObjectInputStream inStream = null;
+
+        File fileInputFolder = new File(context.getFilesDir(), LIST_FOLDER); //cartella in cui leggere i file da deserializzare
+        File file;
+
+        try {
+            file = new File(fileInputFolder, FILE_NAME);
+            inFile = new FileInputStream(file);
+
+            //inFile = context.openFileInput(FILE_NAME);	//istanziazione dello stream di input riferito a un certo file
+
+            if(inFile.available() != 0)
+                inStream = new ObjectInputStream(inFile);
+
+            risultato = inStream.readObject();		//legge l'oggetto dal file
+            returnList = (List<Zona>) risultato;
+
+        }catch(FileNotFoundException e) {
+            System.err.println("Errore in lettura: file non trovato");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(inFile != null && inStream != null){
+                try {
+                    inStream.close();
+                    inFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return returnList;
+    }
 
 
 }
