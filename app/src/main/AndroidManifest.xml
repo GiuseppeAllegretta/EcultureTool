@@ -52,6 +52,11 @@
             android:theme="@style/zxing_CaptureTheme" />
 
         <activity
+            android:name=".percorsi.EsportazionePercorsoActivity"
+            android:screenOrientation="portrait"
+            android:exported="true" />
+
+        <activity
             android:name=".activities.PercorsiActivity"
             android:exported="false"
             android:label="@string/percorsi"

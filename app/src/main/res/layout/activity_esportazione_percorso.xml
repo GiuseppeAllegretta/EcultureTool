@@ -69,4 +69,14 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/arrayAgrafo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esporta in grafo"
+        app:layout_constraintBottom_toTopOf="@+id/cancellaPercorso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/esporta" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

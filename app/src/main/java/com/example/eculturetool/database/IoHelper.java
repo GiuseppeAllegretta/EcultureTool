@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -182,8 +183,6 @@ public class IoHelper {
 
             fileOutputStream = new FileOutputStream(file);
 
-            //fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-
             for(int i = 0; i < zone.size(); i++){
                 fileOutputStream.write((i + 1 + ") " + zone.get(i).getNome() + "\n").getBytes());
 
@@ -226,7 +225,6 @@ public class IoHelper {
             return;
         }
 
-
         Intent intentShare = new Intent(Intent.ACTION_SEND);
         intentShare.setType("text/*");
         intentShare.putExtra(Intent.EXTRA_SUBJECT, "Subject Here"); //per condividere con email app
@@ -244,6 +242,44 @@ public class IoHelper {
         }
 
         return returnList;
+    }
+
+
+    public Graph<Zona, DefaultEdge> fromListToGraph(List<Zona> list){
+        Graph<Zona, DefaultEdge> returnGraph = new SimpleGraph<>(DefaultEdge.class);
+
+        //Aggiunge al grafo tutte le zone che appartengono al percorso principale
+        for(Zona zona: list){
+            returnGraph.addVertex(zona);
+        }
+
+        //Collega tutte le zone contenute nel percorso principale sequenzialmente
+        for(int i = 0; i < list.size()-1; i++){
+            returnGraph.addEdge(list.get(i), list.get(i+1));
+        }
+
+        //Aggiunge tutte le zone delle diramazioni al grafo. Siccome sono implementati equals() e hashCode()
+        //aggiunge solo nel caso in cui ci siano zone diverse da quell già inserite
+        for(int i = 0; i < list.size(); i++){
+            for(int j = 0; j < list.get(i).getDiramazione().size(); j++){
+                returnGraph.addVertex(list.get(i).getDiramazione().get(j));
+            }
+        }
+
+        //Collega tutte le zone all'interno della diramazione
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i).getNome() + "\n");
+            if(list.get(i).getDiramazione().size() != 0){
+                returnGraph.addEdge(list.get(i), list.get(i).getDiramazione().get(0));
+
+                for(int j = 0; j < list.get(i).getDiramazione().size()-1; j++){
+                    returnGraph.addEdge(list.get(i).getDiramazione().get(j), list.get(i).getDiramazione().get(j+1));
+                }
+            }
+
+        }
+
+        return returnGraph;
     }
 
 

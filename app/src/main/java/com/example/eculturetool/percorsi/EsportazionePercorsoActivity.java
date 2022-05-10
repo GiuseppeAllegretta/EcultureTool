@@ -31,12 +31,14 @@ import org.jgrapht.graph.SimpleGraph;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class EsportazionePercorsoActivity extends AppCompatActivity {
 
     //Bottone per l'esportazione di un grafo
     private Button esportaBtn;
     private Button cancellaBtn;
+    private Button esportaInGrafoBtn;
     private DataBaseHelper dataBaseHelper;
     private CardView shareCrd;
     private IoHelper ioHelper;
@@ -48,6 +50,7 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
 
         esportaBtn = findViewById(R.id.esporta);
         cancellaBtn = findViewById(R.id.cancellaPercorso);
+        esportaInGrafoBtn = findViewById(R.id.arrayAgrafo);
         shareCrd = findViewById(R.id.share);
         dataBaseHelper = new DataBaseHelper(this);
         ioHelper = new IoHelper(this);
@@ -89,6 +92,14 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
                 ioHelper.shareFileTxt(1);
             }
         });
+
+        esportaInGrafoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Graph<Zona, DefaultEdge> graph = ioHelper.fromListToGraph(arrayProva());
+                System.out.println(graph);
+            }
+        });
     }
 
 
@@ -114,4 +125,39 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
         return graph;
     }
 
+
+
+    private List<Zona> arrayProva() {
+        List<Zona> zoneList = dataBaseHelper.getZoneDemo();
+        List<Zona> zoneDiramazione = dataBaseHelper.getZoneDemo();
+
+        //Elimino Descrizione
+        for(int i = 0; i < zoneList.size(); i++){
+            zoneList.get(i).setDescrizione("");
+        }
+
+        //Elimino Descrizione
+        for(int i = 0; i < zoneDiramazione.size(); i++){
+            zoneDiramazione.get(i).setDescrizione("");
+        }
+
+        for(Zona zona: zoneList){
+            int p = (int)( Math.random()* zoneDiramazione.size());
+
+            for(int i = 0; i < p; i++){
+                if(zona.getId() != zoneDiramazione.get(i).getId()){
+                    zona.getDiramazione().add(zoneDiramazione.get(i));
+                }
+            }
+        }
+
+        System.out.println("Le zone");
+        for (Zona zona: zoneList){
+            System.out.println(zona.toString() + "\n");
+            for(Zona zona1: zona.getDiramazione()){
+                System.out.println("     " + zona1.toString() + "\n");
+            }
+        }
+        return zoneList;
+    }
 }

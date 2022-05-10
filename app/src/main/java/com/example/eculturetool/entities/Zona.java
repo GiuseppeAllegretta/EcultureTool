@@ -3,6 +3,7 @@ package com.example.eculturetool.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Zona implements Serializable {
     private int id;
@@ -97,8 +98,35 @@ public class Zona implements Serializable {
         return risultato;
     }
 
+
     public interface Keys{
         final static String ID = "ID_ZONA";
     }
 
+    public boolean addZonaDiramazione(Zona zona){
+        boolean risultato = false;
+
+        if(zona != null){
+            if(!diramazione.contains(zona)){
+                diramazione.add(zona);
+                risultato = true;
+            }
+        }
+
+
+        return risultato;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Zona zona = (Zona) o;
+        return id == zona.id && nome.equals(zona.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome);
+    }
 }
