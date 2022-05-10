@@ -111,9 +111,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         curatore = dataBaseHelper.getCuratore();
-        System.out.println("Modifica password2: " + curatore.toString());
-
-
         return flagPassword;
     }
 }

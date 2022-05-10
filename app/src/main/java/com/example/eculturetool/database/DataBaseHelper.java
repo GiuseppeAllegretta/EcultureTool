@@ -417,6 +417,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean resetPassword(String password, String emailCuratore){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLONNA_CURATORE_PASSWORD, password);
+        final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
+
+        if(update == -1){
+            db.close();
+            return false;
+        }else {
+            db.close();
+            return true;
+        }
+    }
+
 
     public List<Luogo> getLuoghi(){
         List<Luogo> list = new ArrayList<>();

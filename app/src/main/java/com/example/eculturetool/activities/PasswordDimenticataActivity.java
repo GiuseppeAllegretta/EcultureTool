@@ -12,14 +12,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.Curatore;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PasswordDimenticataActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private ProgressBar progressBar;
+    private Button resetPasswordButton;
+    private DataBaseHelper dataBaseHelper;
 
-    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,10 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_password_dimenticata);
 
         emailEditText = findViewById(R.id.emailReset);
-        Button resetPasswordButton = findViewById(R.id.resetPassword);
+        resetPasswordButton = findViewById(R.id.resetPassword);
         progressBar = findViewById(R.id.progressBarReset);
         progressBar.setVisibility(View.INVISIBLE);
-
-        auth = FirebaseAuth.getInstance();
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
         resetPasswordButton.setOnClickListener(onClickListener -> resetPassword());
     }
@@ -51,20 +53,20 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
             return;
         }
 
+        if(!dataBaseHelper.checkEmailExist(email)){
+            emailEditText.setError(getResources().getString(R.string.email_errata));
+            emailEditText.requestFocus();
+            return;
+        }
+
         progressBar.setVisibility(View.VISIBLE);
 
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        intent.putExtra(Curatore.Keys.CURATORE_KEY, email); //passo la mail nell'intent
+        startActivity(intent);
 
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(onCompleteListener -> {
-            progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
-            if (onCompleteListener.isSuccessful()) {
-                Toast.makeText(PasswordDimenticataActivity.this, getString(R.string.controlla_la_casella), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(PasswordDimenticataActivity.this, LoginActivity.class));
-            } else {
-                Toast.makeText(PasswordDimenticataActivity.this, getString(R.string.prova_di_nuovo), Toast.LENGTH_SHORT).show();
-            }
-
-        });
 
     }
 }
