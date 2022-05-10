@@ -4,5 +4,5 @@
         name="my_images"
         path="Pictures" />
 
-    <files-path name="files/" path="fileOutput/" />
+    <files-path name="files/" path="fileShare/" />
 </paths>

@@ -121,7 +121,6 @@ public class EsportazionePercorsoActivity extends AppCompatActivity {
             zona.addOggetto(new Oggetto("Venere di Milo", "La Gioconda, nota anche come Monna Lisa, è un dipinto a olio su tavola di legno di pioppo realizzato da Leonardo da Vinci (77×53 cm e 13 mm di spessore), databile al 1503-1504 circa e conservato nel Museo del Louvre di Parigi.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2F15296.jpg?alt=media&token=c8403eeb-838d-4497-b891-5af4015eaefa", TipologiaOggetto.QUADRO, zona.getId()));
         }
 
-
         return graph;
     }
 

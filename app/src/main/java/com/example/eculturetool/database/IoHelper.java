@@ -1,52 +1,38 @@
 package com.example.eculturetool.database;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.net.Uri;
-import android.os.Environment;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
-import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.nio.json.JSONExporter;
-import org.jgrapht.nio.json.JSONImporter;
-import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class IoHelper {
 
-    private Context context;
+    private static final String SHARE = "_SHARE";
+    private static final String SHARE_FOLDER = "fileShare";
+    private static final String GRAPH_FOLDER = "graphSerializzazione";
+
+
+    private final Context context;
     private Uri contentUri;
 
     /**
@@ -68,9 +54,16 @@ public class IoHelper {
         FileOutputStream outFile = null;
         ObjectOutputStream outStream = null;
 
+        File fileOutputFolder = new File(context.getFilesDir(), GRAPH_FOLDER); //cartella in cui salvare i file da serializzare
+        File file;
+
         try {
 
-            outFile = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fileOutputFolder.mkdirs(); //crea la cartella se non esiste
+            file = new File(fileOutputFolder, FILE_NAME);
+            outFile = new FileOutputStream(file);
+
+            //outFile = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             outStream = new ObjectOutputStream(outFile);
             outStream.writeObject(graph);
             Toast.makeText(context, "Salvato in " + context.getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
@@ -107,8 +100,14 @@ public class IoHelper {
         FileInputStream inFile = null;							//stream di input da file
         ObjectInputStream inStream = null;
 
+        File fileInputFolder = new File(context.getFilesDir(), GRAPH_FOLDER); //cartella in cui leggere i file da deserializzare
+        File file;
+
         try {
-            inFile = context.openFileInput(FILE_NAME);	//istanziazione dello stream di input riferito a un certo file
+            file = new File(fileInputFolder, FILE_NAME);
+            inFile = new FileInputStream(file);
+
+            //inFile = context.openFileInput(FILE_NAME);	//istanziazione dello stream di input riferito a un certo file
 
             if(inFile.available() != 0)
                 inStream = new ObjectInputStream(inFile);
@@ -147,8 +146,11 @@ public class IoHelper {
         final String FILE_NAME = id + ".txt";
         boolean risultato = false;
 
-        File dir = context.getFilesDir();
+        File dir = new File(context.getFilesDir(), GRAPH_FOLDER);
         File file = new File(dir, FILE_NAME);
+
+        //File dir = context.getFilesDir();
+        //File file = new File(dir, FILE_NAME);
         if (!file.exists()) {
             throw new IllegalArgumentException("Il file o la Directory non esiste: " + FILE_NAME);
         }
@@ -168,13 +170,13 @@ public class IoHelper {
 
 
     public void esportaTxt(Graph graph, int id){
-        final String FILE_NAME = id + "_TXT" + ".txt";
+        final String FILE_NAME = id + SHARE + ".txt";
         List<Zona> zone = new ArrayList<>();
         Iterator<Zona> iterator = graph.vertexSet().iterator();
 
         zone = fromIteratorToArrayZone(iterator);
 
-        File fileOutputFolder = new File(context.getFilesDir(), "fileOutput"); //cartella in cui salvare i file da condividere
+        File fileOutputFolder = new File(context.getFilesDir(), SHARE_FOLDER); //cartella in cui salvare i file da condividere
 
         FileOutputStream fileOutputStream = null;
         try {
@@ -214,8 +216,8 @@ public class IoHelper {
      * @param id identificativo del percorso
      */
     public void shareFileTxt(int id){
-        String fileName = id + "_TXT.txt";
-        String stringFile = context.getFilesDir() +  "/fileOutput" +  File.separator + fileName;
+        String fileName = id + SHARE + ".txt";
+        String stringFile = context.getFilesDir() +  "/" + SHARE_FOLDER +  File.separator + fileName;
 
         File file = new File(stringFile);
         contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
@@ -281,6 +283,7 @@ public class IoHelper {
 
         return returnGraph;
     }
+
 
 
 }
