@@ -9,6 +9,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
+import com.google.gson.Gson;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -210,6 +211,53 @@ public class IoHelper {
                 }
             }
         }
+    }
+
+
+    public void esportaTxtinJsonFormat(Graph graph, int id){
+        final String FILE_NAME = id + SHARE + ".txt";
+        List<Zona> zone = new ArrayList<>();
+        Iterator<Zona> iterator = graph.vertexSet().iterator();
+
+        zone = fromIteratorToArrayZone(iterator);
+
+        File fileOutputFolder = new File(context.getFilesDir(), SHARE_FOLDER); //cartella in cui salvare i file da condividere
+
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputFolder.mkdirs(); //crea la cartella se non esiste
+            File file = new File(fileOutputFolder, FILE_NAME); //il file da salvare
+
+            fileOutputStream = new FileOutputStream(file);
+
+            fileOutputStream.write(arrayToJsonString(zone));
+
+            contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileOutputStream != null){
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private byte[] arrayToJsonString(List<Zona> list){
+        String jsonString;
+
+        Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+        jsonString = gson.toJson(list);
+
+        System.out.println("String json: " + jsonString);
+
+        return jsonString.getBytes();
     }
 
     /**

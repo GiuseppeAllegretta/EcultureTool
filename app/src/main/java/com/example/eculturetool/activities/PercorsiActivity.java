@@ -64,9 +64,9 @@ public class PercorsiActivity extends AppCompatActivity {
     }
 
     private void setPercorsiInfo() {
-        //percorsiList.add(new Percorso("1", "Colosseo: base"));
-        //percorsiList.add(new Percorso("2", "Colosseo: intermedio"));
-        //percorsiList.add(new Percorso("3", "Colosseo: avanzato"));
+        percorsiList.add(new Percorso(1, "Colosseo: base", 1));
+        percorsiList.add(new Percorso(2, "Colosseo: intermedio", 1));
+        percorsiList.add(new Percorso(3, "Colosseo: avanzato", 1));
     }
 
     @Override

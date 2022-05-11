@@ -17,17 +17,15 @@ public class Percorso {
     private String nome;
     private ArrayList<Zona> zone = new ArrayList<>();
 
-    public Percorso(int id, String nome) {
-        this.id = id;
+    public Percorso(String nome, int idLuogo) {
+        this.idLuogo = idLuogo;
         this.nome = nome;
         zone = new ArrayList<>();
     }
 
-
-    public Percorso(String nome, int idLuogo, ArrayList<Zona> zone) {
-        this.idLuogo = idLuogo;
-        this.nome = nome;
-        this.zone = zone;
+    public Percorso(int id, String nome, int idLuogo){
+        this(nome, idLuogo);
+        this.id = id;
     }
 
 
