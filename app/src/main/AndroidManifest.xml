@@ -45,10 +45,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.DatiPercorsoActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.PercorsiActivity"/>
+        <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".utilities.Capture"
             android:screenOrientation="portrait"
@@ -60,7 +63,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PercorsiActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/percorsi"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

@@ -28,6 +28,9 @@ public class Percorso {
         this.id = id;
     }
 
+    public int getIdLuogo() {
+        return idLuogo;
+    }
 
     public int getId() {
         return id;

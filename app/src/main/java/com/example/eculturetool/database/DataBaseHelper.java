@@ -1048,8 +1048,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLONNA_PERCORSO_NOME, percorso.getNome());
-        //contentValues.put(COLONNA_PERCORSO_DESCRIZIONE, percorso.getDescrizione());
-        //contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
+        contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
 
 
         long insert = db.insert(TABLE_PERCORSI, null, contentValues);
@@ -1087,6 +1086,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return percorso;
+    }
+
+
+    public List<Percorso> getPercorsi(){
+        List<Percorso> percorsiList = new ArrayList<>();
+
+        int idLuogoCorrente = getLuogoCorrente().getId();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String stringQuery = "SELECT * FROM "
+                + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
+                + " INNER JOIN " + TABLE_PERCORSI + " ON " + TABLE_PERCORSI + "." + COLONNA_PERCORSO_ID_LUOGO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
+                + " WHERE " + COLONNA_EMAIL + " = ? and " + COLONNA_LUOGHI_ID + " = " + idLuogoCorrente;
+
+        System.out.println("getLuoghi: " + stringQuery);
+        System.out.println("email curatore: " + emailCuratore);
+
+        Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        if(cursor.moveToFirst()){
+
+            do{
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_NOME));
+                int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
+
+                Percorso percorso = new Percorso(id, nome, idLuogo);
+                percorsiList.add(percorso);
+
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return percorsiList;
     }
 
 }

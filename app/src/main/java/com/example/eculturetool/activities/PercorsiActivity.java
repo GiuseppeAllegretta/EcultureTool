@@ -8,15 +8,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.utilities.RecyclerAdapterPercorso;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -25,6 +29,7 @@ public class PercorsiActivity extends AppCompatActivity {
     private ArrayList<Percorso> percorsiList;
     private RecyclerView recyclerView;
     private RecyclerAdapterPercorso adapterPercorso;
+    private FloatingActionButton addPercorsoFbt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class PercorsiActivity extends AppCompatActivity {
 
         //Inizializzazione variabili
         recyclerView = findViewById(R.id.recyclerViewPercorsi);
+        addPercorsoFbt = findViewById(R.id.addPercorso);
         percorsiList = new ArrayList<>();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarPercorsi);
@@ -55,6 +61,18 @@ public class PercorsiActivity extends AppCompatActivity {
         setAdapter();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        addPercorsoFbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PercorsiActivity.this, DatiPercorsoActivity.class));
+            }
+        });
+    }
+
     private void setAdapter() {
         adapterPercorso = new RecyclerAdapterPercorso(percorsiList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -64,9 +82,12 @@ public class PercorsiActivity extends AppCompatActivity {
     }
 
     private void setPercorsiInfo() {
-        percorsiList.add(new Percorso(1, "Colosseo: base", 1));
-        percorsiList.add(new Percorso(2, "Colosseo: intermedio", 1));
-        percorsiList.add(new Percorso(3, "Colosseo: avanzato", 1));
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+        percorsiList.addAll(dataBaseHelper.getPercorsi());
+
+        //percorsiList.add(new Percorso(1, "Colosseo: base", 1));
+        //percorsiList.add(new Percorso(2, "Colosseo: intermedio", 1));
+        //percorsiList.add(new Percorso(3, "Colosseo: avanzato", 1));
     }
 
     @Override
