@@ -5,7 +5,9 @@ import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -58,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
         parentLayout = findViewById(android.R.id.content);
         replaceFragment(new HomeFragment());
 
+
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
@@ -65,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.profile:
+
                     replaceFragment(new ProfileFragment());
                     break;
                 case R.id.qr_scanner:
@@ -80,6 +85,20 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         });
 
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+//Only if you want to do something here. If you dont want then leave it blankToast.makeText(this, "Landscape Mode", Toast.LENGTH_SHORT).show();
+
+        }else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+
+//Only if you want to do something here too.Toast.makeText(this, "Portrait Mode", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

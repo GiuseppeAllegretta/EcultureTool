@@ -147,7 +147,8 @@
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.EcultureTool.NoActionBar" />
+            android:theme="@style/Theme.EcultureTool.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".activities.PasswordDimenticataActivity"
             android:exported="false"
