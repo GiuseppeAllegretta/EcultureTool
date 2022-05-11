@@ -251,12 +251,8 @@ public class IoHelper {
 
     private byte[] arrayToJsonString(List<Zona> list){
         String jsonString;
-
         Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
         jsonString = gson.toJson(list);
-
-        System.out.println("String json: " + jsonString);
-
         return jsonString.getBytes();
     }
 
