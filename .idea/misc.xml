@@ -119,42 +119,28 @@
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_places.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1755" />
-        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.1296875" />
-        <entry key="app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_zona.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/activity_dati_percorso.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_esportazione_percorso.xml" value="0.16296296296296298" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25815217391304346" />
         <entry key="app/src/main/res/layout/activity_modifica_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_modifica_profilo.xml" value="0.2848731884057971" />
-        <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/activity_password_dimenticata.xml" value="0.3974358974358974" />
+        <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
-        <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
-        <entry key="app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.3974358974358974" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_info_zona.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_places.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25815217391304346" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_q_r_scanner.xml" value="0.13804457953394123" />
-        <entry key="app/src/main/res/layout/fragment_q_rcode_scanner.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fraqment_q_r_scanner.xml" value="0.12590579710144928" />
         <entry key="app/src/main/res/layout/home.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/image_item.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.3974358974358974" />
-        <entry key="app/src/main/res/layout/list_item_oggetto.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/main_recycler_row_item.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/object_lower_menu.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/qrcode_dialog.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/switch_item.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/view_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
@@ -164,7 +150,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
