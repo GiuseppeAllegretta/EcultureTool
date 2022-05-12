@@ -744,7 +744,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
                 + " WHERE " + COLONNA_EMAIL + " = ? ";
 
-        System.out.println("Query b: " + stringQuery);
+        System.out.println("Query aab: " + stringQuery);
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
         if(cursor.moveToFirst()){
