@@ -52,7 +52,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:text="Per aggiungere nuovi oggetti, devi prima inserire almeno una zona"
+            android:text="@string/alert_zona"
             android:textSize="22sp" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:background="@color/verdePrimario"
-            android:text="Aggiungi Zona"
+            android:text="@string/crea_zona"
             android:textColor="@color/white" />
 
 

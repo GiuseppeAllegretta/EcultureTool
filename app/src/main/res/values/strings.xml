@@ -135,6 +135,9 @@
     <string name="cancellazione_fallita">Cancellazione fallita</string>
     <string name="accedi_come_ospite">Accedi come ospite</string>
     <string name="registrazione">Registrazione</string>
+    <string name="password_dimenticata_activity">Password dimenticata</string>
+    <string name="scansiona_qr_code">Scansiona QR Code</string>
+    <string name="alert_zona">Per aggiungere nuovi oggetti, devi prima inserire almeno una zona</string>
 
 
 </resources>

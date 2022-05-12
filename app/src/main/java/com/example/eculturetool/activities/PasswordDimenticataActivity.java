@@ -36,6 +36,8 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
 
         resetPasswordButton.setOnClickListener(onClickListener -> resetPassword());
+
+        getSupportActionBar().setTitle(R.string.password_dimenticata_activity);
     }
 
     private void resetPassword() {
