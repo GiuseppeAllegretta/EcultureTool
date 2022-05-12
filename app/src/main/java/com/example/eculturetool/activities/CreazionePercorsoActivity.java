@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
-import com.example.eculturetool.utility_percorsi.MyRecyclerAdapter;
+import com.example.eculturetool.utility_percorsi.RecyclerAdapterGrid;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
 
-    //Lista di tutte le zone di un luogo
+    //Lista di tutte le zone di un luogo (include gli oggetti di ogni zona)
     ArrayList<Zona> listaZone = new ArrayList<>();
     //Lista di tutte le zone selezionate per la creazione del percorso
     ArrayList<Zona> listaDaActivity = new ArrayList<>();
@@ -46,6 +47,17 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         btnConferma = findViewById(R.id.btnConfermaPercorso);
         btnAggiungiZona = findViewById(R.id.btnAggiungiZona);
 
+        //Recupero zone del luogo corrente
+        DataHolder.getInstance().setData((ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
+
+        //Recupero oggetti per ogni zona
+        for(int i = 0; i < DataHolder.getInstance().getData().size(); i++){
+            DataHolder.getInstance().getData().get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(DataHolder.getInstance().getData().get(i)));
+        }
+
+        init();
+        generateItems();
+
         btnAggiungiZona.setOnClickListener(v ->{
 
         });
@@ -53,18 +65,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         btnConferma.setOnClickListener(v -> {
             //savePercorso();
         });
-
-        //Recupero zone del luogo corrente
-        listaZone.addAll(dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
-        //listaZoneSelezionate.addAll(listaZone);
-
-        //Recupero oggetti per ogni zona
-        for(int i = 0; i < listaZone.size(); i++){
-            listaZone.get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(listaZone.get(i)));
-        }
-
-        init();
-        generateItems();
     }
 
 
@@ -82,7 +82,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
      * Metodo che permette la creazione delle cards zone
      */
     private void generateItems() {
-        MyRecyclerAdapter adapter = new MyRecyclerAdapter(this, listaZone, viewHolder -> itemTouchHelper.startDrag(viewHolder));
+        RecyclerAdapterGrid adapter = new RecyclerAdapterGrid(this, DataHolder.getInstance().getData(), viewHolder -> itemTouchHelper.startDrag(viewHolder));
 
         recyclerView.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter);

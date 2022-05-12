@@ -3,9 +3,8 @@ package com.example.eculturetool.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Oggetto implements Serializable {
-    private int id;
-    private String nome, descrizione;
+public class Oggetto extends Entita implements Serializable {
+
     private String urlImmagine;
     private String urlQrcode;
     private TipologiaOggetto tipologiaOggetto;
@@ -16,16 +15,13 @@ public class Oggetto implements Serializable {
     }
 
     public Oggetto(int id, String nome, String descrizione, String urlImmagine) {
-        this.id = id;
-        this.nome = nome;
-        this.descrizione = descrizione;
+        super(id, nome, descrizione);
         this.urlImmagine = urlImmagine;
         //TODO generare il qr
     }
 
     public Oggetto(String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, int zonaAppartenenza){
-        this.nome = nome;
-        this.descrizione = descrizione;
+        super(nome, descrizione);
         this.urlImmagine = urlImmagine;
         this.tipologiaOggetto = tipologiaOggetto;
         this.zonaAppartenenza = zonaAppartenenza;
@@ -43,27 +39,27 @@ public class Oggetto implements Serializable {
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public String getNome() {
-        return nome;
+        return super.getNome();
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        super.setNome(nome);
     }
 
     public String getDescrizione() {
-        return descrizione;
+        return super.getDescrizione();
     }
 
     public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+        super.setDescrizione(descrizione);
     }
 
     public TipologiaOggetto getTipologiaOggetto() {
@@ -88,14 +84,9 @@ public class Oggetto implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityOggetto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                ", url='" + urlImmagine + '\'' +
-                '}';
+        return super.toString() +
+                ", url='" + urlImmagine + '\'';
     }
-
 
     public int getZonaAppartenenza() {
         return zonaAppartenenza;
@@ -106,10 +97,10 @@ public class Oggetto implements Serializable {
     }
 
     public interface KeysTipologiaOggetto{
-        public final static String QUADRO = "Quadro";
-        public final static String STATUA = "Statua";
-        public final static String SCULTURA = "Scultura";
-        public final static String ALTRO = "Altro";
+        String QUADRO = "Quadro";
+        String STATUA = "Statua";
+        String SCULTURA = "Scultura";
+        String ALTRO = "Altro";
     }
 }
 

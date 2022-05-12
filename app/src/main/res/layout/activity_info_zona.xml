@@ -6,7 +6,7 @@
     android:padding="8dp"
     android:background="@color/lightWhiteGreen"
     android:elevation="20pt"
-    tools:context=".fragments.InfoZonaActivity"
+    tools:context=".activities.InfoZonaActivity"
     android:id="@+id/fragment_container">
 
     <ImageView
@@ -42,7 +42,7 @@
         android:textSize="16sp" />
 
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_oggetti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

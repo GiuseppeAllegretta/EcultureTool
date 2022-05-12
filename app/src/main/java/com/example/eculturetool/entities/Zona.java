@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Zona implements Serializable {
-    private int id;
-    private String nome;
-    private String descrizione;
+public class Zona extends Entita implements Serializable {
     private int riferimentoLuogo;
     private ArrayList<Oggetto> listaOggetti = new ArrayList<>();
     private ArrayList<Zona> diramazione = new ArrayList<>();
@@ -19,40 +16,37 @@ public class Zona implements Serializable {
 
 
     public Zona(String nome, String descrizione, int riferimentoLuogo) {
-        this.nome = nome;
-        this.descrizione = descrizione;
+        super(nome, descrizione);
         this.riferimentoLuogo= riferimentoLuogo;
     }
 
     public Zona(int id, String nome, String descrizione, int riferimentoLuogo) {
-        this.id=id;
-        this.nome = nome;
-        this.descrizione = descrizione;
+        super(id, nome, descrizione);
         this.riferimentoLuogo= riferimentoLuogo;
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public String getNome() {
-        return nome;
+        return super.getNome();
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        super.setNome(nome);
     }
 
     public String getDescrizione() {
-        return descrizione;
+        return super.getDescrizione();
     }
 
     public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+        super.setDescrizione(descrizione);
     }
 
     public int getRiferimentoLuogo() {
@@ -82,11 +76,7 @@ public class Zona implements Serializable {
 
     @Override
     public String toString() {
-        return "Zona{" +
-                "id='" + id + '\'' +
-                ", nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                '}';
+        return super.toString();
     }
 
     public boolean addOggetto(Oggetto oggetto) {
@@ -113,7 +103,6 @@ public class Zona implements Serializable {
             }
         }
 
-
         return risultato;
     }
 
@@ -122,11 +111,11 @@ public class Zona implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Zona zona = (Zona) o;
-        return id == zona.id && nome.equals(zona.nome);
+        return super.getId() == zona.getId() && super.getNome().equals(zona.getNome());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome);
+        return Objects.hash(super.getId(), super.getNome());
     }
 }

@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Luogo implements Serializable {
+public class Luogo extends Entita implements Serializable {
 
-    private String nome, descrizione;
     private Tipologia tipologia;
-    private int id;
     private String emailCuratore;
 
     public Luogo() {
@@ -16,19 +14,21 @@ public class Luogo implements Serializable {
     }
 
     public Luogo(String nome, String descrizione, Tipologia tipologia, String emailCuratore) {
-        this.nome = nome;
-        this.descrizione = descrizione;
+        super(nome, descrizione);
         this.tipologia = tipologia;
         this.emailCuratore = emailCuratore;
     }
 
+    public int getId() {
+        return super.getId();
+    }
 
     public String getNome() {
-        return nome;
+        return super.getNome();
     }
 
     public String getDescrizione() {
-        return descrizione;
+        return super.getDescrizione();
     }
 
     public Tipologia getTipologia() {
@@ -37,31 +37,16 @@ public class Luogo implements Serializable {
 
     public String getEmailCuratore() { return emailCuratore; }
 
-    public int getId() {
-        return id;
-    }
-
-    /*public ArrayList<String> getZoneAsStringList(){
-        ArrayList<String> result = new ArrayList<>();
-        for(int i = 0; i < elencoZone.size(); i++){
-            result.add(i, elencoZone.get(i).getNome());
-        }
-        return result;
-    }*/
-
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     @Override
     public String toString() {
-        return "Luogo{" +
-                "nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
+        return super.toString() +
                 ", tipologia=" + tipologia +
-                ", emailCuratore=" + emailCuratore +
-                '}';
+                ", emailCuratore=" + emailCuratore;
     }
 
     public interface tipologiaLuoghi {

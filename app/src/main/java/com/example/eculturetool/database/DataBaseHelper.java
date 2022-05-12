@@ -290,7 +290,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " FROM (" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") " +
                 "WHERE " + COLONNA_LUOGHI_ID + " = " + luogoCorrente;
 
-        System.out.println(stringQuery);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(stringQuery, null);
 
@@ -320,7 +319,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
-        System.out.println("email curatore: " + emailCuratore);
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 luogoCorrente = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_LUOGO_CORRENTE));
@@ -600,22 +598,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
         }
 
-        /*try {
-            int id = cursor.getColumnIndex(COLONNA_ZONE_ID);
-            int nome = cursor.getColumnIndex(COLONNA_ZONE_NOME);
-            int descrizione= cursor.getColumnIndex(COLONNA_ZONE_DESCRIZIONE);
-            int nOggetti= cursor.getColumnIndex(COLONNA_ZONE_NUMERO_OGGETTI);
-            int riferimentoLuogo = cursor.getColumnIndex(COLONNA_LUOGO_RIFERIMENTO);
-
-            cursor.moveToFirst();
-            while(!cursor.isAfterLast()) {
-                info.add(new Zona(cursor.getInt(id),cursor.getString(nome),cursor.getString(descrizione),cursor.getInt(nOggetti),cursor.getInt(riferimentoLuogo)));
-                cursor.moveToNext();
-            }
-        }catch (Exception e){
-            System.out.println("errore database");
-        }*/
-
         cursor.close();
         db.close();
 
@@ -702,9 +684,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
                 + " WHERE " + COLONNA_EMAIL + " = ? and " + COLONNA_LUOGHI_ID + " = " + idLuogoCorrente;
 
-        System.out.println("getOggetti: " + stringQuery);
-        System.out.println("email curatore: " + emailCuratore);
-
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
         if(cursor.moveToFirst()){
@@ -765,7 +744,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
                 + " WHERE " + COLONNA_EMAIL + " = ? ";
 
-        System.out.println("getOggetti: " + stringQuery);
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
         if(cursor.moveToFirst()){
@@ -1099,9 +1077,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
                 + " INNER JOIN " + TABLE_PERCORSI + " ON " + TABLE_PERCORSI + "." + COLONNA_PERCORSO_ID_LUOGO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
                 + " WHERE " + COLONNA_EMAIL + " = ? and " + COLONNA_LUOGHI_ID + " = " + idLuogoCorrente;
-
-        System.out.println("getLuoghi: " + stringQuery);
-        System.out.println("email curatore: " + emailCuratore);
 
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 

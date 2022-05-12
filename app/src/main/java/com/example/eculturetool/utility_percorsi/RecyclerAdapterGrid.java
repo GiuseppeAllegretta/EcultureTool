@@ -19,7 +19,7 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.activities.AddZonaToPercorsoActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
-import com.example.eculturetool.fragments.InfoZonaActivity;
+import com.example.eculturetool.activities.InfoZonaActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>
+public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGrid.MyViewHolder>
     implements ItemTouchHelperAdapter {
 
     Context context;
@@ -57,7 +57,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         }
     }
 
-    public MyRecyclerAdapter(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
+    public RecyclerAdapterGrid(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
         this.context = context;
         this.listZone = listZone;
         this.listener = listener;
@@ -102,7 +102,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                 //Apertura info zona
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    openInfoZona(holder.cardTitle, holder.cardDescription);
+                    openInfoZona(holder.cardTitle, holder.cardDescription, holder.getAdapterPosition());
                     return true;
                 }
 
@@ -155,10 +155,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     /**
      * Nuova activity per vedere info di una zona
      */
-    private void openInfoZona(TextView title, TextView description){
+    private void openInfoZona(TextView title, TextView description, int adapterPosition){
         Intent intent = new Intent (context, InfoZonaActivity.class);
         intent.putExtra("TITLE", title.getText());
         intent.putExtra("DESCRIPTION", description.getText());
+        intent.putExtra("POSITION", adapterPosition);
         context.startActivity(intent);
     }
 

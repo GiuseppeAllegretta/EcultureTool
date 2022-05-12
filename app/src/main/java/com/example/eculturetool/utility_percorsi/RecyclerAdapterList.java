@@ -10,16 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.entities.Entita;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapterList extends RecyclerView.Adapter<RecyclerAdapterList.ViewHolder>{
+public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<RecyclerAdapterList.ViewHolder>{
 
-    ArrayList<Zona> listaZone;
+    ArrayList<T> list;
 
-    public RecyclerAdapterList(ArrayList<Zona> listaZone) {
-        this.listaZone = listaZone;
+    public RecyclerAdapterList(ArrayList<T> list) {
+        this.list = list;
     }
 
     @NonNull
@@ -32,13 +32,13 @@ public class RecyclerAdapterList extends RecyclerView.Adapter<RecyclerAdapterLis
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.nomeZona.setText(listaZone.get(position).getNome());
-        holder.descrizioneZona.setText(listaZone.get(position).getDescrizione());
+        holder.nomeZona.setText(list.get(position).getNome());
+        holder.descrizioneZona.setText(list.get(position).getDescrizione());
     }
 
     @Override
     public int getItemCount() {
-        return listaZone.size();
+        return list.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
