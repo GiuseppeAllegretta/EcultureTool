@@ -8,7 +8,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,24 +17,15 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
 import com.example.eculturetool.activities.PercorsiActivity;
-import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.ZoneActivity;
 import com.example.eculturetool.activities.OggettiActivity;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
 

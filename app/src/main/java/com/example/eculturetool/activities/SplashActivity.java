@@ -8,16 +8,11 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.lang.ref.WeakReference;
 
@@ -28,7 +23,6 @@ public class SplashActivity extends AppCompatActivity {
     private static final int GO_AHEAD_WHAT = 1;
     private long mStartTime = -1L;
     private boolean mIsDone;
-    private Connection connection = new Connection();
     private DataBaseHelper dataBaseHelper;
     final String emailOspite = "admin@gmail.com";
 

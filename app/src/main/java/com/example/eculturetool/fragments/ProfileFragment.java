@@ -43,14 +43,12 @@ import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 
@@ -59,7 +57,6 @@ public class ProfileFragment extends Fragment {
     private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
-    private final Connection connection = new Connection();
     private Context context;
     private ActivityResultLauncher<Intent> startForProfileImageUpload;
     private Uri imgUri;
@@ -96,8 +93,6 @@ public class ProfileFragment extends Fragment {
                         uri = activityResult.getData().getData();
                     }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
-                        //Riferimento a realtime database
-                        FirebaseDatabase mFirebaseInstance = connection.getDatabase();
                         //aggiorno l'url dell'immagine
                         if (uri != null) {
                             imgUri = uri;

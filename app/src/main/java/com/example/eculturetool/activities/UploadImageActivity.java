@@ -53,7 +53,6 @@ import java.util.Date;
 public class UploadImageActivity extends AppCompatActivity {
 
     public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
-    private static final String DATABASE_REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
     public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
     Permissions permission = new Permissions();

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 

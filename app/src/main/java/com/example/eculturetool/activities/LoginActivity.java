@@ -4,9 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
@@ -29,11 +25,6 @@ import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.LocaleHelper;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;

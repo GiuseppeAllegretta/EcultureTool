@@ -1,13 +1,9 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -16,16 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Curatore;
-import com.example.eculturetool.entities.Luogo;
-import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 public class DettaglioZonaActivity extends AppCompatActivity {
 

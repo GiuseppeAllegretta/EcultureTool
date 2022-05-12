@@ -9,19 +9,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

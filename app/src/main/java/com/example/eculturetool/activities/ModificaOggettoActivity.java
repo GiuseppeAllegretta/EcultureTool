@@ -1,10 +1,8 @@
 package com.example.eculturetool.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,16 +12,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
-import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
