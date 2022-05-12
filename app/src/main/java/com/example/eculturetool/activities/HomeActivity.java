@@ -5,7 +5,6 @@ import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,19 +27,10 @@ import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRcodeScannerFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity {
 
     HomeBinding binding;
-    final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
-    private FirebaseDatabase database = FirebaseDatabase.getInstance(REF);
-    private DatabaseReference myRef;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseUser user = auth.getCurrentUser();
     private View parentLayout;
     protected Curatore curatore;
     private Permissions permission = new Permissions();

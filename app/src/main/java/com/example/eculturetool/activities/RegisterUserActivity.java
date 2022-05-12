@@ -15,12 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //private FirebaseAuth mAuth;
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
     private TextView registerUser;
     private final int PASSWORD_LENGTH = 6;
@@ -34,7 +32,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_register_user);
 
 
-        //mAuth = FirebaseAuth.getInstance();
         registerUser = (Button) findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
