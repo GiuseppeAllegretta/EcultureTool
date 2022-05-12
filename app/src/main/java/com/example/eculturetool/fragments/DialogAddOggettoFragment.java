@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.example.eculturetool.R;
-
 public class DialogAddOggettoFragment extends AppCompatDialogFragment {
 
     @NonNull

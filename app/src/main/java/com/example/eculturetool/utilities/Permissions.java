@@ -7,12 +7,10 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.eculturetool.activities.UploadImageActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class Permissions extends AppCompatActivity {

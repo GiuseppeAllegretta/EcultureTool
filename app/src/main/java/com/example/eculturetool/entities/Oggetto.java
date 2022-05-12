@@ -1,7 +1,6 @@
 package com.example.eculturetool.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Oggetto extends Entita implements Serializable {
 

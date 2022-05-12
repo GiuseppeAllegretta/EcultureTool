@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.AddZonaToPercorsoActivity;
+import com.example.eculturetool.activities.InfoZonaActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
-import com.example.eculturetool.activities.InfoZonaActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;

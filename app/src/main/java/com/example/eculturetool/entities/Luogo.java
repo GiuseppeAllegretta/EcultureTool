@@ -1,8 +1,6 @@
 package com.example.eculturetool.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Luogo extends Entita implements Serializable {
 
