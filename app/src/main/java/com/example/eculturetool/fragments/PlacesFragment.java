@@ -32,7 +32,6 @@ import com.example.eculturetool.activities.ModificaPasswordActivity;
 import com.example.eculturetool.activities.ModificaProfiloActivity;
 import com.example.eculturetool.activities.SplashActivity;
 import com.example.eculturetool.activities.UploadImageActivity;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.entities.Curatore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +46,6 @@ import com.google.firebase.database.ValueEventListener;
 public class PlacesFragment extends Fragment {
 
     public static final String OBJECTS_IMAGES_DIR = "object_images";
-    private Connection connection = new Connection();
     private DatabaseReference myRef;
     private final String REF = "https://auth-96a19-default-rtdb.europe-west1.firebaseda\tabase.app/";
     private FirebaseDatabase database;
@@ -84,7 +82,7 @@ public class PlacesFragment extends Fragment {
                             // get reference to 'curatori' node
                             DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("curatori");
                             //aggiorno l'url dell'immagine
-                            mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
+                           // mFirebaseDatabase.child(connection.getUser().getUid()).child("img").setValue(uri.toString());
                         }
                     }
                 });
@@ -122,8 +120,6 @@ public class PlacesFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
             }
         });
-
-        myRef = connection.getRefCuratore();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -215,14 +211,15 @@ public class PlacesFragment extends Fragment {
         //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
         //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
         //successivamente all'eleminazione dello stesso nell'authentication db
-        String uid = connection.getUser().getUid();
+        //String uid = connection.getUser().getUid();
 
         dialog.show();
 
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                connection.getUser().delete()
+
+               /* connection.getUser().delete()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -234,7 +231,7 @@ public class PlacesFragment extends Fragment {
                                     getActivity().finish();
                                 }
                             }
-                        });
+                        });*/
             }
         });
 

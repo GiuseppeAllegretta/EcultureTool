@@ -134,6 +134,7 @@
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25815217391304346" />
+        <entry key="app/src/main/res/layout/fragment_places.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_q_r_scanner.xml" value="0.13804457953394123" />
         <entry key="app/src/main/res/layout/fraqment_q_r_scanner.xml" value="0.12590579710144928" />
