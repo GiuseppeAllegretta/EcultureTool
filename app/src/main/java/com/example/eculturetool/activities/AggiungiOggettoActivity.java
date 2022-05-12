@@ -2,7 +2,6 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,17 +16,22 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
-import com.example.eculturetool.Upload;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -40,11 +44,11 @@ import java.util.List;
 
 public class AggiungiOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String STORREF = "gs://auth-96a19.appspot.com/";
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
-
     private DataBaseHelper dataBaseHelper;          //Riferimento al database
     private Zona zona;                              //zona che verrà selezionata nello spinner
-
+    private StorageReference mStorageReference;
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
@@ -165,11 +169,45 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         dialogAddOggettoFragment.show(getSupportFragmentManager(), "dialog");
     }
 
+    /**
+     * Metodo che consente di caricare su Firestore un oggetto di tipo bitmap in formato jpeg
+     *
+     * @param bitmap
+     */
+    public void uploadFile(int idOggetto, Bitmap bitmap) {
+        mStorageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads/qrCode");
+        StorageReference fileReferences = mStorageReference.child(System.currentTimeMillis() + "." + "jpeg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = fileReferences.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                //Ottiene l'uri e lo salva su SQLite
+                fileReferences.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        //Salva su SQLite la stringa dell'url
+                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
+                    }
+                });
+            }
+        });
+
+
+    }
+
     private void creazioneOggetto() {
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
         int idOggettoCreato;
-        Upload upload = new Upload(this, nome);
 
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
@@ -213,7 +251,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 if(oggetto1.getNome().compareTo(nome) == 0){
                     idOggettoCreato = oggetto1.getId();
                     Bitmap bitmap = qrCodeGenerator(idOggettoCreato);
-                    upload.uploadFile(idOggettoCreato, bitmap);
+                    uploadFile(idOggettoCreato, bitmap);
                     break;
                 }
             }
