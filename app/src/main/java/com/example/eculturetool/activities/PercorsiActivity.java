@@ -84,10 +84,6 @@ public class PercorsiActivity extends AppCompatActivity {
     private void setPercorsiInfo() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         percorsiList.addAll(dataBaseHelper.getPercorsi());
-
-        //percorsiList.add(new Percorso(1, "Colosseo: base", 1));
-        //percorsiList.add(new Percorso(2, "Colosseo: intermedio", 1));
-        //percorsiList.add(new Percorso(3, "Colosseo: avanzato", 1));
     }
 
     @Override

@@ -119,6 +119,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_places.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1755" />
+        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.1296875" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_zona.xml" value="0.4036458333333333" />
@@ -132,6 +133,7 @@
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_q_r_scanner.xml" value="0.13804457953394123" />
         <entry key="app/src/main/res/layout/fraqment_q_r_scanner.xml" value="0.12590579710144928" />
