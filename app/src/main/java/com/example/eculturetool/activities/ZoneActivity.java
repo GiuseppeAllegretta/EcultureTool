@@ -18,14 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterZona;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.database.SessionManagement;
-import com.example.eculturetool.databinding.HomeBinding;
 import com.example.eculturetool.entities.Zona;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -128,7 +124,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.oggetti_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.ricerca);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
