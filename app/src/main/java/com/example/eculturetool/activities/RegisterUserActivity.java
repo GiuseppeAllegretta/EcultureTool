@@ -47,6 +47,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
         progressBar = findViewById(R.id.progressBarRegister);
         progressBar.setVisibility(View.INVISIBLE);
+
+        getSupportActionBar().setTitle(getString(R.string.registrazione));
     }
 
 

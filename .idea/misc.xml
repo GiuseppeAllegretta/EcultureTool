@@ -126,10 +126,12 @@
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/activity_dati_percorso.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_esportazione_percorso.xml" value="0.16296296296296298" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_modifica_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_modifica_profilo.xml" value="0.2848731884057971" />
         <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />

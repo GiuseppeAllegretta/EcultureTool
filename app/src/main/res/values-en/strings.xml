@@ -33,6 +33,8 @@
     <string name="stai_gestendo">You\'re managing</string>
     <string name="email_esistente">Email already exist</string>
     <string name="email_errata">Wrong email</string>
+    <string name="accedi_come_ospite">Log in as a guest</string>
+    <string name="registrazione">Registration</string>
 
 
     <!-- Stringhe del luogo -->

@@ -133,6 +133,8 @@
     <string name="no_aggiornati_dati">Aggiornamento fallito</string>
     <string name="cancellazione_successo">Cancellazione avvenuta con successo</string>
     <string name="cancellazione_fallita">Cancellazione fallita</string>
+    <string name="accedi_come_ospite">Accedi come ospite</string>
+    <string name="registrazione">Registrazione</string>
 
 
 </resources>

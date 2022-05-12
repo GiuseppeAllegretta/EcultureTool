@@ -170,7 +170,7 @@
                 android:background="@drawable/button_state"
                 android:backgroundTint="@color/orangeAction"
                 android:onClick="popolaDBmodalitaOspite"
-                android:text="Accedi come ospite"
+                android:text="@string/accedi_come_ospite"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/password" />

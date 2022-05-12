@@ -160,7 +160,6 @@
         <activity
             android:name=".activities.RegisterUserActivity"
             android:exported="false"
-            android:label="Registrazione"
             android:parentActivityName=".activities.LoginActivity" />
         <activity
             android:name=".activities.LoginActivity"
