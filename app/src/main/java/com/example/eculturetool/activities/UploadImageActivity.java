@@ -33,12 +33,12 @@ import androidx.core.content.FileProvider;
 import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.Upload;
-import com.example.eculturetool.database.Connection;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -53,10 +53,10 @@ import java.util.Date;
 public class UploadImageActivity extends AppCompatActivity {
 
     public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
+    private static final String DATABASE_REF = "https://auth-96a19-default-rtdb.europe-west1.firebasedatabase.app/";
     public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
     public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
     Permissions permission = new Permissions();
-    private final Connection connection = new Connection();
     private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
@@ -84,7 +84,6 @@ public class UploadImageActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progressBar);
 
         mStorageRef = FirebaseStorage.getInstance(STORAGE_REF).getReference().child("uploads").child(getIntent().getStringExtra("directory"));
-        mDatabaseRef = connection.getDatabase().getReference("uploads").child(getIntent().getStringExtra("directory"));
 
         chooseFileResultLaunch = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -229,9 +228,6 @@ public class UploadImageActivity extends AppCompatActivity {
                             }, 500);
 
                             Toast.makeText(getApplicationContext(), getString(R.string.upload_effettuato), Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(taskSnapshot.getTask().toString());
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(upload);
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
