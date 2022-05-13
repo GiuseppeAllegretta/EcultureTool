@@ -2,14 +2,17 @@ package com.example.eculturetool.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,11 +32,13 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 public class HomeFragment extends Fragment {
 
+    private FrameLayout frameLayout;
     private DataBaseHelper dataBaseHelper;
     private TextView tv, luogoGestito;
     private CardView percorsi, luoghi, zone, oggetti;
     private Context context;
     private ImageView showTutorial;
+    private View view = null;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -73,10 +78,10 @@ public class HomeFragment extends Fragment {
         this.context = context;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         tv = view.findViewById(R.id.nomeCuratore);
         percorsi = view.findViewById(R.id.percorsiCard);
         luoghi = view.findViewById(R.id.luoghiCard);
@@ -156,9 +161,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragments
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        frameLayout = new FrameLayout(getActivity());
+        inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        frameLayout .addView(view);
+        return frameLayout;
     }
 
     @Override
@@ -169,6 +176,15 @@ public class HomeFragment extends Fragment {
         if(luogo != null){
             luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         }
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        frameLayout. removeAllViews();
+        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.fragment_home, null);
+        frameLayout .addView(view);
+
     }
 
 

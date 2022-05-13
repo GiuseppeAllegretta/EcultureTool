@@ -6,6 +6,7 @@ import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -74,24 +75,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
-
-   /* public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-            setContentView(binding.getRoot());
-            parentLayout = findViewById(android.R.id.content);
-            replaceFragment(new HomeFragment());
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(binding.getRoot());
-            parentLayout = findViewById(android.R.id.content);
-            replaceFragment(new HomeFragment());
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
