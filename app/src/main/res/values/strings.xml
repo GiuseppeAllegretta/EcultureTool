@@ -146,6 +146,9 @@
     <string name="accesso_fotocamera">Consenti l\'accesso alla fotocamera dalle impostazioni per usare questa funzionalità</string>
     <string name="accesso_risorse_esterne">Consenti l\'accesso a risorse esterne dalle impostazioni per usare questa funzionalità</string>
     <string name="doppio_tap">Doppio tap per uscire</string>
+    <string name="aggiungi_zona">Aggiungi zona</string>
+    <string name="zona_msg_1">Per iniziare, aggiungi</string>
+    <string name="zona_msg_2">una nuova zona</string>
 
 
 

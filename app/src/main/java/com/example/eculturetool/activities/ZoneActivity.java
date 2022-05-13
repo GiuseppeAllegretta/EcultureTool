@@ -188,8 +188,8 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
 
         TapTargetView.showFor(this,
-                TapTarget.forView(fabAddLuogo, "Aggiungi zona", "Per iniziare, aggiungi\n" +
-                        " una nuova zona")
+                TapTarget.forView(fabAddLuogo, getString(R.string.aggiungi_zona), getString(R.string.zona_msg_1)+ "\n" +
+                        getString(R.string.zona_msg_2))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

@@ -139,6 +139,9 @@
     <string name="aggiungi_oggetto">Add Object</string>
     <string name="Aggiungi_da_qui">Add from here</string>
     <string name="un_nuovo_oggetto">a new object</string>
+    <string name="aggiungi_zona">Add zone</string>
+    <string name="zona_msg_1">To get started, add</string>
+    <string name="zona_msg_2">a new zone</string>
 
 
 </resources>
