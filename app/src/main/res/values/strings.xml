@@ -82,7 +82,7 @@
     <string name="cambia_luogo">Cambia Luogo</string>
     <string name="esci">Esci</string>
     <string name="profilo">Profilo</string>
-    <string name="elimina_profilo">Elimina Profile</string>
+    <string name="elimina_profilo">Elimina Profilo</string>
     <string name="cambia_lingua">Cambia Lingua</string>
     <string name="nome_luogo_richiesto">Il nome del luogo è richiesto</string>
     <string name="nome_esistente">Nome già esistente</string>
@@ -149,6 +149,17 @@
     <string name="aggiungi_zona">Aggiungi zona</string>
     <string name="zona_msg_1">Per iniziare, aggiungi</string>
     <string name="zona_msg_2">una nuova zona</string>
+    <string name="file_non_esiste">Il file non esiste!</string>
+    <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
+
+    <string name="Pulsante_luoghi">Pulsante Luoghi</string>
+    <string name="Pulsante_zone">Pulsante Zone</string>
+    <string name="Pulsante_oggetti">Pulsante Oggetti</string>
+    <string name="Pulsante_percorsi">Pulsante Percorsi</string>
+    <string name="gestire_luoghi">Potrai gestire da qui \n i tuoi luoghi</string>
+    <string name="gestire_zone">Potrai gestire da qui \n le tue zone</string>
+    <string name="gestire_oggetti">Potrai gestire da qui \n i tuoi oggetti</string>
+    <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
 
 
 

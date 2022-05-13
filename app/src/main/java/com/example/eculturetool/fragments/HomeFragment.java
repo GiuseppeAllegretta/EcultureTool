@@ -106,10 +106,6 @@ public class HomeFragment extends Fragment {
             luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         }
 
-
-
-
-
         showTutorial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,7 +187,7 @@ public class HomeFragment extends Fragment {
 
     private void showTutorial(){
         new TapTargetSequence(getActivity()).targets(
-                TapTarget.forView(luoghi,"Pulsante Luoghi","Potrai gestire da qui\ni tuoi luoghi")
+                TapTarget.forView(luoghi, getString(R.string.Pulsante_luoghi), getString(R.string.gestire_luoghi))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -209,7 +205,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
 
-                TapTarget.forView(zone,"Pulsante Zone","Potrai gestire da qui\nle tue zone")
+                TapTarget.forView(zone,getString(R.string.Pulsante_zone),getString(R.string.gestire_zone))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -227,7 +223,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
 
-                TapTarget.forView(oggetti,"Pulsante Oggetti","Potrai gestire da qui\ni tuoi oggetti")
+                TapTarget.forView(oggetti,getString(R.string.Pulsante_oggetti),getString(R.string.gestire_oggetti))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -244,7 +240,7 @@ public class HomeFragment extends Fragment {
                         .tintTarget(false)
                         .transparentTarget(true)
                         .targetRadius(60),
-                TapTarget.forView(percorsi,"Pulsante Percorsi","Potrai creare e gestire\ni tuoi percorsi da qui")
+                TapTarget.forView(percorsi,getString(R.string.Pulsante_percorsi),getString(R.string.gestire_luoghi))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

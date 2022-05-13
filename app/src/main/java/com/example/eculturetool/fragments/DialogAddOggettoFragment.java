@@ -9,14 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.eculturetool.R;
+
 public class DialogAddOggettoFragment extends AppCompatDialogFragment {
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Informazione")
-                .setMessage("Devi creare almeno una zona per il luogo selezionato")
+        builder.setTitle(getString(R.string.informazione))
+                .setMessage(getString(R.string.almeno_una_zona))
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
