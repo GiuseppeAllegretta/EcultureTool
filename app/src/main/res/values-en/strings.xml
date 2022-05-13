@@ -129,6 +129,8 @@
     <string name="password_dimenticata_activity">Forgot Password</string>
     <string name="scansiona_qr_code">Scan QR Code</string>
     <string name="alert_zona">To add new objects, you must first enter at least one zone</string>
+    <string name="inserisci_nome_percorso">Enter itinerary name</string>
+    <string name="nessun_QR">No QR code found</string>
 
 
 </resources>

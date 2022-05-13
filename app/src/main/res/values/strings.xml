@@ -138,6 +138,9 @@
     <string name="password_dimenticata_activity">Password dimenticata</string>
     <string name="scansiona_qr_code">Scansiona QR Code</string>
     <string name="alert_zona">Per aggiungere nuovi oggetti, devi prima inserire almeno una zona</string>
+    <string name="inserisci_nome_percorso">Inserisci nome percorso</string>
+    <string name="nessun_QR">Nessun QR code trovato</string>
+
 
 
 </resources>

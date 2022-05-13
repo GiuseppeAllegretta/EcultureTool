@@ -123,10 +123,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        System.out.println("entra in onItemSelected");
         String item = adapterView.getItemAtPosition(i).toString();
-        System.out.println("item: " + item);
 
         switch (item) {
             case "Museo":
