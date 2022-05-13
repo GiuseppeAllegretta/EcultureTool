@@ -244,7 +244,7 @@ public class ProfileFragment extends Fragment {
         Log.d("Clicked", "Clicked");
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-        dialogBuilder.setTitle("Seleziona una lingua...")
+        dialogBuilder.setTitle(getString(R.string.seleziona_lingua))
                 .setSingleChoiceItems(Language, lang_selected, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -157,6 +157,9 @@
     <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
     <string name="file_non_esiste">The file does not exist!</string>
     <string name="almeno_una_zona">Devi creare almeno una zona per il luogo selezionato</string>
+    <string name="nessun_oggetto_trovato">No object found</string>
+    <string name="flash">For the flash use the volume up key</string>
+
 
     <!-- Tutorial -->
     <string name="aggiungi_oggetto">Add Object</string>
@@ -173,5 +176,6 @@
     <string name="gestire_zone">You will be able to manage \n your zones from here</string>
     <string name="gestire_oggetti">You will be able to manage \n your items from here</string>
     <string name="gestire_percorsi">You will be able to manage \ n your itineraries from here</string>
+    <string name="inquadra">Frame a QR code of an \n object to view, \nmodify or delete it</string>
 
 </resources>
