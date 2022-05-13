@@ -119,6 +119,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_places.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1755" />
+        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.3607162475585939" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_zona.xml" value="0.4036458333333333" />
