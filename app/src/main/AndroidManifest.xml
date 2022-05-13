@@ -130,9 +130,6 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".provaoggetti.ElencoOggetti"
-            android:exported="true" />
-        <activity
             android:name=".activities.ModificaProfiloActivity"
             android:exported="false"
             android:label="Modifica Profilo"

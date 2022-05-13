@@ -159,9 +159,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         oggettiList.clear();
         oggettiList = (ArrayList<Oggetto>) dataBaseHelper.getOggetti();
 
-        System.out.println("oggettiList" + oggettiList);
         setAdapter();
-
     }
 
 
@@ -242,8 +240,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
 
         TapTargetView.showFor(this,
-                TapTarget.forView(fabAddOggetto, "Aggiungi oggetto", "Aggiungi da qui\n" +
-                        " un nuovo oggetto")
+                TapTarget.forView(fabAddOggetto, getString(R.string.aggiungi_oggetto), getString(R.string.Aggiungi_da_qui) + "\n" + getString(R.string.un_nuovo_oggetto))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

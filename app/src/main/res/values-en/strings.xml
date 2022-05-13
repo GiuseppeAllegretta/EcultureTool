@@ -132,5 +132,10 @@
     <string name="inserisci_nome_percorso">Enter itinerary name</string>
     <string name="nessun_QR">No QR code found</string>
 
+    <!-- Tutorial -->
+    <string name="aggiungi_oggetto">Add Object</string>
+    <string name="Aggiungi_da_qui">Add from here</string>
+    <string name="un_nuovo_oggetto">a new object</string>
+
 
 </resources>

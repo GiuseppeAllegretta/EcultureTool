@@ -140,6 +140,9 @@
     <string name="alert_zona">Per aggiungere nuovi oggetti, devi prima inserire almeno una zona</string>
     <string name="inserisci_nome_percorso">Inserisci nome percorso</string>
     <string name="nessun_QR">Nessun QR code trovato</string>
+    <string name="aggiungi_oggetto">Aggiungi oggetto</string>
+    <string name="Aggiungi_da_qui">Aggiungi da qui</string>
+    <string name="un_nuovo_oggetto">un nuovo oggetto</string>
 
 
 
