@@ -133,6 +133,7 @@
     <string name="nessun_QR">No QR code found</string>
     <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
     <string name="doppio_tap">press double tap to exit</string>
+    <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
 
     <!-- Tutorial -->
     <string name="aggiungi_oggetto">Add Object</string>

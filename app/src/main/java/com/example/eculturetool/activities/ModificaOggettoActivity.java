@@ -212,7 +212,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         String item = adapterView.getItemAtPosition(i).toString();
-        System.out.println("item: " + item);
 
         switch (item) {
             case Oggetto.KeysTipologiaOggetto.QUADRO:

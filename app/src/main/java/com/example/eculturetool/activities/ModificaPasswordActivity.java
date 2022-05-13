@@ -80,18 +80,12 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             return false;
         }
 
-        System.out.println("Modifica password: " + curatore.toString());
-
         return passwordVerificata(passAttuale, curatore.getPassword());
 
     }
 
     public boolean passwordVerificata(String passwordAttuale, String password) {
         progressBar.setVisibility(View.VISIBLE);
-
-        System.out.println("passNuova " + passNuova);
-        System.out.println("passwordAttuale " + passwordAttuale);
-        System.out.println("password " + password);
 
         if(passwordAttuale.compareTo(password) == 0){
             if(dataBaseHelper.updatePassword(passNuova)){
