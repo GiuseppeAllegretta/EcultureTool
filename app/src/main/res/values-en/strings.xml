@@ -131,6 +131,8 @@
     <string name="alert_zona">To add new objects, you must first enter at least one zone</string>
     <string name="inserisci_nome_percorso">Enter itinerary name</string>
     <string name="nessun_QR">No QR code found</string>
+    <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
+    <string name="doppio_tap">press double tap to exit</string>
 
     <!-- Tutorial -->
     <string name="aggiungi_oggetto">Add Object</string>

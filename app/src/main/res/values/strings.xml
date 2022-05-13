@@ -143,6 +143,8 @@
     <string name="aggiungi_oggetto">Aggiungi oggetto</string>
     <string name="Aggiungi_da_qui">Aggiungi da qui</string>
     <string name="un_nuovo_oggetto">un nuovo oggetto</string>
+    <string name="accesso_fotocamera">Consenti l\'accesso alla fotocamera dalle impostazioni per usare questa funzionalità</string>
+    <string name="doppio_tap">Doppio tap per uscire</string>
 
 
 
