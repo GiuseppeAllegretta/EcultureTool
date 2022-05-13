@@ -284,7 +284,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                             }
                                         }, this);
                             } else {
-                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso a risorse esterne dalle impostazioni per usare questa funzionalità");
+                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.accesso_risorse_esterne));
                                 snackBar.show();
                             }
                         }
@@ -318,7 +318,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                             }
                                         }, this);
                             } else {
-                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso alla fotocamera dalle impostazioni per usare questa funzionalità");
+                                Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.accesso_fotocamera));
                                 snackBar.show();
                             }
                         }

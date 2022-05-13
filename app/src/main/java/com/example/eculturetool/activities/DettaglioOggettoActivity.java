@@ -201,7 +201,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                             dialogInterface.dismiss();
                         }
                     });
-                    builder.setMessage("Nessun QR code trovato");
+                    builder.setMessage(getString(R.string.nessun_QR));
                     builder.create().show();
                 }
             }

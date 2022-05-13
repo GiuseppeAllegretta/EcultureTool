@@ -87,7 +87,6 @@ public class QRcodeScannerFragment extends Fragment {
                     if (result.getContents() != null) {
                         if (Pattern.matches(regex_id, result.getContents())) {
                             int idOggetto = Integer.parseInt(result.getContents());
-                            System.out.println("Valore risultante: " + idOggetto);
 
                             for (Oggetto oggetto : oggettiList) {
                                 if (oggetto.getId() == idOggetto) {
@@ -112,7 +111,7 @@ public class QRcodeScannerFragment extends Fragment {
     private void dialogOggettoNonTrovato() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle(getResources().getString(R.string.avviso));
-        builder.setMessage("Nessun oggetto trovato");
+        builder.setMessage(getString(R.string.nessun_oggetto_trovato));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -149,7 +148,7 @@ public class QRcodeScannerFragment extends Fragment {
             public void onClick(View view) {
                 ScanOptions options = new ScanOptions();
                 //set prompt
-                options.setPrompt("Per il flash usa il tasto volume su");
+                options.setPrompt(getString(R.string.flash));
                 options.setBeepEnabled(true);
                 //looked orientation
                 options.setOrientationLocked(true);
@@ -170,8 +169,7 @@ public class QRcodeScannerFragment extends Fragment {
 
     private void showTutorial(){
         TapTargetView.showFor(getActivity(),                 // `this` is an Activity
-                TapTarget.forView(scanBtn, "Scansiona QR Code", "Inquadra un Qr code di un\n" +
-                        "oggetto per visualizzarlo,\nmodificarlo o eliminarlo")
+                TapTarget.forView(scanBtn, getString(R.string.scansiona_qr_code), getString(R.string.inquadra))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

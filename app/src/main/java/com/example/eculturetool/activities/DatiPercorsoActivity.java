@@ -45,7 +45,7 @@ public class DatiPercorsoActivity extends AppCompatActivity {
     private void getDatiPercorso() {
 
         if(nomePercorsoEdt.getText().toString().isEmpty()){
-            nomePercorsoEdt.setError("Inserisci nome percorso");
+            nomePercorsoEdt.setError(getString(R.string.inserisci_nome_percorso));
             nomePercorsoEdt.requestFocus();
             return;
         }

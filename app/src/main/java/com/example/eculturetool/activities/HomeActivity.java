@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
                                         }
                                     }, this);
                         } else {
-                            Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, "Consenti l'accesso alla fotocamera dalle impostazioni per usare questa funzionalità");
+                            Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.accesso_fotocamera));
                             snackBar.show();
                         }
                     }
@@ -145,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (isInFragment() && !doubleBackToExitPressedOnce) {
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "press double tap to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.doppio_tap), Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

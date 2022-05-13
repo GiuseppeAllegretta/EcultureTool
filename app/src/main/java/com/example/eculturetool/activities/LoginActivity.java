@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String[] language = {"Italiano", "Inglese"};
 
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-                dialogBuilder.setTitle("Seleziona una lingua...")
+                dialogBuilder.setTitle(getString(R.string.seleziona_lingua))
                         .setSingleChoiceItems(language, lang_selected, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

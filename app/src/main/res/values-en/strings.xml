@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <resources>
+
+    <string name="app_name">EcultureTool</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Nome Curatore</string>
+    <string name="surname">Cognome Curatore</string>
+    <string name="email">Email Curatore</string>
+    <string name="place">Struttura Curatore</string>
+
     <string name="nome">Name</string>
     <string name="cognome">Surname</string>
     <string name="luogo_selezionato">Selected place</string>
@@ -129,6 +150,32 @@
     <string name="password_dimenticata_activity">Forgot Password</string>
     <string name="scansiona_qr_code">Scan QR Code</string>
     <string name="alert_zona">To add new objects, you must first enter at least one zone</string>
+    <string name="inserisci_nome_percorso">Enter itinerary name</string>
+    <string name="nessun_QR">No QR code found</string>
+    <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
+    <string name="doppio_tap">press double tap to exit</string>
+    <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
+    <string name="file_non_esiste">The file does not exist!</string>
+    <string name="almeno_una_zona">Devi creare almeno una zona per il luogo selezionato</string>
+    <string name="nessun_oggetto_trovato">No object found</string>
+    <string name="flash">For the flash use the volume up key</string>
 
+
+    <!-- Tutorial -->
+    <string name="aggiungi_oggetto">Add Object</string>
+    <string name="Aggiungi_da_qui">Add from here</string>
+    <string name="un_nuovo_oggetto">a new object</string>
+    <string name="aggiungi_zona">Add zone</string>
+    <string name="zona_msg_1">To get started, add</string>
+    <string name="zona_msg_2">a new zone</string>
+    <string name="Pulsante_luoghi">Places button</string>
+    <string name="Pulsante_zone">Zone button</string>
+    <string name="Pulsante_oggetti">Objects button</string>
+    <string name="Pulsante_percorsi">Itineraries button</string>
+    <string name="gestire_luoghi">You will be able to manage \n your places from here</string>
+    <string name="gestire_zone">You will be able to manage \n your zones from here</string>
+    <string name="gestire_oggetti">You will be able to manage \n your items from here</string>
+    <string name="gestire_percorsi">You will be able to manage \ n your itineraries from here</string>
+    <string name="inquadra">Frame a QR code of an \n object to view, \nmodify or delete it</string>
 
 </resources>

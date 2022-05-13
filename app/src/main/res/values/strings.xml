@@ -82,7 +82,7 @@
     <string name="cambia_luogo">Cambia Luogo</string>
     <string name="esci">Esci</string>
     <string name="profilo">Profilo</string>
-    <string name="elimina_profilo">Elimina Profile</string>
+    <string name="elimina_profilo">Elimina Profilo</string>
     <string name="cambia_lingua">Cambia Lingua</string>
     <string name="nome_luogo_richiesto">Il nome del luogo è richiesto</string>
     <string name="nome_esistente">Nome già esistente</string>
@@ -138,6 +138,32 @@
     <string name="password_dimenticata_activity">Password dimenticata</string>
     <string name="scansiona_qr_code">Scansiona QR Code</string>
     <string name="alert_zona">Per aggiungere nuovi oggetti, devi prima inserire almeno una zona</string>
+    <string name="inserisci_nome_percorso">Inserisci nome percorso</string>
+    <string name="nessun_QR">Nessun QR code trovato</string>
+    <string name="aggiungi_oggetto">Aggiungi oggetto</string>
+    <string name="Aggiungi_da_qui">Aggiungi da qui</string>
+    <string name="un_nuovo_oggetto">un nuovo oggetto</string>
+    <string name="accesso_fotocamera">Consenti l\'accesso alla fotocamera dalle impostazioni per usare questa funzionalità</string>
+    <string name="accesso_risorse_esterne">Consenti l\'accesso a risorse esterne dalle impostazioni per usare questa funzionalità</string>
+    <string name="doppio_tap">Doppio tap per uscire</string>
+    <string name="aggiungi_zona">Aggiungi zona</string>
+    <string name="zona_msg_1">Per iniziare, aggiungi</string>
+    <string name="zona_msg_2">una nuova zona</string>
+    <string name="file_non_esiste">Il file non esiste!</string>
+    <string name="nessun_oggetto_trovato">Nessun oggetto trovato</string>
+    <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
+    <string name="flash">Per il flash usa il tasto volume su</string>
+    <string name="inquadra">Inquadra un Qr code di un\n oggetto per visualizzarlo,\nmodificarlo o eliminarlo</string>
+
+    <string name="Pulsante_luoghi">Pulsante Luoghi</string>
+    <string name="Pulsante_zone">Pulsante Zone</string>
+    <string name="Pulsante_oggetti">Pulsante Oggetti</string>
+    <string name="Pulsante_percorsi">Pulsante Percorsi</string>
+    <string name="gestire_luoghi">Potrai gestire da qui \n i tuoi luoghi</string>
+    <string name="gestire_zone">Potrai gestire da qui \n le tue zone</string>
+    <string name="gestire_oggetti">Potrai gestire da qui \n i tuoi oggetti</string>
+    <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
+
 
 
 </resources>

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.google.gson.Gson;
@@ -268,7 +269,7 @@ public class IoHelper {
         contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
 
         if(!file.exists()){
-            Toast.makeText(context, "Il file non esiste!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.file_non_esiste), Toast.LENGTH_LONG).show();
             return;
         }
 
