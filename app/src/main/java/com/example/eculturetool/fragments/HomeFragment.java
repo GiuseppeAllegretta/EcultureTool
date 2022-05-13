@@ -39,6 +39,8 @@ public class HomeFragment extends Fragment {
     private Context context;
     private ImageView showTutorial;
     private View view = null;
+    private Curatore curatore;
+    private Luogo luogo;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,25 +92,14 @@ public class HomeFragment extends Fragment {
         luogoGestito = view.findViewById(R.id.nomeLuogoHome);
         showTutorial=view.findViewById(R.id.showTutorialHome);
 
-        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
-        dataBaseHelper.getCuratore();
-
-
         //Operazioni che settano il nome del curatore nella home
-        Curatore curatore = dataBaseHelper.getCuratore();
         if(curatore != null){
             tv.setText(curatore.getNome() + " " + curatore.getCognome());
         }
-
         //Operazioni che settano il nome del luogo corrente nella home
-        Luogo luogo = dataBaseHelper.getLuogoCorrente();
         if(luogo != null){
             luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         }
-
-
-
-
 
         showTutorial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +107,6 @@ public class HomeFragment extends Fragment {
                 showTutorial();
             }
         });
-
 
         percorsi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,12 +138,30 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Curatore", curatore);
+        outState.putSerializable("Luogo", luogo);
+    }
+
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if (savedInstanceState != null) {
+            curatore = (Curatore) savedInstanceState.getSerializable("Curatore");
+            luogo = (Luogo) savedInstanceState.getSerializable("Luogo");
+        } else {
+            dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+            dataBaseHelper.getCuratore();
+            curatore = dataBaseHelper.getCuratore();
+            luogo = dataBaseHelper.getLuogoCorrente();
+        }
+
     }
 
 
@@ -171,11 +179,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //Operazioni che settano il nome del luogo corrente nella home
-        Luogo luogo = dataBaseHelper.getLuogoCorrente();
-        if(luogo != null){
-            luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
-        }
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
@@ -183,8 +186,11 @@ public class HomeFragment extends Fragment {
         frameLayout. removeAllViews();
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.fragment_home, null);
+        tv = view.findViewById(R.id.nomeCuratore);
+        tv.setText(curatore.getNome() + " " + curatore.getCognome());
+        luogoGestito = view.findViewById(R.id.nomeLuogoHome);
+        luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         frameLayout .addView(view);
-
     }
 
 
