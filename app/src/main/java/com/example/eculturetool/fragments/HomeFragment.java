@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment {
                         .cancelable(false)
                         .tintTarget(false)
                         .transparentTarget(true)
-                        .targetRadius(60),
+                        .targetRadius(75),
 
                 TapTarget.forView(oggetti,getString(R.string.Pulsante_oggetti),getString(R.string.gestire_oggetti))
                         // All options below are optional
@@ -256,7 +256,7 @@ public class HomeFragment extends Fragment {
                         .cancelable(false)
                         .tintTarget(false)
                         .transparentTarget(true)
-                        .targetRadius(60))
+                        .targetRadius(75))
                 .listener(new TapTargetSequence.Listener() {
                     @Override
                     public void onSequenceFinish() {
