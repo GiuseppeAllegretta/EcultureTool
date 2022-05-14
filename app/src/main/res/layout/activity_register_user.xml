@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,86 +7,96 @@
     android:autofillHints="name"
     tools:context=".activities.RegisterUserActivity">
 
-    <TextView
-        android:id="@+id/banner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="E-Culture"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        android:textStyle="italic"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:id="@+id/linear1">
 
-    <EditText
-        android:id="@+id/nomeCuratore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="50sp"
-        android:ems="10"
-        android:hint="@string/nome"
-        android:inputType="textPersonName"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/banner" />
+        <TextView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="E-Culture"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:textStyle="italic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/cognomeCuratore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="30sp"
-        android:ems="10"
-        android:hint="@string/cognome"
-        android:inputType="textPersonName"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeCuratore" />
-
-    <EditText
-        android:id="@+id/emailCuratore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="30sp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cognomeCuratore" />
-
-    <EditText
-        android:id="@+id/passwordCuratore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="30sp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailCuratore" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/avantiButton"
+    <LinearLayout
+        android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50sp"
-        android:layout_marginTop="60sp"
-        android:background="@drawable/button_state"
-        android:text="@string/avanti"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@id/passwordCuratore" />
+        android:layout_below="@+id/linear1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/nomeCuratore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:ems="10"
+            android:hint="@string/nome"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/cognomeCuratore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:ems="10"
+            android:hint="@string/cognome"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/emailCuratore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/passwordCuratore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/linear2">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/avantiButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50sp"
+            android:layout_marginTop="80sp"
+            android:background="@drawable/button_state"
+            android:text="@string/avanti"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </LinearLayout>
+
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/progressBarRegister"
@@ -102,14 +112,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="90sp"
-        android:layout_height="90sp"
-        app:srcCompat="@drawable/playstore_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/avantiButton" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

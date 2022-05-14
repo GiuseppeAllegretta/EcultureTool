@@ -24,7 +24,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="3dp"
                 android:background="@drawable/shape_background"
-                android:backgroundTint="@color/orangeAction"
                 android:orientation="horizontal">
 
                 <TextView
@@ -115,7 +114,6 @@
                 android:layout_marginHorizontal="50sp"
                 android:layout_marginTop="25sp"
                 android:background="@drawable/button_state"
-                android:backgroundTint="@color/orangeAction"
                 android:text="Login"
                 android:textColor="@color/white"
                 android:textSize="30sp"
@@ -168,7 +166,6 @@
                 android:layout_marginHorizontal="50sp"
                 android:layout_marginTop="30sp"
                 android:background="@drawable/button_state"
-                android:backgroundTint="@color/orangeAction"
                 android:onClick="popolaDBmodalitaOspite"
                 android:text="@string/accedi_come_ospite"
                 android:textColor="@color/white"

@@ -20,33 +20,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnScatta"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="16sp"
         android:text="@string/scatta_una_foto"
         android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_state"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btnSeleziona"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSeleziona"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="16sp"
         android:text="@string/seleziona_da_file"
         android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_state"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btnScatta"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSalva"
-        android:layout_width="117dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="16sp"
         android:layout_marginTop="50dp"
         android:text="@string/salva"
+        android:textColor="@color/white"
+        android:background="@drawable/button_state"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"

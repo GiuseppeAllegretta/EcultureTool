@@ -159,6 +159,7 @@
     <string name="almeno_una_zona">Devi creare almeno una zona per il luogo selezionato</string>
     <string name="nessun_oggetto_trovato">No object found</string>
     <string name="flash">For the flash use the volume up key</string>
+    <string name="dati_percorso">Itinerary data</string>
 
 
     <!-- Tutorial -->

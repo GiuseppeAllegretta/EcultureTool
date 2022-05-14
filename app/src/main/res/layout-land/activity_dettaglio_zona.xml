@@ -102,20 +102,22 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/aggiungiOggetto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/verdePrimario"
+                    android:background="@drawable/button_state"
                     android:padding="10dp"
                     android:text="@string/aggiungi_oggetti"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/eliminaZona"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_state"
                     android:backgroundTint="#DB311F"
                     android:padding="10dp"
                     android:text="@string/elimina_zona"

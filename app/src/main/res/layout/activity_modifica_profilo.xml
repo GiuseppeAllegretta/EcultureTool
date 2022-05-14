@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nome"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="20sp" />
 
                     <EditText
                         android:id="@+id/edit_name_profile"
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/cognome"
                         android:textColor="@color/headings"
-                        android:textSize="13sp" />
+                        android:textSize="20sp" />
 
                     <EditText
                         android:id="@+id/edit_cognome_profile"

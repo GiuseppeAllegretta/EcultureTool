@@ -42,8 +42,7 @@
                         android:adjustViewBounds="true"
                         android:background="@drawable/circle"
                         android:padding="3dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_museum" />
+                        android:scaleType="centerInside" />
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -237,7 +236,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_state"
-                            android:backgroundTint="@color/gialloSecondario"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:gravity="center"
                             android:text="@string/crea_oggetto"

@@ -250,9 +250,10 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/cambia_luogo"
                     android:layout_width="match_parent"
+                    android:background="@drawable/button_state"
                     android:layout_height="match_parent"
                     android:text="@string/cambia_luogo"
                     android:textColor="@color/white" />
@@ -266,10 +267,11 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/button_state"
                     android:backgroundTint="#D2D2D2"
                     android:text="@string/esci"
                     android:textColor="@color/black"

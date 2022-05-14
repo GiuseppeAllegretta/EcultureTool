@@ -154,6 +154,7 @@
     <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
     <string name="flash">Per il flash usa il tasto volume su</string>
     <string name="inquadra">Inquadra un Qr code di un\n oggetto per visualizzarlo,\nmodificarlo o eliminarlo</string>
+    <string name="dati_percorso">Dati percorso</string>
 
     <string name="Pulsante_luoghi">Pulsante Luoghi</string>
     <string name="Pulsante_zone">Pulsante Zone</string>

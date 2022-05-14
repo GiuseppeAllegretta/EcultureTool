@@ -44,13 +44,15 @@
     </LinearLayout>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/confermaPercorso"
-        android:layout_width="379dp"
+        android:layout_width="350dp"
         android:layout_height="46dp"
         android:layout_gravity="bottom"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_state"
         android:text="conferma"
+        android:textSize="22sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

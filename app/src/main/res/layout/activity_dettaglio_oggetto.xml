@@ -241,21 +241,23 @@
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/qrCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/gialloSecondario"
+                        android:background="@drawable/button_state"
                         android:padding="10dp"
                         android:text="QR code"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/eliminaOggetto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:backgroundTint="#DB311F"
+                        android:background="@drawable/button_state"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/elimina_oggetto"

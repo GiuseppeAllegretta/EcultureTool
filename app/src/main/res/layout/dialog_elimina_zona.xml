@@ -26,10 +26,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/conferma_cancellazione_zona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_state"
+            android:textColor="@color/white"
             android:text="@string/si"
             android:textAlignment="center"
             android:backgroundTint="@android:color/holo_red_light"
@@ -41,8 +43,9 @@
             android:id="@+id/annulla_cancellazione_zona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_state"
+            android:textColor="@color/white"
             android:text="No"
-            android:backgroundTint="@color/verdePrimario"
             android:layout_weight="1"
             android:textAlignment="center"
             android:padding="4dp" />

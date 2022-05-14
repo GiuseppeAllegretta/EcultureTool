@@ -126,23 +126,23 @@
                     android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/impostaLuogoCorrente"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/verdePrimario"
+                        android:background="@drawable/button_state"
                         android:padding="10dp"
                         android:text="@string/seleziona_luogo"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/eliminaLuogo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="#DB311F"
+                        android:background="@drawable/button_state"
                         android:padding="10dp"
                         android:text="@string/elimina_luogo"
                         android:textColor="@color/white"
