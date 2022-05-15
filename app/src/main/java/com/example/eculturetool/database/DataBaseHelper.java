@@ -635,6 +635,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(stringQuery,new String[] {z.getNome(),z.getDescrizione()});
 
+        System.out.println("Lancia rimuovi");
 
         db.close();
     }
