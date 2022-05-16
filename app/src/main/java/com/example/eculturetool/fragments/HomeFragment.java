@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.LuoghiActivity;
@@ -183,14 +184,8 @@ public class HomeFragment extends Fragment {
 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        frameLayout. removeAllViews();
-        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.fragment_home, null);
-        tv = view.findViewById(R.id.nomeCuratore);
-        tv.setText(curatore.getNome() + " " + curatore.getCognome());
-        luogoGestito = view.findViewById(R.id.nomeLuogoHome);
-        luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
-        frameLayout .addView(view);
+        getActivity().recreate();
+
     }
 
 
