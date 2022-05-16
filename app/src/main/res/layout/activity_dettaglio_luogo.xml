@@ -143,6 +143,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/button_state"
+                        android:backgroundTint="#DB311F"
                         android:padding="10dp"
                         android:text="@string/elimina_luogo"
                         android:textColor="@color/white"
