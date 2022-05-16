@@ -1021,9 +1021,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public boolean addPercorso(Percorso percorso){
-        boolean risultato = false;
-
+    public int addPercorso(Percorso percorso){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -1031,14 +1029,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
 
 
-        long insert = db.insert(TABLE_PERCORSI, null, contentValues);
+        int insert = (int) db.insert(TABLE_PERCORSI, null, contentValues);
 
-        if(!(insert == -1)){
-            risultato = true;
-        }
 
         db.close();
-        return risultato;
+        return insert;
     }
 
 

@@ -1,9 +1,11 @@
 package com.example.eculturetool.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +59,19 @@ public class DatiPercorsoActivity extends AppCompatActivity {
         }
 
         Percorso percorso = new Percorso(nomePercorsoEdt.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
-        dataBaseHelper.addPercorso(percorso);
+        int idPercorso = dataBaseHelper.addPercorso(percorso);
+
+        if(idPercorso != -1){
+            percorso.setId(idPercorso);
+
+            Intent intent = new Intent(this, CreazionePercorsoActivity.class);
+            intent.putExtra("PERCORSO", percorso);
+
+            startActivity(intent);
+        }else {
+            Toast.makeText(this, "Si è verificato un errore! \n Riprova", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

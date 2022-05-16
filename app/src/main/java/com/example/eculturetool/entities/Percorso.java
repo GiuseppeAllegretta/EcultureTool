@@ -1,9 +1,10 @@
 package com.example.eculturetool.entities;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Percorso {
+public class Percorso implements Serializable {
 
     /**
      * Id del percorso univoco

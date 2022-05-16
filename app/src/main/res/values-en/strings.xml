@@ -156,10 +156,11 @@
     <string name="doppio_tap">press double tap to exit</string>
     <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
     <string name="file_non_esiste">The file does not exist!</string>
-    <string name="almeno_una_zona">Devi creare almeno una zona per il luogo selezionato</string>
+    <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
     <string name="nessun_oggetto_trovato">No object found</string>
     <string name="flash">For the flash use the volume up key</string>
     <string name="dati_percorso">Itinerary data</string>
+    <string name="errore_percorso_riprova">An error has occurred!\nTry again</string>
 
 
     <!-- Tutorial -->
