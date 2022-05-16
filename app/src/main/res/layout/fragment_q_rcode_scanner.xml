@@ -27,7 +27,7 @@
     </RelativeLayout>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/scanBtn"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -38,5 +38,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/btn_tondo"/>
+        android:background="@drawable/btn_qr_tondo"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
