@@ -140,6 +140,7 @@
             android:name=".activities.UploadImageActivity"
             android:exported="false"
             android:label="Carica Immagine"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.HomeActivity"
