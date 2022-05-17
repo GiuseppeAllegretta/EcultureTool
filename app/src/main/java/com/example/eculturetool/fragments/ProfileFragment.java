@@ -176,13 +176,19 @@ public class ProfileFragment extends Fragment {
         Curatore curatore = dataBaseHelper.getCuratore();
         Luogo luogo = dataBaseHelper.getLuogoCorrente();
 
-        if(curatore != null){
-            nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
+        System.out.println(curatore.toString());
+
+        if (curatore != null) {
+            if (curatore.getEmail().compareTo(emailOspite) == 0) {
+                nomeFoto.setText(curatore.getNome());
+            } else {
+                nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
+            }
             email.setText(curatore.getEmail());
             nome.setText(curatore.getNome());
             cognome.setText(curatore.getCognome());
 
-            if(luogo != null){
+            if (luogo != null) {
                 nomeLuogo.setText(luogo.getNome());
             }
 
@@ -309,7 +315,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 dialog.dismiss();
 
-                if(dataBaseHelper.deleteCuratore()){
+                if (dataBaseHelper.deleteCuratore()) {
                     //delete sessione
                     SessionManagement sessionManagement = new SessionManagement(getActivity());
                     sessionManagement.removeSession();
@@ -317,10 +323,10 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(context, getString(R.string.cancellazione_successo), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), SplashActivity.class));
                     requireActivity().finish();
-                }else {
+                } else {
                     Toast.makeText(context, getString(R.string.cancellazione_fallita), Toast.LENGTH_SHORT).show();
                 }
-                
+
             }
         });
 
@@ -340,13 +346,12 @@ public class ProfileFragment extends Fragment {
     private void nascondiView() {
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
-        if(emailCuratore.compareTo(emailOspite) == 0){
+        if (emailCuratore.compareTo(emailOspite) == 0) {
+
             changeImg.setVisibility(View.INVISIBLE);
             editButton.setVisibility(View.INVISIBLE);
             cambiaLuogo.setVisibility(View.INVISIBLE);
             settingsButton.setVisibility(View.INVISIBLE);
-            email.setVisibility(View.INVISIBLE);
-            cognome.setVisibility(View.INVISIBLE);
         }
     }
 }
