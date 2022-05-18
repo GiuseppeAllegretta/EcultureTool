@@ -42,6 +42,8 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         if (zoneList != null)
             zoneList = dataBaseHelper.getZone();
 
+        getSupportActionBar().setTitle(getString(R.string.crea_zona));
+
     }
 
     @Override

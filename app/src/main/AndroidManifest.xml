@@ -60,7 +60,8 @@
         <activity
             android:name=".percorsi.EsportazionePercorsoActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activities.PercorsiActivity"
             android:exported="true"
