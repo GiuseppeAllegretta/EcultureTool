@@ -161,6 +161,7 @@
     <string name="flash">For the flash use the volume up key</string>
     <string name="dati_percorso">Itinerary data</string>
     <string name="errore_percorso_riprova">An error has occurred!\nTry again</string>
+    <string name="oppure">OR</string>
 
 
     <!-- Tutorial -->

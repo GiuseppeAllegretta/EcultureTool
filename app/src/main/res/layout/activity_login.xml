@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     android:layout_weight="38"
                     android:background="@color/opacityBlack" />
 
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:fontFamily="@font/posterama_1927_regular"
-                    android:text="OPPURE"
+                    android:text="@string/oppure"
                     android:textAlignment="center"
                     android:textColor="@color/opacityBlack"
                     android:textSize="20sp"
@@ -153,7 +153,7 @@
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_weight="38"
                     android:background="@color/opacityBlack" />
 

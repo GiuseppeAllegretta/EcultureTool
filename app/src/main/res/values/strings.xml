@@ -156,6 +156,7 @@
     <string name="inquadra">Inquadra un Qr code di un\n oggetto per visualizzarlo,\nmodificarlo o eliminarlo</string>
     <string name="dati_percorso">Dati percorso</string>
     <string name="errore_percorso_riprova">Si è verificato un errore! Riprova</string>
+    <string name="oppure">OPPURE</string>
 
     <string name="Pulsante_luoghi">Pulsante Luoghi</string>
     <string name="Pulsante_zone">Pulsante Zone</string>
