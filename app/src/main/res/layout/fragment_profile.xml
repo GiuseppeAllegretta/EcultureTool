@@ -7,6 +7,13 @@
     tools:context=".fragments.ProfileFragment"
     android:id="@+id/profileFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
@@ -101,10 +108,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rellay1">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -281,6 +285,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
