@@ -76,6 +76,8 @@ public class UploadImageActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView);
         imagePlaceHolder = findViewById(R.id.imagePlaceHolder);
 
+        getSupportActionBar().setTitle(getString(R.string.carica_immagine));
+
         mProgressBar = findViewById(R.id.progressBar);
 
         mStorageRef = FirebaseStorage.getInstance(STORAGE_REF).getReference().child("uploads").child(getIntent().getStringExtra("directory"));
