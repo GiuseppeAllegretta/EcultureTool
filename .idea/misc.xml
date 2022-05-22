@@ -128,6 +128,7 @@
         <entry key="app/src/main/res/layout-land/activity_aggiungi_oggetti.xml" value="0.46979166666666666" />
         <entry key="app/src/main/res/layout-land/activity_luoghi.xml" value="0.46979166666666666" />
         <entry key="app/src/main/res/layout-land/activity_modifica_luogo.xml" value="0.46979166666666666" />
+        <entry key="app/src/main/res/layout-land/activity_modifica_zona.xml" value="0.46979166666666666" />
         <entry key="app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
@@ -147,6 +148,7 @@
         <entry key="app/src/main/res/layout/activity_modifica_oggetto.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/activity_modifica_password.xml" value="0.39351851851851855" />
         <entry key="app/src/main/res/layout/activity_modifica_profilo.xml" value="0.2848731884057971" />
+        <entry key="app/src/main/res/layout/activity_modifica_zona.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_oggetti.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/layout/activity_password_dimenticata.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
