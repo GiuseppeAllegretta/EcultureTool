@@ -163,6 +163,7 @@
     <string name="errore_percorso_riprova">An error has occurred!\nTry again</string>
     <string name="oppure">OR</string>
     <string name="carica_immagine">Upload Image</string>
+    <string name="cerca">Search</string>
 
 
     <!-- Tutorial -->

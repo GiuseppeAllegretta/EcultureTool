@@ -167,10 +167,11 @@
         <entry key="app/src/main/res/layout/fraqment_q_r_scanner.xml" value="0.12590579710144928" />
         <entry key="app/src/main/res/layout/home.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/image_item.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/list_item_zona.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/object_lower_menu.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/view_object.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
