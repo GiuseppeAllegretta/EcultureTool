@@ -25,6 +25,7 @@ import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.fragments.HomeFragment;
 import com.example.eculturetool.fragments.ProfileFragment;
 import com.example.eculturetool.fragments.QRcodeScannerFragment;
+import com.example.eculturetool.fragments.SearchFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -69,6 +70,10 @@ public class HomeActivity extends AppCompatActivity {
                     }else{
                         permission.requestCameraPermission(this, parentLayout);
                     }
+                    break;
+
+                case R.id.cerca:
+                    replaceFragment(new SearchFragment());
                     break;
             }
             return true;
