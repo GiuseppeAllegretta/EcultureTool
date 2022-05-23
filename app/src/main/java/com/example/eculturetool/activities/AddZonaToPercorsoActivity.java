@@ -1,34 +1,40 @@
 package com.example.eculturetool.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
-import com.example.eculturetool.utility_percorsi.RecyclerAdapterList;
+import com.example.eculturetool.utilities.RecyclerAdapterCheckbox;
+import com.example.eculturetool.utility_percorsi.CheckboxListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class AddZonaToPercorsoActivity extends AppCompatActivity {
+public class AddZonaToPercorsoActivity extends AppCompatActivity implements CheckboxListener {
 
-    //Classe singleton che mi permette di passare i dati tra le activity
-    ArrayList<Zona> data = DataHolder.getInstance().getData();
+    //Recupero le zone dal dataholder
+    //private ArrayList<Zona> data = DataHolder.getInstance().getData();
+
+    private DataHolder data = DataHolder.getInstance();
 
     RecyclerView recyclerView;
-    RecyclerAdapterList recyclerAdapterList;
+    RecyclerAdapterCheckbox recyclerAdapterCheckbox;
 
-    MaterialButton btnSave;
+    MaterialButton btnConferma;
     MaterialButton btnAddZona;
+
+    DataBaseHelper dataBaseHelper;
+    ArrayList<Zona> listaZone;
 
 
     @Override
@@ -36,40 +42,38 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_zona_to_percorso);
 
-
-        recyclerView = findViewById(R.id.recyclerViewList);
-        recyclerAdapterList = new RecyclerAdapterList(data);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerAdapterList);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        btnSave = findViewById(R.id.btnSalvaDiramazione);
+        recyclerView = findViewById(R.id.recyclerViewCheckbox);
+        btnConferma = findViewById(R.id.btnConferma);
         btnAddZona = findViewById(R.id.btnAggiungiZona);
 
-        btnAddZona.setOnClickListener(v ->{
+        dataBaseHelper = new DataBaseHelper(getApplicationContext());
+        //Recupero zone del luogo corrente
+        listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
 
+        init();
+
+        btnConferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.getData().addAll(recyclerAdapterCheckbox.getSelectedList());
+                finish();
+                Intent intent = new Intent (AddZonaToPercorsoActivity.this, CreazionePercorsoActivity.class);
+                startActivity(intent);
+            }
         });
 
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+    private void init() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapterCheckbox = new RecyclerAdapterCheckbox(this, listaZone, this);
+        recyclerView.setAdapter(recyclerAdapterCheckbox);
+    }
 
-            int fromPosition = viewHolder.getAdapterPosition();
-            int toPosition = target.getAdapterPosition();
-            Collections.swap(data, fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            return false;
-        }
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+    @Override
+    public void onQuantityChange(ArrayList<Zona> arrayList) {
+    }
 
-        }
-    };
 }

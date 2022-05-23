@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
 import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.activities.PercorsiActivity;
@@ -112,7 +113,8 @@ public class HomeFragment extends Fragment {
         percorsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), PercorsiActivity.class));
+                //startActivity(new Intent(getActivity(), PercorsiActivity.class));
+                startActivity(new Intent(getActivity(), CreazionePercorsoActivity.class));
             }
         });
 

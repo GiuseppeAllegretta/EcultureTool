@@ -41,7 +41,7 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
         return list.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView nomeZona, descrizioneZona;

@@ -163,10 +163,12 @@
         <activity
             android:name=".activities.AddZonaToPercorsoActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.CreazionePercorsoActivity"
+        <activity android:name=".activities.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
-            android:exported="true" />
+            android:exported="true"/>
+        <activity android:name=".utilities.Searcher"
+            android:exported="false"
+            android:clearTaskOnLaunch="true"/>
         <activity
             android:name=".activities.InfoZonaActivity"
             android:exported="true" />
