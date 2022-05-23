@@ -13,7 +13,6 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
-import com.example.eculturetool.utilities.Searcher;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterGrid;
 import com.google.android.material.button.MaterialButton;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 
 public class CreazionePercorsoActivity extends AppCompatActivity {
 
-    //TODO serve un array in più, il dataholder va usato solo nel passaggio
 
     @BindView(R.id.recyclerViewZone)
     RecyclerView recyclerView;

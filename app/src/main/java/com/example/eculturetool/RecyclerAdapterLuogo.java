@@ -98,7 +98,7 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
     }
 
     public interface OnLuogoListener {
-        public void onLuogoClick(int position);
+        void onLuogoClick(int position);
     }
 
 

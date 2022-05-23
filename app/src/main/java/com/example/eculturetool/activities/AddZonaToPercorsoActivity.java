@@ -2,8 +2,6 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +19,6 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 
 public class AddZonaToPercorsoActivity extends AppCompatActivity implements CheckboxListener {
-
-    //Recupero le zone dal dataholder
-    //private ArrayList<Zona> data = DataHolder.getInstance().getData();
 
     private DataHolder data = DataHolder.getInstance();
 
@@ -52,14 +47,11 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
 
         init();
 
-        btnConferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                data.getData().addAll(recyclerAdapterCheckbox.getSelectedList());
-                finish();
-                Intent intent = new Intent (AddZonaToPercorsoActivity.this, CreazionePercorsoActivity.class);
-                startActivity(intent);
-            }
+        btnConferma.setOnClickListener(v -> {
+            data.getData().addAll(recyclerAdapterCheckbox.getSelectedList());
+            finish();
+            Intent intent = new Intent (AddZonaToPercorsoActivity.this, CreazionePercorsoActivity.class);
+            startActivity(intent);
         });
 
     }
