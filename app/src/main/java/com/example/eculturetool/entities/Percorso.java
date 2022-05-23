@@ -4,29 +4,24 @@ package com.example.eculturetool.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Percorso implements Serializable {
-
-    /**
-     * Id del percorso univoco
-     */
-    private int id;
+public class Percorso extends Entita implements Serializable {
 
     /**
      * id del luogo a cui fa riferimento il percorso
      */
     private int idLuogo;
-    private String nome;
     private ArrayList<Zona> zone = new ArrayList<>();
 
     public Percorso(String nome, int idLuogo) {
-        this.idLuogo = idLuogo;
-        this.nome = nome;
+        super(nome,"");
+        this.idLuogo=idLuogo;
         zone = new ArrayList<>();
     }
 
     public Percorso(int id, String nome, int idLuogo){
-        this(nome, idLuogo);
-        this.id = id;
+        super(id, nome, "");
+        this.idLuogo = idLuogo;
+        zone = new ArrayList<>();
     }
 
     public int getIdLuogo() {
@@ -34,11 +29,11 @@ public class Percorso implements Serializable {
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public String getNome() {
-        return nome;
+        return super.getNome();
     }
 
     public ArrayList<Zona> getZone() {
@@ -46,6 +41,6 @@ public class Percorso implements Serializable {
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 }
