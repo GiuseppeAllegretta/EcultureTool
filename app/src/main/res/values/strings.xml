@@ -168,6 +168,7 @@
     <string name="gestire_zone">Potrai gestire da qui \n le tue zone</string>
     <string name="gestire_oggetti">Potrai gestire da qui \n i tuoi oggetti</string>
     <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
+    <string name="Entita">Entita</string>
 
 
 </resources>

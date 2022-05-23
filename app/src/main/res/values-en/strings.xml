@@ -182,5 +182,6 @@
     <string name="gestire_oggetti">You will be able to manage \n your items from here</string>
     <string name="gestire_percorsi">You will be able to manage \ n your itineraries from here</string>
     <string name="inquadra">Frame a QR code of an \n object to view, \nmodify or delete it</string>
+    <string name="Entita">Entita</string>
 
 </resources>
