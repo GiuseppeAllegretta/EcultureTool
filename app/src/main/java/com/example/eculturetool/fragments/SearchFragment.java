@@ -73,7 +73,14 @@ public class SearchFragment extends Fragment {
     private void setEntitaInfo() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
 
-        //ntitaList.addAll(dataBaseHelper.getOggetti());
+        if(entitaList.size() == 0){
+            entitaList.addAll(dataBaseHelper.getOggetti());
+            oggettiBtn.setSelected(true);
+            zoneBtn.setSelected(false);
+            percorsiBtn.setSelected(false);
+            setAdapter();
+        }
+        //entitaList.addAll(dataBaseHelper.getOggetti());
         //entitaList.addAll(dataBaseHelper.getZone());
         //entitaList.addAll(dataBaseHelper.getPercorsi());
 
