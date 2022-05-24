@@ -82,7 +82,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 entitaList.clear();
                 entitaList.addAll(dataBaseHelper.getOggetti());
-
+                oggettiBtn.setSelected(true);
+                zoneBtn.setSelected(false);
+                percorsiBtn.setSelected(false);
                 setAdapter();
             }
         });
@@ -92,6 +94,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 entitaList.clear();
                 entitaList.addAll(dataBaseHelper.getZone());
+                oggettiBtn.setSelected(false);
+                zoneBtn.setSelected(true);
+                percorsiBtn.setSelected(false);
                 setAdapter();
             }
         });
@@ -101,6 +106,9 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 entitaList.clear();
                 entitaList.addAll(dataBaseHelper.getPercorsi());
+                oggettiBtn.setSelected(false);
+                zoneBtn.setSelected(false);
+                percorsiBtn.setSelected(true);
                 setAdapter();
             }
         });
