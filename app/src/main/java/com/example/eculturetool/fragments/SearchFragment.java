@@ -1,5 +1,6 @@
 package com.example.eculturetool.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,22 +22,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.DettaglioOggettoActivity;
+import com.example.eculturetool.activities.DettaglioZonaActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Entita;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Tipologia;
+import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterEntita;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements RecyclerAdapterEntita.OnEntitaListener {
 
     private ArrayList<Entita> entitaList;
     private RecyclerView recyclerView;
     private RecyclerAdapterEntita adapterEntita;
+    private DataBaseHelper dataBaseHelper;
 
     private Button oggettiBtn;
     private Button zoneBtn;
@@ -62,7 +69,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void setAdapter() {
-        adapterEntita= new RecyclerAdapterEntita(entitaList);
+        adapterEntita = new RecyclerAdapterEntita(entitaList, this);
         RecyclerView.LayoutManager layoutManager;
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -71,18 +78,14 @@ public class SearchFragment extends Fragment {
     }
 
     private void setEntitaInfo() {
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
 
-        if(entitaList.size() == 0){
-            entitaList.addAll(dataBaseHelper.getOggetti());
-            oggettiBtn.setSelected(true);
-            zoneBtn.setSelected(false);
-            percorsiBtn.setSelected(false);
-            setAdapter();
-        }
-        //entitaList.addAll(dataBaseHelper.getOggetti());
-        //entitaList.addAll(dataBaseHelper.getZone());
-        //entitaList.addAll(dataBaseHelper.getPercorsi());
+        entitaList.clear();
+        entitaList.addAll(dataBaseHelper.getOggetti());
+        oggettiBtn.setSelected(true);
+        zoneBtn.setSelected(false);
+        percorsiBtn.setSelected(false);
+        setAdapter();
 
         oggettiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +134,7 @@ public class SearchFragment extends Fragment {
         zoneBtn = view.findViewById(R.id.ZoneSrc);
         percorsiBtn = view.findViewById(R.id.percorsiSrc);
 
-        entitaList= new ArrayList<>();
+        entitaList = new ArrayList<>();
         setEntitaInfo();
         //setAdapter();
 
@@ -153,7 +156,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu,menu);
+        inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.ricerca);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -172,4 +175,39 @@ public class SearchFragment extends Fragment {
     }
 
 
+    @Override
+    public void onEntitaClick(int position) {
+        System.out.println("Hai cliccato");
+
+        if (entitaList.get(position) instanceof Oggetto) {
+            System.out.println("Hai cliccato un oggetto");
+            int oggettoSelezionato = entitaList.get(position).getId();
+            ArrayList<Zona> zoneList = dataBaseHelper.getZone();
+
+            Intent intent = new Intent(getActivity(), DettaglioOggettoActivity.class);
+            intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
+            intent.putExtra("ZONELIST", (Serializable) zoneList);
+            startActivity(intent);
+
+        } else if (entitaList.get(position) instanceof Zona) {
+            System.out.println("Hai cliccato una zona");
+            Zona z = (Zona) entitaList.get(position);
+
+            Intent intent = new Intent(getActivity(), DettaglioZonaActivity.class);
+
+            Bundle b = new Bundle();
+            b.putSerializable("ZONE", z);
+            intent.putExtras(b);
+            startActivity(intent);
+
+        } else if (entitaList.get(position) instanceof Percorso) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setEntitaInfo();
+    }
 }

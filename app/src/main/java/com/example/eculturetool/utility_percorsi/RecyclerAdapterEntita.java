@@ -19,11 +19,12 @@ import java.util.Collection;
 public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterEntita.EntitaViewHolder> implements Filterable {
     private ArrayList<Entita> entitaList;
     private ArrayList<Entita> entitaListAll;
+    private OnEntitaListener mOnEntitaListener;
 
-    public RecyclerAdapterEntita(ArrayList<Entita> entitaList) {
+    public RecyclerAdapterEntita(ArrayList<Entita> entitaList, OnEntitaListener onEntitaListener) {
         this.entitaList=entitaList;
         this.entitaListAll = new ArrayList<>(entitaList);
-
+        this.mOnEntitaListener = onEntitaListener;
     }
 
     @Override
@@ -58,21 +59,29 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         }
     };
 
-    public class EntitaViewHolder extends RecyclerView.ViewHolder{
+    public class EntitaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomeEntita;
         private TextView descrizioneEntita;
-        public EntitaViewHolder(final View view){
+        private OnEntitaListener onEntitaListener;
+
+        public EntitaViewHolder(final View view, OnEntitaListener onEntitaListener){
             super(view);
             nomeEntita= view.findViewById(R.id.nomeEntita);
             descrizioneEntita= view.findViewById(R.id.descrizioneEntita);
+            this.onEntitaListener = onEntitaListener;
+            view.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            onEntitaListener.onEntitaClick(getAdapterPosition());
+        }
     }
     @NonNull
     @Override
     public RecyclerAdapterEntita.EntitaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items_search,parent,false);
-        return new EntitaViewHolder(itemView);
+        return new EntitaViewHolder(itemView, mOnEntitaListener);
     }
 
     @Override
@@ -86,5 +95,12 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
     @Override
     public int getItemCount() {
         return entitaList.size();
+    }
+
+
+    public interface OnEntitaListener {
+
+        void onEntitaClick(int position);
+
     }
 }

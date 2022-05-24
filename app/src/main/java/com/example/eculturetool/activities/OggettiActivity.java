@@ -45,8 +45,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     private RecyclerAdapterOggetto adapter;
     private LinearLayout layoutNoZone;
 
-    //luogo corrente che sta gestendo il curatore
-    private String luogoCorrente;
     private List<Zona> zoneList = new ArrayList<>();
     private FloatingActionButton fabAddOggetto;
     private Button addZona;
@@ -190,7 +188,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         Intent intent = new Intent(this, DettaglioOggettoActivity.class);
         intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
         intent.putExtra("ZONELIST", (Serializable) zoneList);
-        intent.putExtra(Luogo.Keys.ID, luogoCorrente);
         startActivity(intent);
     }
 
