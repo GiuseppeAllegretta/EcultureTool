@@ -66,6 +66,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
         });
 
+
         btnConferma.setOnClickListener(v -> {
             //savePercorso();
         });
@@ -97,9 +98,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
     }
 
-    //TODO auto increment per l'id nel db?
+    //TODO auto increment per l'id nel db? Effettuare scrittura nel db
     /*private void savePercorso(){
-        Percorso percorso = new Percorso(1, "stub", )
+        Percorso percorso = new Percorso(1, "stub", )?
+        data.getData().clear(); // pulizia array condiviso tra le classi per evitare che riaprendo l'activity resti memorizzato
     }*/
 
 

@@ -16,7 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.AddZonaToPercorsoActivity;
+import com.example.eculturetool.activities.CreazioneDiramazione;
 import com.example.eculturetool.activities.InfoZonaActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
@@ -121,8 +121,9 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
 
         //Area per creare la diramazione
         holder.creaDiramazione.setOnClickListener(v -> {
-            DataHolder.getInstance().setData(listZone);
-            Intent intent = new Intent (context, AddZonaToPercorsoActivity.class);
+            Intent intent = new Intent(this.context, CreazioneDiramazione.class);
+            intent.putExtra("ROOT", holder.cardTitle.getText());
+            intent.putExtra("NUMBER", holder.cardNumber.getText());
             context.startActivity(intent);
         });
     }

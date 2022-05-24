@@ -166,13 +166,12 @@
             android:exported="false" />
         <activity android:name=".activities.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
-            android:exported="true"/>
-        <activity android:name=".utilities.Searcher"
-            android:exported="false"
-            android:clearTaskOnLaunch="true"/>
+            android:exported="false"/>
         <activity
             android:name=".activities.InfoZonaActivity"
-            android:exported="true" />
+            android:exported="false" />
+        <activity android:name=".activities.CreazioneDiramazione"
+            android:exported="false"/>
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"

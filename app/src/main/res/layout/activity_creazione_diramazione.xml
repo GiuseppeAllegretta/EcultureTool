@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:weightSum="100"
+    tools:context=".activities.AddZonaToPercorsoActivity">
+
+    <TextView
+        android:id="@+id/titolo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="8dp"
+        android:layout_weight="10"
+        android:fontFamily="@font/posterama_1927_regular"
+        android:gravity="center"
+        android:text="Seleziona le zone che comporranno la diramazione"
+        android:textAlignment="center"
+        android:textColor="@color/orangeAction"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="8dp"
+        android:layout_weight="5"
+        android:fontFamily="@font/posterama_1927_light"
+        android:gravity="center"
+        android:text="Effettua lo swipe per eliminare una zona"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="75"
+        android:padding="12dp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/verdePrimario"
+            android:fontFamily="@font/posterama_1927_regular"
+            android:text="Conferma"
+            android:textSize="22sp"
+            app:cornerRadius="50dp" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
