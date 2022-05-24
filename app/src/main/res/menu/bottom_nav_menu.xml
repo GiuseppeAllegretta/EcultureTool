@@ -14,13 +14,13 @@
         android:title="QRScanner"/>
 
     <item
-        android:id="@+id/profile"
-        android:icon="@drawable/ic_profile"
-        android:title="@string/profilo" />
-
-    <item
         android:id="@+id/cerca"
         android:icon="@drawable/ic_ricerca"
         android:title="@string/cerca" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profilo" />
 
 </menu>
