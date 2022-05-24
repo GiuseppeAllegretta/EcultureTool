@@ -8,6 +8,9 @@
     <!-- focused -->
     <item android:drawable="@drawable/button_not_pressed_drawable" android:state_focused="true" />
 
+    <!-- selected -->
+    <item android:drawable="@drawable/button_shape_selected" android:state_selected="true" />
+
     <!-- default -->
     <item android:drawable="@drawable/button_shape_normal" />
 

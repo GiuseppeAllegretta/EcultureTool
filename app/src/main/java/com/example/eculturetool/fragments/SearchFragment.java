@@ -18,8 +18,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Entita;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -35,6 +37,10 @@ public class SearchFragment extends Fragment {
     private ArrayList<Entita> entitaList;
     private RecyclerView recyclerView;
     private RecyclerAdapterEntita adapterEntita;
+
+    private Button oggettiBtn;
+    private Button zoneBtn;
+    private Button percorsiBtn;
 
 
     public SearchFragment() {
@@ -65,12 +71,39 @@ public class SearchFragment extends Fragment {
     }
 
     private void setEntitaInfo() {
-        entitaList.add(new Luogo("l1","dl1", Tipologia.AREA_ARCHEOLOGICA,"ciaocurat"));
-        entitaList.add(new Luogo("l2","dl2", Tipologia.SITO_CULTURALE,"ciaocurat"));
-        entitaList.add(new Luogo("l3","dl3", Tipologia.MOSTRA_ITINERANTE,"ciaocurat"));
-        entitaList.add(new Oggetto(10,"telefono","chiamare",""));
-        entitaList.add(new Oggetto(1,"telefono1","chiamare1",""));
-        entitaList.add(new Oggetto(13,"telefono2","chiamare2",""));
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+
+        //ntitaList.addAll(dataBaseHelper.getOggetti());
+        //entitaList.addAll(dataBaseHelper.getZone());
+        //entitaList.addAll(dataBaseHelper.getPercorsi());
+
+        oggettiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                entitaList.clear();
+                entitaList.addAll(dataBaseHelper.getOggetti());
+
+                setAdapter();
+            }
+        });
+
+        zoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                entitaList.clear();
+                entitaList.addAll(dataBaseHelper.getZone());
+                setAdapter();
+            }
+        });
+
+        percorsiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                entitaList.clear();
+                entitaList.addAll(dataBaseHelper.getPercorsi());
+                setAdapter();
+            }
+        });
 
     }
 
@@ -79,9 +112,13 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerViewEntita);
+        oggettiBtn = view.findViewById(R.id.oggettiSrc);
+        zoneBtn = view.findViewById(R.id.ZoneSrc);
+        percorsiBtn = view.findViewById(R.id.percorsiSrc);
+
         entitaList= new ArrayList<>();
         setEntitaInfo();
-        setAdapter();
+        //setAdapter();
 
     }
 
