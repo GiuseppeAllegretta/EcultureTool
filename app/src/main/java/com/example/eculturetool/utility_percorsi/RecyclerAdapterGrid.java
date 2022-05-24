@@ -83,8 +83,8 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
                 @Override
                 public void onLongPress(MotionEvent e) {
                     long eventDuration = e.getEventTime() - e.getDownTime();
-                    //Se una card viene premuta per almeno 800ms può essere spostata
-                    if (eventDuration > 800) {
+                    //Se una card viene premuta per almeno 500ms può essere spostata
+                    if (eventDuration > 500) {
                         listener.onStartDrag(holder);
                     }
                 }
