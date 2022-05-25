@@ -34,6 +34,11 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.nomeZona.setText(list.get(position).getNome());
         holder.descrizioneZona.setText(list.get(position).getDescrizione());
+
+        //Nascondo immagine zona
+        //TODO serve immagine zona???
+        holder.imageView.setVisibility(View.INVISIBLE);
+        holder.numeroZona.setText(""+ (position + 1));
     }
 
     @Override
@@ -44,17 +49,15 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView nomeZona, descrizioneZona;
-        //TODO impostare un numerino? RIMOSSO l'onClick
+        TextView nomeZona, descrizioneZona, numeroZona;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.iconaZona);
+            numeroZona = itemView.findViewById(R.id.numeroZona);
             nomeZona = itemView.findViewById(R.id.nomeZona);
             descrizioneZona = itemView.findViewById(R.id.descrizioneZona);
-
         }
-
     }
 }
