@@ -20,21 +20,23 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
-
+    private GraphView graphView;
+    private SimpleGraph<Zona, DefaultEdge> graph;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_riepilogo_percorso);
+
 
         Intent i = new Intent();
         i = getIntent();
-        SimpleGraph<Zona, DefaultEdge> graph = (SimpleGraph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
-        setContentView(R.layout.activity_riepilogo_percorso);
-        GraphView graphView = findViewById(R.id.graphView);
+        graph = (SimpleGraph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
+
+
+
+        graphView = findViewById(R.id.graphView);
         graphView.setGrafo(graph);
-
-        System.out.println();
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarDettaglioPercorso);
+        Toolbar myToolbar = findViewById(R.id.toolbarDettaglioPercorso);
 
 
 
@@ -52,9 +54,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
+
+
 }

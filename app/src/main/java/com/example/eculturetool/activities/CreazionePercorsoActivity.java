@@ -133,7 +133,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
             intent.putExtra("PERCORSO", percorso);
             startActivity(intent);
-            finish();
         } else {
             Toast.makeText(this, "Si è verificato un errore! \n Riprova", Toast.LENGTH_SHORT).show();
         }

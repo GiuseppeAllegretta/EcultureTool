@@ -38,7 +38,6 @@ public class GraphView extends View{
     public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.grafo = new SimpleGraph<Zona,DefaultEdge>(DefaultEdge.class);
-        costruzioneGrafo(grafo);
 
 
 //inizializzo tutti i vertici che servono;
@@ -51,9 +50,6 @@ public class GraphView extends View{
     private void costruzioneGrafo(Graph<Zona, DefaultEdge> grafo) {
         for (Zona v1 : grafo.vertexSet()) {
             vertices.add(new Vertice(v1.getNome()));
-
-
-
 
         }
         int i=1;
@@ -119,7 +115,6 @@ public class GraphView extends View{
 
             indici = new ArrayList<>();
 
-            System.out.println(indici);
         }
 
 
