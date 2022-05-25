@@ -21,6 +21,11 @@ import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterGrid;
 import com.google.android.material.button.MaterialButton;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,14 +84,28 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
 
         btnConferma.setOnClickListener(v -> {
+            //savePercorso();
+
             if(data.getData().size() == 0){
                 Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
             } else{
                 getDatiPercorso();
             }
+            Bundle bundle = new Bundle();
+            IoHelper ioHelper = new IoHelper(this);
+            Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+            graph = ioHelper.fromListToGraph(data.getData());
+
+            bundle.putSerializable("grafo", (Serializable) graph);
+
+            Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
 
+
     }
+
 
 
     private void getDatiPercorso() {
@@ -111,8 +130,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             //TODO controllo file vuoto
             ioHelper.listZoneSerializzazione(data.getData(), idPercorso);
 
-            //TODO modificare l'intent
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
             intent.putExtra("PERCORSO", percorso);
             startActivity(intent);
         } else {

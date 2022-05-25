@@ -44,6 +44,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
+            android:name=".activities.RiepilogoPercorsoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -55,8 +58,7 @@
         <activity
             android:name=".percorsi.EsportazionePercorsoActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PercorsiActivity"
             android:exported="true"
@@ -135,14 +137,14 @@
         <activity
             android:name=".activities.UploadImageActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.EcultureTool.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.PasswordDimenticataActivity"
             android:exported="false"
@@ -159,14 +161,16 @@
         <activity
             android:name=".activities.AddZonaToPercorsoActivity"
             android:exported="false" />
-        <activity android:name=".activities.CreazionePercorsoActivity"
+        <activity
+            android:name=".activities.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activities.InfoZonaActivity"
             android:exported="false" />
-        <activity android:name=".activities.CreazioneDiramazione"
-            android:exported="false"/>
+        <activity
+            android:name=".activities.CreazioneDiramazione"
+            android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
