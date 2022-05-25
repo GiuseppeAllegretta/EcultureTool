@@ -1,11 +1,17 @@
 package com.example.eculturetool.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.view.GraphView;
 
@@ -22,15 +28,30 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         Intent i = new Intent();
         i = getIntent();
         SimpleGraph<Zona, DefaultEdge> graph = (SimpleGraph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
+        setContentView(R.layout.activity_riepilogo_percorso);
+        GraphView graphView = findViewById(R.id.graphView);
+        graphView.setGrafo(graph);
+
+        System.out.println();
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarDettaglioPercorso);
 
 
-        //GraphView graphView = findViewById(R.id.graphView);
 
-        //graphView.setGrafo(graph);
+        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
+        Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
+        myToolbar.setNavigationIcon(freccia_indietro);
+        setSupportActionBar(myToolbar);
 
-        System.out.println("percorso"+ graph);
+        //Azione da eseguire quando si clicca la freccia di navigazione
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Ritorna al fragment del profilo chiamante
+                finish();
+            }
+        });
 
-        setContentView(new GraphView(this, null, graph));
 
 
 

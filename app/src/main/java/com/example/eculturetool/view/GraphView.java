@@ -35,9 +35,9 @@ public class GraphView extends View{
 
 
 
-    public GraphView(Context context, @Nullable AttributeSet attrs,Graph<Zona,DefaultEdge>grafo) {
+    public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.grafo = grafo;
+        this.grafo = new SimpleGraph<Zona,DefaultEdge>(DefaultEdge.class);
         costruzioneGrafo(grafo);
 
 
