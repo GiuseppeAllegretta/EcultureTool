@@ -5,13 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Entita;
+import com.example.eculturetool.entities.Oggetto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,6 +66,7 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         private TextView nomeEntita;
         private TextView descrizioneEntita;
         private OnEntitaListener onEntitaListener;
+        private ImageView immagineOggetto;
 
         public EntitaViewHolder(final View view, OnEntitaListener onEntitaListener){
             super(view);
@@ -70,6 +74,7 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
             descrizioneEntita= view.findViewById(R.id.descrizioneEntita);
             this.onEntitaListener = onEntitaListener;
             view.setOnClickListener(this);
+            immagineOggetto = view.findViewById(R.id.iconaEntita);
         }
 
         @Override
@@ -90,6 +95,9 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         String descrizione = entitaList.get(position).getDescrizione();
         holder.nomeEntita.setText(name);
         holder.descrizioneEntita.setText(descrizione);
+
+        if(entitaList.get(position) instanceof Oggetto)
+            Glide.with(holder.immagineOggetto.getContext()).load(((Oggetto) entitaList.get(position)).getUrl()).circleCrop().into(holder.immagineOggetto);
     }
 
     @Override
