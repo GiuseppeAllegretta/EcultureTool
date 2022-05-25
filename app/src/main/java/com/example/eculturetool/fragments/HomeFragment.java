@@ -113,8 +113,7 @@ public class HomeFragment extends Fragment {
         percorsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getActivity(), PercorsiActivity.class));
-                startActivity(new Intent(getActivity(), CreazionePercorsoActivity.class));
+                startActivity(new Intent(getActivity(), PercorsiActivity.class));
             }
         });
 

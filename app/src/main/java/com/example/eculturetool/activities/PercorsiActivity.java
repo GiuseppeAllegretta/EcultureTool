@@ -64,12 +64,7 @@ public class PercorsiActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        addPercorsoFbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PercorsiActivity.this, DatiPercorsoActivity.class));
-            }
-        });
+        addPercorsoFbt.setOnClickListener(view -> startActivity(new Intent(PercorsiActivity.this, CreazionePercorsoActivity.class)));
     }
 
     private void setAdapter() {

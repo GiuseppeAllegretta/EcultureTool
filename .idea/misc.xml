@@ -54,6 +54,7 @@
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_diramazione.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dati_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/checkbox_layout.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_percorsi.xml" value="0.22864583333333333" />
@@ -157,7 +158,6 @@
         <entry key="app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/list_item_oggetto.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/list_items_search.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/main_recycler_row_item.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/object_lower_menu.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/qrcode_dialog.xml" value="0.4036458333333333" />
