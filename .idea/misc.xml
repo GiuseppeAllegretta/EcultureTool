@@ -130,6 +130,7 @@
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.325" />
         <entry key="app/src/main/res/layout/activity_esportazione_percorso.xml" value="0.16296296296296298" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25815217391304346" />
@@ -142,8 +143,10 @@
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
+        <entry key="app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/activity_zone.xml" value="0.325" />
         <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
@@ -166,6 +169,8 @@
         <entry key="app/src/main/res/layout/view_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/menu/percorso_menu.xml" value="0.32395833333333335" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.325" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.2125" />
