@@ -309,11 +309,51 @@ public class GraphView extends View{
                 Zona v1 = grafo.getEdgeSource(e);
                 Zona v2 = grafo.getEdgeTarget(e);
 
-                Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
-                Point endPoint = new Point((int)returnX(v2.getNome()), (int)returnY(v2.getNome())-30);
+                //se a sta sopra a b
 
-                canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome()), returnY(v2.getNome())-30, paintEdge);
-                this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+                if( returnY(v1.getNome()) < returnY(v2.getNome()) ){
+
+                    Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
+                    Point endPoint = new Point((int)returnX(v2.getNome()), (int)returnY(v2.getNome())-30);
+
+                    canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome()), returnY(v2.getNome())-30, paintEdge);
+                    this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+                }else
+
+                //se a sta sotto b
+
+                if( returnY(v1.getNome()) > returnY(v2.getNome())){
+                    Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
+                    Point endPoint = new Point((int)returnX(v2.getNome()), (int)returnY(v2.getNome())+30);
+
+                    canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome()), returnY(v2.getNome())+30, paintEdge);
+                    this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+                }else
+
+                // se a sta a destra di b
+
+                if(returnX(v1.getNome()) < returnX(v2.getNome())){
+                    Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
+                    Point endPoint = new Point((int)returnX(v2.getNome())-30, (int)returnY(v2.getNome()));
+
+                    canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome())-30, returnY(v2.getNome()), paintEdge);
+                    this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+                }else
+
+                // se a sta a sinistra di b
+                if(returnX(v1.getNome()) > returnX(v2.getNome())){
+                    Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
+                    Point endPoint = new Point((int)returnX(v2.getNome())+30, (int)returnY(v2.getNome()));
+
+                    canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome())+30, returnY(v2.getNome()), paintEdge);
+                    this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+                }
+
 
             }
         }
