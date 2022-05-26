@@ -101,7 +101,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 IoHelper ioHelper = new IoHelper(this);
-                Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+                Graph<Zona, DefaultEdge> graph;
                 graph = ioHelper.fromListToGraph(data.getData());
 
                 //Serializzo il percorso

@@ -24,6 +24,7 @@ import com.example.eculturetool.entities.Vertice;
 import com.example.eculturetool.entities.Zona;
 
 import org.jgrapht.Graph;
+import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public class GraphView extends View{
 
     public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.grafo = new SimpleGraph<Zona,DefaultEdge>(DefaultEdge.class);
+        this.grafo = new SimpleDirectedGraph<>(DefaultEdge.class);
 
 
 //inizializzo tutti i vertici che servono;

@@ -24,7 +24,7 @@ import org.jgrapht.graph.SimpleGraph;
 
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private GraphView graphView;
-    private SimpleGraph<Zona, DefaultEdge> graph;
+    private Graph<Zona, DefaultEdge> graph;
     private IoHelper ioHelper;
     private int idPercorso; //id del percorso
     private DataBaseHelper dataBaseHelper;
@@ -38,7 +38,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
         Intent i;
         i = getIntent();
-        graph = (SimpleGraph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
+        graph = (Graph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
         idPercorso = i.getIntExtra("ID_PERCORSO", 0);
 
         graphView = findViewById(R.id.graphView);

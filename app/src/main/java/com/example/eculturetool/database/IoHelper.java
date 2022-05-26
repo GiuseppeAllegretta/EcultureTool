@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.io.File;
@@ -97,7 +98,7 @@ public class IoHelper {
      */
     public Graph<Zona, DefaultEdge> deserializzaPercorso(int id){
         final String FILE_NAME = id + ".txt";
-        Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        Graph<Zona, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
         Object risultato;
 
         FileInputStream inFile = null;							//stream di input da file
@@ -294,7 +295,7 @@ public class IoHelper {
 
 
     public Graph<Zona, DefaultEdge> fromListToGraph(List<Zona> list){
-        Graph<Zona, DefaultEdge> returnGraph = new SimpleGraph<>(DefaultEdge.class);
+        Graph<Zona, DefaultEdge> returnGraph = new SimpleDirectedGraph<>(DefaultEdge.class);
 
         //Aggiunge al grafo tutte le zone che appartengono al percorso principale
         for(Zona zona: list){
