@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -281,10 +282,16 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_elimina_oggetto);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
 
-        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_oggetto);
-        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_oggetto);
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText(getResources().getString(R.string.cancella_oggetto));
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
 

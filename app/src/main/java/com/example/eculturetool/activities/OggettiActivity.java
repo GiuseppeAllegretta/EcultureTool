@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -24,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.RecyclerAdapterOggetto;
 import com.example.eculturetool.database.DataBaseHelper;
-import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -212,10 +213,16 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_elimina_oggetto);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
 
-        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_oggetto);
-        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_oggetto);
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText(getResources().getString(R.string.cancella_oggetto));
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
 

@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -163,10 +165,19 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_elimina_zona);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
 
-        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione_zona);
-        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione_zona);
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText(getResources().getString(R.string.cancella_zona));
+        TextView descrizione_tv = layout.findViewById(R.id.descrizione_dialog);
+        descrizione_tv.setText(getResources().getString(R.string.NB_zona));
+
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
         conferma.setOnClickListener(new View.OnClickListener() {
