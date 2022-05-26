@@ -17,13 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Percorso;
+import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.RecyclerAdapterPercorso;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PercorsiActivity extends AppCompatActivity {
+public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapterPercorso.OnPercorsoListener {
 
     private ArrayList<Percorso> percorsiList;
     private RecyclerView recyclerView;
@@ -68,7 +74,7 @@ public class PercorsiActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        adapterPercorso = new RecyclerAdapterPercorso(percorsiList);
+        adapterPercorso = new RecyclerAdapterPercorso(percorsiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,5 +104,20 @@ public class PercorsiActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onPercorsoClick(int position) {
+        IoHelper ioHelper = new IoHelper(this);
+
+        int idPercorso = percorsiList.get(position).getId();
+        Graph<Zona, DefaultEdge> graph = ioHelper.deserializzaPercorso(idPercorso);
+        Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID_PERCORSO", idPercorso);
+        bundle.putSerializable("grafo", (Serializable) graph);
+
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

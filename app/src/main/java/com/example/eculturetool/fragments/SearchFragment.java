@@ -24,7 +24,9 @@ import android.widget.Button;
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.DettaglioOggettoActivity;
 import com.example.eculturetool.activities.DettaglioZonaActivity;
+import com.example.eculturetool.activities.RiepilogoPercorsoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
+import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Entita;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -32,6 +34,9 @@ import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterEntita;
+
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -202,6 +207,17 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
 
         } else if (entitaList.get(position) instanceof Percorso) {
 
+            IoHelper ioHelper = new IoHelper(getActivity().getApplicationContext());
+
+            int idPercorso = entitaList.get(position).getId();
+            Graph<Zona, DefaultEdge> graph = ioHelper.deserializzaPercorso(idPercorso);
+            Intent intent = new Intent(getActivity(), RiepilogoPercorsoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ID_PERCORSO", idPercorso);
+            bundle.putSerializable("grafo", (Serializable) graph);
+
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 

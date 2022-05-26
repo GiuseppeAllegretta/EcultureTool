@@ -46,6 +46,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     ItemTouchHelper itemTouchHelper;
 
     IoHelper ioHelper;
+    int idPercorso; //Id del percorso memorizzato su SQLite
 
     //ArrayList condiviso, memorizza le zone selezionate
     DataHolder data = DataHolder.getInstance();
@@ -103,7 +104,11 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
                 Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
                 graph = ioHelper.fromListToGraph(data.getData());
 
+                //Serializzo il percorso
+                ioHelper.serializzaPercorso(graph, idPercorso);
+
                 bundle.putSerializable("grafo", (Serializable) graph);
+                bundle.putInt("ID_PERCORSO", idPercorso);
 
                 Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
                 intent.putExtras(bundle);
@@ -151,7 +156,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     private void createPercorso(){
         Percorso percorso = new Percorso(editText.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
-        int idPercorso = dataBaseHelper.addPercorso(percorso);
+        idPercorso = dataBaseHelper.addPercorso(percorso);
 
         if(idPercorso != -1){
             percorso.setId(idPercorso);
