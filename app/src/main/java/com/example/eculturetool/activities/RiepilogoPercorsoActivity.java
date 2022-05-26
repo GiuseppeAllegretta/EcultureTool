@@ -27,18 +27,19 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private SimpleGraph<Zona, DefaultEdge> graph;
     private IoHelper ioHelper;
     private int idPercorso; //id del percorso
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
         ioHelper = new IoHelper(this);
+        dataBaseHelper = new DataBaseHelper(this);
 
         Intent i;
         i = getIntent();
         graph = (SimpleGraph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
         idPercorso = i.getIntExtra("ID_PERCORSO", 0);
-
 
         graphView = findViewById(R.id.graphView);
         graphView.setGrafo(graph);
@@ -48,6 +49,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
         myToolbar.setNavigationIcon(freccia_indietro);
+        myToolbar.setTitle(dataBaseHelper.getPercorsoById(idPercorso).getNome());
         setSupportActionBar(myToolbar);
 
         //Azione da eseguire quando si clicca la freccia di navigazione

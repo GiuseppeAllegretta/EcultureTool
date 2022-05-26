@@ -1051,9 +1051,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
                 int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
 
-                //TODO vedere con calma
-                //percorso = new Percorso(nome, descrizione, idLuogo);
-                percorso.setId(idPercorso);
+                percorso = new Percorso(idPercorso, nome, idLuogo);
             }
 
         }
