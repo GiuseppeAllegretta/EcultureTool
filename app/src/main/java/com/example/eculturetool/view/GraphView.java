@@ -96,7 +96,7 @@ public class GraphView extends View{
 
         //conto numero vertici per y fisso
 
-        for (int j = 200; j< 1000; j+=200) {
+        for (int j = 200; j< 3000; j+=200) {
 
             for (int i = 0; i < vertices.size(); i++) {
                 if (vertices.get(i).getY() == j) {
