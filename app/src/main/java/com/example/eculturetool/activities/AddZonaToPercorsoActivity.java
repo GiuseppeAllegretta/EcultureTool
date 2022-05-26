@@ -42,9 +42,8 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
         btnAddZona = findViewById(R.id.btnAggiungiZona);
 
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
-        //Recupero zone del luogo corrente
-        listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
 
+        prepList();
         init();
 
         btnConferma.setOnClickListener(v -> {
@@ -56,16 +55,40 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
 
     }
 
+    @Override
+    public void onQuantityChange(ArrayList<Zona> arrayList) {
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent (AddZonaToPercorsoActivity.this, CreazionePercorsoActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Rimuove le zone già inserite dalle possibili opzioni selezionabili
+     */
+    private void prepList() {
+        //Recupero zone del luogo corrente, da database
+        listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
+
+        for(int i = 0; i < data.getData().size(); i++){
+            for(int j = 0; j < listaZone.size(); j++){
+                if(data.getData().get(i).getNome().equals(listaZone.get(j).getNome()))
+                    listaZone.remove(j--);
+            }
+        }
+    }
+
+    /**
+     * Inizializzazione della recyclerView e setting adapter
+     */
     private void init() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerAdapterCheckbox = new RecyclerAdapterCheckbox(this, listaZone, this);
         recyclerView.setAdapter(recyclerAdapterCheckbox);
-    }
-
-
-    @Override
-    public void onQuantityChange(ArrayList<Zona> arrayList) {
     }
 
 }

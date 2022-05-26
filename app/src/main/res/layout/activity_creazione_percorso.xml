@@ -19,7 +19,9 @@
         android:gravity="center"
         android:hint="Inserisci nome percorso"
         android:textColorHint="@color/orangeAction"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:inputType="text"
+        android:importantForAutofill="no"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewZone"
@@ -30,6 +32,7 @@
 
 
     <RelativeLayout
+        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
