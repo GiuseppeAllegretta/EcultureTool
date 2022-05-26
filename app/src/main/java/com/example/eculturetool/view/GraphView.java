@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import org.jgrapht.graph.DefaultEdge;
 import androidx.annotation.Nullable;
@@ -229,37 +230,95 @@ public class GraphView extends View{
         return indice;
     }
 
+    private void drawArrow(Point startPoint, Point endPoint, Paint paint, Canvas mCanvas) {
+        Path mPath = new Path();
+        float deltaX = endPoint.x - startPoint.x;
+        float deltaY = endPoint.y - startPoint.y;
+        //float frac = (float) 0.1;
+        int ARROWHEAD_LENGTH = 20;
+        float sideZ = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        float frac = ARROWHEAD_LENGTH < sideZ ? ARROWHEAD_LENGTH / sideZ : 1.0f;
+        float point_x_1 = startPoint.x + (float) ((1 - frac) * deltaX + frac * deltaY);
+        float point_y_1 = startPoint.y + (float) ((1 - frac) * deltaY - frac * deltaX);
+        float point_x_2 = endPoint.x;
+        float point_y_2 = endPoint.y;
+        float point_x_3 = startPoint.x + (float) ((1 - frac) * deltaX - frac * deltaY);
+        float point_y_3 = startPoint.y + (float) ((1 - frac) * deltaY + frac * deltaX);
+        mPath.moveTo(point_x_1, point_y_1);
+        mPath.lineTo(point_x_2, point_y_2);
+        mPath.lineTo(point_x_3, point_y_3);
+        //mPath.lineTo(point_x_1, point_y_1);
+        //mPath.lineTo(point_x_1, point_y_1);
+        mCanvas.drawPath(mPath, paint);
+        invalidate();
+    }
+
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Paint paintVertex =new Paint();
-        paintVertex.setTextSize(100);
+        Paint paintVertex = new Paint();
+        paintVertex.setTextSize(60);
         paintVertex.setColor(Color.BLUE);
 
-        for (Vertice v : vertices){
+        Canvas nome = new Canvas();
+
+
+        for (Vertice v : vertices) {
             canvas.drawCircle(v.getX(), v.getY(), 30, paintVertex);
-            canvas.drawText(v.getNomeVertice(),v.getX(),v.getY()-30,paintVertex);
+            String nomeZona = v.getNomeVertice();
+            String nomeZonaRidotto = "";
+
+            if (nomeZona.length() > 10) {
+
+                String[] split = nomeZona.split(" ",2);
+
+
+                for (String s : split) {
+                        s = s.substring(0, 3);
+
+                    if (s.length()>2) {
+                        nomeZonaRidotto = nomeZonaRidotto + s + ". ";
+                    }
+
+
+
+                }
+
+
+
+                canvas.drawText(nomeZonaRidotto, v.getX() - 110, v.getY() - 60, paintVertex);
+            }
+            else {
+                canvas.drawText(nomeZona, v.getX() - 110, v.getY() - 60, paintVertex);
+
+            }
+
+            Paint paintEdge = new Paint();
+            paintEdge.setColor(Color.GREEN);
+            paintEdge.setStrokeWidth(7);
+            Paint paintArrow = new Paint();
+            paintArrow.setColor(Color.RED);
+            paintArrow.setStrokeWidth(20);
+
+            for (DefaultEdge e : grafo.edgeSet()) {
+
+
+                Zona v1 = grafo.getEdgeSource(e);
+                Zona v2 = grafo.getEdgeTarget(e);
+
+                Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome()));
+                Point endPoint = new Point((int)returnX(v2.getNome()), (int)returnY(v2.getNome())-30);
+
+                canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome()), returnX(v2.getNome()), returnY(v2.getNome())-30, paintEdge);
+                this.drawArrow(startPoint,endPoint,paintArrow,canvas);
+
+            }
         }
 
-        Paint paintEdge =new Paint();
-        paintEdge.setColor(Color.GREEN);
-        paintEdge.setStrokeWidth(7);
-
-        for (DefaultEdge e: grafo.edgeSet()){
-
-            Zona v1 = grafo.getEdgeSource(e);
-            Zona v2 = grafo.getEdgeTarget(e);
-
-
-            canvas.drawLine(returnX(v1.getNome()),returnY(v1.getNome()),returnX(v2.getNome()),returnY(v2.getNome()),paintEdge);
-
-
-
-
-        }
     }
-
 }
 
 
