@@ -21,19 +21,30 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
 
     private ArrayList<Percorso> percorsiList;
     private ArrayList<Percorso> percorsiListAll;
+    private OnPercorsoListener mOnPercorsoListener;
 
-    public RecyclerAdapterPercorso (ArrayList<Percorso> percorsiList){
+    public RecyclerAdapterPercorso (ArrayList<Percorso> percorsiList, OnPercorsoListener onPercorsoListener){
         this.percorsiList = percorsiList;
         this.percorsiListAll = new ArrayList<>(percorsiList);
+        this.mOnPercorsoListener = onPercorsoListener;
     }
 
 
-    public class PercorsoViewHolder extends RecyclerView.ViewHolder{
+    public class PercorsoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nomePercorsoTxt;
+        private OnPercorsoListener onPercorsoListener;
 
-        public PercorsoViewHolder(final View view){
+        public PercorsoViewHolder(final View view, OnPercorsoListener onPercorsoListener){
             super(view);
             nomePercorsoTxt = view.findViewById(R.id.nomePercorso);
+            this.onPercorsoListener = onPercorsoListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onPercorsoListener.onPercorsoClick(getAdapterPosition());
         }
     }
 
@@ -41,7 +52,7 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
     @Override
     public RecyclerAdapterPercorso.PercorsoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_percorsi, parent, false);
-        return new PercorsoViewHolder(itemView);
+        return new PercorsoViewHolder(itemView, mOnPercorsoListener);
     }
 
     @Override
@@ -89,4 +100,9 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
             notifyDataSetChanged();
         }
     };
+
+
+    public interface OnPercorsoListener{
+        void onPercorsoClick(int position);
+    }
 }

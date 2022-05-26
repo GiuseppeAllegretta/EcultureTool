@@ -23,7 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class PercorsiActivity extends AppCompatActivity {
+public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapterPercorso.OnPercorsoListener {
 
     private ArrayList<Percorso> percorsiList;
     private RecyclerView recyclerView;
@@ -68,7 +68,7 @@ public class PercorsiActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        adapterPercorso = new RecyclerAdapterPercorso(percorsiList);
+        adapterPercorso = new RecyclerAdapterPercorso(percorsiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,5 +98,11 @@ public class PercorsiActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onPercorsoClick(int position) {
+        percorsiList.get(position);
+        Intent intent;
     }
 }
