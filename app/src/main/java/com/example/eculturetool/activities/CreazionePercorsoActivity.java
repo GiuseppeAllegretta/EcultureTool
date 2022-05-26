@@ -76,6 +76,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         generateItems();
 
         btnAggiungiZona.setOnClickListener(v ->{
+            if(!editText.getText().toString().equals(""))
+                data.setPathName(editText.getText().toString());
+
             finish();
             Intent intent = new Intent(this, AddZonaToPercorsoActivity.class);
             startActivity(intent);
@@ -84,43 +87,69 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
 
         btnConferma.setOnClickListener(v -> {
-            //savePercorso();
-
+            boolean isValid = true;
             if(data.getData().size() == 0){
                 Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
-            } else{
-                getDatiPercorso();
+                isValid = false;
             }
-            Bundle bundle = new Bundle();
-            IoHelper ioHelper = new IoHelper(this);
-            Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-            graph = ioHelper.fromListToGraph(data.getData());
+            if(!checkNomePercorso())
+                isValid = false;
 
-            bundle.putSerializable("grafo", (Serializable) graph);
+            if(isValid){
+                createPercorso();
 
-            Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+                Bundle bundle = new Bundle();
+                IoHelper ioHelper = new IoHelper(this);
+                Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+                graph = ioHelper.fromListToGraph(data.getData());
+
+                bundle.putSerializable("grafo", (Serializable) graph);
+
+                Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
         });
-
 
     }
 
 
+    /**
+     * Effettua il controllo sulla validità del nome del percorso
+     * @return true(se il nome non è già esisistente e non è vuoto), false in ogni altro caso
+     */
+    private boolean checkNomePercorso() {
+        boolean flag = true;
 
-    private void getDatiPercorso() {
         if(editText.getText().toString().isEmpty()){
             editText.setError(getString(R.string.inserisci_nome_percorso));
             editText.requestFocus();
-            return;
+            flag = false;
         }
 
         if(esistenzaNomePercorso()){
             editText.setError(getString(R.string.nome_esistente));
             editText.requestFocus();
-            return;
+            flag = false;
         }
 
+        return flag;
+    }
+
+    private boolean esistenzaNomePercorso() {
+        boolean risultato = false;
+        List<Percorso> percorsi = dataBaseHelper.getPercorsi();
+
+        for(Percorso percorso: percorsi){
+            if(percorso.getNome().compareToIgnoreCase(editText.getText().toString()) == 0){
+                risultato = true;
+            }
+        }
+        return risultato;
+    }
+
+
+    private void createPercorso(){
         Percorso percorso = new Percorso(editText.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
         int idPercorso = dataBaseHelper.addPercorso(percorso);
 
@@ -138,20 +167,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         }
     }
 
-    private boolean esistenzaNomePercorso() {
-        boolean risultato = false;
-
-        List<Percorso> percorsi = dataBaseHelper.getPercorsi();
-
-        for(Percorso percorso: percorsi){
-            if(percorso.getNome().compareToIgnoreCase(editText.getText().toString()) == 0){
-                risultato = true;
-            }
-        }
-
-        return risultato;
-    }
-
     /**
      * Metodo che permette la creazione delle cards zone
      */
@@ -165,9 +180,12 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo che inizializza la recycler view (griglia)
+     * Metodo che inizializza la recycler view (griglia) e la vista
      */
     private void init(){
+        if(data.getPathName() != null)
+            editText.setText(data.getPathName());
+
         ButterKnife.bind(this);
 
         recyclerView.setHasFixedSize(true);
@@ -175,12 +193,5 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
     }
-
-    //TODO auto increment per l'id nel db? Effettuare scrittura nel db
-    private void savePercorso(){
-        //Percorso percorso = new Percorso(1, "stub", )?
-        //data.getData().clear(); // pulizia array condiviso tra le classi per evitare che riaprendo l'activity resti memorizzato
-    }
-
 
 }
