@@ -299,10 +299,16 @@ public class ProfileFragment extends Fragment {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_elimina_profilo);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
 
-        final Button conferma = dialog.findViewById(R.id.conferma_cancellazione);
-        final Button rifiuto = dialog.findViewById(R.id.annulla_cancellazione);
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText(getResources().getString(R.string.cancella_profilo));
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
         //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
