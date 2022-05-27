@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -27,7 +29,9 @@ import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -169,21 +173,33 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = fileReferences.putBytes(data);
-        uploadTask.addOnFailureListener(exception -> {
-        }).addOnSuccessListener(taskSnapshot -> {
-
-            //Ottiene l'uri e lo salva su SQLite
-            fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
-                //Salva su SQLite la stringa dell'url
-                dataBaseHelper.setQRCode(idOggetto, uri.toString());
-            });
-        });
+        //Ottiene l'uri e lo salva su SQLite
+        //Salva su SQLite la stringa dell'url
+        StorageTask uploadTask = fileReferences.putBytes(data)
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                }).addOnSuccessListener(taskSnapshot -> {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    //Ottiene l'uri e lo salva su SQLite
+                    fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
+                        //Salva su SQLite la stringa dell'url
+                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
+                        finish();
+                    });
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                });
 
 
     }
 
     private void creazioneOggetto() {
+        //La progressbar diventa visibile
+        progressBar.setVisibility(View.VISIBLE);
+
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
         int idOggettoCreato;
@@ -216,32 +232,19 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        //La progressbar diventa visibile
-        progressBar.setVisibility(View.VISIBLE);
-
         //Scrittura dell'oggetto sul Realtime Database
         Oggetto oggetto = new Oggetto(nome, descrizione, imgUri.toString(), tipologia, zona.getId());
 
 
-        //aggiundo l'oggetto al database
-        if(dataBaseHelper.addOggetto(oggetto)){
-            List<Oggetto> oggettiUpdate = dataBaseHelper.getOggetti(); //lista di oggetti aggiornata con l'ultimo oggetto creato
-            for(Oggetto oggetto1: oggettiUpdate){
-                if(oggetto1.getNome().compareTo(nome) == 0){
-                    idOggettoCreato = oggetto1.getId();
-                    Bitmap bitmap = qrCodeGenerator(idOggettoCreato);
-                    uploadFile(idOggettoCreato, bitmap);
-                    break;
-                }
-            }
-
-
+        //aggiungo l'oggetto al database
+        if((idOggettoCreato = dataBaseHelper.addOggetto(oggetto)) != -1){
+            Bitmap bitmap = qrCodeGenerator(idOggettoCreato);
+            uploadFile(idOggettoCreato, bitmap);
         }
-
-        //La progressbar diventa visibile
-        progressBar.setVisibility(View.INVISIBLE);
-
-        finish();
+        //Si è verificato un problema col db e l'oggetto non è stato creato
+        else{
+            Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
+        }
     }
 
 

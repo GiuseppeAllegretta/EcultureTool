@@ -48,6 +48,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Oggetto oggetto;                        //oggetto di cui si vedono i dati a schermo
     private List<Zona> zoneList;                    //L'insieme di tutte le zone
     private int idOggetto, idZona, luogoCorrente;   //identificativi dell'oggetto, zona e luogo
+    private String qrCode;
     private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
@@ -190,9 +191,8 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (oggetto.getUrlQrcode() != null) {
-                    Uri uri = Uri.parse(oggetto.getUrlQrcode());
-                    displayPopupImage(uri);
+                if (qrCode != null) {
+                    displayPopupImage(qrCode);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(DettaglioOggettoActivity.this);
                     builder.setTitle(getResources().getString(R.string.avviso));
@@ -210,7 +210,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
     }
 
-    public void displayPopupImage(Uri uri) {
+    public void displayPopupImage(String uri) {
 
         final Dialog dialog = new Dialog(DettaglioOggettoActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -219,7 +219,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
         final ImageView image = dialog.findViewById(R.id.qrCodeImg);
 
-        Glide.with(dialog.getContext()).load(uri.toString()).into(image);
+        Glide.with(dialog.getContext()).load(uri).into(image);
 
         dialog.show();
     }
@@ -236,6 +236,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
             zonaAppartenenza.setText(getNomeZona(oggetto.getZonaAppartenenza()));
             idZona = oggetto.getZonaAppartenenza();
+            qrCode = oggetto.getUrlQrcode();
         }
     }
 

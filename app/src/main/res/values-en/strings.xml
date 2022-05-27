@@ -57,6 +57,8 @@
     <string name="accedi_come_ospite">Log in as a guest</string>
     <string name="registrazione">Registration</string>
 
+    <!-- String database -->
+    <string name="db_errore_scrittura">There was an unexpected problem with writing to the database</string>
 
     <!-- Stringhe del luogo -->
     <string name="nome_luogo">Place name</string>

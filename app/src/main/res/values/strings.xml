@@ -32,6 +32,8 @@
         <item>Altro</item>
     </string-array>
 
+    <!-- String database -->
+    <string name="db_errore_scrittura">Si è verificato un problema inaspettato con la scrittura nel database</string>
 
     <!-- String profilo/oggetto/zona/luogo -->
     <string name="nome">Nome</string>
@@ -171,6 +173,7 @@
     <string name="gestire_oggetti">Potrai gestire da qui \n i tuoi oggetti</string>
     <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
     <string name="Entita">Entita</string>
+
 
 
 </resources>

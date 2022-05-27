@@ -772,9 +772,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public boolean addOggetto(Oggetto oggetto){
-        boolean risultato = false;
-
+    public int addOggetto(Oggetto oggetto){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -786,14 +784,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long insert = db.insert(TABLE_OGGETTI, null, contentValues);
 
-        if(insert == -1){
-            risultato = false;
-        }else {
-            risultato = true;
-        }
-
         db.close();
-        return risultato;
+
+        return (int) insert;
     }
 
 
