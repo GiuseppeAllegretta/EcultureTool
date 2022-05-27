@@ -178,12 +178,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getResources().getString(R.string.avviso))
                 .setMessage(getResources().getString(R.string.avviso_luoghi_zone))
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
+                .setNeutralButton("Ok", (dialogInterface, i) -> finish());
         alert.create().show();
     }
 
@@ -207,24 +202,21 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (idLuogo == luogoCorrente) {
+        conferma.setOnClickListener(v -> {
+            if (idLuogo == luogoCorrente) {
 
-                    for(int i = 0; i < numeroLuoghi; i++){
-                        if(luogoCorrente != luoghiList.get(i).getId()){
-                            dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
-                            dataBaseHelper.deleteLuogo(idLuogo);
-                            dialog.dismiss();
-                            break;
-                        }
+                for(int i = 0; i < numeroLuoghi; i++){
+                    if(luogoCorrente != luoghiList.get(i).getId()){
+                        dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
+                        dataBaseHelper.deleteLuogo(idLuogo);
+                        dialog.dismiss();
+                        break;
                     }
-                } else {
-                    dataBaseHelper.deleteLuogo(idLuogo);
                 }
-                showDialog();
+            } else {
+                dataBaseHelper.deleteLuogo(idLuogo);
             }
+            showDialog();
         });
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
