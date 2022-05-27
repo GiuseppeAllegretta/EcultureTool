@@ -4,17 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
+import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.view.GraphView;
 
@@ -24,7 +30,10 @@ import org.jgrapht.graph.SimpleGraph;
 
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private GraphView graphView;
+    private Button modificaBtn;
+    private Button eliminaBtn;
     private Graph<Zona, DefaultEdge> graph;
+    private Intent i;
     private IoHelper ioHelper;
     private int idPercorso; //id del percorso
     private DataBaseHelper dataBaseHelper;
@@ -33,10 +42,11 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
+        modificaBtn = findViewById(R.id.modificaPercorso);
+        eliminaBtn = findViewById(R.id.eliminaPercorso);
         ioHelper = new IoHelper(this);
         dataBaseHelper = new DataBaseHelper(this);
 
-        Intent i;
         i = getIntent();
         graph = (Graph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
         idPercorso = i.getIntExtra("ID_PERCORSO", 0);
@@ -84,5 +94,61 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        eliminaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomDialog();
+            }
+        });
+    }
+
+
+    /**
+     * Metodo che gestisce il dialog di conferma eliminazione del profilo.
+     * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
+     */
+    void showCustomDialog() {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
+
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText("Vuoi cancellare definitivamente il percorso?");
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
+
+        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
+        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
+        //successivamente all'eleminazione dello stesso nell'authentication db
+
+        dialog.show();
+
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO cancellare il percorso in SQL
+                //TODO cancellare l'array di array
+                //TODO cancellare il file di share
+                ioHelper.cancellaPercorso(idPercorso);
+                dialog.dismiss();
+                finish();
+
+
+            }
+        });
+
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }
