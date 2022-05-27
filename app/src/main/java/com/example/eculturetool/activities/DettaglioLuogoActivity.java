@@ -215,6 +215,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                 }
             } else {
                 dataBaseHelper.deleteLuogo(idLuogo);
+                dialog.dismiss();
             }
             showDialog();
         });
