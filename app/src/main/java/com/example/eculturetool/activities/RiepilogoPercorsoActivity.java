@@ -53,6 +53,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         idPercorso = i.getIntExtra("ID_PERCORSO", 0);
 
         graphView = findViewById(R.id.graphView);
+        graphView.setBackgroundColor(getResources().getColor(R.color.white));
         graphView.setGrafo(graph);
 
 
@@ -76,7 +77,6 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
 
         Zoomy.Builder builder = new Zoomy.Builder(this).target(graphView);
-
         builder.register();
     }
 
