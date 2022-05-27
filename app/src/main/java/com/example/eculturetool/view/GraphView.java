@@ -20,6 +20,7 @@ import org.jgrapht.graph.DefaultEdge;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Vertice;
 import com.example.eculturetool.entities.Zona;
 
@@ -257,12 +258,11 @@ public class GraphView extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int colorVertice = ContextCompat.getColor(getContext(), R.color.verdePrimario);
 
         Paint paintVertex = new Paint();
         paintVertex.setTextSize(60);
-        paintVertex.setColor(Color.BLUE);
-
-        Canvas nome = new Canvas();
+        paintVertex.setColor(colorVertice);
 
 
         for (Vertice v : vertices) {
@@ -296,11 +296,14 @@ public class GraphView extends View{
 
             }
 
+            int colorArrow = ContextCompat.getColor(getContext(), R.color.orangeAction);
+            int colorArco = ContextCompat.getColor(getContext(), R.color.gialloPrimario);
+
             Paint paintEdge = new Paint();
-            paintEdge.setColor(Color.GREEN);
+            paintEdge.setColor(colorArco);
             paintEdge.setStrokeWidth(7);
             Paint paintArrow = new Paint();
-            paintArrow.setColor(Color.RED);
+            paintArrow.setColor(colorArrow);
             paintArrow.setStrokeWidth(20);
 
 //disegno tutti gli archi
@@ -399,9 +402,10 @@ public class GraphView extends View{
                                 this.drawArrow(startPoint,endPoint,paintArrow,canvas);
 
                             }
-
-
             }
+
+
+
 
             }
 
