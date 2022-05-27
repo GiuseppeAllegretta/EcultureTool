@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.13874873864783047" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-anydpi/ic_list.xml" value="0.259" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1355" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.151" />
@@ -51,19 +52,10 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.2635416666666667" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/upload_image_options.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-land/activity_luoghi.xml" value="0.2875" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_diramazione.xml" value="0.22760416666666666" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dati_percorso.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_percorsi.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.33" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/checkbox_layout.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.215625" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_percorsi.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_zona.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/searcher.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/search_menu.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />
@@ -134,6 +126,8 @@
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.325" />
+        <entry key="app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_esportazione_percorso.xml" value="0.16296296296296298" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25815217391304346" />
@@ -146,8 +140,10 @@
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
+        <entry key="app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/activity_zone.xml" value="0.325" />
         <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
@@ -162,7 +158,9 @@
         <entry key="app/src/main/res/layout/image_item.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/list_item_oggetto.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/list_item_percorsi.xml" value="0.32395833333333335" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/list_items_search.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/main_recycler_row_item.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/object_lower_menu.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/qrcode_dialog.xml" value="0.4036458333333333" />
@@ -170,6 +168,8 @@
         <entry key="app/src/main/res/layout/view_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/menu/percorso_menu.xml" value="0.32395833333333335" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.325" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.2125" />
