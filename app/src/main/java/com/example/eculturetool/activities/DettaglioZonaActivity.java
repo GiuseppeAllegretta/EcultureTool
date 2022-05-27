@@ -17,6 +17,8 @@ import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Objects;
+
 public class DettaglioZonaActivity extends AppCompatActivity {
 
     private TextView nomeZona, descrizioneZona;
@@ -48,7 +50,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         nomeZona.setText(z.getNome());
         descrizioneZona.setText(z.getDescrizione());
-        getSupportActionBar().setTitle(z.getNome());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(z.getNome());
 
 
         dataBaseHelper = new DataBaseHelper(this);

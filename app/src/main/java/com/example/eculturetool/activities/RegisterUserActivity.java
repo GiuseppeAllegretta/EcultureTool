@@ -21,8 +21,6 @@ import java.util.Objects;
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
-    private TextView registerUser;
-    private final int PASSWORD_LENGTH = 6;
     private ProgressBar progressBar;
     DataBaseHelper dataBaseHelper;
 
@@ -33,7 +31,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_register_user);
 
 
-        registerUser = findViewById(R.id.avantiButton);
+        TextView registerUser = findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
         editTextNome = findViewById(R.id.nomeCuratore);
@@ -94,8 +92,9 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             return;
         }
 
+        int PASSWORD_LENGTH = 6;
         if (password.length() < PASSWORD_LENGTH) {
-            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) +  PASSWORD_LENGTH  + getResources().getString(R.string.caratteri));
+            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
             return;
         }

@@ -2,7 +2,6 @@ package com.example.eculturetool.fragments;
 
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,51 +32,22 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QRcodeScannerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QRcodeScannerFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
 
     ActivityResultLauncher<ScanOptions> activityResultLaucher;
     Button scanBtn;
     ImageView showTutorial;
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 
     public QRcodeScannerFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QRcodeScannerFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static QRcodeScannerFragment newInstance(String param1, String param2) {
-        QRcodeScannerFragment fragment = new QRcodeScannerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
         String regex_id = "[0-9]*"; //espressione regolare utile per verificare che quanto letto dal qr code contenga solo numeri
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(requireContext());
@@ -112,12 +82,9 @@ public class QRcodeScannerFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle(getResources().getString(R.string.avviso));
         builder.setMessage(getString(R.string.nessun_oggetto_trovato));
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //dismiss dialog
-                dialogInterface.dismiss();
-            }
+        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+            //dismiss dialog
+            dialogInterface.dismiss();
         });
         //show alert dialog
         builder.create().show();
@@ -133,30 +100,22 @@ public class QRcodeScannerFragment extends Fragment {
 
         scanQRcode();
 
-        showTutorial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTutorial();
-            }
-        });
+        showTutorial.setOnClickListener(view1 -> showTutorial());
     }
 
 
     private void scanQRcode() {
-        scanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ScanOptions options = new ScanOptions();
-                //set prompt
-                options.setPrompt(getString(R.string.flash));
-                options.setBeepEnabled(true);
-                //looked orientation
-                options.setOrientationLocked(true);
-                //set campture activity
-                options.setCaptureActivity(Capture.class);
-                //initialize scan
-                activityResultLaucher.launch(options);
-            }
+        scanBtn.setOnClickListener(view -> {
+            ScanOptions options = new ScanOptions();
+            //set prompt
+            options.setPrompt(getString(R.string.flash));
+            options.setBeepEnabled(true);
+            //looked orientation
+            options.setOrientationLocked(true);
+            //set campture activity
+            options.setCaptureActivity(Capture.class);
+            //initialize scan
+            activityResultLaucher.launch(options);
         });
     }
 
@@ -168,7 +127,7 @@ public class QRcodeScannerFragment extends Fragment {
     }
 
     private void showTutorial(){
-        TapTargetView.showFor(getActivity(),                 // `this` is an Activity
+        TapTargetView.showFor(requireActivity(),                 // `this` is an Activity
                 TapTarget.forView(scanBtn, getString(R.string.scansiona_qr_code), getString(R.string.inquadra))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)

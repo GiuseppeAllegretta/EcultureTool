@@ -1,7 +1,6 @@
 package com.example.eculturetool.activities;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -20,10 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
-    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
     private static final int MIN_LUOGHI = 1;    //numero minimo di luoghi che devono essere presenti
 
     private DataBaseHelper dataBaseHelper;      //oggetto che consente di interrogare il database per reperire dati
@@ -35,7 +34,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private Button eliminaLuogo;
     private FloatingActionButton editLuogo;
 
-    private int idLuogoCorrente;
     private int numeroLuoghi;
     private List<Luogo> luoghiList = new ArrayList<>();
 
@@ -63,7 +61,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);     //id del luogo selezionato nella recyclerView precedente
 
         luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
-        idLuogoCorrente = dataBaseHelper.getIdLuogoCorrente();          //id del luogo corrente
         luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
         nascondiView();
@@ -77,6 +74,8 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
+        //email dell'account ospite
+        String emailOspite = "admin@gmail.com";
         if(emailCuratore.compareTo(emailOspite) == 0){
             impostaLuogoCorrente.setVisibility(View.INVISIBLE);
             eliminaLuogo.setVisibility(View.INVISIBLE);
@@ -90,22 +89,16 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         popolaCampi();
 
-        impostaLuogoCorrente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dataBaseHelper.setLuogoCorrente(idLuogo);
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
-            }
+        impostaLuogoCorrente.setOnClickListener(view -> {
+            dataBaseHelper.setLuogoCorrente(idLuogo);
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            finish();
         });
 
-        editLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
-                intent.putExtra(Luogo.Keys.ID, idLuogo);
-                startActivity(intent);
-            }
+        editLuogo.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
+            intent.putExtra(Luogo.Keys.ID, idLuogo);
+            startActivity(intent);
         });
 
         eliminaLuogo();
@@ -114,7 +107,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     private void popolaCampi() {
         if(luogoSelezionato != null){
-            getSupportActionBar().setTitle(luogoSelezionato.getNome());
+            Objects.requireNonNull(getSupportActionBar()).setTitle(luogoSelezionato.getNome());
             nomeLuogo.setText(luogoSelezionato.getNome());
             descrizioneLuogo.setText(luogoSelezionato.getDescrizione());
             tipologiaLuogo.setText(setTipologia(luogoSelezionato.getTipologia()));
@@ -153,42 +146,32 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         numeroLuoghi = luoghiList.size();
         int luogoCorrente = dataBaseHelper.getLuogoCorrente().getId();
 
-        eliminaLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        eliminaLuogo.setOnClickListener(view -> {
 
-                if (numeroLuoghi == MIN_LUOGHI) {
-                    Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
-                    //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
-                } else {
-                    if (idLuogo == luogoCorrente) {
+            if (numeroLuoghi == MIN_LUOGHI) {
+                Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
+                //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
+            } else {
+                if (idLuogo == luogoCorrente) {
 
-                        for(int i = 0; i < numeroLuoghi; i++){
-                            if(luogoCorrente != luoghiList.get(i).getId()){
-                                dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
-                                dataBaseHelper.deleteLuogo(idLuogo);
-                                break;
-                            }
+                    for(int i = 0; i < numeroLuoghi; i++){
+                        if(luogoCorrente != luoghiList.get(i).getId()){
+                            dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
+                            dataBaseHelper.deleteLuogo(idLuogo);
+                            break;
                         }
-
-                    } else {
-                        dataBaseHelper.deleteLuogo(idLuogo);
                     }
-                    showDialog();
-                }
 
+                } else {
+                    dataBaseHelper.deleteLuogo(idLuogo);
+                }
+                showDialog();
             }
+
         });
 
     }
 
-    /*@Override
-    protected void onDestroy() {
-        super.onDestroy();
-        connection.getRefLuoghi().removeEventListener(mListenerDeleteLuogo);
-
-    }
-*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -201,12 +184,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getResources().getString(R.string.avviso))
                 .setMessage(getResources().getString(R.string.avviso_luoghi_zone))
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
+                .setNeutralButton("Ok", (dialogInterface, i) -> finish());
         alert.create().show();
     }
 }

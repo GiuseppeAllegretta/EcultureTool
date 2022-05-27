@@ -44,7 +44,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         if(viewHolder.getItemViewType() != target.getItemViewType())
             return false;
-        adapter.onItemMove(viewHolder.getAdapterPosition(), target.getLayoutPosition()); //TODO qui c'era getBindingAdapterPosition
+        adapter.onItemMove(viewHolder.getAdapterPosition(), target.getLayoutPosition());
         return true;
     }
 
