@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,12 +15,12 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 
+import java.util.Objects;
+
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
-    private TextView registerUser;
-    private final int PASSWORD_LENGTH = 6;
     private ProgressBar progressBar;
     DataBaseHelper dataBaseHelper;
 
@@ -32,29 +31,27 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_register_user);
 
 
-        registerUser = (Button) findViewById(R.id.avantiButton);
+        TextView registerUser = findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
-        editTextNome = (EditText) findViewById(R.id.nomeCuratore);
-        editTextCognome = (EditText) findViewById(R.id.cognomeCuratore);
-        editTextEmail = (EditText) findViewById(R.id.emailCuratore);
-        editTextPassword = (EditText) findViewById(R.id.passwordCuratore);
+        editTextNome = findViewById(R.id.nomeCuratore);
+        editTextCognome = findViewById(R.id.cognomeCuratore);
+        editTextEmail = findViewById(R.id.emailCuratore);
+        editTextPassword = findViewById(R.id.passwordCuratore);
 
         dataBaseHelper = new DataBaseHelper(this);
 
         progressBar = findViewById(R.id.progressBarRegister);
         progressBar.setVisibility(View.INVISIBLE);
 
-        getSupportActionBar().setTitle(getString(R.string.registrazione));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.registrazione));
     }
 
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.avantiButton:
-                registerUser();
-                break;
+        if (view.getId() == R.id.avantiButton) {
+            registerUser();
         }
     }
 
@@ -95,8 +92,9 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             return;
         }
 
+        int PASSWORD_LENGTH = 6;
         if (password.length() < PASSWORD_LENGTH) {
-            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) +  PASSWORD_LENGTH  + getResources().getString(R.string.caratteri));
+            editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
             return;
         }
@@ -115,7 +113,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         Bundle bundle = new Bundle();
         bundle.putSerializable(Curatore.Keys.CURATORE_KEY, curatore);
 
-        Intent intent = new Intent(this, CreazioneMuseoActivity.class);
+        Intent intent = new Intent(this, CreazioneLuogoActivity.class);
         intent.putExtras(bundle);
 
         startActivity(intent);
@@ -127,7 +125,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        EditText editTextNomeSavedState = (EditText) findViewById(R.id.nomeCuratore);
+        EditText editTextNomeSavedState = findViewById(R.id.nomeCuratore);
         CharSequence charSequence = editTextNomeSavedState.getText();
         savedInstanceState.putCharSequence("MySavedData", charSequence);
     }
@@ -136,7 +134,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         CharSequence restoreData = savedInstanceState.getCharSequence("MySavedData");
-        EditText myEditText = (EditText) findViewById(R.id.nomeCuratore);
+        EditText myEditText = findViewById(R.id.nomeCuratore);
         myEditText.setText(restoreData);
     }
     //FINE

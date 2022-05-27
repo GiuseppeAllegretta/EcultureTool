@@ -17,15 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaZonaActivity extends AppCompatActivity {
-    // private final Connection connection = new Connection();
-    private String idZona;
+
     private EditText nomeZona, descrizioneZona;
-    private String luogoCorrente;
     private ImageView frecciaBack, conferma;
     List<Zona> zoneList = new ArrayList<>();
-    private static final int MAX_OGGETTI = 10;
     private ProgressBar progressBar;
-    private Zona z1,z2;
+    private Zona z1;
     private DataBaseHelper dataBaseHelper;
 
     @Override
@@ -43,24 +40,8 @@ public class ModificaZonaActivity extends AppCompatActivity {
         //recupero dati dall'intent
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
-
         z1 = (Zona) bundle.getSerializable("ZONE");
-/*
-        connection.getRefCuratore().child("luogoCorrente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(String.class) != null) {
-                    zoneList = getListZoneCreate();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-*/
         dataBaseHelper = new DataBaseHelper(this);
         zoneList = dataBaseHelper.getZone();
     }
@@ -74,19 +55,9 @@ public class ModificaZonaActivity extends AppCompatActivity {
         descrizioneZona.setText(z1.getDescrizione());
 
 
-        frecciaBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        frecciaBack.setOnClickListener(view -> finish());
 
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editZona();
-            }
-        });
+        conferma.setOnClickListener(view -> editZona());
     }
 
 
@@ -114,13 +85,12 @@ public class ModificaZonaActivity extends AppCompatActivity {
             return;
         }
 
-
-        z2= new Zona(0,nome,descrizione,0);
+        Zona z2 = new Zona(0, nome, descrizione, 0);
 
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
 
-        dataBaseHelper.modifica(z1,z2);
+        dataBaseHelper.modifica(z1, z2);
         finish();
     }
 
@@ -141,45 +111,5 @@ public class ModificaZonaActivity extends AppCompatActivity {
         }
 
         return isEsistente;
-
-
     }
-
-/*
-    private List<Zona> getListZoneCreate() {
-
-        List<Zona> zone = new ArrayList<>();
-
-        zone = dataBaseHelper.zoneQuery();
-
-        System.out.println("Luogo corrente" + luogoCorrente);
-        connection.getRefZone().child(luogoCorrente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iteratore = snapshot.getChildren();
-                int count = (int) snapshot.getChildrenCount();
-
-                Zona zona;
-
-                for (int i = 0; i < count; i++) {
-                    zona=iteratore.iterator().next().getValue(Zona.class);
-                   // if(zona.getId().compareTo(idZona)!=0)
-                    {
-                        zone.add(zona);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return zone;
-
-
-    }
-*/
 }

@@ -23,10 +23,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DettaglioLuogoActivity extends AppCompatActivity {
 
-    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
     private static final int MIN_LUOGHI = 1;    //numero minimo di luoghi che devono essere presenti
 
     private DataBaseHelper dataBaseHelper;      //oggetto che consente di interrogare il database per reperire dati
@@ -38,7 +38,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     private Button eliminaLuogo;
     private FloatingActionButton editLuogo;
 
-    private int idLuogoCorrente;
     private int numeroLuoghi;
     private List<Luogo> luoghiList = new ArrayList<>();
 
@@ -66,7 +65,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);     //id del luogo selezionato nella recyclerView precedente
 
         luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
-        idLuogoCorrente = dataBaseHelper.getIdLuogoCorrente();          //id del luogo corrente
         luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
         nascondiView();
@@ -80,6 +78,8 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
+        //email dell'account ospite
+        String emailOspite = "admin@gmail.com";
         if(emailCuratore.compareTo(emailOspite) == 0){
             impostaLuogoCorrente.setVisibility(View.INVISIBLE);
             eliminaLuogo.setVisibility(View.INVISIBLE);
@@ -93,22 +93,16 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
         popolaCampi();
 
-        impostaLuogoCorrente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dataBaseHelper.setLuogoCorrente(idLuogo);
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
-            }
+        impostaLuogoCorrente.setOnClickListener(view -> {
+            dataBaseHelper.setLuogoCorrente(idLuogo);
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            finish();
         });
 
-        editLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
-                intent.putExtra(Luogo.Keys.ID, idLuogo);
-                startActivity(intent);
-            }
+        editLuogo.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
+            intent.putExtra(Luogo.Keys.ID, idLuogo);
+            startActivity(intent);
         });
 
         eliminaLuogo();
@@ -117,7 +111,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     private void popolaCampi() {
         if(luogoSelezionato != null){
-            getSupportActionBar().setTitle(luogoSelezionato.getNome());
+            Objects.requireNonNull(getSupportActionBar()).setTitle(luogoSelezionato.getNome());
             nomeLuogo.setText(luogoSelezionato.getNome());
             descrizioneLuogo.setText(luogoSelezionato.getDescrizione());
             tipologiaLuogo.setText(setTipologia(luogoSelezionato.getTipologia()));

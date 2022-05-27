@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -26,8 +25,6 @@ import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,12 +45,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
     private DataBaseHelper dataBaseHelper;          //Riferimento al database
     private Zona zona;                              //zona che verrà selezionata nello spinner
-    private StorageReference mStorageReference;
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
     private ProgressBar progressBar;
-    private FloatingActionButton changeImg;
     private ImageView imgOggetto;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private Uri imgUri;
@@ -66,7 +61,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Spinner spinnerZone;
     private List<String> nomiZoneList = new ArrayList<>();
     private List<Zona> zoneList = new ArrayList<>();
-    private ArrayAdapter<String> nomiZoneListAdapter;
 
 
     @Override
@@ -80,7 +74,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
         creaOggetto = findViewById(R.id.creaOggetto);
         progressBar = findViewById(R.id.progressAddOggetto);
-        changeImg = findViewById(R.id.change_imgUser);
+        FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
         dataBaseHelper = new DataBaseHelper(this);
 
@@ -121,12 +115,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         // Apply the adapter to the spinner
         tipologiaOggetto.setAdapter(adapter);
         tipologiaOggetto.setOnItemSelectedListener(this);
-        creaOggetto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                creazioneOggetto();
-            }
-        });
+        creaOggetto.setOnClickListener(view -> creazioneOggetto());
     }
 
 
@@ -147,7 +136,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 nomiZoneList.add(zoneList.get(i).getNome());
             }
 
-            nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+            ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
             spinnerZone.setAdapter(nomiZoneListAdapter);
 
             spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -172,33 +161,23 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     /**
      * Metodo che consente di caricare su Firestore un oggetto di tipo bitmap in formato jpeg
      *
-     * @param bitmap
      */
     public void uploadFile(int idOggetto, Bitmap bitmap) {
-        mStorageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads/qrCode");
+        StorageReference mStorageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads/qrCode");
         StorageReference fileReferences = mStorageReference.child(System.currentTimeMillis() + "." + "jpeg");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
         UploadTask uploadTask = fileReferences.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        uploadTask.addOnFailureListener(exception -> {
+        }).addOnSuccessListener(taskSnapshot -> {
 
-                //Ottiene l'uri e lo salva su SQLite
-                fileReferences.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        //Salva su SQLite la stringa dell'url
-                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
-                    }
-                });
-            }
+            //Ottiene l'uri e lo salva su SQLite
+            fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
+                //Salva su SQLite la stringa dell'url
+                dataBaseHelper.setQRCode(idOggetto, uri.toString());
+            });
         });
 
 

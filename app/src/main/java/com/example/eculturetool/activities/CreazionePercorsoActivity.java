@@ -23,7 +23,6 @@ import com.google.android.material.button.MaterialButton;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -101,7 +100,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 IoHelper ioHelper = new IoHelper(this);
-                Graph<Zona, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+                Graph<Zona, DefaultEdge> graph;
                 graph = ioHelper.fromListToGraph(data.getData());
 
                 //Serializzo il percorso

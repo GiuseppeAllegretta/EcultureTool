@@ -2,7 +2,6 @@ package com.example.eculturetool.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -33,13 +32,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     DataBaseHelper dataBaseHelper;
     private EditText editTextEmail, editTextPassword;
-    private Button signIn;
     private ProgressBar progressBar;
-    private TextView language_dialog, register, passwordDimenticata;
-    private Context context;
+    private TextView language_dialog;
     private int lang_selected;
-    private static final String TAG = "EmailPassword";
-    private final int PASSWORD_LENGTH = 6;
+    Context context;
 
 
     @Override
@@ -47,10 +43,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        register = findViewById(R.id.registrati);
+        TextView register = findViewById(R.id.registrati);
         register.setOnClickListener(this);
 
-        signIn = findViewById(R.id.logInButton);
+        Button signIn = findViewById(R.id.logInButton);
         signIn.setOnClickListener(this);
 
         editTextEmail = findViewById(R.id.email);
@@ -59,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = findViewById(R.id.progressBarLogin);
         progressBar.setVisibility(View.INVISIBLE);
 
-        passwordDimenticata = findViewById(R.id.passwordDimenticata);
+        TextView passwordDimenticata = findViewById(R.id.passwordDimenticata);
         passwordDimenticata.setOnClickListener(this);
 
         //TextView con nome nella lingua selezionata
@@ -108,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        int PASSWORD_LENGTH = 6;
         if (password.length() < PASSWORD_LENGTH) {
             editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
@@ -133,11 +130,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.verifica_email), Toast.LENGTH_SHORT).show();
                 editTextEmail.requestFocus();
                 editTextEmail.setError(getString(R.string.email_errata));
-                progressBar.setVisibility(View.INVISIBLE);
             }else {
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_fallita), Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
             }
+            progressBar.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -156,40 +152,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             language_dialog.setText("English");
         }
 
-        language_dialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        language_dialog.setOnClickListener(view -> {
 
-                //lista delle lingue disponibili
-                final String[] language = {"Italiano", "Inglese"};
+            //lista delle lingue disponibili
+            final String[] language = {"Italiano", "Inglese"};
 
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-                dialogBuilder.setTitle(getString(R.string.seleziona_lingua))
-                        .setSingleChoiceItems(language, lang_selected, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                language_dialog.setText(language[i]);
+            final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+            dialogBuilder.setTitle(getString(R.string.seleziona_lingua))
+                    .setSingleChoiceItems(language, lang_selected, (dialogInterface, i) -> {
+                        language_dialog.setText(language[i]);
 
-                                if (language[i].equals("Italiano")) {
-                                    LocaleHelper.setLocale(LoginActivity.this, "it");
-                                    lang_selected = 0;
-                                }
-                                if (language[i].equals("Inglese")) {
-                                    LocaleHelper.setLocale(LoginActivity.this, "en");
-                                    lang_selected = 1;
-                                }
-                            }
-                        })
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                recreate();
-                            }
-                        });
-                dialogBuilder.create().show();
+                        if (language[i].equals("Italiano")) {
+                            LocaleHelper.setLocale(LoginActivity.this, "it");
+                            lang_selected = 0;
+                        }
+                        if (language[i].equals("Inglese")) {
+                            LocaleHelper.setLocale(LoginActivity.this, "en");
+                            lang_selected = 1;
+                        }
+                    })
+                    .setPositiveButton("OK", (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                        recreate();
+                    });
+            dialogBuilder.create().show();
 
-            }
         });
     }
 

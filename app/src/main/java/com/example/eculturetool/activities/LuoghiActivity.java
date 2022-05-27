@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapterLuogo.OnLuogoListener {
 
-    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
-
     private DataBaseHelper dataBaseHelper;
     private ArrayList<Luogo> luoghiList;
     private RecyclerView recyclerView;
@@ -41,7 +39,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         setContentView(R.layout.activity_luoghi);
         fabAddLuogo = findViewById(R.id.addLuogo);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarLuoghi);
+        Toolbar myToolbar = findViewById(R.id.toolbarLuoghi);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -49,12 +47,9 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         setSupportActionBar(myToolbar);
 
         //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Ritorna al fragment del profilo chiamante
-                finish();
-            }
+        myToolbar.setNavigationOnClickListener(view -> {
+            //Ritorna al fragment del profilo chiamante
+            finish();
         });
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -73,6 +68,8 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
+        //email dell'account ospite
+        String emailOspite = "admin@gmail.com";
         if(emailCuratore.compareTo(emailOspite) == 0){
             fabAddLuogo.setVisibility(View.INVISIBLE);
         }
@@ -83,12 +80,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     protected void onStart() {
         super.onStart();
 
-        fabAddLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class));
-            }
-        });
+        fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class)));
 
     }
 

@@ -21,7 +21,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     private EditText nomeZona, descrizioneZona;
     private Button creaZona;
     private ProgressBar progressBar;
-    private static final int MAX_OGGETTI = 10;
     private List<Zona> zoneList = new ArrayList<>();
     private DataBaseHelper dataBaseHelper;
     private int luogoCorrente;
@@ -54,7 +53,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     }
 
     private void creazioneZona() {
-        int numeroMax;
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
 
@@ -63,7 +61,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             nomeZona.requestFocus();
             return;
         }
-        if (controlloEsistenzaNomeZona(nome)) {
+        if (controlloEsistenzaNomeZona()) {
             nomeZona.requestFocus();
             nomeZona.setError(getResources().getString(R.string.nome_esistente));
             return;
@@ -84,9 +82,9 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    private boolean controlloEsistenzaNomeZona(String nomeZona) {
+    private boolean controlloEsistenzaNomeZona() {
         boolean isEsistente = false;
-        nomeZona = this.nomeZona.getText().toString();
+        String nomeZona = this.nomeZona.getText().toString();
 
         for (int i = 0; i < zoneList.size(); i++) {
             if (nomeZona.compareToIgnoreCase(zoneList.get(i).getNome()) == 0) {

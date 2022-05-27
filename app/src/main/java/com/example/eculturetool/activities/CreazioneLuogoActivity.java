@@ -20,7 +20,7 @@ import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 
 
-public class CreazioneMuseoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreazioneLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private DataBaseHelper dataBaseHelper;
     private EditText nomeLuogo, descrizioneLuogo;
@@ -58,12 +58,7 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
         // Apply the adapter to the spinner
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
-        registrazione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registrazione();
-            }
-        });
+        registrazione.setOnClickListener(view -> registrazione());
 
     }
 
@@ -98,15 +93,15 @@ public class CreazioneMuseoActivity extends AppCompatActivity implements Adapter
             curatore.setLuogoCorrente(idLuogoCreato);
 
             if(dataBaseHelper.addCuratore(curatore)){
-                Toast.makeText(CreazioneMuseoActivity.this, getResources().getString(R.string.registrazione_completata), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreazioneMuseoActivity.this, LoginActivity.class));
+                Toast.makeText(CreazioneLuogoActivity.this, getResources().getString(R.string.registrazione_completata), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreazioneLuogoActivity.this, LoginActivity.class));
                 progressBar.setVisibility(View.INVISIBLE);
             }else{
-                Toast.makeText(CreazioneMuseoActivity.this, getResources().getString(R.string.registrazione_fallita), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreazioneLuogoActivity.this, getResources().getString(R.string.registrazione_fallita), Toast.LENGTH_SHORT).show();
             }
 
         }else {
-            Toast.makeText(CreazioneMuseoActivity.this, getResources().getString(R.string.registrazione_fallita), Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreazioneLuogoActivity.this, getResources().getString(R.string.registrazione_fallita), Toast.LENGTH_SHORT).show();
         }
     }
 

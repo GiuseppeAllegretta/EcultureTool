@@ -46,7 +46,7 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         addPercorsoFbt = findViewById(R.id.addPercorso);
         percorsiList = new ArrayList<>();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarPercorsi);
+        Toolbar myToolbar = findViewById(R.id.toolbarPercorsi);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -54,12 +54,9 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         setSupportActionBar(myToolbar);
 
         //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Ritorna al fragment del profilo chiamante
-                finish();
-            }
+        myToolbar.setNavigationOnClickListener(view -> {
+            //Ritorna al fragment del profilo chiamante
+            finish();
         });
 
         setPercorsiInfo();

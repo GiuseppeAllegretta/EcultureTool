@@ -12,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.activities.LuoghiActivity;
 import com.example.eculturetool.activities.OggettiActivity;
 import com.example.eculturetool.activities.PercorsiActivity;
@@ -34,47 +31,17 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 public class HomeFragment extends Fragment {
 
-    private FrameLayout frameLayout;
-    private DataBaseHelper dataBaseHelper;
-    private TextView tv, luogoGestito;
     private CardView percorsi, luoghi, zone, oggetti;
     private Context context;
-    private ImageView showTutorial;
-    private View view = null;
     private Curatore curatore;
     private Luogo luogo;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -86,13 +53,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tv = view.findViewById(R.id.nomeCuratore);
+        TextView tv = view.findViewById(R.id.nomeCuratore);
         percorsi = view.findViewById(R.id.percorsiCard);
         luoghi = view.findViewById(R.id.luoghiCard);
         zone = view.findViewById(R.id.zoneCard);
         oggetti = view.findViewById(R.id.oggettiCard);
-        luogoGestito = view.findViewById(R.id.nomeLuogoHome);
-        showTutorial=view.findViewById(R.id.showTutorialHome);
+        TextView luogoGestito = view.findViewById(R.id.nomeLuogoHome);
+        ImageView showTutorial = view.findViewById(R.id.showTutorialHome);
 
         //Operazioni che settano il nome del curatore nella home
         if(curatore != null){
@@ -103,40 +70,15 @@ public class HomeFragment extends Fragment {
             luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         }
 
-        showTutorial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showTutorial();
-            }
-        });
+        showTutorial.setOnClickListener(view1 -> showTutorial());
 
-        percorsi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), PercorsiActivity.class));
-            }
-        });
+        percorsi.setOnClickListener(view12 -> startActivity(new Intent(getActivity(), PercorsiActivity.class)));
 
-        luoghi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LuoghiActivity.class));
-            }
-        });
+        luoghi.setOnClickListener(view13 -> startActivity(new Intent(getActivity(), LuoghiActivity.class)));
 
-        oggetti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), OggettiActivity.class));
-            }
-        });
+        oggetti.setOnClickListener(view14 -> startActivity(new Intent(getActivity(), OggettiActivity.class)));
 
-        zone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ZoneActivity.class));
-            }
-        });
+        zone.setOnClickListener(view15 -> startActivity(new Intent(getActivity(), ZoneActivity.class)));
     }
 
     @Override
@@ -150,15 +92,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         if (savedInstanceState != null) {
             curatore = (Curatore) savedInstanceState.getSerializable("Curatore");
             luogo = (Luogo) savedInstanceState.getSerializable("Luogo");
         } else {
-            dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(requireActivity().getApplicationContext());
             dataBaseHelper.getCuratore();
             curatore = dataBaseHelper.getCuratore();
             luogo = dataBaseHelper.getLuogoCorrente();
@@ -169,12 +107,12 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        frameLayout = new FrameLayout(getActivity());
-        inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        frameLayout .addView(view);
+        FrameLayout frameLayout = new FrameLayout(getActivity());
+        inflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        frameLayout.addView(view);
         return frameLayout;
     }
 
@@ -183,16 +121,16 @@ public class HomeFragment extends Fragment {
         super.onResume();
     }
 
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        getActivity().recreate();
+        requireActivity().recreate();
 
     }
 
 
 
     private void showTutorial(){
-        new TapTargetSequence(getActivity()).targets(
+        new TapTargetSequence(requireActivity()).targets(
                 TapTarget.forView(luoghi, getString(R.string.Pulsante_luoghi), getString(R.string.gestire_luoghi))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)

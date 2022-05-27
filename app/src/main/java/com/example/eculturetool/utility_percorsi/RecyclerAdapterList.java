@@ -36,7 +36,6 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
         holder.descrizioneZona.setText(list.get(position).getDescrizione());
 
         //Nascondo immagine zona
-        //TODO serve immagine zona???
         holder.imageView.setVisibility(View.INVISIBLE);
         holder.numeroZona.setText(""+ (position + 1));
     }

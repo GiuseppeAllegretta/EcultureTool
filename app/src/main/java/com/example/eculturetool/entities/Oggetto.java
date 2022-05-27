@@ -92,7 +92,7 @@ public class Oggetto extends Entita implements Serializable {
     }
 
     public interface Keys{
-        final static String ID = "ID_OGGETTO";
+        String ID = "ID_OGGETTO";
     }
 
     public interface KeysTipologiaOggetto{
