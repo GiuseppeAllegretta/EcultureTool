@@ -108,7 +108,9 @@
     <string name="si">Yes</string>
     <string name="cancella_profilo">Do you want to permanently delete your profile?</string>
     <string name="cancella_zona">Do you want to permanently delete the area?</string>
+    <string name="cancella_luogo">Do you want to permanently delete the place?</string>
     <string name="NB_zona">N.B. if you delete a zone all the Items it contains will also be deleted</string>
+    <string name="NB_luogo">N.B. if you delete a place, all its objects and areas will also be deleted</string>
 
     <!-- Stringhe Menu -->
     <string name="profilo">Profile</string>

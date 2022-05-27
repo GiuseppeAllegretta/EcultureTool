@@ -77,7 +77,9 @@
     <string name="si">Si</string>
     <string name="cancella_profilo">Vuoi cancellare definitivamente il tuo profilo?</string>
     <string name="cancella_zona">Vuoi cancellare definitivamente la zona?</string>
+    <string name="cancella_luogo">Vuoi cancellare definitivamente il luogo?</string>
     <string name="NB_zona">N.B. se cancelli una zona anche tutti gli oggetti in essa contenuti saranno cancellati</string>
+    <string name="NB_luogo">N.B. se cancelli un luogo anche tutti i relativi oggetti e zone verranno cancellati</string>
     <string name="percorsi">Percorsi</string>
     <string name="cambia_luogo">Cambia Luogo</string>
     <string name="esci">Esci</string>

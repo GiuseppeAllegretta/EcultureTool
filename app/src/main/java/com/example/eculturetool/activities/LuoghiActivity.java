@@ -102,7 +102,6 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
 
     private void setLuogoInfo() {
         dataBaseHelper = new DataBaseHelper(this);
-
         luoghiList.clear();
         luoghiList = (ArrayList<Luogo>) dataBaseHelper.getLuoghi();
         setAdapter();

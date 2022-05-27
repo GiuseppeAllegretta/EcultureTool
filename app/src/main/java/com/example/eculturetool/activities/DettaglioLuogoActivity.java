@@ -1,11 +1,14 @@
 package com.example.eculturetool.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,20 +164,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                     Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
                     //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
-                    if (idLuogo == luogoCorrente) {
-
-                        for(int i = 0; i < numeroLuoghi; i++){
-                            if(luogoCorrente != luoghiList.get(i).getId()){
-                                dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
-                                dataBaseHelper.deleteLuogo(idLuogo);
-                                break;
-                            }
-                        }
-
-                    } else {
-                        dataBaseHelper.deleteLuogo(idLuogo);
-                    }
-                    showDialog();
+                    showCustomDialog(luogoCorrente);
                 }
 
             }
@@ -182,13 +172,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
-    protected void onDestroy() {
-        super.onDestroy();
-        connection.getRefLuoghi().removeEventListener(mListenerDeleteLuogo);
-
-    }
-*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -208,5 +191,47 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
                     }
                 });
         alert.create().show();
+    }
+
+    private void showCustomDialog(int luogoCorrente) {
+        final Dialog dialog = new Dialog(this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_layout);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        dialog.setContentView(layout);
+
+        TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
+        testo_tv.setText(getResources().getString(R.string.cancella_luogo));
+        TextView descrizione_tv = layout.findViewById(R.id.descrizione_dialog);
+        descrizione_tv.setText(getResources().getString(R.string.NB_luogo));
+
+
+        final Button conferma = dialog.findViewById(R.id.conferma);
+        final Button rifiuto = dialog.findViewById(R.id.annulla);
+
+        dialog.show();
+        conferma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (idLuogo == luogoCorrente) {
+
+                    for(int i = 0; i < numeroLuoghi; i++){
+                        if(luogoCorrente != luoghiList.get(i).getId()){
+                            dataBaseHelper.setLuogoCorrente(luoghiList.get(i).getId());
+                            dataBaseHelper.deleteLuogo(idLuogo);
+                            dialog.dismiss();
+                            break;
+                        }
+                    }
+                } else {
+                    dataBaseHelper.deleteLuogo(idLuogo);
+                }
+                showDialog();
+            }
+        });
+        rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }
