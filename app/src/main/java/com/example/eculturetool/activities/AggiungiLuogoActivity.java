@@ -56,12 +56,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         // Apply the adapter to the spinner
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
-        creaLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                creazioneLuogo();
-            }
-        });
+        creaLuogo.setOnClickListener(view -> creazioneLuogo());
     }
 
     private void creazioneLuogo() {
@@ -75,7 +70,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        if (controlloEsistenzaNomeLuogo(nome) == true) {
+        if (controlloEsistenzaNomeLuogo()) {
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
@@ -100,16 +95,14 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             //La progressbar diventa visibile
             progressBar.setVisibility(View.INVISIBLE);
             finish();
-        }else {
-            return;
         }
 
     }
 
 
-    private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {
+    private boolean controlloEsistenzaNomeLuogo() {
         boolean isEsistente = false;
-        nomeLuogo = this.nomeLuogo.getText().toString();
+        String nomeLuogo = this.nomeLuogo.getText().toString();
 
         for (int i = 0; i < luoghiList.size(); i++) {
             if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
