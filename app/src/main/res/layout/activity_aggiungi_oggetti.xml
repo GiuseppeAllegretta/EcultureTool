@@ -115,8 +115,8 @@
                             android:layout_marginTop="10dp"
                             android:background="@android:color/transparent"
                             android:fontFamily="sans-serif-light"
-                            android:textColorHighlight="@color/gialloPrimario"
                             android:textColor="#000000"
+                            android:textColorHighlight="@color/gialloPrimario"
                             android:textSize="18sp" />
 
                         <View
@@ -148,8 +148,8 @@
                             android:layout_marginTop="10dp"
                             android:background="@android:color/transparent"
                             android:fontFamily="sans-serif-light"
-                            android:textColorHighlight="@color/gialloPrimario"
                             android:textColor="#000000"
+                            android:textColorHighlight="@color/gialloPrimario"
                             android:textSize="18sp" />
 
                         <View

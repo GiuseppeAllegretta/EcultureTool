@@ -43,12 +43,17 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         dataBaseHelper = new DataBaseHelper(this);
 
         luoghiList = dataBaseHelper.getLuoghi();
+        creaLuogo.setOnClickListener(view -> {
+            creazioneLuogo();
+            //La progressbar diventa invisibile
+            progressBar.setVisibility(View.GONE);
+            finish();
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -56,10 +61,12 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         // Apply the adapter to the spinner
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
-        creaLuogo.setOnClickListener(view -> creazioneLuogo());
+
     }
 
     private void creazioneLuogo() {
+        //La progressbar diventa invisibile
+        progressBar.setVisibility(View.VISIBLE);
 
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
@@ -87,16 +94,8 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        //La progressbar diventa visibile
-        progressBar.setVisibility(View.VISIBLE);
-
         Luogo luogo = new Luogo(nome, descrizione, tipologia, DataBaseHelper.getEmailCuratore());
-        if(dataBaseHelper.addLuogo(luogo)){
-            //La progressbar diventa visibile
-            progressBar.setVisibility(View.INVISIBLE);
-            finish();
-        }
-
+        dataBaseHelper.addLuogo(luogo);
     }
 
 

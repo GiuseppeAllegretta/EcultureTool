@@ -48,11 +48,17 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        creaZona.setOnClickListener(view -> creazioneZona());
+        creaZona.setOnClickListener(view -> {
+            creazioneZona();
+            //La progressbar diventa invisibile
+            progressBar.setVisibility(View.GONE);
+        });
 
     }
 
     private void creazioneZona() {
+        //La progressbar diventa invisibile
+        progressBar.setVisibility(View.VISIBLE);
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
 
