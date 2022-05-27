@@ -62,6 +62,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         btnAggiungiZona = findViewById(R.id.btnAggiungiZona);
 
         ioHelper = new IoHelper(getApplicationContext());
+        getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
 
 
         //Recupero zone del luogo corrente
@@ -112,6 +113,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
+                //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
+                data.getData().clear();
+                editText.getText().clear();
             }
         });
 
@@ -163,9 +168,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             //TODO controllo file vuoto
             ioHelper.listZoneSerializzazione(data.getData(), idPercorso);
 
-            Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
-            intent.putExtra("PERCORSO", percorso);
-            startActivity(intent);
         } else {
             Toast.makeText(this, "Si è verificato un errore! \n Riprova", Toast.LENGTH_SHORT).show();
         }

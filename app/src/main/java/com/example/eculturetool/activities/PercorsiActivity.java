@@ -117,4 +117,12 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        percorsiList.clear();
+        setPercorsiInfo();
+        setAdapter();
+    }
 }
