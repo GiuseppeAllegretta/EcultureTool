@@ -124,6 +124,7 @@
     <string name="nuovo">New</string>
     <string name="modifica">Edit</string>
     <string name="lista">List</string>
+    <string name="creazione_percorso">Itinerary Creation</string>
 
 
     <!-- Stringhe Messaggi di errore -->
