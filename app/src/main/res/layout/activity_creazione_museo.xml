@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreazioneMuseoActivity"
-    android:orientation="vertical">
+    tools:context=".activities.CreazioneLuogoActivity"
+    android:orientation="vertical"
+    tools:ignore="LabelFor" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="false"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="30dp"
@@ -24,10 +24,10 @@
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nome_luogo"
+                android:fontFamily="@font/posterama_1927_regular"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -40,7 +40,9 @@
                 android:fontFamily="sans-serif-light"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:inputType="text"
+                android:importantForAutofill="no" />
 
             <View
                 android:layout_width="match_parent"
@@ -60,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/descrizione_luogo"
+                android:fontFamily="@font/posterama_1927_regular"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -72,7 +75,9 @@
                 android:fontFamily="sans-serif-light"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:inputType="text"
+                android:importantForAutofill="no" />
 
             <View
                 android:layout_width="match_parent"
@@ -93,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tipologia_del_luogo"
+                android:fontFamily="@font/posterama_1927_regular"
                 android:textColor="@color/headings"
                 android:textSize="20sp" />
 
@@ -130,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/registrati"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/button_state"
             android:textColor="@color/white"
             android:gravity="center" />
@@ -141,7 +147,6 @@
         style="@style/SpinKitView.Large.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:visibility="invisible"
         app:SpinKit_Color="@color/verdePrimario"
         app:layout_constraintBottom_toBottomOf="parent"
