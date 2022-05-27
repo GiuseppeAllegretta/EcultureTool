@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ablanco.zoomy.Zoomy;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
@@ -72,6 +73,11 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         });
 
         scritturaSuFileJson();
+
+
+        Zoomy.Builder builder = new Zoomy.Builder(this).target(graphView);
+
+        builder.register();
     }
 
     private void scritturaSuFileJson() {
