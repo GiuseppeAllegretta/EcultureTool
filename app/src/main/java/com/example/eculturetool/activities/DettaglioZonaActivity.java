@@ -19,15 +19,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DettaglioZonaActivity extends AppCompatActivity {
 
-    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
-
     private TextView nomeZona, descrizioneZona;
-    private String luogoCorrente;
-    private String idZona;
     private FloatingActionButton modificaZona;
     private Button aggiungiOggettoButton;
     private Button eliminaZonaButton;
-    private Zona z, zM ;
+    private Zona z;
     private DataBaseHelper dataBaseHelper;
 
     @Override
@@ -50,8 +46,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         z= (Zona) bundle.getSerializable("ZONE");
 
-        nomeZona.setText(z.getNome().toString());
-        descrizioneZona.setText(z.getDescrizione().toString());
+        nomeZona.setText(z.getNome());
+        descrizioneZona.setText(z.getDescrizione());
         getSupportActionBar().setTitle(z.getNome());
 
 
@@ -68,6 +64,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
+        //email dell'account ospite
+        String emailOspite = "admin@gmail.com";
         if(emailCuratore.compareTo(emailOspite) == 0){
             aggiungiOggettoButton.setVisibility(View.INVISIBLE);
             eliminaZonaButton.setVisibility(View.INVISIBLE);
@@ -78,9 +76,9 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        zM = dataBaseHelper.recuperoZonaModificata(z.getId());
-        nomeZona.setText(zM.getNome().toString());
-        descrizioneZona.setText(zM.getDescrizione().toString());
+        Zona zM = dataBaseHelper.recuperoZonaModificata(z.getId());
+        nomeZona.setText(zM.getNome());
+        descrizioneZona.setText(zM.getDescrizione());
 
     }
 
@@ -88,34 +86,17 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        modificaZona.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ModificaZonaActivity.class);
-
-                Bundle b = new Bundle();
-                b.putSerializable("ZONE",z);
-                intent.putExtras(b);
-                startActivityForResult(intent,123);
-                //TODO deprecation, che bella sensation
-            }
+        modificaZona.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ModificaZonaActivity.class);
+            intent.putExtra("ZONE", z);
+            startActivity(intent);
         });
 
 
 
-        aggiungiOggettoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
-            }
-        });
+        aggiungiOggettoButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class)));
 
-        eliminaZonaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCustomDialog();
-            }
-        });
+        eliminaZonaButton.setOnClickListener(view -> showCustomDialog());
 
     }
 
@@ -141,12 +122,9 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         dialog.show();
 
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataBaseHelper.rimuoviZona(z);
-                onBackPressed();
-            }
+        conferma.setOnClickListener(v -> {
+            dataBaseHelper.rimuoviZona(z);
+            onBackPressed();
         });
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
