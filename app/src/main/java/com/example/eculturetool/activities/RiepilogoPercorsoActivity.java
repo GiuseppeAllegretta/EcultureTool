@@ -129,23 +129,17 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         final Button conferma = dialog.findViewById(R.id.conferma);
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
-        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
-        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
-        //successivamente all'eleminazione dello stesso nell'authentication db
-
         dialog.show();
 
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO cancellare il percorso in SQL
-                //TODO cancellare l'array di array
-                //TODO cancellare il file di share
+                dataBaseHelper.deletePercorso(idPercorso);
+                ioHelper.cancellaPercorsoArray(idPercorso);
+                ioHelper.cancellaPercorsoJson(idPercorso);
                 ioHelper.cancellaPercorso(idPercorso);
                 dialog.dismiss();
                 finish();
-
-
             }
         });
 

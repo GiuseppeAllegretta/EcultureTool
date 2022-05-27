@@ -1086,4 +1086,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return percorsiList;
     }
 
+    public boolean deletePercorso(int id){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int delete = db.delete(TABLE_PERCORSI, COLONNA_PERCORSO_ID + " = " + id, null);
+
+        if(delete == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
 }

@@ -153,8 +153,67 @@ public class IoHelper {
         File dir = new File(context.getFilesDir(), GRAPH_FOLDER);
         File file = new File(dir, FILE_NAME);
 
-        //File dir = context.getFilesDir();
-        //File file = new File(dir, FILE_NAME);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("Il file o la Directory non esiste: " + FILE_NAME);
+        }
+
+        if (!file.canWrite()) {
+            throw new IllegalArgumentException("Non ho il permesso di scrittura: " + FILE_NAME);
+        }
+
+        risultato = file.delete();
+
+        if (!risultato) {
+            throw new IllegalArgumentException("Cancellazione Fallita!");
+        }
+
+        return risultato;
+    }
+
+
+    /**
+     * Questo metodo consente di eliminare il file contenente i dai di un percorso sottoforma di ARRAY DI ARRAY una volta che lo steso percorso è stato eliminato dal db SQLite
+     * @param id identificativo del percorso fornito da SQLite
+     * @return valore booleano: true se il file è stato cancellato correttamente, false altrimenti
+     * @throws IllegalArgumentException eccezione che comprande diversi tipi di situazioni da gestire
+     */
+    public boolean cancellaPercorsoArray(int id) throws IllegalArgumentException {
+        final String FILE_NAME = id + ".txt";
+        boolean risultato = false;
+
+        File dir = new File(context.getFilesDir(), LIST_FOLDER); //cartella in cui salvare i file da serializzare
+        File file = new File(dir, FILE_NAME);
+
+        if (!file.exists()) {
+            throw new IllegalArgumentException("Il file o la Directory non esiste: " + FILE_NAME);
+        }
+
+        if (!file.canWrite()) {
+            throw new IllegalArgumentException("Non ho il permesso di scrittura: " + FILE_NAME);
+        }
+
+        risultato = file.delete();
+
+        if (!risultato) {
+            throw new IllegalArgumentException("Cancellazione Fallita!");
+        }
+
+        return risultato;
+    }
+
+    /**
+     * Questo metodo consente di eliminare il file contenente i dai di un percorso sottoforma di JSON una volta che lo steso percorso è stato eliminato dal db SQLite
+     * @param id identificativo del percorso fornito da SQLite
+     * @return valore booleano: true se il file è stato cancellato correttamente, false altrimenti
+     * @throws IllegalArgumentException eccezione che comprande diversi tipi di situazioni da gestire
+     */
+    public boolean cancellaPercorsoJson(int id) throws IllegalArgumentException {
+        final String FILE_NAME = id + SHARE + ".txt";
+        boolean risultato = false;
+
+        File dir = new File(context.getFilesDir(), SHARE_FOLDER); //cartella in cui salvare i file da condividere
+        File file = new File(dir, FILE_NAME);
+
         if (!file.exists()) {
             throw new IllegalArgumentException("Il file o la Directory non esiste: " + FILE_NAME);
         }
