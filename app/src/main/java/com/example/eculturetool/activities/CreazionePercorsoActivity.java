@@ -114,6 +114,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
+                //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
+                data.getData().clear();
+                editText.getText().clear();
             }
         });
 
