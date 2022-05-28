@@ -169,6 +169,7 @@
     <string name="oppure">OR</string>
     <string name="carica_immagine">Upload Image</string>
     <string name="cerca">Search</string>
+    <string name="conferma">Confirm</string>
 
 
     <!-- Tutorial -->
@@ -188,5 +189,8 @@
     <string name="gestire_percorsi">You will be able to manage \ n your itineraries from here</string>
     <string name="inquadra">Frame a QR code of an \n object to view, \nmodify or delete it</string>
     <string name="Entita">Entita</string>
+    <string name="Messaggio_percorso_1">Select the zones that will make up the branch</string>
+    <string name="Messaggio_percorso_2">Swipe to delete a zone</string>
+    <string name="Creazione_diramazione">Branch creation</string>
 
 </resources>

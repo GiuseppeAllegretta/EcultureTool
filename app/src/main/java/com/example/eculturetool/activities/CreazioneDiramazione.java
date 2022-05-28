@@ -46,6 +46,9 @@ public class CreazioneDiramazione extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewList);
         btnConferma = findViewById(R.id.btn_conferma);
 
+        //Inserimento del titolo all'activity
+        getSupportActionBar().setTitle(getResources().getString(R.string.Creazione_diramazione));
+
         //Preparazione items, rimuovendo il nodo padre
         intent = getIntent();
         dataBaseHelper = new DataBaseHelper(getApplicationContext());

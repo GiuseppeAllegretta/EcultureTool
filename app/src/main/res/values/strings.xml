@@ -67,6 +67,7 @@
     <string name="password_attuale">Password Attuale</string>
     <string name="nuova_password">Nuova Password</string>
     <string name="conferma_password">Conferma password</string>
+    <string name="conferma">Conferma</string>
     <string name="modifica_profilo">Modifica Profilo</string>
     <string name="modifica_zona">Modifica Zona</string>
     <string name="oggetti">Oggetti</string>
@@ -174,6 +175,11 @@
     <string name="gestire_oggetti">Potrai gestire da qui \n i tuoi oggetti</string>
     <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
     <string name="Entita">Entita</string>
+    <string name="Messaggio_percorso_1">Seleziona le zone che comporranno la diramazione</string>
+    <string name="Messaggio_percorso_2">Effettua lo swipe per eliminare una zona</string>
+    <string name="Creazione_diramazione">Creazione diramazione</string>
+
+
 
 
 

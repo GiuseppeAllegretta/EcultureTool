@@ -17,7 +17,7 @@
         android:layout_weight="10"
         android:fontFamily="@font/posterama_1927_regular"
         android:gravity="center"
-        android:text="Seleziona le zone che comporranno la diramazione"
+        android:text="@string/Messaggio_percorso_1"
         android:textAlignment="center"
         android:textColor="@color/orangeAction"
         android:textSize="20sp" />
@@ -30,7 +30,7 @@
         android:layout_weight="5"
         android:fontFamily="@font/posterama_1927_light"
         android:gravity="center"
-        android:text="Effettua lo swipe per eliminare una zona"
+        android:text="@string/Messaggio_percorso_2"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp" />
@@ -55,7 +55,7 @@
             android:layout_centerInParent="true"
             android:backgroundTint="@color/verdePrimario"
             android:fontFamily="@font/posterama_1927_regular"
-            android:text="Conferma"
+            android:text="@string/conferma"
             android:textSize="22sp"
             app:cornerRadius="50dp" />
 
