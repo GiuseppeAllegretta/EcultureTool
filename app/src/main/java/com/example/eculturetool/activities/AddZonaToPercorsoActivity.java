@@ -37,6 +37,9 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_zona_to_percorso);
 
+        //Settaggio del titolo all'activity
+        getSupportActionBar().setTitle(getResources().getString(R.string.aggiungi_zona));
+
         recyclerView = findViewById(R.id.recyclerViewCheckbox);
         btnConferma = findViewById(R.id.btn_conferma);
         btnAddZona = findViewById(R.id.btnAggiungiZona);

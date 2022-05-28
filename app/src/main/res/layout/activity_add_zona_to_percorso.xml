@@ -17,7 +17,7 @@
         android:layout_weight="10"
         android:fontFamily="@font/posterama_1927_regular"
         android:gravity="center"
-        android:text="Seleziona le zone da aggiungere"
+        android:text="@string/Messaggio_percorso_3"
         android:textAlignment="center"
         android:textColor="@color/orangeAction"
         android:textSize="20sp" />
@@ -37,7 +37,7 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/verdePrimario"
         android:fontFamily="@font/posterama_1927_regular"
-        android:text="Conferma"
+        android:text="@string/conferma"
         android:textSize="22sp"
         app:cornerRadius="50dp" />
 

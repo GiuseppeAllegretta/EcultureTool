@@ -194,5 +194,7 @@
     <string name="Creazione_diramazione">Branch creation</string>
     <string name="AggiuntaZonaPercorso">Add Zone</string>
     <string name="NomePercorso">Enter itinerary name</string>
-
+    <string name="Messaggio_percorso_3">Select the zones to add</string>
+    <string name="Elimina_Percorso">Delete Itinerary</string>
+    <string name="Modifica_percorso">Edit Itinerary</string>
 </resources>

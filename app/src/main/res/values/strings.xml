@@ -180,6 +180,11 @@
     <string name="Creazione_diramazione">Creazione diramazione</string>
     <string name="AggiuntaZonaPercorso">Aggiungi\nZona</string>
     <string name="NomePercorso">Inserisci nome percorso</string>
+    <string name="Messaggio_percorso_3">Seleziona le zone da aggiungere</string>
+    <string name="Elimina_Percorso">Elimina Percorso</string>
+    <string name="Modifica_percorso">Modifica Percorso</string>
+
+
 
 
 
