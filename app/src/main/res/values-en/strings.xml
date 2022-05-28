@@ -192,5 +192,7 @@
     <string name="Messaggio_percorso_1">Select the zones that will make up the branch</string>
     <string name="Messaggio_percorso_2">Swipe to delete a zone</string>
     <string name="Creazione_diramazione">Branch creation</string>
+    <string name="AggiuntaZonaPercorso">Add Zone</string>
+    <string name="NomePercorso">Enter itinerary name</string>
 
 </resources>
