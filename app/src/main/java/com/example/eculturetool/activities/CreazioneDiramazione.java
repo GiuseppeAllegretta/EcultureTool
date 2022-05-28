@@ -2,14 +2,12 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +26,7 @@ public class CreazioneDiramazione extends AppCompatActivity {
 
     DataBaseHelper dataBaseHelper;
     DataHolder data = DataHolder.getInstance();
-    ArrayList<Zona> childs = new ArrayList<>(); //Array che escludo il nodo padre
+    ArrayList<Zona> childs = new ArrayList<>(); //Array che esclude il nodo padre
     Intent intent;
 
     RecyclerView recyclerView;
@@ -36,6 +34,7 @@ public class CreazioneDiramazione extends AppCompatActivity {
     ItemTouchHelper itemTouchHelper;
 
     MaterialButton btnConferma;
+    MaterialButton btnReset;
 
 
     @Override
@@ -45,6 +44,7 @@ public class CreazioneDiramazione extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewList);
         btnConferma = findViewById(R.id.btn_conferma);
+        btnReset = findViewById(R.id.btn_reset);
 
         //Inserimento del titolo all'activity
         getSupportActionBar().setTitle(getResources().getString(R.string.Creazione_diramazione));
@@ -58,15 +58,19 @@ public class CreazioneDiramazione extends AppCompatActivity {
         //Inizializzazione recycler view
         initRecyclerView();
 
-        btnConferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Acquisisco la posizione della card per impostare la diramazione
-                data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).setDiramazione(childs);
-                finish();
-                Intent intent = new Intent (CreazioneDiramazione.this, CreazionePercorsoActivity.class);
-                startActivity(intent);
-            }
+        btnConferma.setOnClickListener(v -> {
+            //Acquisisco la posizione della card per impostare la diramazione
+            data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).setDiramazione(childs);
+            finish();
+            Intent intent = new Intent (CreazioneDiramazione.this, CreazionePercorsoActivity.class);
+            startActivity(intent);
+        });
+
+        btnReset.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition( 0, 0);
+            startActivity(getIntent());
+            overridePendingTransition( 0, 0);
         });
 
     }

@@ -200,4 +200,8 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
