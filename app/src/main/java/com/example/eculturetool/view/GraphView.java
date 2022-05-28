@@ -89,6 +89,13 @@ public class GraphView extends View{
         costruzioneGrafo(grafo);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int height = 3000; // should be calculated based on the content
+        int width = 1500; // should be calculated based on the content
+        setMeasuredDimension(width, height);
+    }
     public void normalizzaPunti(){
         int numeroVertici = 0;
         int larghezzaDisplay= getScreenWidth();

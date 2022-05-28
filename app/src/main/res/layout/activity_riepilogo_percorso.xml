@@ -22,20 +22,26 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1">
 
 
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
-            <com.example.eculturetool.view.GraphView
-                android:id="@+id/graphView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
+                <com.example.eculturetool.view.GraphView
+                    android:id="@+id/graphView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  />
 
-    </LinearLayout>
+        </ScrollView>
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
