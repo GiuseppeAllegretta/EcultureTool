@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class CreazioneDiramazione extends AppCompatActivity {
+public class CreazioneDiramazioneActivity extends AppCompatActivity {
 
     DataBaseHelper dataBaseHelper;
     DataHolder data = DataHolder.getInstance();
@@ -62,7 +62,7 @@ public class CreazioneDiramazione extends AppCompatActivity {
             //Acquisisco la posizione della card per impostare la diramazione
             data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).setDiramazione(childs);
             finish();
-            Intent intent = new Intent (CreazioneDiramazione.this, CreazionePercorsoActivity.class);
+            Intent intent = new Intent (CreazioneDiramazioneActivity.this, CreazionePercorsoActivity.class);
             startActivity(intent);
         });
 

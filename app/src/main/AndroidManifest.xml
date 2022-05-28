@@ -172,8 +172,10 @@
             android:name=".activities.InfoZonaActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CreazioneDiramazione"
+            android:name=".activities.CreazioneDiramazioneActivity"
             android:exported="false" />
+        <activity android:name=".activities.VisualizzaDiramazioneActivity"
+            android:exported="false"/>
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"

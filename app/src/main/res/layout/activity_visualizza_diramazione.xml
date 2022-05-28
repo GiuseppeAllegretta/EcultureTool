@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:weightSum="100"
-    tools:context=".activities.CreazioneDiramazioneActivity">
+    tools:context=".activities.VisualizzaDiramazioneActivity">
 
     <TextView
         android:id="@+id/titolo"
@@ -17,29 +17,17 @@
         android:layout_weight="10"
         android:fontFamily="@font/posterama_1927_regular"
         android:gravity="center"
-        android:text="@string/Messaggio_percorso_1"
+        android:text=""
         android:textAlignment="center"
         android:textColor="@color/orangeAction"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/hint"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginVertical="8dp"
-        android:layout_weight="5"
-        android:fontFamily="@font/posterama_1927_light"
-        android:gravity="center"
-        android:text="@string/Messaggio_percorso_2"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="78"
+        android:layout_weight="83"
         android:padding="12dp" />
 
 
@@ -47,33 +35,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="7"
-        android:paddingHorizontal="10dp">
+        android:paddingHorizontal="50dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_conferma"
+            android:id="@+id/btn_reimposta"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/verdePrimario"
-            android:fontFamily="@font/posterama_1927_regular"
-            android:text="@string/conferma"
-            android:textSize="22sp"
-            app:cornerRadius="50dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_reset"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
+            android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/orangeAction"
             android:fontFamily="@font/posterama_1927_regular"
-            android:text="Reset"
-            android:textSize="22sp"
+            android:text="Reimposta diramazione"
+            android:textSize="20sp"
             app:cornerRadius="50dp" />
 
     </RelativeLayout>
-
 
 </LinearLayout>
