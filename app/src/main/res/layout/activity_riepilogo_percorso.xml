@@ -21,17 +21,19 @@
         app:titleTextColor="@color/white" />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1">
 
-        <com.example.eculturetool.view.GraphView
-            android:id="@+id/graphView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+
+            <com.example.eculturetool.view.GraphView
+                android:id="@+id/graphView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 
