@@ -1,8 +1,10 @@
 package com.example.eculturetool.utility_percorsi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +36,7 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
     Context context;
     ArrayList<Zona> listZone;
     OnStartDragListener listener;
+    DataHolder data = DataHolder.getInstance();
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -49,6 +52,11 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
         ImageView closeCard;
         @BindView(R.id.creaDiramazione)
         RelativeLayout creaDiramazione;
+        @BindView(R.id.scrittaDiramazione)
+        TextView scrittaDiramazione;
+        @BindView(R.id.btnDiramazione)
+        ImageView btnDiramazione;
+
         Unbinder unbinder;
 
         public MyViewHolder(@NonNull View itemView){
@@ -76,6 +84,13 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
         holder.cardNumber.setText(new StringBuilder().append(position+1));
         holder.cardTitle.setText(listZone.get(position).getNome());
         holder.cardDescription.setText(listZone.get(position).getDescrizione());
+        if(data.getData().get(position).getDiramazione().isEmpty())
+            holder.scrittaDiramazione.setText("Crea diramazione");
+        else{
+            holder.scrittaDiramazione.setText("Visualizza diramazione");
+            holder.scrittaDiramazione.setGravity(Gravity.CENTER_VERTICAL);
+            holder.btnDiramazione.setVisibility(View.GONE);
+        }
 
         //Touch listener, differenzia i tipi di tocco
         holder.cardZona.setOnTouchListener(new View.OnTouchListener() {
@@ -121,6 +136,7 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
 
         //Area per creare la diramazione
         holder.creaDiramazione.setOnClickListener(v -> {
+            ((Activity)context).finish();
             Intent intent = new Intent(this.context, CreazioneDiramazione.class);
             intent.putExtra("ROOT", holder.cardTitle.getText());
             intent.putExtra("NUMBER", holder.cardNumber.getText());
