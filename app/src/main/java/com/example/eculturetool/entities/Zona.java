@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//Classe che rappresenta il concetto di zona
 public class Zona extends Entita implements Serializable {
     private int riferimentoLuogo;
     private ArrayList<Oggetto> listaOggetti = new ArrayList<>();
     private ArrayList<Zona> diramazione = new ArrayList<>();
 
     public Zona(){
-
     }
-
 
     public Zona(String nome, String descrizione, int riferimentoLuogo) {
         super(nome, descrizione);

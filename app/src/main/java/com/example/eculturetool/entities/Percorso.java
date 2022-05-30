@@ -3,12 +3,9 @@ package com.example.eculturetool.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+//Classe che rappresenta il concetto di percorso
 public class Percorso extends Entita implements Serializable {
 
-    /**
-     * id del luogo a cui fa riferimento il percorso
-     */
     private int idLuogo;
     private ArrayList<Zona> zone = new ArrayList<>();
 

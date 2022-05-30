@@ -1,7 +1,5 @@
 package com.example.eculturetool.entities;
-
-import java.util.Objects;
-
+// classe di supporto per la creazione del grafo
 public class Vertice {
     private int x;
     private int y;
@@ -12,8 +10,6 @@ public class Vertice {
         this.y=200;
         this.nomeVertice= nomeVertice;
     }
-
-
 
     public Vertice(int x, int y, String nomeVertice) {
         this.x = x;
