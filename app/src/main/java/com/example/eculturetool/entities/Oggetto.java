@@ -16,7 +16,6 @@ public class Oggetto extends Entita implements Serializable {
     public Oggetto(int id, String nome, String descrizione, String urlImmagine) {
         super(id, nome, descrizione);
         this.urlImmagine = urlImmagine;
-        //TODO generare il qr
     }
 
     public Oggetto(String nome, String descrizione, String urlImmagine, TipologiaOggetto tipologiaOggetto, int zonaAppartenenza){

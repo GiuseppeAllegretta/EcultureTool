@@ -95,8 +95,8 @@ public class Curatore implements Serializable {
     }
 
     public interface Keys {
-        final static String CURATORE_KEY = "CURATORE_KEY";
-        final static String PASSWORD_KEY = "PASSWORD_KEY";
+        String CURATORE_KEY = "CURATORE_KEY";
+        String PASSWORD_KEY = "PASSWORD_KEY";
     }
 
 

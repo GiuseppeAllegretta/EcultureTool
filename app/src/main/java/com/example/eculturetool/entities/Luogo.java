@@ -48,13 +48,13 @@ public class Luogo extends Entita implements Serializable {
     }
 
     public interface tipologiaLuoghi {
-        public final static String MUSEO = "Museo";
-        public final static String AREA_ARCHEOLOGICA = "Area Archeologica";
-        public final static String SITO_CULTURALE = "Sito Culturale";
-        public final static String MOSTRA_ITINERANTE = "Mostra Itinerante";
+        String MUSEO = "Museo";
+        String AREA_ARCHEOLOGICA = "Area Archeologica";
+        String SITO_CULTURALE = "Sito Culturale";
+        String MOSTRA_ITINERANTE = "Mostra Itinerante";
     }
 
     public interface Keys{
-        final static String ID = "ID_LUOGO";
+        String ID = "ID_LUOGO";
     }
 }
