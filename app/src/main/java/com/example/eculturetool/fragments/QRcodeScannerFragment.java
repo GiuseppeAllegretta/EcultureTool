@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 
 public class QRcodeScannerFragment extends Fragment {
 
-    ActivityResultLauncher<ScanOptions> activityResultLaucher;
-    Button scanBtn;
-    ImageView showTutorial;
+    private ActivityResultLauncher<ScanOptions> activityResultLaucher;
+    private Button scanBtn;
+    private ImageView showTutorial;
 
 
     public QRcodeScannerFragment() {

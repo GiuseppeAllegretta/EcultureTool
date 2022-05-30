@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class RecyclerAdapterCheckbox extends RecyclerView.Adapter<RecyclerAdapterCheckbox.ViewHolder> {
 
-    View view;
-    Context context;
-    ArrayList<Zona> itemList;
-    ArrayList<Zona> selectedList = new ArrayList<>();
-    CheckboxListener checkboxListener;
+    private View view;
+    private Context context;
+    private ArrayList<Zona> itemList;
+    private ArrayList<Zona> selectedList = new ArrayList<>();
+    private CheckboxListener checkboxListener;
 
     public RecyclerAdapterCheckbox(Context context, ArrayList<Zona> itemList, CheckboxListener checkboxListener) {
         this.context = context;
