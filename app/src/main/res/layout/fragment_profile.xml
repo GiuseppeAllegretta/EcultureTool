@@ -102,7 +102,7 @@
                     android:layout_below="@+id/imgBox"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10sp"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/posterama_1927_light"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="26sp" />

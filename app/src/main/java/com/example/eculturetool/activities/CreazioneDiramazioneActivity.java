@@ -30,7 +30,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
     Intent intent;
 
     RecyclerView recyclerView;
-    RecyclerAdapterList recyclerAdapterList;
+    RecyclerAdapterList<Zona> recyclerAdapterList;
     ItemTouchHelper itemTouchHelper;
 
     MaterialButton btnConferma;
@@ -47,20 +47,23 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_reset);
 
         //Inserimento del titolo all'activity
-        getSupportActionBar().setTitle(getResources().getString(R.string.Creazione_diramazione));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.Creazione_diramazione));
 
         //Preparazione items, rimuovendo il nodo padre
         intent = getIntent();
+        String root = intent.getStringExtra("ROOT");
+        int number = Integer.parseInt(intent.getStringExtra("NUMBER"));
+
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         childs.addAll(dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
-        prepData(intent.getStringExtra("ROOT"));
+        prepData(root);
 
         //Inizializzazione recycler view
         initRecyclerView();
 
         btnConferma.setOnClickListener(v -> {
             //Acquisisco la posizione della card per impostare la diramazione
-            data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).setDiramazione(childs);
+            data.getData().get(number - 1).setDiramazione(childs);
             finish();
             Intent intent = new Intent (CreazioneDiramazioneActivity.this, CreazionePercorsoActivity.class);
             startActivity(intent);
@@ -69,7 +72,10 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> {
             finish();
             overridePendingTransition( 0, 0);
-            startActivity(getIntent());
+            Intent intent = new Intent (CreazioneDiramazioneActivity.this, CreazioneDiramazioneActivity.class);
+            intent.putExtra("ROOT", root);
+            intent.putExtra("NUMBER", ""+number);
+            startActivity(intent);
             overridePendingTransition( 0, 0);
         });
 
@@ -94,13 +100,20 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent (CreazioneDiramazioneActivity.this, CreazionePercorsoActivity.class);
+        startActivity(intent);
+    }
+
 
     private void prepData(String root){
         childs.removeIf(item -> item.getNome().equals(root));
     }
 
     private void initRecyclerView(){
-        recyclerAdapterList = new RecyclerAdapterList(childs);
+        recyclerAdapterList = new RecyclerAdapterList<>(childs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapterList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
