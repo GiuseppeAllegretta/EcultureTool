@@ -38,10 +38,8 @@ public class HomeFragment extends Fragment {
 
 
     public HomeFragment() {
-        // Required empty public constructor
+        // Richiesto costruttore vuoto
     }
-
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -132,7 +130,6 @@ public class HomeFragment extends Fragment {
     private void showTutorial(){
         new TapTargetSequence(requireActivity()).targets(
                 TapTarget.forView(luoghi, getString(R.string.Pulsante_luoghi), getString(R.string.gestire_luoghi))
-                        // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
                         .targetCircleColor(R.color.white)
@@ -150,7 +147,6 @@ public class HomeFragment extends Fragment {
                         .targetRadius(60),
 
                 TapTarget.forView(zone,getString(R.string.Pulsante_zone),getString(R.string.gestire_zone))
-                        // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
                         .targetCircleColor(R.color.white)
@@ -168,7 +164,6 @@ public class HomeFragment extends Fragment {
                         .targetRadius(75),
 
                 TapTarget.forView(oggetti,getString(R.string.Pulsante_oggetti),getString(R.string.gestire_oggetti))
-                        // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
                         .targetCircleColor(R.color.white)
@@ -185,7 +180,6 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
                 TapTarget.forView(percorsi,getString(R.string.Pulsante_percorsi),getString(R.string.gestire_luoghi))
-                        // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
                         .targetCircleColor(R.color.white)

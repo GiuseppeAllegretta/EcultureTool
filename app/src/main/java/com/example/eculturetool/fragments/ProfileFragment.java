@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
 
 
     public ProfileFragment() {
-        // Required empty public constructor
+        // Richiesto costruttore vuoto
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate del layout per questo fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -157,7 +157,6 @@ public class ProfileFragment extends Fragment {
         Curatore curatore = dataBaseHelper.getCuratore();
         Luogo luogo = dataBaseHelper.getLuogoCorrente();
 
-        System.out.println(curatore.toString());
 
         if (curatore.getEmail().compareTo(emailOspite) == 0) {
             nomeFoto.setText(curatore.getNome());
@@ -248,10 +247,8 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    /**
-     * Metodo che gestisce il dialog di conferma eliminazione del profilo.
-     * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
-     */
+    // Metodo che gestisce il dialog di conferma eliminazione del profilo
+
     void showCustomDialog() {
         final Dialog dialog = new Dialog(getActivity());
 
@@ -268,17 +265,13 @@ public class ProfileFragment extends Fragment {
         final Button conferma = dialog.findViewById(R.id.conferma);
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
-        //Serve per cancellare il nodo del rispettivo curatore dal Realtime database in quanto con il delete verrebbe
-        //cancellata l'istanza del curatore. IN questo modo manteniamo l'uid per poter cancellare il curatore
-        //successivamente all'eleminazione dello stesso nell'authentication db
-
         dialog.show();
 
         conferma.setOnClickListener(view -> {
             dialog.dismiss();
 
             if (dataBaseHelper.deleteCuratore()) {
-                //delete sessione
+                //cancella sessione
                 SessionManagement sessionManagement = new SessionManagement(requireActivity());
                 sessionManagement.removeSession();
 
@@ -301,9 +294,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    /**
-     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
-     */
+    // Nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
     private void nascondiView() {
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 

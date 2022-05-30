@@ -13,6 +13,7 @@ import com.example.eculturetool.R;
 
 public class DialogAddOggettoFragment extends AppCompatDialogFragment {
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -23,7 +24,6 @@ public class DialogAddOggettoFragment extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getActivity().finish();
-
                     }
                 });
         return builder.create();
