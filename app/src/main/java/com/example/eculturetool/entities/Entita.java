@@ -2,6 +2,9 @@ package com.example.eculturetool.entities;
 
 import java.io.Serializable;
 
+/**
+ * Classe che rappresenta il concetto di Entità e che fattorizza metodi comuni a Oggetto, Luogo, Zona
+ */
 public abstract class Entita implements Serializable {
 
     private int id;
