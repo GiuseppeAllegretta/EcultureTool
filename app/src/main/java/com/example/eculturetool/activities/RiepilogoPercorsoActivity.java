@@ -37,7 +37,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private Graph<Zona, DefaultEdge> graph;
     private Intent i;
     private IoHelper ioHelper;
-    private int idPercorso; //id del percorso
+    private int idPercorso;
     private DataBaseHelper dataBaseHelper;
 
 
@@ -46,8 +46,8 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
         modificaBtn = findViewById(R.id.modificaPercorso);
-
         eliminaBtn = findViewById(R.id.eliminaPercorso);
+
         ioHelper = new IoHelper(this);
         dataBaseHelper = new DataBaseHelper(this);
 
@@ -58,8 +58,6 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         graphView = findViewById(R.id.graphView);
         graphView.setBackgroundColor(getResources().getColor(R.color.white));
         graphView.setGrafo(graph);
-
-
 
         Toolbar myToolbar = findViewById(R.id.toolbarDettaglioPercorso);
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
@@ -78,7 +76,6 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         });
 
         scritturaSuFileJson();
-
 
         Zoomy.Builder builder = new Zoomy.Builder(this).target(graphView);
         builder.register();
@@ -119,10 +116,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Metodo che gestisce il dialog di conferma eliminazione del profilo.
-     * E' possibile confermare o rifiutare l'eliminazione del profilo attraverso gli appositi button
-     */
+    // Metodo che gestisce il dialog di conferma eliminazione del percorso
     void showCustomDialog() {
         final Dialog dialog = new Dialog(this);
 

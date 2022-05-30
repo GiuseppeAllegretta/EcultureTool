@@ -14,7 +14,10 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 
 import org.jgrapht.graph.DefaultEdge;
@@ -35,12 +38,21 @@ public class GraphView extends View{
 
     ArrayList<Vertice> vertices = new ArrayList<>();
     Graph<Zona,DefaultEdge>grafo;
+    Context context;
 
 
 
     public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         this.grafo = new SimpleDirectedGraph<>(DefaultEdge.class);
+
+
+//inizializzo tutti i vertici che servono;
+
+
+
+
     }
 
     private void costruzioneGrafo(Graph<Zona, DefaultEdge> grafo) {
@@ -119,9 +131,14 @@ public class GraphView extends View{
             indici = new ArrayList<>();
 
         }
+
+
+
+
+
+
+
     }
-
-
     public boolean verticeNonAncoraModificato(String target){
         boolean flag = false;
         if(vertices.get(returnIndice(target)).getX()==200&&vertices.get(returnIndice(target)).getY()==200){

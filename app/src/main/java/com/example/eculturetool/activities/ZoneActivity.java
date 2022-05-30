@@ -76,9 +76,8 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         }
     }
 
-    /**
-     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
-     */
+    // Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
+
     private void nascondiView() {
         dataBaseHelper = new DataBaseHelper(this);
 

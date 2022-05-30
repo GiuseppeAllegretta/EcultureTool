@@ -29,7 +29,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_password);
 
-        //Recupero i riferimenti delle view presenti nella schermata
         oldPassword = findViewById(R.id.password_attuale);
         newPassword = findViewById(R.id.nuova_password);
         confirmPassword = findViewById(R.id.conferma_nuova_password);

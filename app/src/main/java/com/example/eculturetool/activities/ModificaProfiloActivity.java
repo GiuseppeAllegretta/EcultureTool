@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 
 public class ModificaProfiloActivity extends AppCompatActivity {
 
-    DataBaseHelper dataBaseHelper;
+    private DataBaseHelper dataBaseHelper;
     private EditText nome, cognome;
-    private ImageView back, conferma; //icona back e icona conferma
+    private ImageView back, conferma;
     private Curatore curatore;
 
     private final static String NO_ALPHA_REGEX = "[a-zA-Z\\s]*$";
@@ -41,8 +41,6 @@ public class ModificaProfiloActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        //Avvaloro le editText
         nome.setText(curatore.getNome());
         cognome.setText(curatore.getCognome());
 

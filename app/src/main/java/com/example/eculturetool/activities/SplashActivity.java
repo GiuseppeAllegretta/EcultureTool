@@ -68,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
 
-// We initialize the Handler
+        //Inizializza Handler
         UiHandler mHandler = new UiHandler(this);
 
         if (mStartTime == -1L) {
@@ -76,11 +76,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         final Message goAheadMessage = mHandler.obtainMessage(GO_AHEAD_WHAT);
         mHandler.sendMessageAtTime(goAheadMessage, mStartTime + MAX_WAIT_INTERVAL);
-        Log.d(TAG_LOG, "Handler message sent!");
-        //checkSession();
-
     }
-
 
     private void nextActivity() {
         final Intent intent = new Intent(this, LoginActivity.class);
@@ -92,7 +88,6 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(new Intent(SplashActivity.this, HomeActivity.class));
         finish();
     }
-
 
     private boolean checkSession() {
         boolean flag = false;
@@ -108,7 +103,6 @@ public class SplashActivity extends AppCompatActivity {
                 dataBaseHelper.setEmailCuratore(sessionManagement.getSession());
             }
         }
-
 
         return flag;
     }

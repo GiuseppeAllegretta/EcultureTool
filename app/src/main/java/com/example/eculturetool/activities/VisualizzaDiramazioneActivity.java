@@ -20,14 +20,12 @@ import java.util.Objects;
 
 public class VisualizzaDiramazioneActivity extends AppCompatActivity {
 
-    DataHolder data = DataHolder.getInstance();
-    Intent intent;
-
-    TextView titolo;
-    RecyclerView recyclerView;
-    RecyclerAdapterList<Zona> recyclerAdapterList;
-
-    MaterialButton btnReimposta;
+    private DataHolder data = DataHolder.getInstance();
+    private Intent intent;
+    private TextView titolo;
+    private RecyclerView recyclerView;
+    private RecyclerAdapterList<Zona> recyclerAdapterList;
+    private MaterialButton btnReimposta;
 
 
     @Override

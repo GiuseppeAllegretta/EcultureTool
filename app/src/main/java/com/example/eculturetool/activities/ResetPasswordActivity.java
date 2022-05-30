@@ -31,8 +31,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         nuovaPassTxt = findViewById(R.id.nuova_password_reset);
         confirmPassTxt = findViewById(R.id.conferma_nuova_password_reset);
 
-
-        //Raccolgo i dati dall'intent
+        //Recupero dati dall'intent
         Intent intent = getIntent();
         email = intent.getStringExtra(Curatore.Keys.CURATORE_KEY);
     }

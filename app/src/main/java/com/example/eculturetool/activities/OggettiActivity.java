@@ -86,25 +86,16 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
             fabAddOggetto.setVisibility(View.INVISIBLE);
             layoutNoZone.setVisibility(View.VISIBLE);
 
-
         } else if (zoneList.size() != 0 && oggettiList.isEmpty()) {
             showTutorial();
         }
-        //setOggettoInfo();
-
-        //setAdapter();
-
-
-        //metodo che nasconde le view in caso di accesso con account ospite
         nascondiView();
 
 
     }
 
 
-    /**
-     * Questo metodo consente di nasconde alcune view nel caso in cui si faccia l'accesso con l'account ospite
-     */
+    // Nasconde alcune view quando si effettua l'accesso in modalità ospite
     private void nascondiView() {
         dataBaseHelper = new DataBaseHelper(this);
 
@@ -115,9 +106,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         }
     }
 
-    /**
-     * Metodo che recupera le zone
-     */
+    //query per recuperare le zone
+
     private void retrieveZone() {
         zoneList.clear();
         zoneList = dataBaseHelper.getZone();
@@ -242,7 +232,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
     private void showTutorial() {
 
-
         TapTargetView.showFor(this,
                 TapTarget.forView(fabAddOggetto, getString(R.string.aggiungi_oggetto), getString(R.string.Aggiungi_da_qui) + "\n" + getString(R.string.un_nuovo_oggetto))
                         // All options below are optional
@@ -267,6 +256,5 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
                         super.onTargetClick(view);
                     }
                 });
-
     }
 }

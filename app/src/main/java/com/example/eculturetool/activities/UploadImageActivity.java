@@ -53,14 +53,14 @@ public class UploadImageActivity extends AppCompatActivity {
     public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
     public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
     public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
-    Permissions permission = new Permissions();
+    private Permissions permission = new Permissions();
     private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
     private File photoFile;
     private View parentLayout;
-    ActivityResultLauncher<Intent> chooseFileResultLaunch;
-    ActivityResultLauncher<Intent> tookPhotoResultLaunch;
+    private ActivityResultLauncher<Intent> chooseFileResultLaunch;
+    private ActivityResultLauncher<Intent> tookPhotoResultLaunch;
 
     private StorageReference mStorageRef;
 
@@ -79,7 +79,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(getString(R.string.carica_immagine));
 
-        //per tornare indietro
+        //permette di tornare indietro
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressBar = findViewById(R.id.progressBar);
@@ -173,16 +173,16 @@ public class UploadImageActivity extends AppCompatActivity {
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            // Ensure that there's a camera activity to handle the intent
+            // Si assicura che ci sia una Activity della fotocamera per gestire l'intent
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                // Create the File where the photo should go
+                // Creazione del file dove salvare la foto
                 photoFile = null;
                 try {
                     photoFile = createImageFile();
                 } catch (IOException ex) {
-                    // Error occurred while creating the File...
+                    // Qualcosa è andato storto
                 }
-                // Continue only if the File was successfully created
+                // Continua se il file è stato correttamente creato
                 if (photoFile != null) {
                     Uri photoURI = FileProvider.getUriForFile(this,
                             "com.example.android.fileprovider",
@@ -192,20 +192,17 @@ public class UploadImageActivity extends AppCompatActivity {
                 }
             }
         } catch (ActivityNotFoundException e) {
-            // display error state to the user
         }
     }
 
     private String getFileExtension(Uri uri) {
         String extension;
-        //Check uri format to avoid null
+        //Evita che l'uri sia null
         if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-            //If scheme is a content
             final MimeTypeMap mime = MimeTypeMap.getSingleton();
             extension = mime.getExtensionFromMimeType(this.getContentResolver().getType(uri));
         } else {
-            //If scheme is a File
-            //This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
+            //evita il ritorno di valori null a causa di caratteri speciali
             extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
         }
         return extension;
@@ -335,11 +332,8 @@ public class UploadImageActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Metodo che consente di ritornare indietro dalla seguente activity
-     * @param item
-     * @return
-     */
+    // Metodo che consente di ritornare indietro dalla seguente activity
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

@@ -22,14 +22,13 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
-    DataBaseHelper dataBaseHelper;
+    private DataBaseHelper dataBaseHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-
 
         TextView registerUser = findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
@@ -120,8 +119,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    //Prova per recuperare i dati quando si ritorna indietro dall'Activity CreazioneMuseoActivity
-    //INIZIO
+    //Salvataggio informazioni Activity corrente
     @Override
     protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -137,7 +135,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         EditText myEditText = findViewById(R.id.nomeCuratore);
         myEditText.setText(restoreData);
     }
-    //FINE
 }
 
 

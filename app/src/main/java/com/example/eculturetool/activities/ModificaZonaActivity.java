@@ -20,7 +20,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
     private EditText nomeZona, descrizioneZona;
     private ImageView frecciaBack, conferma;
-    List<Zona> zoneList = new ArrayList<>();
+    private List<Zona> zoneList = new ArrayList<>();
     private ProgressBar progressBar;
     private Zona z1;
     private DataBaseHelper dataBaseHelper;
@@ -36,7 +36,6 @@ public class ModificaZonaActivity extends AppCompatActivity {
         conferma = findViewById(R.id.icona_conferma_modifica_zona);
         progressBar=findViewById(R.id.progressModificaZona);
 
-
         //recupero dati dall'intent
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
@@ -50,10 +49,8 @@ public class ModificaZonaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //Popolamento dei campi
         nomeZona.setText(z1.getNome());
         descrizioneZona.setText(z1.getDescrizione());
-
 
         frecciaBack.setOnClickListener(view -> finish());
 

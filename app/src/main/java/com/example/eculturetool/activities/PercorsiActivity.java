@@ -41,7 +41,6 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_percorsi);
 
-        //Inizializzazione variabili
         recyclerView = findViewById(R.id.recyclerViewPercorsi);
         addPercorsoFbt = findViewById(R.id.addPercorso);
         percorsiList = new ArrayList<>();
@@ -66,7 +65,6 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
     @Override
     protected void onStart() {
         super.onStart();
-
         addPercorsoFbt.setOnClickListener(view -> startActivity(new Intent(PercorsiActivity.this, CreazionePercorsoActivity.class)));
     }
 
