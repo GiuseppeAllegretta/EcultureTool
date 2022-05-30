@@ -230,7 +230,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        //Scrittura dell'oggetto sul Realtime Database
         Oggetto oggetto = new Oggetto(nome, descrizione, imgUri.toString(), tipologia, zona.getId());
 
 
