@@ -3,14 +3,10 @@ package com.example.eculturetool.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +24,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -50,11 +45,9 @@ import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.LocaleHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Locale;
-
 public class ProfileFragment extends Fragment {
 
-    private String emailOspite = "admin@gmail.com"; //email dell'account ospite
+    private final String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
     public static final String PROFILE_IMAGES_DIR = "profile_images";
     private Context context;
@@ -65,8 +58,7 @@ public class ProfileFragment extends Fragment {
 
     private DataBaseHelper dataBaseHelper;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
-    private Button cambiaLuogo, logout;
-    private Toolbar myToolbar;
+    private Button cambiaLuogo;
     private ImageView imgUser;
     private ProgressBar progressBar;
     private FloatingActionButton changeImg, editButton;
@@ -83,7 +75,7 @@ public class ProfileFragment extends Fragment {
         context = requireActivity().getApplicationContext();
 
         //Inizializzazione del database
-        dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
+        dataBaseHelper = new DataBaseHelper(requireActivity().getApplicationContext());
 
         startForProfileImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -128,8 +120,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.progress);
-        myToolbar = view.findViewById(R.id.toolbarOggetto);
-        logout = view.findViewById(R.id.logout);
+        Button logout = view.findViewById(R.id.logout);
         imgUser = view.findViewById(R.id.imgUser);
         changeImg = view.findViewById(R.id.change_imgUser);
         nomeFoto = view.findViewById(R.id.profile_name);
@@ -141,12 +132,7 @@ public class ProfileFragment extends Fragment {
         settingsButton = view.findViewById(R.id.settings_button);
         editButton = view.findViewById(R.id.fab);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ModificaProfiloActivity.class));
-            }
-        });
+        editButton.setOnClickListener(view1 -> startActivity(new Intent(getActivity(), ModificaProfiloActivity.class)));
 
         //Popola i campi del profilo
         popolaCampi();
@@ -158,14 +144,9 @@ public class ProfileFragment extends Fragment {
         });
 
         //Operazioni da eseguire quando l'utente decide di cambiare il luogo
-        cambiaLuogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LuoghiActivity.class));
-            }
-        });
+        cambiaLuogo.setOnClickListener(view12 -> startActivity(new Intent(getActivity(), LuoghiActivity.class)));
 
-        settingsButton.setOnClickListener(onClickListener -> showPopup(onClickListener));
+        settingsButton.setOnClickListener(this::showPopup);
 
         logout.setOnClickListener(onClickListener -> logout());
 
@@ -178,32 +159,30 @@ public class ProfileFragment extends Fragment {
 
         System.out.println(curatore.toString());
 
-        if (curatore != null) {
-            if (curatore.getEmail().compareTo(emailOspite) == 0) {
-                nomeFoto.setText(curatore.getNome());
-            } else {
-                nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
-            }
-            email.setText(curatore.getEmail());
-            nome.setText(curatore.getNome());
-            cognome.setText(curatore.getCognome());
+        if (curatore.getEmail().compareTo(emailOspite) == 0) {
+            nomeFoto.setText(curatore.getNome());
+        } else {
+            nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
+        }
+        email.setText(curatore.getEmail());
+        nome.setText(curatore.getNome());
+        cognome.setText(curatore.getCognome());
 
-            if (luogo != null) {
-                nomeLuogo.setText(luogo.getNome());
-            }
+        if (luogo != null) {
+            nomeLuogo.setText(luogo.getNome());
+        }
 
-            if (curatore.getImg() != null) {
-                Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
-            } else {
-                progressBar.setVisibility(View.GONE);
-                Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
-            }
+        if (curatore.getImg() != null) {
+            Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
         }
     }
 
     public void logout() {
         //delete sessione
-        SessionManagement sessionManagement = new SessionManagement(getActivity());
+        SessionManagement sessionManagement = new SessionManagement(requireActivity());
         sessionManagement.removeSession();
 
         //Imposta a null la variabile statica che indica il login di un curatore
@@ -251,42 +230,21 @@ public class ProfileFragment extends Fragment {
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         dialogBuilder.setTitle(getString(R.string.seleziona_lingua))
-                .setSingleChoiceItems(Language, lang_selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (Language[i].equals("Italiano")) {
-                            LocaleHelper.setLocale(getContext(), "it");
-                            lang_selected = 0;
-                        }
-                        if (Language[i].equals("Inglese")) {
-                            LocaleHelper.setLocale(getContext(), "en");
-                            lang_selected = 1;
-                        }
+                .setSingleChoiceItems(Language, lang_selected, (dialogInterface, i) -> {
+                    if (Language[i].equals("Italiano")) {
+                        LocaleHelper.setLocale(getContext(), "it");
+                        lang_selected = 0;
+                    }
+                    if (Language[i].equals("Inglese")) {
+                        LocaleHelper.setLocale(getContext(), "en");
+                        lang_selected = 1;
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        getActivity().recreate();
-                    }
+                .setPositiveButton("OK", (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    requireActivity().recreate();
                 });
         dialogBuilder.create().show();
-    }
-
-    private void setLocale(String lang) {
-        //inizialize resources
-        Resources resources = getResources();
-        //Inizialize metrics
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        //Inizialize configurations
-        Configuration configuration = resources.getConfiguration();
-        //inizialize Locale
-        configuration.locale = new Locale(lang);
-        //Update configurations
-        resources.updateConfiguration(configuration, metrics);
-        //notify configurations
-        onConfigurationChanged(configuration);
     }
 
 
@@ -316,24 +274,21 @@ public class ProfileFragment extends Fragment {
 
         dialog.show();
 
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+        conferma.setOnClickListener(view -> {
+            dialog.dismiss();
 
-                if (dataBaseHelper.deleteCuratore()) {
-                    //delete sessione
-                    SessionManagement sessionManagement = new SessionManagement(getActivity());
-                    sessionManagement.removeSession();
+            if (dataBaseHelper.deleteCuratore()) {
+                //delete sessione
+                SessionManagement sessionManagement = new SessionManagement(requireActivity());
+                sessionManagement.removeSession();
 
-                    Toast.makeText(context, getString(R.string.cancellazione_successo), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getActivity(), SplashActivity.class));
-                    requireActivity().finish();
-                } else {
-                    Toast.makeText(context, getString(R.string.cancellazione_fallita), Toast.LENGTH_SHORT).show();
-                }
-
+                Toast.makeText(context, getString(R.string.cancellazione_successo), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), SplashActivity.class));
+                requireActivity().finish();
+            } else {
+                Toast.makeText(context, getString(R.string.cancellazione_fallita), Toast.LENGTH_SHORT).show();
             }
+
         });
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
