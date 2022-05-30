@@ -34,10 +34,10 @@ import butterknife.Unbinder;
 public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGrid.MyViewHolder>
     implements ItemTouchHelperAdapter {
 
-    Context context;
-    ArrayList<Zona> listZone;
-    OnStartDragListener listener;
-    DataHolder data = DataHolder.getInstance();
+    private Context context;
+    private ArrayList<Zona> listZone;
+    private OnStartDragListener listener;
+    private DataHolder data = DataHolder.getInstance();
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
