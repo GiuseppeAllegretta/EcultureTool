@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,11 +40,13 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private int idPercorso; //id del percorso
     private DataBaseHelper dataBaseHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
         modificaBtn = findViewById(R.id.modificaPercorso);
+
         eliminaBtn = findViewById(R.id.eliminaPercorso);
         ioHelper = new IoHelper(this);
         dataBaseHelper = new DataBaseHelper(this);
@@ -55,6 +58,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         graphView = findViewById(R.id.graphView);
         graphView.setBackgroundColor(getResources().getColor(R.color.white));
         graphView.setGrafo(graph);
+
 
 
         Toolbar myToolbar = findViewById(R.id.toolbarDettaglioPercorso);

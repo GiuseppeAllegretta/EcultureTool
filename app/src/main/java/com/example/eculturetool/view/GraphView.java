@@ -4,17 +4,15 @@ import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
+
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.RectF;
+
 import android.util.AttributeSet;
-import android.view.Display;
+
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
+
 
 import org.jgrapht.graph.DefaultEdge;
 import androidx.annotation.Nullable;
@@ -26,10 +24,9 @@ import com.example.eculturetool.entities.Zona;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
+
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class GraphView extends View{
 
@@ -65,8 +62,8 @@ public class GraphView extends View{
 
                 Zona source = grafo.getEdgeSource(e);
 
-                x = vertices.get(returnIndice(source.getNome())).getX();;
-                y = vertices.get(returnIndice(source.getNome())).getY();;
+                x = vertices.get(returnIndice(source.getNome())).getX();
+                y = vertices.get(returnIndice(source.getNome())).getY();
 
 
                 Zona target = grafo.getEdgeTarget(e);
@@ -92,6 +89,13 @@ public class GraphView extends View{
         costruzioneGrafo(grafo);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int height = 3000; // should be calculated based on the content
+        int width = 1500; // should be calculated based on the content
+        setMeasuredDimension(width, height);
+    }
     public void normalizzaPunti(){
         int numeroVertici = 0;
         int larghezzaDisplay= getScreenWidth();
@@ -247,12 +251,9 @@ public class GraphView extends View{
         mPath.moveTo(point_x_1, point_y_1);
         mPath.lineTo(point_x_2, point_y_2);
         mPath.lineTo(point_x_3, point_y_3);
-        //mPath.lineTo(point_x_1, point_y_1);
-        //mPath.lineTo(point_x_1, point_y_1);
         mCanvas.drawPath(mPath, paint);
         invalidate();
     }
-
 
 
     @Override
@@ -265,36 +266,12 @@ public class GraphView extends View{
         paintVertex.setColor(colorVertice);
 
 
+
+
         for (Vertice v : vertices) {
-            canvas.drawCircle(v.getX(), v.getY(), 30, paintVertex);
 
-            String nomeZona = v.getNomeVertice();
-            String nomeZonaRidotto = "";
+            //per ogni vertice stampa prima gli archi e le frecce
 
-            if (nomeZona.length() > 10) {
-
-                String[] split = nomeZona.split(" ",2);
-
-
-                for (String s : split) {
-                        s = s.substring(0, 3);
-
-                    if (s.length()>2) {
-                        nomeZonaRidotto = nomeZonaRidotto + s + ". ";
-                    }
-
-
-
-                }
-
-
-
-                canvas.drawText(nomeZonaRidotto, v.getX() - 110, v.getY() - 60, paintVertex);
-            }
-            else {
-                canvas.drawText(nomeZona, v.getX() - 110, v.getY() - 60, paintVertex);
-
-            }
 
             int colorArrow = ContextCompat.getColor(getContext(), R.color.orangeAction);
             int colorArco = ContextCompat.getColor(getContext(), R.color.gialloPrimario);
@@ -306,7 +283,7 @@ public class GraphView extends View{
             paintArrow.setColor(colorArrow);
             paintArrow.setStrokeWidth(20);
 
-//disegno tutti gli archi
+            //disegno tutti gli archi
             for (DefaultEdge e : grafo.edgeSet()) {
 
 
@@ -408,6 +385,38 @@ public class GraphView extends View{
 
 
             }
+
+        //disegno tutti i vertici e i nomi dei vertici
+        for (Vertice v : vertices) {
+            canvas.drawCircle(v.getX(), v.getY(), 30, paintVertex);
+
+            String nomeZona = v.getNomeVertice();
+            String nomeZonaRidotto = "";
+
+            if (nomeZona.length() > 10) {
+
+                String[] split = nomeZona.split(" ",2);
+
+
+                for (String s : split) {
+                    if (s.length()>4){
+                        s = s.substring(0, 3);
+                        nomeZonaRidotto = nomeZonaRidotto + s + ". ";
+                    }else {
+                        nomeZonaRidotto = nomeZonaRidotto + s  + " ";
+                    }
+
+                }
+
+
+
+                canvas.drawText(nomeZonaRidotto, v.getX() - 110, v.getY() - 60, paintVertex);
+            }
+            else {
+                canvas.drawText(nomeZona, v.getX() - 110, v.getY() - 60, paintVertex);
+
+            }}
+
 
     }
 }

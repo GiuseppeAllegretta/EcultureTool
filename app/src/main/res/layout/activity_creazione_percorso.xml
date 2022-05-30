@@ -27,17 +27,17 @@
         android:id="@+id/recyclerViewZone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="80"
+        android:layout_weight="88"
         android:background="@color/black" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
+        android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
+        android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConfermaPercorso"
@@ -50,7 +50,11 @@
             android:fontFamily="@font/posterama_1927_regular"
             android:text="@string/conferma"
             android:textSize="20sp"
-            app:cornerRadius="50dp" />
+            app:cornerRadius="50dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAggiungiZona"
@@ -62,9 +66,13 @@
             android:fontFamily="@font/posterama_1927_regular"
             android:text="@string/AggiuntaZonaPercorso"
             android:textSize="20sp"
-            app:cornerRadius="50dp" />
+            app:cornerRadius="50dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>
