@@ -199,4 +199,5 @@
     <string name="Messaggio_percorso_3">Select the zones to add</string>
     <string name="Elimina_Percorso">Delete Itinerary</string>
     <string name="Modifica_percorso">Edit Itinerary</string>
+    <string name="reset_diramazione">Reset branch</string>
 </resources>

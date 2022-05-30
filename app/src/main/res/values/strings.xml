@@ -183,10 +183,7 @@
     <string name="Messaggio_percorso_3">Seleziona le zone da aggiungere</string>
     <string name="Elimina_Percorso">Elimina Percorso</string>
     <string name="Modifica_percorso">Modifica Percorso</string>
-
-
-
-
+    <string name="reset_diramazione">Reimposta diramazione</string>
     <string name="Visualizza_diramazione">Visualizza diramazione</string>
 
 

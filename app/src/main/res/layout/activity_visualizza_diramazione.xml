@@ -44,7 +44,7 @@
             android:layout_centerInParent="true"
             android:backgroundTint="@color/orangeAction"
             android:fontFamily="@font/posterama_1927_regular"
-            android:text="Reimposta diramazione"
+            android:text="@string/reset_diramazione"
             android:textSize="20sp"
             app:cornerRadius="50dp" />
 
