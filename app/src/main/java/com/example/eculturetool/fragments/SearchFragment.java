@@ -28,10 +28,8 @@ import com.example.eculturetool.activities.RiepilogoPercorsoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Entita;
-import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Percorso;
-import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterEntita;
 
@@ -40,7 +38,6 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class SearchFragment extends Fragment implements RecyclerAdapterEntita.OnEntitaListener {
@@ -59,13 +56,6 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
         // Required empty public constructor
     }
 
-
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,13 +139,11 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbarEntita);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
-
         return view;
     }
 

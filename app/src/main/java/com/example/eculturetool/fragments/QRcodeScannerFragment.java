@@ -86,7 +86,7 @@ public class QRcodeScannerFragment extends Fragment {
             //dismiss dialog
             dialogInterface.dismiss();
         });
-        //show alert dialog
+        //mostra alert dialog
         builder.create().show();
     }
 
@@ -110,11 +110,11 @@ public class QRcodeScannerFragment extends Fragment {
             //set prompt
             options.setPrompt(getString(R.string.flash));
             options.setBeepEnabled(true);
-            //looked orientation
+            //blocca l'orientazione
             options.setOrientationLocked(true);
-            //set campture activity
+            //setta l'activity di cattura nella camera
             options.setCaptureActivity(Capture.class);
-            //initialize scan
+            //inizializza scan
             activityResultLaucher.launch(options);
         });
     }
@@ -127,7 +127,7 @@ public class QRcodeScannerFragment extends Fragment {
     }
 
     private void showTutorial(){
-        TapTargetView.showFor(requireActivity(),                 // `this` is an Activity
+        TapTargetView.showFor(requireActivity(),                 //this is an Activity
                 TapTarget.forView(scanBtn, getString(R.string.scansiona_qr_code), getString(R.string.inquadra))
                         // All options below are optional
                         .outerCircleColor(R.color.gialloSecondario)
