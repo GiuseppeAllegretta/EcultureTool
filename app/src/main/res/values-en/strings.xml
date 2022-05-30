@@ -85,7 +85,7 @@
 
     <!-- Stringhe zona -->
     <string name="nome_zona">Zone Name*</string>
-    <string name="descrizione_zona">Description Zone*</string>
+    <string name="descrizione_zona">Description Zone</string>
     <string name="numero_massimo_di_oggetti">Maximum number of Item</string>
     <string name="NB">N.B. If the above field is left blank, the number of Items is set by default to 10.</string>
     <string name="crea_zona">Create Zone</string>

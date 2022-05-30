@@ -49,7 +49,7 @@
     <string name="zona_di_appartenenza">Zona di appartenenza</string>
     <string name="crea_oggetto">Crea oggetto</string>
     <string name="nome_zona">Nome Zona*</string>
-    <string name="descrizione_zona">Descrizione Zona*</string>
+    <string name="descrizione_zona">Descrizione Zona</string>
     <string name="numero_massimo_di_oggetti">Numero massimo di oggetti</string>
     <string name="NB">N.B. Se il campo sovrastante viene lasciato vuoto, il numero di oggetti viene settato di default a 10.</string>
     <string name="crea_zona">Crea Zona</string>

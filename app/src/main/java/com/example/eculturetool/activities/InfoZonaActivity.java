@@ -35,6 +35,8 @@ public class InfoZonaActivity extends AppCompatActivity {
         descrizione = findViewById(R.id.descrizione);
         descrizione.setText(getIntent().getStringExtra("DESCRIPTION"));
 
+        getSupportActionBar().setTitle(getString(R.string.descrizione_zona));
+
         int posizione = getIntent().getIntExtra("POSITION", -1);
 
         recyclerView = findViewById(R.id.list_oggetti);
