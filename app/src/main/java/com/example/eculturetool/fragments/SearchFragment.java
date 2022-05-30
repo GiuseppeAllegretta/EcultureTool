@@ -170,10 +170,8 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
 
     @Override
     public void onEntitaClick(int position) {
-        System.out.println("Hai cliccato");
 
         if (entitaList.get(position) instanceof Oggetto) {
-            System.out.println("Hai cliccato un oggetto");
             int oggettoSelezionato = entitaList.get(position).getId();
             ArrayList<Zona> zoneList = dataBaseHelper.getZone();
 
@@ -183,7 +181,6 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
             startActivity(intent);
 
         } else if (entitaList.get(position) instanceof Zona) {
-            System.out.println("Hai cliccato una zona");
             Zona z = (Zona) entitaList.get(position);
 
             Intent intent = new Intent(getActivity(), DettaglioZonaActivity.class);
