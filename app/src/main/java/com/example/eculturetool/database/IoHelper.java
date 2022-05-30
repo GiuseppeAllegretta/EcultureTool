@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Classe di supporto che contiene metodi utili di INPUT e OUTPUT su File e di conversione da array a Graph
+ */
 public class IoHelper {
 
     private static final String SHARE = "_SHARE";
@@ -471,6 +474,5 @@ public class IoHelper {
 
         return returnList;
     }
-
 
 }

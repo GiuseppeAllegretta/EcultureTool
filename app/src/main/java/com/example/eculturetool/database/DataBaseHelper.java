@@ -20,6 +20,9 @@ import com.example.eculturetool.entities.Zona;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Questa classe contine lo scherma del DB e tutte le query che vengono utilizzate per interrogare il DB
+ */
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     SharedPreferences sharedPreferences;
