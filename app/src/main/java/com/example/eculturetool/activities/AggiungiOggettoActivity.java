@@ -205,28 +205,33 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
             nomeOggetto.requestFocus();
             nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (descrizione.isEmpty()) {
             descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if(imgUri == null){
             Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -242,6 +247,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         else{
             Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
         }
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
