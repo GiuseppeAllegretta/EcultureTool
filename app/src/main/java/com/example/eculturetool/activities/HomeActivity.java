@@ -6,7 +6,6 @@ import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;

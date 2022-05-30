@@ -128,7 +128,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
-        if (controlloEsistenzaNomeLuogo(nome) == true) {
+        if (controlloEsistenzaNomeLuogo(nome)) {
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
@@ -158,7 +158,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
      * @return: ritorna la lista dei luighi memorizzati su firebase in riferimento a un determinato curatore
      */
     private List getListLuoghiCreati() {
-        List<Luogo> returnList = new ArrayList<>();
+        List<Luogo> returnList;
 
         returnList = dataBaseHelper.getLuoghi();
 

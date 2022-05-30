@@ -47,7 +47,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private DataBaseHelper dataBaseHelper;          //riferimento del database
     private Oggetto oggetto;                        //oggetto di cui si vedono i dati a schermo
     private List<Zona> zoneList;                    //L'insieme di tutte le zone
-    private int idOggetto, idZona, luogoCorrente;   //identificativi dell'oggetto, zona e luogo
+    private int idOggetto, luogoCorrente;   //identificativi dell'oggetto e luogo
     private String qrCode;
     private String emailOspite = "admin@gmail.com"; //email dell'account ospite
 
@@ -235,7 +235,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             descrizioneOggetto.setText(oggetto.getDescrizione());
             tipologiaOggetto.setText(setTipologia(oggetto.getTipologiaOggetto()));
             zonaAppartenenza.setText(getNomeZona(oggetto.getZonaAppartenenza()));
-            idZona = oggetto.getZonaAppartenenza();
             qrCode = oggetto.getUrlQrcode();
         }
     }

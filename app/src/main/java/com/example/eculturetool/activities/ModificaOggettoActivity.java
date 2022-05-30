@@ -40,7 +40,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     private ArrayAdapter<String> nomiZoneListAdapter;
     private String zonaSelezionata;     //nome della zona selezionata dallo spinner
     private int idZonaSelezionata;      //id della zona selezionata nella spinner
-    private String imgUri;
 
 
     @Override
