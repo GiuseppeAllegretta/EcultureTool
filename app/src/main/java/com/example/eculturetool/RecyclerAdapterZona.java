@@ -34,7 +34,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
     }
 
     Filter filter = new Filter() {
-        //run on background thread
+        //eseguita sul thread in background
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Zona> filteredList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
             return filterResults;
         }
 
-        //runs on a UI thread
+        //eseguito sul UI thread
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             zoneList.clear();
@@ -66,7 +66,7 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
 
     public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView nomeZona, descrizioneZona;
-        OnZonaListener onZonaListener;
+        private OnZonaListener onZonaListener;
 
         public ZoneViewHolder(final View view, OnZonaListener onZonaListener) {
             super(view);

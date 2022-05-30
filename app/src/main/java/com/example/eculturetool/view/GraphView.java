@@ -36,28 +36,19 @@ import java.util.ArrayList;
 
 public class GraphView extends View{
 
-    ArrayList<Vertice> vertices = new ArrayList<>();
-    Graph<Zona,DefaultEdge>grafo;
-    Context context;
-
-
+    private ArrayList<Vertice> vertices = new ArrayList<>();
+    private Graph<Zona,DefaultEdge>grafo;
 
     public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
         this.grafo = new SimpleDirectedGraph<>(DefaultEdge.class);
-
-
-//inizializzo tutti i vertici che servono;
-
-
-
 
     }
 
     private void costruzioneGrafo(Graph<Zona, DefaultEdge> grafo) {
         for (Zona v1 : grafo.vertexSet()) {
             vertices.add(new Vertice(v1.getNome()));
+            // inizializzo i vertici e assegno le coordinate automaticamente
 
         }
         int i=1;
@@ -67,12 +58,10 @@ public class GraphView extends View{
         for (Zona v1 : grafo.vertexSet()){
             for (DefaultEdge e : grafo.outgoingEdgesOf(v1)){
 
-
                 Zona source = grafo.getEdgeSource(e);
 
                 x = vertices.get(returnIndice(source.getNome())).getX();
                 y = vertices.get(returnIndice(source.getNome())).getY();
-
 
                 Zona target = grafo.getEdgeTarget(e);
                 if(this.verticeNonAncoraModificato(target.getNome())){
@@ -83,12 +72,10 @@ public class GraphView extends View{
                     vertices.get(returnIndice(target.getNome())).setX(x*i);
                     vertices.get(returnIndice(target.getNome())).setY(y+200);
                 }
-
             }
             i=1;
 
         }
-
         normalizzaPunti();
     }
 
@@ -96,14 +83,16 @@ public class GraphView extends View{
         this.grafo = grafo;
         costruzioneGrafo(grafo);
     }
-
+    // assegno una dimensione standard per la view
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int height = 3000; // should be calculated based on the content
-        int width = 1500; // should be calculated based on the content
+        int height = 3000;
+        int width = 1500;
         setMeasuredDimension(width, height);
     }
+
+    //centro i vertici al centro dello schermo
     public void normalizzaPunti(){
         int numeroVertici = 0;
         int larghezzaDisplay= getScreenWidth();
@@ -132,13 +121,8 @@ public class GraphView extends View{
 
         }
 
-
-
-
-
-
-
     }
+
     public boolean verticeNonAncoraModificato(String target){
         boolean flag = false;
         if(vertices.get(returnIndice(target)).getX()==200&&vertices.get(returnIndice(target)).getY()==200){
@@ -167,47 +151,6 @@ public class GraphView extends View{
 
     }
 
-
-
-
-/*
-    private static Graph<String, DefaultEdge> graph()
-    {
-        Graph<String, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);
-
-        String v1 = "v1";
-        String v2 = "v2";
-        String v3 = "v3";
-        String v4 = "v4";
-        String v5 = "v5";
-        String v7 = "v7";
-        String v8 = "v8";
-
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        g.addVertex(v5);
-        g.addVertex("v6");
-        g.addVertex(v7);
-        g.addVertex(v8);
-
-
-
-
-        g.addEdge(v1, v2);
-        g.addEdge(v1, v3);
-        g.addEdge(v2, v4);
-        g.addEdge(v2, v5);
-        g.addEdge(v4, v5);
-        g.addEdge(v3,v4);
-        g.addEdge(v5,"v6");
-        g.addEdge(v8,v7);
-        g.addEdge(v3,v8);
-
-        return g;
-    }
-*/
     public float returnX (String v){
         int x =0;
 
@@ -229,7 +172,6 @@ public class GraphView extends View{
             }
         }
         return y;
-
     }
 
     public int returnIndice (String v){
@@ -242,11 +184,11 @@ public class GraphView extends View{
         return indice;
     }
 
+    // metodo per disegnare le frecce
     private void drawArrow(Point startPoint, Point endPoint, Paint paint, Canvas mCanvas) {
         Path mPath = new Path();
         float deltaX = endPoint.x - startPoint.x;
         float deltaY = endPoint.y - startPoint.y;
-        //float frac = (float) 0.1;
         int ARROWHEAD_LENGTH = 20;
         float sideZ = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         float frac = ARROWHEAD_LENGTH < sideZ ? ARROWHEAD_LENGTH / sideZ : 1.0f;
@@ -273,13 +215,9 @@ public class GraphView extends View{
         paintVertex.setTextSize(60);
         paintVertex.setColor(colorVertice);
 
-
-
-
         for (Vertice v : vertices) {
 
             //per ogni vertice stampa prima gli archi e le frecce
-
 
             int colorArrow = ContextCompat.getColor(getContext(), R.color.orangeAction);
             int colorArco = ContextCompat.getColor(getContext(), R.color.gialloPrimario);
@@ -294,22 +232,18 @@ public class GraphView extends View{
             //disegno tutti gli archi
             for (DefaultEdge e : grafo.edgeSet()) {
 
-
                 Zona v1 = grafo.getEdgeSource(e);
                 Zona v2 = grafo.getEdgeTarget(e);
 
-                //se a sta sopra a b
-
+                //se l'arco sorgente sta sopra quello di destinazione
 
                 if( returnY(v1.getNome()) < returnY(v2.getNome()) ){
 
-
                     canvas.drawLine(returnX(v1.getNome()), returnY(v1.getNome())+30, returnX(v2.getNome()), returnY(v2.getNome())-30, paintEdge);
-
 
                 }else
 
-                //se a sta sotto b
+                    //se l'arco sorgente sta sotto quello di destinazione
 
                 if( returnY(v1.getNome()) > returnY(v2.getNome())){
 
@@ -319,7 +253,7 @@ public class GraphView extends View{
 
                 }else
 
-                // se a sta a destra di b
+                    //se l'arco sorgente sta a destra di quello di destinazione
 
                 if(returnX(v1.getNome()) < returnX(v2.getNome())){
 
@@ -328,17 +262,12 @@ public class GraphView extends View{
 
                 }else
 
-                // se a sta a sinistra di b
+                    //se l'arco sorgente sta a sinistra di quello di destinazione
                 if(returnX(v1.getNome()) > returnX(v2.getNome())){
 
                     canvas.drawLine(returnX(v1.getNome())-30, returnY(v1.getNome()), returnX(v2.getNome())+30, returnY(v2.getNome()), paintEdge);
 
-
                 }
-
-
-
-
 
             }
 
@@ -346,13 +275,10 @@ public class GraphView extends View{
 
             for (DefaultEdge e : grafo.edgeSet()) {
 
-
                 Zona v1 = grafo.getEdgeSource(e);
                 Zona v2 = grafo.getEdgeTarget(e);
 
-
-                //se a sta sopra a b
-
+                //se il vertice sorgente sta sopra quello di destinazione
 
                 if( returnY(v1.getNome()) < returnY(v2.getNome()) ){
 
@@ -362,7 +288,7 @@ public class GraphView extends View{
 
                 }else
 
-                    //se a sta sotto b
+                    //se il vertice sorgente sta sotto quello di destinazione
 
                     if( returnY(v1.getNome()) > returnY(v2.getNome())){
                         Point startPoint= new Point((int) returnX(v1.getNome()), (int)returnY(v1.getNome())-30);
@@ -371,7 +297,7 @@ public class GraphView extends View{
 
                     }else
 
-                        // se a sta a destra di b
+                        //se il vertice sorgente sta a destra di quello di destinazione
 
                         if(returnX(v1.getNome()) < returnX(v2.getNome())){
                             Point startPoint= new Point((int) returnX(v1.getNome())+30, (int)returnY(v1.getNome()));
@@ -380,7 +306,8 @@ public class GraphView extends View{
 
                         }else
 
-                            // se a sta a sinistra di b
+                            //se il vertice sorgente sta a sinistra di quello di destinazione
+
                             if(returnX(v1.getNome()) > returnX(v2.getNome())){
                                 Point startPoint= new Point((int) returnX(v1.getNome())-30, (int)returnY(v1.getNome()));
                                 Point endPoint = new Point((int)returnX(v2.getNome())+30, (int)returnY(v2.getNome()));
@@ -388,9 +315,6 @@ public class GraphView extends View{
 
                             }
             }
-
-
-
 
             }
 
@@ -415,8 +339,6 @@ public class GraphView extends View{
                     }
 
                 }
-
-
 
                 canvas.drawText(nomeZonaRidotto, v.getX() - 110, v.getY() - 60, paintVertex);
             }
