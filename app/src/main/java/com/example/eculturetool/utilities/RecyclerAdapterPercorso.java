@@ -46,7 +46,6 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
         @Override
         public void onClick(View view) {
             onPercorsoListener.onPercorsoClick(getAdapterPosition());
-            //TODO prendere i dati
         }
     }
 

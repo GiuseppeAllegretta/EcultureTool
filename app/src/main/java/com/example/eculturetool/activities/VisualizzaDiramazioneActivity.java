@@ -43,7 +43,9 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.Visualizza_diramazione));
 
         intent = getIntent();
-        titolo.setText(intent.getStringExtra("ROOT"));
+        String root = intent.getStringExtra("ROOT");
+        int number = Integer.parseInt(intent.getStringExtra("NUMBER"));
+        titolo.setText(root);
 
         //Inizializzazione recycler view
         initRecyclerView();
@@ -51,6 +53,8 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         btnReimposta.setOnClickListener(v -> {
             finish();
             Intent intent = new Intent (VisualizzaDiramazioneActivity.this, CreazioneDiramazioneActivity.class);
+            intent.putExtra("ROOT", root);
+            intent.putExtra("NUMBER", ""+number);
             startActivity(intent);
         });
 
