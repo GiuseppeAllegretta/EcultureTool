@@ -135,7 +135,6 @@
         <activity
             android:name=".activities.UploadImageActivity"
             android:exported="false"
-            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"

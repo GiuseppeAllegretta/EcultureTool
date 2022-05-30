@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -77,6 +78,9 @@ public class UploadImageActivity extends AppCompatActivity {
         imagePlaceHolder = findViewById(R.id.imagePlaceHolder);
 
         getSupportActionBar().setTitle(getString(R.string.carica_immagine));
+
+        //per tornare indietro
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressBar = findViewById(R.id.progressBar);
 
@@ -330,4 +334,21 @@ public class UploadImageActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Metodo che consente di ritornare indietro dalla seguente activity
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
