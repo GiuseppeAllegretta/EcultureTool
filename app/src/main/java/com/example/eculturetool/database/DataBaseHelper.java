@@ -68,7 +68,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String COLONNA_PERCORSO_ID = "PERCORSO_ID";
     private static final String COLONNA_PERCORSO_NOME = "PERCORSO_NOME";
     private static final String COLONNA_PERCORSO_ID_LUOGO = COLONNA_PERCORSO_ID + "_LUOGO";
-    private static final String COLONNA_PERCORSO_DESCRIZIONE = "PERCORSO_DESCRIZIONE";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "e-cultureTool.db",null , 3);
@@ -128,7 +127,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String createTablePercorsi = "CREATE TABLE " + TABLE_PERCORSI + " " +
                 "(" + COLONNA_PERCORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLONNA_PERCORSO_NOME + " TEXT," +
-                COLONNA_PERCORSO_DESCRIZIONE + " TEXT," +
                 COLONNA_PERCORSO_ID_LUOGO + " INT, " +
                 " CONSTRAINT fk_luoghi_percorsi FOREIGN KEY (" + COLONNA_PERCORSO_ID_LUOGO + ") REFERENCES " + TABLE_LUOGHI + " (" + COLONNA_LUOGHI_ID + ")" + ")";
 
@@ -1041,7 +1039,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToFirst()){
                 int idPercorso = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID));
                 String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_NOME));
-                String descrizione = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_DESCRIZIONE));
                 int idLuogo = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID_LUOGO));
 
                 percorso = new Percorso(idPercorso, nome, idLuogo);
