@@ -59,7 +59,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         //Metodo di scroll per la textView
         descrizioneLuogo.setMovementMethod(new ScrollingMovementMethod());
 
-
         //Recupero dei dati dall'intent
         Intent intent = getIntent();
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);     //id del luogo selezionato nella recyclerView precedente
@@ -67,6 +66,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
         luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
+        //Metodo che consente di nascondere le view in caso di accesso con l'account ospite
         nascondiView();
     }
 
@@ -106,7 +106,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         });
 
         eliminaLuogo();
-
     }
 
     private void popolaCampi() {
@@ -156,7 +155,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
                 if (numeroLuoghi == MIN_LUOGHI) {
                     Toast.makeText(DettaglioLuogoActivity.this, getResources().getString(R.string.min_luoghi), Toast.LENGTH_LONG).show();
-                    //TODO bisogna far uscire un dialog che indica che non è possibile eliminare il luogo in quanto ci deve essere almeno un luogo attivo
                 } else {
                     showCustomDialog(luogoCorrente);
                 }

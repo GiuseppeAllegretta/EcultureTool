@@ -28,9 +28,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     private DataBaseHelper dataBaseHelper;
     private ArrayList<Luogo> luoghiList;
     private RecyclerView recyclerView;
-
     private RecyclerAdapterLuogo adapter;
-
     private FloatingActionButton fabAddLuogo;
 
     @Override
@@ -56,7 +54,6 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         luoghiList = new ArrayList<>();
 
         setLuogoInfo();
-
         nascondiView();
     }
 
@@ -79,9 +76,7 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     @Override
     protected void onStart() {
         super.onStart();
-
         fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class)));
-
     }
 
     private void setAdapter() {

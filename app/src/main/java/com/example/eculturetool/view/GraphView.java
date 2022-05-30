@@ -3,12 +3,15 @@ package com.example.eculturetool.view;
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 
 import android.view.View;
@@ -38,13 +41,6 @@ public class GraphView extends View{
     public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.grafo = new SimpleDirectedGraph<>(DefaultEdge.class);
-
-
-//inizializzo tutti i vertici che servono;
-
-
-
-
     }
 
     private void costruzioneGrafo(Graph<Zona, DefaultEdge> grafo) {
@@ -123,14 +119,9 @@ public class GraphView extends View{
             indici = new ArrayList<>();
 
         }
-
-
-
-
-
-
-
     }
+
+
     public boolean verticeNonAncoraModificato(String target){
         boolean flag = false;
         if(vertices.get(returnIndice(target)).getX()==200&&vertices.get(returnIndice(target)).getY()==200){

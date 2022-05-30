@@ -59,22 +59,6 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         Intent intent = getIntent();
         idOggetto = intent.getIntExtra(Oggetto.Keys.ID, 0);
         zoneList = (List<Zona>) intent.getSerializableExtra("ZoneList");
-
-        /*connection.getRefOggetti().child(luogoCorrente).child(idZona).child(idOggetto).child("url").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    if(snapshot.getValue(String.class) != null)
-                    imgUri = snapshot.getValue(String.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
         oggettiList = getListOggettiCreati();
     }
 
@@ -108,11 +92,11 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         //Setta lo spinner delle zone
         setZoneSpinner();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_oggetti, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+        //Azione da eseguire quando si clicca la freccia di navigazione
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Applica l'adapter allo spinner
         tipologiaOggetto.setAdapter(adapter);
         tipologiaOggetto.setOnItemSelectedListener(this);
 

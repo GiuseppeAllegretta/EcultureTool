@@ -270,10 +270,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         dataBaseHelper.addOggetto(new Oggetto("La lotta per lo Stendardo", "Si tratta di una copia tratta dall'unica scena, quella centrale, dell'affresco con la Battaglia d'Anghiari eseguita da Leonardo nella sala del Consiglio di Palazzo Vecchio e andata distrutta verso il 1557 quando Vasari iniziò i lavori nel Palazzo.", "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fdownload.jpg?alt=media&token=9ea08f23-a428-4fdd-8005-72d2b10cb16e", TipologiaOggetto.QUADRO, zona.getId()));
                         break;
                 }
-
             }
-
-
         }
 
         progressBar.setVisibility(View.VISIBLE);

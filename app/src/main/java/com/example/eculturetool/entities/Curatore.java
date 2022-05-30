@@ -3,9 +3,20 @@ package com.example.eculturetool.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Classe che rappresenta il concetto di curatore.
+ */
 public class Curatore implements Serializable {
 
+    /**
+     * nome: nome del curatore
+     * cognome: cognome del curatore
+     * email: email del curatore
+     * password:password del curatore
+     */
     private String nome, cognome, email, password;
+
+
     private String img;
     private ArrayList<Luogo> luoghi = new ArrayList<>();
     private int luogoCorrente;

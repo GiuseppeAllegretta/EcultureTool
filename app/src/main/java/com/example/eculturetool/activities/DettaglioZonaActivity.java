@@ -94,12 +94,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-
         aggiungiOggettoButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class)));
-
         eliminaZonaButton.setOnClickListener(view -> showCustomDialog());
-
     }
 
 

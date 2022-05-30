@@ -36,11 +36,6 @@ public class HomeActivity extends AppCompatActivity {
     protected Curatore curatore;
     private Permissions permission = new Permissions();
 
-
-    private Integer perc = 0;
-    private Integer ogg = 0;
-    //private EditText numeroPercorso, anno, tipologia;
-
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -129,23 +124,8 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void addPerc(View view) {
-        //  myRef.child("percorso "+perc.toString()).setValue("vuoto");
-        perc++;
-    }
 
-    public void addOgg(View view) {
-
-        //  Oggetto oggetto= new Oggetto(nome.getText().toString(),anno.getText().toString(),tipologia.getText().toString());
-        //  myRef.child("percorso "+numeroPercorso.getText().toString())
-        //          .child("oggetto "+ogg.toString())
-        //         .setValue(oggetto);
-        ogg++;
-    }
-
-
-
-//funzione per uscire dall'app al doppio click
+    //funzione per uscire dall'app al doppio click
     @Override
     public void onBackPressed() {
         if (isInFragment() && !doubleBackToExitPressedOnce) {

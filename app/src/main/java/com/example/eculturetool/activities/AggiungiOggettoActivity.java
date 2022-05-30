@@ -57,8 +57,9 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private Uri imgUri;
     private TipologiaOggetto tipologia;
+    private FloatingActionButton changeImg;
 
-    //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome uno precedente
+    //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome di uno precedente
     List<Oggetto> oggettiList = new ArrayList<>();
 
     //VARIABILI GESTIONE SPINNER PER LE ZONE
@@ -78,7 +79,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
         creaOggetto = findViewById(R.id.creaOggetto);
         progressBar = findViewById(R.id.progressAddOggetto);
-        FloatingActionButton changeImg = findViewById(R.id.change_imgUser);
+        changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
         dataBaseHelper = new DataBaseHelper(this);
 
@@ -112,11 +113,11 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     protected void onStart() {
         super.onStart();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Crea un ArrayAdapter usando un array di stringhe e uno spinner predefinito
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_oggetti, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+        // Specificare il layout da utilizzare quando viene visualizzato l'elenco delle scelte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Applico l'adapter allo spinner
         tipologiaOggetto.setAdapter(adapter);
         tipologiaOggetto.setOnItemSelectedListener(this);
         creaOggetto.setOnClickListener(view -> creazioneOggetto());
@@ -192,8 +193,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                         progressBar.setVisibility(View.VISIBLE);
                     }
                 });
-
-
     }
 
     private void creazioneOggetto() {

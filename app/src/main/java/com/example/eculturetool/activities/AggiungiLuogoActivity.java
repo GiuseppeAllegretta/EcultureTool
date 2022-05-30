@@ -54,11 +54,11 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     @Override
     protected void onStart() {
         super.onStart();
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Crea un ArrayAdapter usando un array di stringhe e uno spinner predefinito
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+        // Specificare il layout da utilizzare quando viene visualizzato l'elenco delle scelte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Applico l'adapter allo spinner
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
 

@@ -128,8 +128,8 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     }
                 });
 
+        //Metodo che consente di scondere le view in caso di accesso con l'account ospite
         nascondiView();
-
     }
 
     /**
@@ -242,7 +242,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
 
     /**
      * Metodo che recupera il nome di una zona in base all'id della zona fornito in input
-     *
      * @param id id della zona in cui è contenuto l'oggetto
      * @return nomeZona cioè il nome di una zona sotto forma di stringa
      */

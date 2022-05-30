@@ -29,7 +29,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     private Spinner tipologiaLuogo;
     private ImageView frecciaBack, conferma;
 
-
     //Si recupera questa lista per fare in modo che l'utente non crei/modifichi un luogo con lo stesso nome di uno già creato
     private List<Luogo> luoghiList;
     private Tipologia tipologia;
@@ -46,7 +45,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         frecciaBack = findViewById(R.id.freccia_back_modifica_luogo);
         conferma = findViewById(R.id.icona_conferma_luoghi);
 
-
         //Ottengo i dati del luogo selezionato
         Intent intent = getIntent();
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);
@@ -60,11 +58,11 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     protected void onStart() {
         super.onStart();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipologie_luoghi, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+        //Azione da eseguire quando si clicca la freccia di navigazione
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Applica l'adapter allo spinner
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
 
@@ -185,6 +183,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
         return isEsistente;
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
