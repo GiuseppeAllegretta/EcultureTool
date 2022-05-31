@@ -46,7 +46,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     Intent intent;
 
     IoHelper ioHelper;
-    int idPercorso; //Id del percorso memorizzato su SQLite
 
     //ArrayList condiviso, memorizza le zone selezionate
     DataHolder data = DataHolder.getInstance();
@@ -66,7 +65,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
 
         intent = getIntent();
-
+        if(intent.getBooleanExtra("MODIFICA_PERCORSO", false)){
+            data.setIdPath(intent.getIntExtra("ID_PERCORSO", 0));
+        }
 
         //Recupero zone del luogo corrente
         listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
@@ -86,16 +87,16 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             finish();
             Intent intent = new Intent(this, AddZonaToPercorsoActivity.class);
             startActivity(intent);
-
         });
 
 
         btnConferma.setOnClickListener(v -> {
             boolean isValid = true;
-            if (intent.getBooleanExtra("MODIFICA_PERCORSO", false)) {
-                idPercorso = intent.getIntExtra("ID_PERCORSO", 0);
-                if (!esistenzaNomePercorsoModifica(idPercorso))
-                    dataBaseHelper.modificaPercorso(idPercorso, editText.getText().toString());
+            if (data.getIdPath() != 0) {
+                if (!esistenzaNomePercorsoModifica()){
+                    dataBaseHelper.modificaPercorso(data.getIdPath(), editText.getText().toString());
+                    ioHelper.listZoneSerializzazione(data.getData(), data.getIdPath());
+                }
             } else {
                 if (data.getData().size() == 0) {
                     Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
@@ -115,13 +116,13 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             graph = ioHelper.fromListToGraph(data.getData());
 
             //Serializzo il percorso
-            ioHelper.serializzaPercorso(graph, idPercorso);
+            ioHelper.serializzaPercorso(graph, data.getIdPath());
 
             bundle.putSerializable("grafo", (Serializable) graph);
-            bundle.putInt("ID_PERCORSO", idPercorso);
 
             Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
             intent.putExtras(bundle);
+            intent.putExtra("ID_PERCORSO", data.getIdPath());
             startActivity(intent);
             finish();
             //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
@@ -168,11 +169,11 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         return risultato;
     }
 
-    private boolean esistenzaNomePercorsoModifica(int idPercorso) {
+    private boolean esistenzaNomePercorsoModifica() {
         boolean risultato = false;
         List<Percorso> percorsi = dataBaseHelper.getPercorsi();
         for (int i = 0; i < percorsi.size(); i++) {
-            if (percorsi.get(i).getNome() == editText.getText().toString())
+            if (percorsi.get(i).getNome().equals(editText.getText().toString()))
                 percorsi.remove(i);
         }
 
@@ -186,13 +187,13 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     private void createPercorso() {
         Percorso percorso = new Percorso(editText.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
-        idPercorso = dataBaseHelper.addPercorso(percorso);
+        data.setIdPath(dataBaseHelper.addPercorso(percorso));
 
-        if (idPercorso != -1) {
-            percorso.setId(idPercorso);
+        if (data.getIdPath() != -1) {
+            percorso.setId(data.getIdPath());
 
             //TODO controllo file vuoto
-            ioHelper.listZoneSerializzazione(data.getData(), idPercorso);
+            ioHelper.listZoneSerializzazione(data.getData(), data.getIdPath());
 
         } else {
             Toast.makeText(this, "Si è verificato un errore! \n Riprova", Toast.LENGTH_SHORT).show();

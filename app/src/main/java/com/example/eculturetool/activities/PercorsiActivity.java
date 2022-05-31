@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
+import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.RecyclerAdapterPercorso;
@@ -65,7 +65,13 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
     @Override
     protected void onStart() {
         super.onStart();
-        addPercorsoFbt.setOnClickListener(view -> startActivity(new Intent(PercorsiActivity.this, CreazionePercorsoActivity.class)));
+
+        addPercorsoFbt.setOnClickListener(view -> {
+            DataHolder data = DataHolder.getInstance();
+            data.getData().clear();
+            data.setPathName("");
+            startActivity(new Intent(PercorsiActivity.this, CreazionePercorsoActivity.class));
+        });
     }
 
     private void setAdapter() {
