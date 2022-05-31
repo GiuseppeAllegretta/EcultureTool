@@ -3,8 +3,12 @@ package com.example.eculturetool.utilities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,7 @@ public class Permissions extends AppCompatActivity {
 
     public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
     public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
+    public static final String INTERNET_AVAILABILITY_CHECK = "Per usare questa funzionalità è necessario avere una connessione ad internet attiva.";
     public static final int STORAGE_REQUEST_CODE = 100;
     public static final int CAMERA_REQUEST_CODE = 110;
 
@@ -49,6 +54,26 @@ public class Permissions extends AppCompatActivity {
     public void requestCameraPermission(Activity activity, View parentLayout) {
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
     }
+
+    public boolean checkConnection(Context context) {
+        boolean result = false;
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            // connected to the internet
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                result = true;
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to mobile data
+                result = true;
+            }
+        } else {
+            result = false;
+        }
+        return result;
+    }
+
 
     public void showMessageOkCancel(String message, DialogInterface.OnClickListener okListener, Activity activity) {
         new AlertDialog.Builder(activity)

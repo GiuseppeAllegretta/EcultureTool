@@ -1,8 +1,5 @@
 package com.example.eculturetool.activities;
 
-import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE;
-import static com.example.eculturetool.utilities.Permissions.STORAGE_REQUEST_CODE;
-
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -51,8 +48,6 @@ import java.util.Date;
 public class UploadImageActivity extends AppCompatActivity {
 
     public static final String STORAGE_REF = "gs://auth-96a19.appspot.com";
-    public static final String STORAGE_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso a risorse esterne.";
-    public static final String CAMERA_PERMISSION_MSG = "Per usare questa funzionalità è necessario consentire l'accesso alla fotocamera.";
     private Permissions permission = new Permissions();
     private ImageView mImageView, imagePlaceHolder;
     private ProgressBar mProgressBar;
@@ -260,7 +255,7 @@ public class UploadImageActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Permissions perm = new Permissions();
         switch (requestCode){
-            case STORAGE_REQUEST_CODE:
+            case Permissions.STORAGE_REQUEST_CODE:
                 for (int i = 0; i < permissions.length; i++) {
                     String permission = permissions[i];
                     int grantResult = grantResults[i];
@@ -269,7 +264,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                                perm.showMessageOkCancel(STORAGE_PERMISSION_MSG,
+                                perm.showMessageOkCancel(Permissions.STORAGE_PERMISSION_MSG,
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -280,7 +275,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         perm.requestStoragePermission(UploadImageActivity.this, parentLayout);
                                                         break;
                                                     case DialogInterface.BUTTON_NEGATIVE:
-                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, STORAGE_PERMISSION_MSG);
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, Permissions.STORAGE_PERMISSION_MSG);
                                                         snackBar.show();
                                                         break;
                                                 }
@@ -294,7 +289,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     }
                 }
                 break;
-            case CAMERA_REQUEST_CODE:
+            case Permissions.CAMERA_REQUEST_CODE:
                 for (int i = 0; i < permissions.length; i++) {
                     String permission = permissions[i];
                     int grantResult = grantResults[i];
@@ -303,7 +298,7 @@ public class UploadImageActivity extends AppCompatActivity {
                         if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                                perm.showMessageOkCancel(CAMERA_PERMISSION_MSG,
+                                perm.showMessageOkCancel(Permissions.CAMERA_PERMISSION_MSG,
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -314,7 +309,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                                         perm.requestCameraPermission(UploadImageActivity.this, parentLayout);
                                                         break;
                                                     case DialogInterface.BUTTON_NEGATIVE:
-                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, Permissions.CAMERA_PERMISSION_MSG);
                                                         snackBar.show();
                                                         break;
                                                 }
