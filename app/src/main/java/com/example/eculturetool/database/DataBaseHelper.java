@@ -1103,4 +1103,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+
+    public boolean modificaPercorso(int id, String nome){
+        boolean risultato = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLONNA_PERCORSO_NOME, nome);
+        final int update = db.update(TABLE_PERCORSI, contentValues, COLONNA_PERCORSO_ID + " = " + id, null);
+
+        if(update == -1){
+            risultato = false;
+        }else {
+            risultato = true;
+        }
+
+        db.close();
+        return risultato;
+    }
+
 }
