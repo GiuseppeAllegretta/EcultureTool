@@ -51,9 +51,8 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         dataBaseHelper = new DataBaseHelper(this);
 
         Intent i = getIntent();
-        Bundle bundle = i.getExtras();
         graph = (Graph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
-        idPercorso = bundle.getInt("ID_PERCORSO");
+        idPercorso = i.getIntExtra("ID_PERCORSO", 0);
 
         GraphView graphView = findViewById(R.id.graphView);
         graphView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
@@ -63,7 +62,6 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
         myToolbar.setNavigationIcon(freccia_indietro);
-        System.out.println("--->" + idPercorso);
         myToolbar.setTitle(dataBaseHelper.getPercorsoById(idPercorso).getNome());
         setSupportActionBar(myToolbar);
 
@@ -104,18 +102,15 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
         eliminaBtn.setOnClickListener(view -> showCustomDialog());
 
-        modificaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IoHelper ioHelper = new IoHelper(getApplicationContext());
-                data.setData((ArrayList<Zona>) ioHelper.listZoneDeserializzazione(idPercorso));
-                data.setPathName(dataBaseHelper.getPercorsoById(idPercorso).getNome());
-                finish();
-                Intent intent = new Intent(RiepilogoPercorsoActivity.this, CreazionePercorsoActivity.class);
-                intent.putExtra("MODIFICA_PERCORSO", true);
-                intent.putExtra("ID_PERCORSO", idPercorso);
-                startActivity(intent);
-            }
+        modificaBtn.setOnClickListener(v -> {
+            IoHelper ioHelper = new IoHelper(getApplicationContext());
+            data.setData((ArrayList<Zona>) ioHelper.listZoneDeserializzazione(idPercorso));
+            data.setPathName(dataBaseHelper.getPercorsoById(idPercorso).getNome());
+            finish();
+            Intent intent = new Intent(RiepilogoPercorsoActivity.this, CreazionePercorsoActivity.class);
+            intent.putExtra("MODIFICA_PERCORSO", true);
+            intent.putExtra("ID_PERCORSO", idPercorso);
+            startActivity(intent);
         });
     }
 
