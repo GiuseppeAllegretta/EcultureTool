@@ -43,6 +43,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
+    Intent intent;
 
     IoHelper ioHelper;
     int idPercorso; //Id del percorso memorizzato su SQLite
@@ -64,20 +65,22 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         ioHelper = new IoHelper(getApplicationContext());
         getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
 
+        intent = getIntent();
+
 
         //Recupero zone del luogo corrente
         listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
 
         //Recupero oggetti per ogni zona
-        for(int i = 0; i < listaZone.size(); i++){
+        for (int i = 0; i < listaZone.size(); i++) {
             listaZone.get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(listaZone.get(i)));
         }
 
         init();
         generateItems();
 
-        btnAggiungiZona.setOnClickListener(v ->{
-            if(!editText.getText().toString().equals(""))
+        btnAggiungiZona.setOnClickListener(v -> {
+            if (!editText.getText().toString().equals(""))
                 data.setPathName(editText.getText().toString());
 
             finish();
@@ -89,35 +92,41 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
         btnConferma.setOnClickListener(v -> {
             boolean isValid = true;
-            if(data.getData().size() == 0){
-                Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
-                isValid = false;
+            if (intent.getBooleanExtra("MODIFICA_PERCORSO", false)) {
+                idPercorso = intent.getIntExtra("ID_PERCORSO", 0);
+                if (!esistenzaNomePercorsoModifica(idPercorso))
+                    dataBaseHelper.modificaPercorso(idPercorso, editText.getText().toString());
+            } else {
+                if (data.getData().size() == 0) {
+                    Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }
+                if (!checkNomePercorso())
+                    isValid = false;
+
+                if (isValid)
+                    createPercorso();
+
             }
-            if(!checkNomePercorso())
-                isValid = false;
 
-            if(isValid){
-                createPercorso();
+            Bundle bundle = new Bundle();
+            IoHelper ioHelper = new IoHelper(this);
+            Graph<Zona, DefaultEdge> graph;
+            graph = ioHelper.fromListToGraph(data.getData());
 
-                Bundle bundle = new Bundle();
-                IoHelper ioHelper = new IoHelper(this);
-                Graph<Zona, DefaultEdge> graph;
-                graph = ioHelper.fromListToGraph(data.getData());
+            //Serializzo il percorso
+            ioHelper.serializzaPercorso(graph, idPercorso);
 
-                //Serializzo il percorso
-                ioHelper.serializzaPercorso(graph, idPercorso);
+            bundle.putSerializable("grafo", (Serializable) graph);
+            bundle.putInt("ID_PERCORSO", idPercorso);
 
-                bundle.putSerializable("grafo", (Serializable) graph);
-                bundle.putInt("ID_PERCORSO", idPercorso);
-
-                Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-                //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
-                data.getData().clear();
-                editText.getText().clear();
-            }
+            Intent intent = new Intent(this, RiepilogoPercorsoActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+            //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
+            data.getData().clear();
+            editText.getText().clear();
         });
 
     }
@@ -125,18 +134,19 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
     /**
      * Effettua il controllo sulla validità del nome del percorso
+     *
      * @return true(se il nome non è già esisistente e non è vuoto), false in ogni altro caso
      */
     private boolean checkNomePercorso() {
         boolean flag = true;
 
-        if(editText.getText().toString().isEmpty()){
+        if (editText.getText().toString().isEmpty()) {
             editText.setError(getString(R.string.inserisci_nome_percorso));
             editText.requestFocus();
             flag = false;
         }
 
-        if(esistenzaNomePercorso()){
+        if (esistenzaNomePercorso()) {
             editText.setError(getString(R.string.nome_esistente));
             editText.requestFocus();
             flag = false;
@@ -145,24 +155,40 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         return flag;
     }
 
+
     private boolean esistenzaNomePercorso() {
         boolean risultato = false;
         List<Percorso> percorsi = dataBaseHelper.getPercorsi();
 
-        for(Percorso percorso: percorsi){
-            if(percorso.getNome().compareToIgnoreCase(editText.getText().toString()) == 0){
+        for (Percorso percorso : percorsi) {
+            if (percorso.getNome().compareToIgnoreCase(editText.getText().toString()) == 0) {
                 risultato = true;
             }
         }
         return risultato;
     }
 
+    private boolean esistenzaNomePercorsoModifica(int idPercorso) {
+        boolean risultato = false;
+        List<Percorso> percorsi = dataBaseHelper.getPercorsi();
+        for (int i = 0; i < percorsi.size(); i++) {
+            if (percorsi.get(i).getNome() == editText.getText().toString())
+                percorsi.remove(i);
+        }
 
-    private void createPercorso(){
+        for (Percorso percorso : percorsi) {
+            if (percorso.getNome().compareToIgnoreCase(editText.getText().toString()) == 0) {
+                risultato = true;
+            }
+        }
+        return risultato;
+    }
+
+    private void createPercorso() {
         Percorso percorso = new Percorso(editText.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
         idPercorso = dataBaseHelper.addPercorso(percorso);
 
-        if(idPercorso != -1){
+        if (idPercorso != -1) {
             percorso.setId(idPercorso);
 
             //TODO controllo file vuoto
@@ -188,8 +214,8 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     /**
      * Metodo che inizializza la recycler view (griglia) e la vista
      */
-    private void init(){
-        if(data.getPathName() != null)
+    private void init() {
+        if (data.getPathName() != null)
             editText.setText(data.getPathName());
 
         ButterKnife.bind(this);

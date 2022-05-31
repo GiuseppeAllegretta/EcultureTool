@@ -20,33 +20,40 @@ import com.ablanco.zoomy.Zoomy;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
+import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.view.GraphView;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.ArrayList;
+
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private Button eliminaBtn;
+    private Button modificaBtn;
+    DataHolder data = DataHolder.getInstance();
     private Graph<Zona, DefaultEdge> graph;
     private IoHelper ioHelper;
     private int idPercorso;
     private DataBaseHelper dataBaseHelper;
 
+    //TODO in tasto condividi genera eccezione
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
-        Button modificaBtn = findViewById(R.id.modificaPercorso);
+        modificaBtn = findViewById(R.id.modificaPercorso);
         eliminaBtn = findViewById(R.id.eliminaPercorso);
 
         ioHelper = new IoHelper(this);
         dataBaseHelper = new DataBaseHelper(this);
 
         Intent i = getIntent();
+        Bundle bundle = i.getExtras();
         graph = (Graph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
-        idPercorso = i.getIntExtra("ID_PERCORSO", 0);
+        idPercorso = bundle.getInt("ID_PERCORSO");
 
         GraphView graphView = findViewById(R.id.graphView);
         graphView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
@@ -56,6 +63,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
         myToolbar.setNavigationIcon(freccia_indietro);
+        System.out.println("--->" + idPercorso);
         myToolbar.setTitle(dataBaseHelper.getPercorsoById(idPercorso).getNome());
         setSupportActionBar(myToolbar);
 
@@ -95,6 +103,20 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         super.onStart();
 
         eliminaBtn.setOnClickListener(view -> showCustomDialog());
+
+        modificaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IoHelper ioHelper = new IoHelper(getApplicationContext());
+                data.setData((ArrayList<Zona>) ioHelper.listZoneDeserializzazione(idPercorso));
+                data.setPathName(dataBaseHelper.getPercorsoById(idPercorso).getNome());
+                finish();
+                Intent intent = new Intent(RiepilogoPercorsoActivity.this, CreazionePercorsoActivity.class);
+                intent.putExtra("MODIFICA_PERCORSO", true);
+                intent.putExtra("ID_PERCORSO", idPercorso);
+                startActivity(intent);
+            }
+        });
     }
 
 
