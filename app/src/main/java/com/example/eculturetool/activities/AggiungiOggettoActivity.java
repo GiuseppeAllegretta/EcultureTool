@@ -29,6 +29,7 @@ import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
+import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -58,6 +59,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private ImageView imgOggetto;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private Uri imgUri;
+    private Permissions permissions;
     private TipologiaOggetto tipologia;
     private FloatingActionButton changeImg;
 
@@ -74,7 +76,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_oggetti);
-
+        permissions = new Permissions();
         imgOggetto = findViewById(R.id.imgOggetto);
         nomeOggetto = findViewById(R.id.nome_oggetto_add);
         descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
@@ -99,11 +101,16 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                     }
                 });
 
-        changeImg.setOnClickListener(onClickListener -> {
-            Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
-            uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
-            startForObjectImageUpload.launch(uploadImageIntent);
-        });
+        if(permissions.checkConnection(getApplicationContext())){
+            changeImg.setOnClickListener(onClickListener -> {
+                Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
+                uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
+                startForObjectImageUpload.launch(uploadImageIntent);
+            });
+        }else{
+            changeImg.setVisibility(View.INVISIBLE);
+            imgOggetto.setImageDrawable(getDrawable(R.drawable.pottery));
+        }
 
 
         oggettiList = getListOggettiCreati();
@@ -231,11 +238,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             progressBar.setVisibility(View.INVISIBLE);
             return;
         }
-
-        if(imgUri == null){
-            Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.INVISIBLE);
-            return;
+        if(permissions.checkConnection(getApplicationContext())){
+            if(imgUri == null){
+                Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.INVISIBLE);
+                return;
+            }
+        }else{
+            imgUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fpottery.png?alt=media&token=4551fc3f-2d22-4e91-8b09-baab87588d45");
         }
 
         Oggetto oggetto = new Oggetto(nome, descrizione, imgUri.toString(), tipologia, zona.getId());
