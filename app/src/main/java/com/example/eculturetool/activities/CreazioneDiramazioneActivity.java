@@ -89,7 +89,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
             int toPosition = target.getAdapterPosition();
             Collections.swap(childs, fromPosition, toPosition);
             Objects.requireNonNull(recyclerView.getAdapter()).notifyItemMoved(fromPosition, toPosition);
-            return false;
+            return true;
         }
 
         @Override

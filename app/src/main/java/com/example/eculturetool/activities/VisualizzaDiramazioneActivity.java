@@ -22,10 +22,7 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
 
     private DataHolder data = DataHolder.getInstance();
     private Intent intent;
-    private TextView titolo;
     private RecyclerView recyclerView;
-    private RecyclerAdapterList<Zona> recyclerAdapterList;
-    private MaterialButton btnReimposta;
 
 
     @Override
@@ -33,9 +30,9 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_diramazione);
 
-        titolo = findViewById(R.id.titolo);
+        TextView titolo = findViewById(R.id.titolo);
         recyclerView = findViewById(R.id.recyclerViewList);
-        btnReimposta = findViewById(R.id.btn_reimposta);
+        MaterialButton btnReimposta = findViewById(R.id.btn_reimposta);
 
         //Inserimento del titolo all'activity
         Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.Visualizza_diramazione));
@@ -58,8 +55,15 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent (VisualizzaDiramazioneActivity.this, CreazionePercorsoActivity.class);
+        startActivity(intent);
+    }
+
     private void initRecyclerView(){
-        recyclerAdapterList = new RecyclerAdapterList<>(data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).getDiramazione());
+        RecyclerAdapterList<Zona> recyclerAdapterList = new RecyclerAdapterList<>(data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).getDiramazione());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapterList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
