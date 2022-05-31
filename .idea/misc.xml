@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.13506876227897838" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-anydpi/ic_list.xml" value="0.259" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1355" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.151" />
@@ -61,7 +60,7 @@
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dati_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_percorsi.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.33" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.22" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.25" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/checkbox_layout.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.215625" />
@@ -126,9 +125,7 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
-        <entry key="app/src/main/res/drawable-anydpi/grad.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.16" />
-        <entry key="app/src/main/res/drawable/btn_qr_tondo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/button_shape_normal.xml" value="0.1075" />
         <entry key="app/src/main/res/drawable/button_shape_selected.xml" value="0.1075" />
         <entry key="app/src/main/res/drawable/button_state.xml" value="0.2295" />
@@ -158,7 +155,6 @@
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
-        <entry key="app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.4036458333333333" />

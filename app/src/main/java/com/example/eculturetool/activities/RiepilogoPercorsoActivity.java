@@ -1,9 +1,5 @@
 package com.example.eculturetool.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -14,28 +10,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.ablanco.zoomy.Zoomy;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
-import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.view.GraphView;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
-    private GraphView graphView;
-    private Button modificaBtn;
     private Button eliminaBtn;
     private Graph<Zona, DefaultEdge> graph;
-    private Intent i;
     private IoHelper ioHelper;
     private int idPercorso;
     private DataBaseHelper dataBaseHelper;
@@ -45,18 +38,18 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riepilogo_percorso);
-        modificaBtn = findViewById(R.id.modificaPercorso);
+        Button modificaBtn = findViewById(R.id.modificaPercorso);
         eliminaBtn = findViewById(R.id.eliminaPercorso);
 
         ioHelper = new IoHelper(this);
         dataBaseHelper = new DataBaseHelper(this);
 
-        i = getIntent();
+        Intent i = getIntent();
         graph = (Graph<Zona, DefaultEdge>) i.getExtras().getSerializable("grafo");
         idPercorso = i.getIntExtra("ID_PERCORSO", 0);
 
-        graphView = findViewById(R.id.graphView);
-        graphView.setBackgroundColor(getResources().getColor(R.color.white));
+        GraphView graphView = findViewById(R.id.graphView);
+        graphView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         graphView.setGrafo(graph);
 
         Toolbar myToolbar = findViewById(R.id.toolbarDettaglioPercorso);
@@ -67,12 +60,9 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         //Azione da eseguire quando si clicca la freccia di navigazione
-        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Ritorna al fragment del profilo chiamante
-                finish();
-            }
+        myToolbar.setNavigationOnClickListener(view -> {
+            //Ritorna al fragment del profilo chiamante
+            finish();
         });
 
         scritturaSuFileJson();
@@ -92,12 +82,9 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.percorso_menu, menu);
         MenuItem item = menu.findItem(R.id.shareTXT);
 
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                ioHelper.shareFileTxt(idPercorso);
-                return false;
-            }
+        item.setOnMenuItemClickListener(menuItem -> {
+            ioHelper.shareFileTxt(idPercorso);
+            return false;
         });
 
         return true;
@@ -107,12 +94,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        eliminaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCustomDialog();
-            }
-        });
+        eliminaBtn.setOnClickListener(view -> showCustomDialog());
     }
 
 
@@ -135,16 +117,13 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
         dialog.show();
 
-        conferma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dataBaseHelper.deletePercorso(idPercorso);
-                ioHelper.cancellaPercorsoArray(idPercorso);
-                ioHelper.cancellaPercorsoJson(idPercorso);
-                ioHelper.cancellaPercorso(idPercorso);
-                dialog.dismiss();
-                finish();
-            }
+        conferma.setOnClickListener(view -> {
+            dataBaseHelper.deletePercorso(idPercorso);
+            ioHelper.cancellaPercorsoArray(idPercorso);
+            ioHelper.cancellaPercorsoJson(idPercorso);
+            ioHelper.cancellaPercorso(idPercorso);
+            dialog.dismiss();
+            finish();
         });
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
