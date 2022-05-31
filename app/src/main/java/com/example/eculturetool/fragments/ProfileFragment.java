@@ -43,7 +43,9 @@ import com.example.eculturetool.database.SessionManagement;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.utilities.LocaleHelper;
+import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ProfileFragment extends Fragment {
 
@@ -55,7 +57,7 @@ public class ProfileFragment extends Fragment {
     private Uri imgUri;
     protected static Curatore curatore;
     private int lang_selected;
-
+    private Permissions permissions;
     private DataBaseHelper dataBaseHelper;
     private TextView nomeFoto, email, nome, cognome, nomeLuogo;
     private Button cambiaLuogo;
@@ -73,7 +75,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = requireActivity().getApplicationContext();
-
+        permissions = new Permissions();
         //Inizializzazione del database
         dataBaseHelper = new DataBaseHelper(requireActivity().getApplicationContext());
 
@@ -138,9 +140,15 @@ public class ProfileFragment extends Fragment {
         popolaCampi();
 
         changeImg.setOnClickListener(onClickListener -> {
-            Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
-            uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
-            startForProfileImageUpload.launch(uploadImageIntent);
+            //Controllo la connessione
+            if(permissions.checkConnection(context)){
+                Intent uploadImageIntent = new Intent(getActivity(), UploadImageActivity.class);
+                uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
+                startForProfileImageUpload.launch(uploadImageIntent);
+            }else{
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(requireActivity().findViewById(R.id.frame_layout), "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                snackBar.show();
+            }
         });
 
         //Operazioni da eseguire quando l'utente decide di cambiare il luogo
@@ -299,7 +307,6 @@ public class ProfileFragment extends Fragment {
         String emailCuratore = dataBaseHelper.getCuratore().getEmail();
 
         if (emailCuratore.compareTo(emailOspite) == 0) {
-
             changeImg.setVisibility(View.INVISIBLE);
             editButton.setVisibility(View.INVISIBLE);
             cambiaLuogo.setVisibility(View.INVISIBLE);
