@@ -24,6 +24,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -238,7 +239,12 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         oggetto = dataBaseHelper.getOggettoById(idOggetto);
 
         if (oggetto != null) {
-            Glide.with(context).load(oggetto.getUrl()).circleCrop().into(immagineOggetto);
+            String uriImg = oggetto.getUrl();
+            if (!Objects.equals(uriImg, PLACEHOLDER_OGGETTO)) {
+                Glide.with(context).load(uriImg).circleCrop().into(immagineOggetto);
+            } else {
+                immagineOggetto.setImageDrawable(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.pottery));
+            }
             getSupportActionBar().setTitle(oggetto.getNome());
             nomeOggetto.setText(oggetto.getNome());
             descrizioneOggetto.setText(oggetto.getDescrizione());
