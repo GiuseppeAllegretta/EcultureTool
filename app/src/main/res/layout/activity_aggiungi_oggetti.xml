@@ -44,20 +44,17 @@
                         android:padding="3dp"
                         android:scaleType="centerInside" />
 
-
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/change_imgUser"
+                        android:id="@+id/change_imgUser2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|bottom"
-                        android:layout_marginBottom="5dp"
                         android:backgroundTint="@color/gialloSecondario"
                         android:clickable="true"
                         android:src="@android:drawable/ic_menu_camera"
                         android:tint="@color/black"
                         app:borderWidth="0dp"
-                        app:elevation="2dp"
-                        app:fabSize="mini" />
+                        app:elevation="0dp" />
 
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

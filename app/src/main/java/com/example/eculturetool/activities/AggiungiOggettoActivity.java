@@ -3,6 +3,7 @@ package com.example.eculturetool.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -20,9 +21,15 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
@@ -31,6 +38,7 @@ import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.fragments.DialogAddOggettoFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -63,6 +71,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private Permissions permissions;
     private TipologiaOggetto tipologia;
     private FloatingActionButton changeImg;
+    private View parentLayout;
 
     //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome di uno precedente
     List<Oggetto> oggettiList = new ArrayList<>();
@@ -87,7 +96,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
         dataBaseHelper = new DataBaseHelper(this);
-
+        parentLayout = findViewById(android.R.id.content);
+        imgOggetto.setImageDrawable(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.pottery));
 
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -98,20 +108,34 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                     }
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         imgUri = uri;
-                        Glide.with(this).load(imgUri).circleCrop().into(imgOggetto);
+                        Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                progressBar.setVisibility(View.GONE);
+                                return false;
+                            }
+                        }).circleCrop().into(imgOggetto);
                     }
                 });
 
-        if(permissions.checkConnection(getApplicationContext())){
-            changeImg.setOnClickListener(onClickListener -> {
+        changeImg.setOnClickListener(onClickListener -> {
+            if(permissions.checkConnection(getApplicationContext())){
+
                 Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
-            });
-        }else{
-            changeImg.setVisibility(View.INVISIBLE);
-            imgOggetto.setImageDrawable(getDrawable(R.drawable.pottery));
-        }
+            }else{
+            Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+            snackBar.show();
+            }
+        });
 
 
         oggettiList = getListOggettiCreati();
