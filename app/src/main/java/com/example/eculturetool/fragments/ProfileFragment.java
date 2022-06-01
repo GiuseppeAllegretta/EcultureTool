@@ -24,6 +24,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -91,19 +92,11 @@ public class ProfileFragment extends Fragment {
                         if (uri != null) {
                             imgUri = uri;
                             dataBaseHelper.setImageCuratore(imgUri.toString());
-                            Glide.with(context).load(dataBaseHelper.getImageCuratore()).listener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    progressBar.setVisibility(View.GONE);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    progressBar.setVisibility(View.VISIBLE);
-                                    return false;
-                                }
-                            }).circleCrop().into(imgUser);
+                            if(permissions.checkConnection(context)){
+                                Glide.with(context).load(imgUri).circleCrop().into(imgUser);
+                            }else{
+                                Glide.with(context).load(AppCompatResources.getDrawable(context, R.drawable.image_not_found)).circleCrop().into(imgUser);
+                            }
                         }
                     }
                 });
@@ -179,7 +172,11 @@ public class ProfileFragment extends Fragment {
         }
 
         if (curatore.getImg() != null) {
-            Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+            if(permissions.checkConnection(context)){
+                Glide.with(context).load(curatore.getImg()).circleCrop().into(imgUser);
+            }else{
+                Glide.with(context).load(AppCompatResources.getDrawable(context, R.drawable.image_not_found)).circleCrop().into(imgUser);
+            }
         } else {
             progressBar.setVisibility(View.GONE);
             Glide.with(context).load(R.drawable.ic_user).circleCrop().into(imgUser);
