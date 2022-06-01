@@ -131,7 +131,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "(" + COLONNA_PERCORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLONNA_PERCORSO_NOME + " TEXT," +
                 COLONNA_PERCORSO_ID_LUOGO + " INT, " +
-                " CONSTRAINT fk_luoghi_percorsi FOREIGN KEY (" + COLONNA_PERCORSO_ID_LUOGO + ") REFERENCES " + TABLE_LUOGHI + " (" + COLONNA_LUOGHI_ID + ")" + ")";
+                " CONSTRAINT fk_luoghi_percorsi FOREIGN KEY (" + COLONNA_PERCORSO_ID_LUOGO + ") REFERENCES " + TABLE_LUOGHI + " (" + COLONNA_LUOGHI_ID + ")" + " ON DELETE CASCADE" + ")";
 
         sqLiteDatabase.execSQL(createTableCuratore);
         sqLiteDatabase.execSQL(createTableLuogo);
