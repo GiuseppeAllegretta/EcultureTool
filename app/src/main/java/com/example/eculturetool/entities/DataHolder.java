@@ -7,7 +7,7 @@ public class DataHolder {
     private ArrayList<Zona> arrayList = new ArrayList<>();
     private static DataHolder holder = new DataHolder();
     private String pathName;
-    private int idPath;
+    private int idPath = 0;
 
     public void setData(ArrayList<Zona> arrayList){
         this.arrayList = arrayList;
