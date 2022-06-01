@@ -1,10 +1,13 @@
 package com.example.eculturetool.activities;
 
+import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,10 +38,13 @@ import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class DettaglioOggettoActivity extends AppCompatActivity {
 
@@ -50,7 +56,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private int idOggetto, luogoCorrente;   //identificativi dell'oggetto e luogo
     private String qrCode;
     private String emailOspite = "admin@gmail.com"; //email dell'account ospite
-
+    private Permissions permissions;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private TextView nomeOggetto, descrizioneOggetto, tipologiaOggetto, zonaAppartenenza;
     private ImageView immagineOggetto;
@@ -61,15 +67,16 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Context context;
     private Uri imgUri;
     private ProgressBar progressBar;
+    private View parentLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_oggetto);
-
+        permissions = new Permissions();
         myToolbar = (Toolbar) findViewById(R.id.toolbarOggetto);
-
+        parentLayout = findViewById(android.R.id.content);
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
         myToolbar.setNavigationIcon(freccia_indietro);
@@ -182,28 +189,30 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         });
 
         cambiaImmagine.setOnClickListener(onClickListener -> {
-            Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
-            uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
-            startForObjectImageUpload.launch(uploadImageIntent);
+            if (permissions.checkConnection(getApplicationContext())) {
+                Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
+                uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
+                startForObjectImageUpload.launch(uploadImageIntent);
+            }else{
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                snackBar.show();
+            }
         });
 
 
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (qrCode != null) {
-                    displayPopupImage(qrCode);
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DettaglioOggettoActivity.this);
-                    builder.setTitle(getResources().getString(R.string.avviso));
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.setMessage(getString(R.string.nessun_QR));
-                    builder.create().show();
+                if(permissions.checkConnection(getApplicationContext())) {
+                    if (!Objects.equals(qrCode, PLACEHOLDER_OGGETTO)) {
+                        displayPopupImage(qrCode);
+                    } else {
+                        //Bitmap bitmap = qrCodeGenerator(idOggetto);
+                        //uploadQrCode(context, idOggetto, bitmap, dataBaseHelper, DettaglioOggettoActivity.this, progressBar);
+                    }
+                } else{
+                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                    snackBar.show();
                 }
             }
         });

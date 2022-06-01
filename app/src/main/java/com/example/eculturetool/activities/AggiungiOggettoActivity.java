@@ -50,6 +50,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
     private static final String STORREF = "gs://auth-96a19.appspot.com/";
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
+    public static final String PLACEHOLDER_OGGETTO = "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fpottery.png?alt=media&token=4551fc3f-2d22-4e91-8b09-baab87588d45";
     private DataBaseHelper dataBaseHelper;          //Riferimento al database
     private Zona zona;                              //zona che verrà selezionata nello spinner
     private EditText nomeOggetto, descrizioneOggetto;
