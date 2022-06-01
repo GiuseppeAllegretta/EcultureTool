@@ -122,7 +122,8 @@ public class DettaglioZonaActivity extends AppCompatActivity {
 
         conferma.setOnClickListener(v -> {
             dataBaseHelper.rimuoviZona(z);
-            onBackPressed();
+            dialog.dismiss();
+            finish();
         });
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
