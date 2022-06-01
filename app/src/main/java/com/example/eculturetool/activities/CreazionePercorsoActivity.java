@@ -65,9 +65,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
 
         intent = getIntent();
-        if(intent.getBooleanExtra("MODIFICA_PERCORSO", false)){
-            data.setIdPath(intent.getIntExtra("ID_PERCORSO", 0));
-        }
 
         //Recupero zone del luogo corrente
         listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
@@ -92,22 +89,38 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
         btnConferma.setOnClickListener(v -> {
             boolean isValid = true;
-            if (data.getIdPath() != 0) {
-                if (!esistenzaNomePercorsoModifica()){
-                    dataBaseHelper.modificaPercorso(data.getIdPath(), editText.getText().toString());
-                    ioHelper.listZoneSerializzazione(data.getData(), data.getIdPath());
+
+            if(data.getData().size() == 0){
+                Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (editText.getText().toString().isEmpty()) {
+                editText.setError(getString(R.string.inserisci_nome_percorso));
+                editText.requestFocus();
+                return;
+            }
+
+            if(data.getIdPath() != 0) {
+                if (esistenzaNomePercorsoModifica()) {
+                    System.out.println("BBBBBBA");
+                    editText.setError(getString(R.string.nome_esistente));
+                    editText.requestFocus();
+                    return;
                 }
+
+                dataBaseHelper.modificaPercorso(data.getIdPath(), editText.getText().toString());
+                ioHelper.listZoneSerializzazione(data.getData(), data.getIdPath());
+
             } else {
-                if (data.getData().size() == 0) {
-                    Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
-                    isValid = false;
-                }
                 if (!checkNomePercorso())
                     isValid = false;
 
+                if(!isValid)
+                    return;
+
                 if (isValid)
                     createPercorso();
-
             }
 
             Bundle bundle = new Bundle();
@@ -126,6 +139,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
+            data.setIdPath(0);
             data.getData().clear();
             editText.getText().clear();
         });
@@ -172,8 +186,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     private boolean esistenzaNomePercorsoModifica() {
         boolean risultato = false;
         List<Percorso> percorsi = dataBaseHelper.getPercorsi();
+        String nomePercorsoModifica = dataBaseHelper.getPercorsoById(data.getIdPath()).getNome();
+
         for (int i = 0; i < percorsi.size(); i++) {
-            if (percorsi.get(i).getNome().equals(editText.getText().toString()))
+            if (percorsi.get(i).getNome().compareToIgnoreCase(nomePercorsoModifica) == 0)
                 percorsi.remove(i);
         }
 

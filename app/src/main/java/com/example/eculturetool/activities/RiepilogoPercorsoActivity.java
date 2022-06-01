@@ -103,14 +103,13 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         eliminaBtn.setOnClickListener(view -> showCustomDialog());
 
         modificaBtn.setOnClickListener(v -> {
-            IoHelper ioHelper = new IoHelper(getApplicationContext());
             data.setData((ArrayList<Zona>) ioHelper.listZoneDeserializzazione(idPercorso));
             data.setPathName(dataBaseHelper.getPercorsoById(idPercorso).getNome());
-            finish();
+            data.setIdPath(idPercorso);
             Intent intent = new Intent(RiepilogoPercorsoActivity.this, CreazionePercorsoActivity.class);
-            intent.putExtra("MODIFICA_PERCORSO", true);
             intent.putExtra("ID_PERCORSO", idPercorso);
             startActivity(intent);
+            finish();
         });
     }
 
