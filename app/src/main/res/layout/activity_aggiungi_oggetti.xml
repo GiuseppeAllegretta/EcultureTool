@@ -45,7 +45,7 @@
                         android:scaleType="centerInside" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/change_imgUser2"
+                        android:id="@+id/change_imgUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|bottom"
@@ -55,6 +55,21 @@
                         android:tint="@color/black"
                         app:borderWidth="0dp"
                         app:elevation="0dp" />
+
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/progressImg"
+                        style="@style/SpinKitView.Large.Circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="invisible"
+                        app:SpinKit_Color="@color/gialloPrimario"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_gravity="center"
+                        tools:ignore="MissingConstraints" />
 
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

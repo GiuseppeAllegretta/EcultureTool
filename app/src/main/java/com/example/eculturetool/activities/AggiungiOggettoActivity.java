@@ -64,7 +64,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
-    private ProgressBar progressBar;
+    private ProgressBar progressBarAddOggetto;
+    private ProgressBar progressBarImg;
     private ImageView imgOggetto;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
     private Uri imgUri;
@@ -92,7 +93,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
         tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
         creaOggetto = findViewById(R.id.creaOggetto);
-        progressBar = findViewById(R.id.progressAddOggetto);
+        progressBarAddOggetto = findViewById(R.id.progressAddOggetto);
+        progressBarImg = findViewById(R.id.progressImg);
         changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
         dataBaseHelper = new DataBaseHelper(this);
@@ -102,6 +104,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
+                    progressBarImg.setVisibility(View.VISIBLE);
                     Uri uri = null;
                     if (activityResult.getData() != null) {
                         uri = activityResult.getData().getData();
@@ -111,14 +114,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                         Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                progressBar.setVisibility(View.GONE);
+                                progressBarImg.setVisibility(View.GONE);
 
                                 return false;
                             }
 
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                progressBar.setVisibility(View.GONE);
+                                progressBarImg.setVisibility(View.GONE);
                                 return false;
                             }
                         }).circleCrop().into(imgOggetto);
@@ -214,7 +217,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 .addOnFailureListener(exception -> {
                     Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(taskSnapshot -> {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBarAddOggetto.setVisibility(View.INVISIBLE);
                     //Ottiene l'uri e lo salva su SQLite
                     fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
                         //Salva su SQLite la stringa dell'url
@@ -224,14 +227,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressBarAddOggetto.setVisibility(View.VISIBLE);
                     }
                 });
     }
 
     private void creazioneOggetto() {
         //La progressbar diventa visibile
-        progressBar.setVisibility(View.VISIBLE);
+        progressBarAddOggetto.setVisibility(View.VISIBLE);
 
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
@@ -240,33 +243,33 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBarAddOggetto.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
             nomeOggetto.requestFocus();
             nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBarAddOggetto.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (descrizione.isEmpty()) {
             descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBarAddOggetto.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBarAddOggetto.setVisibility(View.INVISIBLE);
             return;
         }
         if(permissions.checkConnection(getApplicationContext())){
             if(imgUri == null){
                 Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBarAddOggetto.setVisibility(View.INVISIBLE);
                 return;
             }
         }else{
@@ -285,7 +288,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         else{
             Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
         }
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBarAddOggetto.setVisibility(View.INVISIBLE);
     }
 
 
