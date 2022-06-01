@@ -1,6 +1,8 @@
 package com.example.eculturetool;
 
 
+import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +21,7 @@ import com.example.eculturetool.entities.Oggetto;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 
 public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapterOggetto.OggettiViewHolder> implements Filterable {
@@ -76,7 +80,11 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
         String descrizione = oggettiList.get(position).getDescrizione();
         holder.nomeOggetto.setText(nome);
         holder.descrizioneOggetto.setText(descrizione);
-        Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position).getUrl()).circleCrop().into(holder.immagineOggetto);
+        if (!Objects.equals(oggettiList.get(position).getUrl(), PLACEHOLDER_OGGETTO)) {
+            Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position).getUrl()).circleCrop().into(holder.immagineOggetto);
+        } else {
+            holder.immagineOggetto.setImageDrawable(AppCompatResources.getDrawable(holder.immagineOggetto.getContext(), R.drawable.pottery));
+        }
     }
 
     @Override
