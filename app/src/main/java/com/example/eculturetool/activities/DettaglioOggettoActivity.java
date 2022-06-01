@@ -241,9 +241,13 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         if (oggetto != null) {
             String uriImg = oggetto.getUrl();
             if (!Objects.equals(uriImg, PLACEHOLDER_OGGETTO)) {
-                Glide.with(context).load(uriImg).circleCrop().into(immagineOggetto);
+                if(permissions.checkConnection(getApplicationContext())){
+                    Glide.with(context).load(uriImg).circleCrop().into(immagineOggetto);
+                }else{
+                    Glide.with(context).load(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.image_not_found)).circleCrop().into(immagineOggetto);
+                }
             } else {
-                immagineOggetto.setImageDrawable(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.pottery));
+                Glide.with(context).load(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.pottery)).circleCrop().into(immagineOggetto);
             }
             getSupportActionBar().setTitle(oggetto.getNome());
             nomeOggetto.setText(oggetto.getNome());
