@@ -84,7 +84,7 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
         Permissions permissions = new Permissions();
         if (!Objects.equals(oggettiList.get(position).getUrl(), PLACEHOLDER_OGGETTO)) {
             if(permissions.checkConnection(holder.immagineOggetto.getContext())){
-                Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position)).circleCrop().into(holder.immagineOggetto);
+                Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position).getUrl()).circleCrop().into(holder.immagineOggetto);
             }else{
                 Glide.with(holder.immagineOggetto.getContext()).load(AppCompatResources.getDrawable(holder.immagineOggetto.getContext(), R.drawable.image_not_found)).circleCrop().into(holder.immagineOggetto);
             }
