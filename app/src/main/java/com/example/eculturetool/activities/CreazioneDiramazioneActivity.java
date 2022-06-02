@@ -2,6 +2,7 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,6 +80,20 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
             overridePendingTransition( 0, 0);
         });
 
+        //imposta la actionBar visibile nella diramazione
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Quando selezionata la freccia indietro si ritorna nell'activity specificata
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            Intent intent = new Intent (CreazioneDiramazioneActivity.this, CreazionePercorsoActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
