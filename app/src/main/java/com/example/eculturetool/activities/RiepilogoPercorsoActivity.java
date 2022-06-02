@@ -152,6 +152,10 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         autoCompleteTextView.setAdapter(adapter);
+
+        //Consente di non far "alzare" la tastiera virtuale alla seleziona dello spinner
+        autoCompleteTextView.setFocusable(false);
+        autoCompleteTextView.setClickable(true);
     }
 
     private void scritturaSuFileJson() {
