@@ -55,6 +55,7 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        //Imposta la freccia back visibile nella actionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
