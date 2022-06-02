@@ -19,9 +19,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -42,7 +44,18 @@ import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +63,7 @@ import java.util.Objects;
 public class DettaglioOggettoActivity extends AppCompatActivity {
 
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
-
+    private static final String STORREF = "gs://auth-96a19.appspot.com/";
     private DataBaseHelper dataBaseHelper;          //riferimento del database
     private Oggetto oggetto;                        //oggetto di cui si vedono i dati a schermo
     private List<Zona> zoneList;                    //L'insieme di tutte le zone
@@ -218,6 +231,66 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Metodo che si occupa di generare il QRcode dell'oggetto appena creato
+     * @param idOggetto identificativo dell'oggetto appena creato
+     * @return bitmap: ovvero l'oggetto di tipo Bitmap che rappresenta il QRcode
+     */
+    private Bitmap qrCodeGenerator(int idOggetto) {
+        Bitmap bitmap = null;
+
+        //inizializzazione multi format writer
+        MultiFormatWriter writer = new MultiFormatWriter();
+
+        try {
+            //inizializzazione bit matrix
+            BitMatrix matrix = writer.encode(String.valueOf(idOggetto), BarcodeFormat.QR_CODE, 350, 350);
+
+            //inizializzazione barcode encoder
+            BarcodeEncoder encoder = new BarcodeEncoder();
+
+            //inizializzazione bitmap
+            bitmap = encoder.createBitmap(matrix);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    /**
+     * Metodo che consente di caricare su Firestore un oggetto di tipo bitmap in formato jpeg
+     *
+     */
+    public void uploadFile(int idOggetto, Bitmap bitmap) {
+        StorageReference mStorageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads/qrCode");
+        StorageReference fileReferences = mStorageReference.child(System.currentTimeMillis() + "." + "jpeg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        //Ottiene l'uri e lo salva su SQLite
+        //Salva su SQLite la stringa dell'url
+        StorageTask uploadTask = fileReferences.putBytes(data)
+                .addOnFailureListener(exception -> {
+                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                }).addOnSuccessListener(taskSnapshot -> {
+                    progressBarAddOggetto.setVisibility(View.INVISIBLE);
+                    //Ottiene l'uri e lo salva su SQLite
+                    fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
+                        //Salva su SQLite la stringa dell'url
+                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
+                        finish();
+                    });
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        progressBarAddOggetto.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     public void displayPopupImage(String uri) {

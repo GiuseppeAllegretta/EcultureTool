@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -56,7 +58,6 @@ import java.util.List;
 
 public class AggiungiOggettoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private static final String STORREF = "gs://auth-96a19.appspot.com/";
     public static final String OBJECTS_IMAGES_DIR = "objects_images";
     public static final String PLACEHOLDER_OGGETTO = "https://firebasestorage.googleapis.com/v0/b/auth-96a19.appspot.com/o/uploads%2Fobjects_images%2Fpottery.png?alt=media&token=4551fc3f-2d22-4e91-8b09-baab87588d45";
     private DataBaseHelper dataBaseHelper;          //Riferimento al database
@@ -157,7 +158,10 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         // Applico l'adapter allo spinner
         tipologiaOggetto.setAdapter(adapter);
         tipologiaOggetto.setOnItemSelectedListener(this);
-        creaOggetto.setOnClickListener(view -> creazioneOggetto());
+        creaOggetto.setOnClickListener(view -> {
+            creazioneOggetto();
+            finish();
+        });
     }
 
 
@@ -200,41 +204,15 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         dialogAddOggettoFragment.show(getSupportFragmentManager(), "dialog");
     }
 
-    /**
-     * Metodo che consente di caricare su Firestore un oggetto di tipo bitmap in formato jpeg
-     *
-     */
-    public void uploadFile(int idOggetto, Bitmap bitmap) {
-        StorageReference mStorageReference = FirebaseStorage.getInstance(STORREF).getReference("uploads/qrCode");
-        StorageReference fileReferences = mStorageReference.child(System.currentTimeMillis() + "." + "jpeg");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        //Ottiene l'uri e lo salva su SQLite
-        //Salva su SQLite la stringa dell'url
-        StorageTask uploadTask = fileReferences.putBytes(data)
-                .addOnFailureListener(exception -> {
-                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                }).addOnSuccessListener(taskSnapshot -> {
-                    progressBarAddOggetto.setVisibility(View.INVISIBLE);
-                    //Ottiene l'uri e lo salva su SQLite
-                    fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
-                        //Salva su SQLite la stringa dell'url
-                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
-                        finish();
-                    });
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        progressBarAddOggetto.setVisibility(View.VISIBLE);
-                    }
-                });
-    }
-
     private void creazioneOggetto() {
-        //La progressbar diventa visibile
-        progressBarAddOggetto.setVisibility(View.VISIBLE);
+        Handler handler = new Handler(getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //La progressbar diventa visibile
+                progressBarAddOggetto.setVisibility(View.VISIBLE);
+            }
+        });
 
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
@@ -280,44 +258,9 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
 
         //aggiungo l'oggetto al database
-        if((idOggettoCreato = dataBaseHelper.addOggetto(oggetto)) != -1){
-            Bitmap bitmap = qrCodeGenerator(idOggettoCreato);
-            uploadFile(idOggettoCreato, bitmap);
-        }
-        //Si è verificato un problema col db e l'oggetto non è stato creato
-        else{
+        if((dataBaseHelper.addOggetto(oggetto)) == -1){
             Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
         }
-        progressBarAddOggetto.setVisibility(View.INVISIBLE);
-    }
-
-
-    /**
-     * Metodo che si occupa di generare il QRcode dell'oggetto appena creato
-     * @param idOggetto identificativo dell'oggetto appena creato
-     * @return bitmap: ovvero l'oggetto di tipo Bitmap che rappresenta il QRcode
-     */
-    private Bitmap qrCodeGenerator(int idOggetto) {
-        Bitmap bitmap = null;
-
-        //inizializzazione multi format writer
-        MultiFormatWriter writer = new MultiFormatWriter();
-
-        try {
-            //inizializzazione bit matrix
-            BitMatrix matrix = writer.encode(String.valueOf(idOggetto), BarcodeFormat.QR_CODE, 350, 350);
-
-            //inizializzazione barcode encoder
-            BarcodeEncoder encoder = new BarcodeEncoder();
-
-            //inizializzazione bitmap
-            bitmap = encoder.createBitmap(matrix);
-
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
     }
 
 
@@ -366,5 +309,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
+
+
 
 }
