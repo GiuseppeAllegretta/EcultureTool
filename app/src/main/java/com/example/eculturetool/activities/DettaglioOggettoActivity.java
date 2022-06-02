@@ -278,7 +278,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 .addOnFailureListener(exception -> {
                     Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(taskSnapshot -> {
-                    progressBarAddOggetto.setVisibility(View.INVISIBLE);
+                    //progressBarAddOggetto.setVisibility(View.INVISIBLE);
                     //Ottiene l'uri e lo salva su SQLite
                     fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
                         //Salva su SQLite la stringa dell'url
@@ -288,7 +288,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        progressBarAddOggetto.setVisibility(View.VISIBLE);
+                        //progressBarAddOggetto.setVisibility(View.VISIBLE);
                     }
                 });
     }
