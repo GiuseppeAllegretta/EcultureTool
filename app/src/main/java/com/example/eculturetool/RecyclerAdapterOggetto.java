@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.eculturetool.entities.Oggetto;
+import com.example.eculturetool.utilities.Permissions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,8 +81,13 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
         String descrizione = oggettiList.get(position).getDescrizione();
         holder.nomeOggetto.setText(nome);
         holder.descrizioneOggetto.setText(descrizione);
+        Permissions permissions = new Permissions();
         if (!Objects.equals(oggettiList.get(position).getUrl(), PLACEHOLDER_OGGETTO)) {
-            Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position).getUrl()).circleCrop().into(holder.immagineOggetto);
+            if(permissions.checkConnection(holder.immagineOggetto.getContext())){
+                Glide.with(holder.immagineOggetto.getContext()).load(oggettiList.get(position)).circleCrop().into(holder.immagineOggetto);
+            }else{
+                Glide.with(holder.immagineOggetto.getContext()).load(AppCompatResources.getDrawable(holder.immagineOggetto.getContext(), R.drawable.image_not_found)).circleCrop().into(holder.immagineOggetto);
+            }
         } else {
             holder.immagineOggetto.setImageDrawable(AppCompatResources.getDrawable(holder.immagineOggetto.getContext(), R.drawable.pottery));
         }
