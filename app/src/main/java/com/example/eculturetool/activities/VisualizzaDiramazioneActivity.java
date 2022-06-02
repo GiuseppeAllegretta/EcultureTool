@@ -2,8 +2,10 @@ package com.example.eculturetool.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -53,6 +55,19 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            Intent intent = new Intent (VisualizzaDiramazioneActivity.this, CreazionePercorsoActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
