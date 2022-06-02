@@ -21,6 +21,31 @@
         app:titleTextColor="@color/white" />
 
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/materialSpinner"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Seleziona Zona"
+            android:layout_margin="10dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="0dp"

@@ -1,5 +1,7 @@
 package com.example.eculturetool.activities;
 
+import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Placeholder;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
@@ -22,6 +25,7 @@ import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Tipologia;
 import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.utilities.Permissions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -142,6 +146,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     public void popolaDBmodalitaBalducci() {
 
+        Permissions permissions = new Permissions();
         //Stringhe relative alle zone del museo
         final String duecento_e_trecento = "Duecento e Trecento";
         final String primo_rinascimento = "Primo Rinascimento";
@@ -150,7 +155,6 @@ public class SplashActivity extends AppCompatActivity {
         final String cinquecento = "Cinquecento";
 
         final String emailOspite = "balducci@gmail.com";
-        final String passwordOspite = "123456";
 
 
         if(!dataBaseHelper.checkEmailExist(emailOspite)){
@@ -232,12 +236,20 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
 
-            List<Oggetto> oggetti = dataBaseHelper.getOggetti();
+            if(permissions.checkConnection(getApplicationContext())){
+                List<Oggetto> oggetti = dataBaseHelper.getOggetti();
 
-            for (Oggetto oggetto: oggetti){
-                if(oggetto.getId() != -1 ) {
-                    Bitmap bitmap = qrCodeGenerator(oggetto.getId());
-                    uploadFile(oggetto.getId(), bitmap);
+                for (Oggetto oggetto: oggetti){
+                    if(oggetto.getId() != -1 ) {
+                        Bitmap bitmap = qrCodeGenerator(oggetto.getId());
+                        uploadFile(oggetto.getId(), bitmap);
+                    }
+                }
+            }else {
+                List<Oggetto> oggetti = dataBaseHelper.getOggetti();
+
+                for(Oggetto oggetto: oggetti){
+                    dataBaseHelper.setImageOggetto(oggetto.getId(), PLACEHOLDER_OGGETTO);
                 }
             }
         }
