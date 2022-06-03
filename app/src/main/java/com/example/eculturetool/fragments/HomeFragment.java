@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
     private Context context;
     private Curatore curatore;
     private Luogo luogo;
+    private final String emailOspite = "admin@gmail.com";
 
 
     public HomeFragment() {
@@ -61,7 +62,11 @@ public class HomeFragment extends Fragment {
 
         //Operazioni che settano il nome del curatore nella home
         if(curatore != null){
-            tv.setText(curatore.getNome() + " " + curatore.getCognome());
+            if(curatore.getEmail().compareTo(emailOspite) == 0){
+                tv.setText(curatore.getNome());
+            }else{
+                tv.setText(curatore.getNome() + " " + curatore.getCognome());
+            }
         }
         //Operazioni che settano il nome del luogo corrente nella home
         if(luogo != null){
