@@ -37,6 +37,7 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
 
         //Nascondo immagine zona
         holder.imageView.setVisibility(View.INVISIBLE);
+        holder.iconaFreccia.setVisibility(View.VISIBLE);
     }
 
     @Override
