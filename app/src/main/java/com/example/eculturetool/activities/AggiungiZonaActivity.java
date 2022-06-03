@@ -69,24 +69,25 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         String descrizione = descrizioneZona.getText().toString().trim();
 
         if (nome.isEmpty()) {
+            progressBar.setVisibility(View.INVISIBLE);
             nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
             nomeZona.requestFocus();
             return;
         }
         if (controlloEsistenzaNomeZona()) {
+            progressBar.setVisibility(View.INVISIBLE);
             nomeZona.requestFocus();
             nomeZona.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
+            progressBar.setVisibility(View.INVISIBLE);
             descrizioneZona.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneZona.requestFocus();
             return;
         }
-
-
-        progressBar.setVisibility(View.VISIBLE);
+        
         dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente));
         zoneList = dataBaseHelper.getZone();
     }

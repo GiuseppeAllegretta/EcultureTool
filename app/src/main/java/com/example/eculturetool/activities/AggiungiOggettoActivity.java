@@ -1,13 +1,8 @@
 package com.example.eculturetool.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -41,18 +35,7 @@ import com.example.eculturetool.fragments.DialogAddOggettoFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +48,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private EditText nomeOggetto, descrizioneOggetto;
     private Spinner tipologiaOggetto;
     private Button creaOggetto;
-    private ProgressBar progressBarAddOggetto;
+    private ProgressBar progressBar;
     private ProgressBar progressBarImg;
     private ImageView imgOggetto;
     private ActivityResultLauncher<Intent> startForObjectImageUpload;
@@ -94,7 +77,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         descrizioneOggetto = findViewById(R.id.descrizione_oggetto_add);
         tipologiaOggetto = findViewById(R.id.spinner_tipologia_oggetto_add);
         creaOggetto = findViewById(R.id.creaOggetto);
-        progressBarAddOggetto = findViewById(R.id.progressAddOggetto);
+        progressBar = findViewById(R.id.progressAddOggetto);
         progressBarImg = findViewById(R.id.progressImg);
         changeImg = findViewById(R.id.change_imgUser);
         spinnerZone = findViewById(R.id.spinner_zona_add);
@@ -210,7 +193,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             @Override
             public void run() {
                 //La progressbar diventa visibile
-                progressBarAddOggetto.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -221,33 +204,33 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
-            progressBarAddOggetto.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
             nomeOggetto.requestFocus();
             nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
-            progressBarAddOggetto.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (descrizione.isEmpty()) {
             descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
-            progressBarAddOggetto.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
 
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
-            progressBarAddOggetto.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
         if(permissions.checkConnection(getApplicationContext())){
             if(imgUri == null){
                 Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
-                progressBarAddOggetto.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
                 return;
             }
         }else{

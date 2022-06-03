@@ -1,6 +1,7 @@
 package com.example.eculturetool.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,8 +46,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         luoghiList = dataBaseHelper.getLuoghi();
         creaLuogo.setOnClickListener(view -> {
             creazioneLuogo();
-            //La progressbar diventa invisibile
-            progressBar.setVisibility(View.GONE);
             finish();
         });
     }
@@ -65,31 +64,41 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
     private void creazioneLuogo() {
-        //La progressbar diventa invisibile
-        progressBar.setVisibility(View.VISIBLE);
+        Handler handler = new Handler(getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //La progressbar diventa visibile
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
 
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
+            progressBar.setVisibility(View.INVISIBLE);
             nomeLuogo.requestFocus();
+            nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             return;
         }
 
         if (controlloEsistenzaNomeLuogo()) {
+            progressBar.setVisibility(View.INVISIBLE);
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
+            progressBar.setVisibility(View.INVISIBLE);
             descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
         if (tipologiaLuogo == null) {
+            progressBar.setVisibility(View.INVISIBLE);
             tipologiaLuogo.requestFocus();
             return;
         }
