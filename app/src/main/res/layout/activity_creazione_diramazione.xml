@@ -43,23 +43,12 @@
         android:padding="12dp" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:paddingHorizontal="10dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_conferma"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/verdePrimario"
-            android:fontFamily="@font/posterama_1927_regular"
-            android:text="@string/conferma"
-            android:textSize="22sp"
-            app:cornerRadius="50dp" />
+        android:paddingHorizontal="10dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_reset"
@@ -71,9 +60,26 @@
             android:fontFamily="@font/posterama_1927_regular"
             android:text="Reset"
             android:textSize="22sp"
-            app:cornerRadius="50dp" />
+            app:cornerRadius="50dp"
+            android:layout_weight="0"
+            android:layout_marginRight="10dp"/>
 
-    </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/verdePrimario"
+            android:fontFamily="@font/posterama_1927_regular"
+            android:text="@string/conferma"
+            android:textSize="22sp"
+            app:cornerRadius="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

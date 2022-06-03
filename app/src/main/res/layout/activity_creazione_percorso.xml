@@ -14,8 +14,8 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
+
     <EditText
         android:paddingTop="20dp"
         android:id="@+id/nomePercorso"
@@ -77,7 +77,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginRight="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConfermaPercorso"
@@ -94,7 +94,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:layout_weight="1"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginLeft="5dp"/>
 
 
 
