@@ -73,7 +73,6 @@ public class IoHelper {
             //outFile = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             outStream = new ObjectOutputStream(outFile);
             outStream.writeObject(graph);
-            Toast.makeText(context, "Salvato in " + context.getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
 
         }catch(FileNotFoundException e) {
             System.err.println("Errore in scrittura: file non trovato");
@@ -413,7 +412,6 @@ public class IoHelper {
 
             outStream = new ObjectOutputStream(outFile);
             outStream.writeObject(list);
-            Toast.makeText(context, "Salvato in " + context.getFilesDir() + File.separator + LIST_FOLDER + File.separator + FILE_NAME, Toast.LENGTH_LONG).show();
 
         }catch(FileNotFoundException e) {
             System.err.println("Errore in scrittura: file non trovato");
