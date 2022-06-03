@@ -318,20 +318,25 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        progressBarQr.setVisibility(View.GONE);
+                        Handler handler = new Handler(getMainLooper());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //La progressbar diventa visibile
+                                progressBarQr.setVisibility(View.INVISIBLE);
+                            }
+                        });
                         final Dialog dialog = new Dialog(DettaglioOggettoActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setCancelable(true);
                         dialog.setContentView(R.layout.qrcode_dialog);
 
                         final ImageView image = dialog.findViewById(R.id.qrCodeImg);
-                        final ProgressBar progressBarQr = dialog.findViewById(R.id.progressQrCode);
                         image.setImageBitmap(resource);
                         dialog.show();
                     }
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) { }
-
                 });
     }
 
