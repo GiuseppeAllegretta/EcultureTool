@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/oggettoSelezionato"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:focusable="true"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:id="@+id/oggettoSelezionato"
+    android:orientation="vertical"
     tools:ignore="HardcodedText">
 
     <RelativeLayout
@@ -20,27 +21,25 @@
             android:id="@+id/iconaZona"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="image" />
+            android:contentDescription="image"
+            android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/numeroZona"
+        <ImageView
+            android:id="@+id/icona_freccia"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:fontFamily="@font/posterama_1927_regular"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/orangeAction"
-            android:textSize="32sp" />
+            android:contentDescription="image"
+            android:src="@drawable/ic_double_arrow_down"
+            app:tint="@color/orangeAction" />
 
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/numeroZona"
-            android:columnCount="1"
             android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/icona_freccia"
+            android:columnCount="1"
             android:orientation="vertical">
 
             <TextView
@@ -49,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
                 android:ellipsize="end"
-                android:gravity="left"
+                android:gravity="start"
                 android:singleLine="true"
                 android:text="Nome Zona"
                 android:textSize="22sp"
@@ -59,9 +58,9 @@
                 android:id="@+id/descrizioneZona"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:layout_gravity="center|left"
                 android:ellipsize="end"
+                android:gravity="left"
                 android:maxLines="3"
                 android:text="Descrizione completa della zona"
                 tools:ignore="RtlHardcoded" />
@@ -73,9 +72,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="1dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:background="@color/grey" />
 
 </LinearLayout>
