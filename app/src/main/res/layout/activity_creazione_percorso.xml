@@ -10,10 +10,17 @@
     tools:context=".activities.CreazionePercorsoActivity"
     tools:ignore="HardcodedText">
 
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
     <EditText
+        android:paddingTop="20dp"
         android:id="@+id/nomePercorso"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="10"
         android:fontFamily="@font/posterama_1927_regular"
         android:gravity="center"
@@ -22,12 +29,30 @@
         android:textSize="20sp"
         android:inputType="text"
         android:importantForAutofill="no"/>
+    <ImageView
+        android:id="@+id/showTutorialPercorsi"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/question" />
 
+</LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:padding="10dp">
+
+</LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewZone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="85" />
+        android:layout_weight="85"
+        android:layout_gravity="right"
+        android:background="@color/white"/>
 
 
     <LinearLayout
@@ -37,6 +62,22 @@
         android:orientation="horizontal"
         android:layout_weight="5"
         android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAggiungiZona"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/orangeAction"
+            android:fontFamily="@font/posterama_1927_regular"
+            android:text="@string/AggiuntaZonaPercorso"
+            android:textSize="20sp"
+            app:cornerRadius="50dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConfermaPercorso"
@@ -55,21 +96,7 @@
             android:layout_weight="1"
             android:layout_marginRight="5dp"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAggiungiZona"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/orangeAction"
-            android:fontFamily="@font/posterama_1927_regular"
-            android:text="@string/AggiuntaZonaPercorso"
-            android:textSize="20sp"
-            app:cornerRadius="50dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"/>
+
 
     </LinearLayout>
 
