@@ -10,6 +10,21 @@ public class Zona extends Entita implements Serializable {
     private int riferimentoLuogo;
     private ArrayList<Oggetto> listaOggetti = new ArrayList<>();
     private ArrayList<Zona> diramazione = new ArrayList<>();
+    /**
+     * true se è zona finale
+     * false altrimenti
+     */
+    private boolean isFinal= false;
+
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean flag) {
+        isFinal = flag;
+    }
+
+
 
     public Zona(){
     }

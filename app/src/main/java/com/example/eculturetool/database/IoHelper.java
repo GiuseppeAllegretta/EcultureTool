@@ -360,10 +360,12 @@ public class IoHelper {
         Graph<Zona, DefaultEdge> returnGraph = new SimpleDirectedGraph<>(DefaultEdge.class);
 
         //Aggiunge al grafo tutte le zone che appartengono al percorso principale
-        for(Zona zona: list){
+        for(Zona zona : list){
             returnGraph.addVertex(zona);
         }
-
+        //indico l'elemento finale della lista
+        list.get(0).setFinal(true);
+        list.get(list.size()-1).setFinal(true);
         //Collega tutte le zone contenute nel percorso principale sequenzialmente
         for(int i = 0; i < list.size()-1; i++){
             returnGraph.addEdge(list.get(i), list.get(i+1));

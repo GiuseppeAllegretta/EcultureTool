@@ -4,11 +4,21 @@ public class Vertice {
     private int x;
     private int y;
     private String nomeVertice;
+    private boolean isFinal= false;
 
-    public Vertice(String nomeVertice){
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean aFinal) {
+        isFinal = aFinal;
+    }
+
+    public Vertice(String nomeVertice, boolean isFinal){
         this.x=200;
         this.y=200;
         this.nomeVertice= nomeVertice;
+        this.isFinal = isFinal;
     }
 
     public Vertice(int x, int y, String nomeVertice) {

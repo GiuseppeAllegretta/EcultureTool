@@ -47,7 +47,10 @@ public class GraphView extends View{
 
     private void costruzioneGrafo(Graph<Zona, DefaultEdge> grafo) {
         for (Zona v1 : grafo.vertexSet()) {
-            vertices.add(new Vertice(v1.getNome()));
+            vertices.add(new Vertice(v1.getNome(),v1.isFinal()));
+
+
+
             // inizializzo i vertici e assegno le coordinate automaticamente
 
         }
@@ -77,6 +80,20 @@ public class GraphView extends View{
 
         }
         normalizzaPunti();
+
+        for (DefaultEdge e : grafo.edgeSet()){
+            System.out.println(grafo.getEdgeSource(e).getNome());
+        }
+    }
+
+    public int maxY(){
+        int i = 0;
+
+        for (Vertice v : vertices){
+            i= Math.max(i,v.getY());
+
+        }
+        return i+200;
     }
 
     public void setGrafo (Graph<Zona,DefaultEdge> grafo){
@@ -87,8 +104,8 @@ public class GraphView extends View{
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int height = 3000;
-        int width = 1500;
+        int height = maxY();
+        int width = getScreenWidth();
         setMeasuredDimension(width, height);
     }
 
@@ -100,7 +117,7 @@ public class GraphView extends View{
 
         //conto numero vertici per y fisso
 
-        for (int j = 200; j< 3000; j+=200) {
+        for (int j = 200; j< maxY(); j+=200) {
 
             for (int i = 0; i < vertices.size(); i++) {
                 if (vertices.get(i).getY() == j) {
@@ -214,20 +231,21 @@ public class GraphView extends View{
         Paint paintVertex = new Paint();
         paintVertex.setTextSize(60);
         paintVertex.setColor(colorVertice);
+        int colorArrow = ContextCompat.getColor(getContext(), R.color.orangeAction);
+        int colorArco = ContextCompat.getColor(getContext(), R.color.gialloPrimario);
+
+        Paint paintEdge = new Paint();
+        paintEdge.setColor(colorArco);
+        paintEdge.setStrokeWidth(7);
+        Paint paintArrow = new Paint();
+        paintArrow.setColor(colorArrow);
+        paintArrow.setStrokeWidth(20);
 
         for (Vertice v : vertices) {
 
             //per ogni vertice stampa prima gli archi e le frecce
 
-            int colorArrow = ContextCompat.getColor(getContext(), R.color.orangeAction);
-            int colorArco = ContextCompat.getColor(getContext(), R.color.gialloPrimario);
 
-            Paint paintEdge = new Paint();
-            paintEdge.setColor(colorArco);
-            paintEdge.setStrokeWidth(7);
-            Paint paintArrow = new Paint();
-            paintArrow.setColor(colorArrow);
-            paintArrow.setStrokeWidth(20);
 
             //disegno tutti gli archi
             for (DefaultEdge e : grafo.edgeSet()) {
@@ -320,7 +338,12 @@ public class GraphView extends View{
 
         //disegno tutti i vertici e i nomi dei vertici
         for (Vertice v : vertices) {
-            canvas.drawCircle(v.getX(), v.getY(), 30, paintVertex);
+            if(!v.isFinal()){
+                canvas.drawCircle(v.getX(), v.getY(), 30, paintVertex);
+            }else{
+                canvas.drawCircle(v.getX(), v.getY(), 30, paintArrow);
+            }
+
 
             String nomeZona = v.getNomeVertice();
             String nomeZonaRidotto = "";
@@ -345,9 +368,8 @@ public class GraphView extends View{
             else {
                 canvas.drawText(nomeZona, v.getX() - 110, v.getY() - 60, paintVertex);
 
-            }}
-
-
+            }
+        }
     }
 }
 
