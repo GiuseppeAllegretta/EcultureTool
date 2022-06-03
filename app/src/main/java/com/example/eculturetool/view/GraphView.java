@@ -370,6 +370,12 @@ public class GraphView extends View{
 
             }
         }
+
+        for (Zona z : grafo.vertexSet()){
+            if(grafo.outgoingEdgesOf(z).size()==0){
+                canvas.drawCircle(vertices.get(returnIndice(z.getNome())).getX(), vertices.get(returnIndice(z.getNome())).getY(), 30, paintArrow);
+            }
+        }
     }
 }
 
