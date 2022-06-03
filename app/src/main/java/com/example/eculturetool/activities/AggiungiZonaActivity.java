@@ -1,6 +1,7 @@
 package com.example.eculturetool.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,15 +51,20 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         super.onStart();
         creaZona.setOnClickListener(view -> {
             creazioneZona();
-            //La progressbar diventa invisibile
-            progressBar.setVisibility(View.GONE);
+            finish();
         });
 
     }
 
     private void creazioneZona() {
-        //La progressbar diventa invisibile
-        progressBar.setVisibility(View.VISIBLE);
+        Handler handler = new Handler(getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //La progressbar diventa visibile
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
 
@@ -83,9 +89,6 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente));
         zoneList = dataBaseHelper.getZone();
-        finish();
-
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private boolean controlloEsistenzaNomeZona() {
