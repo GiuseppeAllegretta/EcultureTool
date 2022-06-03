@@ -53,6 +53,7 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/gradient_background.xml" value="0.172" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/new_background_test.xml" value="0.172" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/prova.xml" value="0.158" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-land/activity_luoghi.xml" value="0.2875" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-v28/activity_visualizza_diramazione.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.28888888888888886" />
@@ -60,17 +61,21 @@
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dati_percorso.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_info_zona.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_percorsi.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.22" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.25" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/checkbox_layout.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_anteprima_oggetto.xml" value="0.33" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_image_gallery.xml" value="0.365625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_percorsi.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_zona.xml" value="0.215625" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/prova.xml" value="0.365625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/searcher.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/search_menu.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />

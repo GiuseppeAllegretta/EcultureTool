@@ -118,7 +118,7 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
                 //Apertura info zona
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    openInfoZona(holder.cardTitle, holder.cardDescription, holder.getAdapterPosition());
+                    openInfoZona(holder.cardTitle.getText().toString());
                     return true;
                 }
 
@@ -179,11 +179,9 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
     /**
      * Nuova activity per vedere info di una zona
      */
-    private void openInfoZona(TextView title, TextView description, int adapterPosition){
+    private void openInfoZona(String cardTitle){
         Intent intent = new Intent (context, InfoZonaActivity.class);
-        intent.putExtra("TITLE", title.getText());
-        intent.putExtra("DESCRIPTION", description.getText());
-        intent.putExtra("POSITION", adapterPosition);
+        intent.putExtra("TITLE", cardTitle);
         context.startActivity(intent);
     }
 

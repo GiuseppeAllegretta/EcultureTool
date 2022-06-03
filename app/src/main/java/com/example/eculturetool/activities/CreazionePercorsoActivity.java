@@ -67,11 +67,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         intent = getIntent();
 
         //Recupero zone del luogo corrente
-        listaZone = (ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId());
-
+        data.setElencoZone((ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
         //Recupero oggetti per ogni zona
-        for (int i = 0; i < listaZone.size(); i++) {
-            listaZone.get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(listaZone.get(i)));
+        for (int i = 0; i < data.getElencoZone().size(); i++) {
+            data.getElencoZone().get(i).addListaOggetti(dataBaseHelper.getOggettiByZona(data.getElencoZone().get(i)));
         }
 
         init();
@@ -103,7 +102,6 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
             if(data.getIdPath() != 0) {
                 if (esistenzaNomePercorsoModifica()) {
-                    System.out.println("BBBBBBA");
                     editText.setError(getString(R.string.nome_esistente));
                     editText.requestFocus();
                     return;

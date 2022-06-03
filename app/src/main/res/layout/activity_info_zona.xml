@@ -9,6 +9,8 @@
     tools:context=".activities.InfoZonaActivity"
     android:id="@+id/fragment_container">
 
+
+
     <ImageView
         android:id="@+id/ic_close"
         android:layout_width="32dp"
@@ -30,6 +32,7 @@
         android:textColor="@color/black"
         android:textSize="28sp" />
 
+
     <TextView
         android:id="@+id/descrizione"
         android:layout_width="match_parent"
@@ -42,11 +45,16 @@
         android:textSize="16sp" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_oggetti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/descrizione"
-        android:layout_marginTop="20dp" />
+        <GridView
+            android:id="@+id/grid_oggetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="100dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_below="@+id/descrizione"
+            android:layout_marginTop="20dp" />
+
 
 </RelativeLayout>
