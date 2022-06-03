@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
@@ -81,6 +84,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     private Context context;
     private Uri imgUri;
     private ProgressBar progressBar;
+    private ProgressBar progressBarQr;
     private View parentLayout;
 
 
@@ -109,6 +113,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         modificaOggetto = findViewById(R.id.editOggetto);
         eliminaOggetto = findViewById(R.id.eliminaOggetto);
         progressBar = findViewById(R.id.progress);
+        progressBarQr = findViewById(R.id.progressBarQr);
         qrCodeBtn = findViewById(R.id.qrCode);
 
         //Metodo di scroll per la textView
@@ -217,12 +222,23 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Handler handler = new Handler(getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //La progressbar diventa visibile
+                        progressBarQr.setVisibility(View.VISIBLE);
+                    }
+                });
                 if(permissions.checkConnection(getApplicationContext())) {
-                    if (!Objects.equals(qrCode, PLACEHOLDER_OGGETTO)) {
+                    //Check qr code esistente
+                    if (qrCode == null) {
+                        Bitmap bitmap = qrCodeGenerator(idOggetto);
+                        uploadFile(idOggetto, bitmap);
+                        oggetto = dataBaseHelper.getOggettoById(idOggetto);
+                        displayPopupImage(oggetto.getUrlQrcode());
+                    }else{
                         displayPopupImage(qrCode);
-                    } else {
-                        //Bitmap bitmap = qrCodeGenerator(idOggetto);
-                        //uploadQrCode(context, idOggetto, bitmap, dataBaseHelper, DettaglioOggettoActivity.this, progressBar);
                     }
                 } else{
                     Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
@@ -278,33 +294,45 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 .addOnFailureListener(exception -> {
                     Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(taskSnapshot -> {
-                    //progressBarAddOggetto.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     //Ottiene l'uri e lo salva su SQLite
                     fileReferences.getDownloadUrl().addOnSuccessListener(uri -> {
+                        qrCode = uri.toString();
                         //Salva su SQLite la stringa dell'url
-                        dataBaseHelper.setQRCode(idOggetto, uri.toString());
-                        finish();
+                        dataBaseHelper.setQRCode(idOggetto, qrCode);
+                        displayPopupImage(qrCode);
                     });
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        //progressBarAddOggetto.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
                     }
                 });
     }
 
     public void displayPopupImage(String uri) {
+        //Glide.with(dialog.getContext()).load(uri).into(image);
+        Glide.with(this)
+                .asBitmap()
+                .load(uri)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        progressBarQr.setVisibility(View.GONE);
+                        final Dialog dialog = new Dialog(DettaglioOggettoActivity.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.qrcode_dialog);
 
-        final Dialog dialog = new Dialog(DettaglioOggettoActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.qrcode_dialog);
+                        final ImageView image = dialog.findViewById(R.id.qrCodeImg);
+                        final ProgressBar progressBarQr = dialog.findViewById(R.id.progressQrCode);
+                        image.setImageBitmap(resource);
+                        dialog.show();
+                    }
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) { }
 
-        final ImageView image = dialog.findViewById(R.id.qrCodeImg);
-
-        Glide.with(dialog.getContext()).load(uri).into(image);
-
-        dialog.show();
+                });
     }
 
     private void setDatiOggetto() {
