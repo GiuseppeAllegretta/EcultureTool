@@ -1,9 +1,24 @@
 package com.example.eculturetool.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.PixelCopy;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +55,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     EditText editText;
     MaterialButton btnConferma;
     MaterialButton btnAggiungiZona;
+    private ImageView showTutorial;
 
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
@@ -60,6 +76,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         editText = findViewById(R.id.nomePercorso);
         btnConferma = findViewById(R.id.btnConfermaPercorso);
         btnAggiungiZona = findViewById(R.id.btnAggiungiZona);
+        showTutorial = findViewById(R.id.showTutorialPercorsi);
+
+
 
         ioHelper = new IoHelper(getApplicationContext());
         getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
@@ -85,11 +104,35 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        showTutorial.setOnClickListener(v -> {
+            //Intent intent = new Intent(this, ProvaTutorialActivity.class);
+            //startActivity(intent);
+
+
+            final Dialog dialog = new Dialog(CreazionePercorsoActivity.this);
+            dialog.setCancelable(true);
+            dialog.setContentView(R.layout.dialog_tutorial);
+            dialog.show();
+
+            VideoView videoView = dialog.findViewById(R.id.video_tutorialDialog);
+
+            String videoPath="android.resource://"+getPackageName()+"/"+R.raw.video;
+
+            Uri uri=Uri.parse(videoPath);
+            videoView.setVideoURI(uri);
+
+            MediaController mediaController= new MediaController(this);
+            videoView.setMediaController(mediaController);
+            mediaController.setAnchorView(videoView);
+            videoView.start();
+
+        });
+
 
         btnConferma.setOnClickListener(v -> {
             boolean isValid = true;
 
-            if(data.getData().size() == 0){
+            if (data.getData().size() == 0) {
                 Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -100,7 +143,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
                 return;
             }
 
-            if(data.getIdPath() != 0) {
+            if (data.getIdPath() != 0) {
                 if (esistenzaNomePercorsoModifica()) {
                     editText.setError(getString(R.string.nome_esistente));
                     editText.requestFocus();
@@ -114,7 +157,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
                 if (!checkNomePercorso())
                     isValid = false;
 
-                if(!isValid)
+                if (!isValid)
                     return;
 
                 if (isValid)
@@ -245,4 +288,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+
+    private void showCustomDialog() {
+
+    }
+
 }
