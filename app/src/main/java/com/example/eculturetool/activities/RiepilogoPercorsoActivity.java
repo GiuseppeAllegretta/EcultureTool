@@ -133,6 +133,15 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
 
         zone = ioHelper.listZoneDeserializzazione(idPercorso);
+
+        //Questo ciclo è necessario per popolare tutte le zone del percorso con i relativi oggetti per far si che siano visibili attraverso spinner
+        for(Zona zona: zone){
+            zona.addListaOggetti(dataBaseHelper.getOggettiByZona(zona));
+            for (Zona diramazione: zona.getDiramazione()){
+                diramazione.addListaOggetti(dataBaseHelper.getOggettiByZona(diramazione));
+            }
+        }
+
         zoneNomi = new ArrayList<>();
         oggetti = new ArrayList<>();
 
