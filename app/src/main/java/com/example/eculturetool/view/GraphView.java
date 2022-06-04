@@ -105,7 +105,7 @@ public class GraphView extends View{
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int height = maxY();
-        int width = getScreenWidth();
+        int width = Math.min(getScreenHeight(),getScreenWidth());
         setMeasuredDimension(width, height);
     }
 
@@ -114,7 +114,9 @@ public class GraphView extends View{
     //centro i vertici al centro dello schermo
     public void normalizzaPunti(){
         int numeroVertici = 0;
-        int larghezzaDisplay= getScreenWidth();
+
+
+        int larghezzaDisplay=Math.min(getScreenHeight(),getScreenWidth());
         ArrayList <Integer> indici = new ArrayList<>();
 
         //conto numero vertici per y fisso
