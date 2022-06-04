@@ -72,8 +72,6 @@ public class QRcodeScannerFragment extends Fragment {
                         } else {
                             dialogOggettoNonTrovato();
                         }
-                    } else {
-                        dialogOggettoNonTrovato();
                     }
         });
     }
