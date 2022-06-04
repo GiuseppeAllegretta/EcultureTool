@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/lightWhiteGreen"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".activities.HomeActivity">
@@ -31,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nomeCuratore"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="50dp"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/showTutorialHome"
@@ -71,7 +71,7 @@
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/lightWhiteGreen"
+                    app:cardBackgroundColor="@color/verdePrimario"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="3dp">
 
@@ -86,7 +86,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="30dp"
                             android:background="@drawable/ic_percorsi"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="@color/white"
                             android:padding="10dp" />
 
                         <TextView
@@ -110,7 +110,7 @@
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/lightWhiteGreen"
+                    app:cardBackgroundColor="@color/verdePrimario"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="3dp">
 
@@ -125,7 +125,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="30dp"
                             android:background="@drawable/ic_luoghi"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="@color/white"
                             android:padding="10dp" />
 
                         <TextView
@@ -158,7 +158,7 @@
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/lightWhiteGreen"
+                    app:cardBackgroundColor="@color/verdePrimario"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="3dp">
 
@@ -173,7 +173,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="30dp"
                             android:background="@drawable/ic_zone"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="@color/white"
                             android:padding="10dp" />
 
                         <TextView
@@ -184,7 +184,7 @@
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="Zone"
-                            android:textColor="@color/customWhite"
+                            android:textColor="@color/white"
                             android:textSize="24sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -197,7 +197,7 @@
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/lightWhiteGreen"
+                    app:cardBackgroundColor="@color/verdePrimario"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="3dp">
 
@@ -212,7 +212,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="30dp"
                             android:background="@drawable/ic_oggetti"
-                            android:backgroundTint="@color/black"
+                            android:backgroundTint="@color/white"
                             android:padding="10dp" />
 
                         <TextView

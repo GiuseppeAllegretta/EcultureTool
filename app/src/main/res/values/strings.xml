@@ -178,7 +178,7 @@
     <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
     <string name="Entita">Entita</string>
     <string name="Messaggio_percorso_1">Seleziona le zone che comporranno la diramazione</string>
-    <string name="Messaggio_percorso_2">Effettua lo swipe per eliminare una zona</string>
+    <string name="Messaggio_percorso_2">Effettua lo swipe a destra o sinistra per eliminare una zona</string>
     <string name="Creazione_diramazione">Creazione diramazione</string>
     <string name="AggiuntaZonaPercorso">Aggiungi\nZona</string>
     <string name="NomePercorso">Inserisci nome percorso</string>
