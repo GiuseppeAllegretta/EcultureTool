@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -222,7 +223,16 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Handler handler = new Handler(getMainLooper());
+                Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(@NonNull Message message) {
+                        //Messaggio che rende invisibile la progressBar
+                        if (message.what == 1) {
+                            progressBarQr.setVisibility(View.INVISIBLE);
+                        }
+                        return true;
+                    }
+                });
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -241,6 +251,10 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                         displayPopupImage(qrCode);
                     }
                 } else{
+                    //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
+                    Message msg = handler.obtainMessage();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
                     Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
                     snackBar.show();
                 }

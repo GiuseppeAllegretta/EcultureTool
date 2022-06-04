@@ -69,6 +69,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
+                //Messaggio che rende invisibile la progressBar
                 if (message.what == 1) {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -88,6 +89,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
         if (nome.isEmpty()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
@@ -97,6 +99,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         }
 
         if (controlloEsistenzaNomeLuogo()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
@@ -106,6 +109,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         }
 
         if (descrizione.isEmpty()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
@@ -115,6 +119,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         }
 
         if (tipologiaLuogo == null) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);

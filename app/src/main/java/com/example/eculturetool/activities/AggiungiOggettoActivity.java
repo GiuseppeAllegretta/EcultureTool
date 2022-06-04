@@ -192,6 +192,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
+                //Messaggio che rende invisibile la progressBar
                 if (message.what == 1) {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -214,37 +215,41 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         String descrizione = descrizioneOggetto.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
-            nomeOggetto.requestFocus();
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
+            nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
+            nomeOggetto.requestFocus();
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
-            nomeOggetto.requestFocus();
-            nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
+            nomeOggetto.requestFocus();
+            nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
-            descrizioneOggetto.requestFocus();
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
+            descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
+            descrizioneOggetto.requestFocus();
             return;
         }
 
         if (tipologiaOggetto == null) {
-            tipologiaOggetto.requestFocus();
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
+            tipologiaOggetto.requestFocus();
             return;
         }
         if(permissions.checkConnection(getApplicationContext())){

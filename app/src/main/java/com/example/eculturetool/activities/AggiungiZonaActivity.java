@@ -62,6 +62,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
+                //Messaggio che rende invisibile la progressBar
                 if (message.what == 1) {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -79,6 +80,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         String descrizione = descrizioneZona.getText().toString().trim();
 
         if (nome.isEmpty()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
@@ -87,6 +89,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             return;
         }
         if (controlloEsistenzaNomeZona()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
@@ -96,6 +99,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         }
 
         if (descrizione.isEmpty()) {
+            //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
             msg.what = 1;
             handler.sendMessage(msg);
