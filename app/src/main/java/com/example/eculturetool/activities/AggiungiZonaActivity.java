@@ -2,11 +2,14 @@ package com.example.eculturetool.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
@@ -51,13 +54,20 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         super.onStart();
         creaZona.setOnClickListener(view -> {
             creazioneZona();
-            finish();
         });
 
     }
 
     private void creazioneZona() {
-        Handler handler = new Handler(getMainLooper());
+        Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message message) {
+                if (message.what == 1) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                return true;
+            }
+        });
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -69,27 +79,36 @@ public class AggiungiZonaActivity extends AppCompatActivity {
         String descrizione = descrizioneZona.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             nomeZona.setError(getResources().getString(R.string.nome_zona_richiesto));
             nomeZona.requestFocus();
             return;
         }
         if (controlloEsistenzaNomeZona()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             nomeZona.requestFocus();
             nomeZona.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             descrizioneZona.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneZona.requestFocus();
             return;
         }
-        
-        dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente));
-        zoneList = dataBaseHelper.getZone();
+        if(dataBaseHelper.aggiungiZona(new Zona(0, nome, descrizione, luogoCorrente))){
+            zoneList = dataBaseHelper.getZone();
+            finish();
+        }else{
+            Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
+        }
     }
 
     private boolean controlloEsistenzaNomeZona() {

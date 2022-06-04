@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -143,7 +145,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         tipologiaOggetto.setOnItemSelectedListener(this);
         creaOggetto.setOnClickListener(view -> {
             creazioneOggetto();
-            finish();
         });
     }
 
@@ -188,49 +189,70 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     }
 
     private void creazioneOggetto() {
-        Handler handler = new Handler(getMainLooper());
+        Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message message) {
+                if (message.what == 1) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                return true;
+            }
+        });
+
         handler.post(new Runnable() {
             @Override
             public void run() {
                 //La progressbar diventa visibile
                 progressBar.setVisibility(View.VISIBLE);
             }
+
         });
+
+
 
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
-        int idOggettoCreato;
 
         if (nome.isEmpty()) {
             nomeOggetto.setError(getResources().getString(R.string.nome_oggetto_richiesto));
             nomeOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             return;
         }
 
         if (controlloEsistenzaNomeOggetto(nome)) {
             nomeOggetto.requestFocus();
             nomeOggetto.setError(getResources().getString(R.string.nome_esistente));
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             return;
         }
 
         if (descrizione.isEmpty()) {
             descrizioneOggetto.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             return;
         }
 
         if (tipologiaOggetto == null) {
             tipologiaOggetto.requestFocus();
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             return;
         }
         if(permissions.checkConnection(getApplicationContext())){
             if(imgUri == null){
                 Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.INVISIBLE);
+                Message msg = handler.obtainMessage();
+                msg.what = 1;
+                handler.sendMessage(msg);
                 return;
             }
         }else{
@@ -243,6 +265,8 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         //aggiungo l'oggetto al database
         if((dataBaseHelper.addOggetto(oggetto)) == -1){
             Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
+        }else{
+            finish();
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.eculturetool.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -9,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
@@ -46,7 +49,6 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         luoghiList = dataBaseHelper.getLuoghi();
         creaLuogo.setOnClickListener(view -> {
             creazioneLuogo();
-            finish();
         });
     }
 
@@ -64,7 +66,16 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
     private void creazioneLuogo() {
-        Handler handler = new Handler(getMainLooper());
+        Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message message) {
+                if (message.what == 1) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                return true;
+            }
+        });
+
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -77,34 +88,46 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
         if (nome.isEmpty()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             return;
         }
 
         if (controlloEsistenzaNomeLuogo()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
         if (descrizione.isEmpty()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
         if (tipologiaLuogo == null) {
-            progressBar.setVisibility(View.INVISIBLE);
+            Message msg = handler.obtainMessage();
+            msg.what = 1;
+            handler.sendMessage(msg);
             tipologiaLuogo.requestFocus();
             return;
         }
 
         Luogo luogo = new Luogo(nome, descrizione, tipologia, DataBaseHelper.getEmailCuratore());
-        dataBaseHelper.addLuogo(luogo);
+        if(dataBaseHelper.addLuogo(luogo)){
+            finish();
+        }else {
+            Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
+        }
     }
 
 
