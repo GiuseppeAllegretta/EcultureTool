@@ -26,79 +26,93 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="2" >
+        android:weightSum="2">
 
 
         <LinearLayout
-
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:background="@color/white"
+            android:orientation="vertical"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/materialSpinner"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Seleziona Zona"
+                android:elevation="3dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/materialSpinner"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <LinearLayout
+                    android:id="@+id/layoutpercorso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Seleziona Zona">
+                    android:orientation="vertical">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextView"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/modificaPercorso"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="none" />
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_state"
+                        android:padding="10dp"
+                        android:text="@string/Modifica_percorso"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/layoutpercorso"
+                    android:weightSum="1">
 
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/modificaPercorso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="0"
-                android:background="@drawable/button_state"
-                android:padding="10dp"
-                android:text="@string/Modifica_percorso"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/eliminaPercorso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="0"
-                android:background="@drawable/button_state"
-                android:backgroundTint="#DB311F"
-                android:padding="10dp"
-                android:text="@string/Elimina_Percorso"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/eliminaPercorso"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/button_state"
+                        android:backgroundTint="#DB311F"
+                        android:padding="10dp"
+                        android:text="@string/Elimina_Percorso"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:layout_below="@+id/modificaPercorso"/>
+                </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
 
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:background="@color/white"
+            android:orientation="vertical"
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
             <ScrollView
@@ -108,16 +122,13 @@
                 tools:ignore="Suspicious0dp,UselessParent">
 
 
-                    <com.example.eculturetool.view.GraphView
-                        android:id="@+id/graphView"
+                <com.example.eculturetool.view.GraphView
+                    android:id="@+id/graphView"
 
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
 
-                        android:layout_height="0dp" />
-
-
-
+                    android:layout_gravity="center_horizontal" />
 
 
             </ScrollView>
