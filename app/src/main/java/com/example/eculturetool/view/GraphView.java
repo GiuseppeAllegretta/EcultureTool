@@ -109,6 +109,8 @@ public class GraphView extends View{
         setMeasuredDimension(width, height);
     }
 
+
+
     //centro i vertici al centro dello schermo
     public void normalizzaPunti(){
         int numeroVertici = 0;
