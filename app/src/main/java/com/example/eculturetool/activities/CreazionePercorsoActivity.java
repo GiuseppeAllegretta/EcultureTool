@@ -133,7 +133,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             boolean isValid = true;
 
             if (data.getData().size() == 0) {
-                Toast.makeText(this, "Percorso vuoto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.percorso_vuoto), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -253,7 +253,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             ioHelper.listZoneSerializzazione(data.getData(), data.getIdPath());
 
         } else {
-            Toast.makeText(this, "Si è verificato un errore! \n Riprova", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.errore_percorso_riprova), Toast.LENGTH_SHORT).show();
         }
     }
 

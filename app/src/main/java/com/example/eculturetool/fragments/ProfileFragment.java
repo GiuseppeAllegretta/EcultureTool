@@ -138,7 +138,7 @@ public class ProfileFragment extends Fragment {
                 uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
                 startForProfileImageUpload.launch(uploadImageIntent);
             }else{
-                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(requireActivity().findViewById(R.id.frame_layout), "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(requireActivity().findViewById(R.id.frame_layout), getResources().getString(R.string.connessione_internet));
                 snackBar.show();
             }
         });

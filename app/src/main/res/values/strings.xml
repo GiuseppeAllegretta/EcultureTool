@@ -77,6 +77,7 @@
     <string name="seleziona_da_file">Seleziona da file</string>
     <string name="salva">Salva</string>
     <string name="cancella_oggetto">Vuoi cancellare definitivamente l\'oggetto?</string>
+    <string name="cancella_percorso">Vuoi cancellare definitivamente il percorso?</string>
     <string name="si">Si</string>
     <string name="cancella_profilo">Vuoi cancellare definitivamente il tuo profilo?</string>
     <string name="cancella_zona">Vuoi cancellare definitivamente la zona?</string>
@@ -160,11 +161,12 @@
     <string name="flash">Per il flash usa il tasto volume su</string>
     <string name="inquadra">Inquadra un Qr code di un\n oggetto per visualizzarlo,\nmodificarlo o eliminarlo</string>
     <string name="dati_percorso">Dati percorso</string>
-    <string name="errore_percorso_riprova">Si è verificato un errore! Riprova</string>
+    <string name="errore_percorso_riprova">Si è verificato un errore! \nRiprova</string>
     <string name="oppure">OPPURE</string>
     <string name="carica_immagine">Carica Immagine</string>
     <string name="cerca">Ricerca</string>
     <string name="creazione_percorso">Creazione Percorso</string>
+    <string name="connessione_internet">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
 
     <string name="Pulsante_luoghi">Pulsante Luoghi</string>
     <string name="Pulsante_zone">Pulsante Zone</string>
@@ -185,6 +187,9 @@
     <string name="Modifica_percorso">Modifica Percorso</string>
     <string name="reset_diramazione">Reimposta diramazione</string>
     <string name="Visualizza_diramazione">Visualizza diramazione</string>
+    <string name="percorso_vuoto">Percorso vuoto</string>
+    <string name="oggetti_nella_zona">Oggetti nella zona </string>
+
 
 
 </resources>

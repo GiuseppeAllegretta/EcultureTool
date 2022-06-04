@@ -214,7 +214,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
             }else{
-                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.connessione_internet));
                 snackBar.show();
             }
         });
@@ -255,7 +255,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     Message msg = handler.obtainMessage();
                     msg.what = 1;
                     handler.sendMessage(msg);
-                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.connessione_internet));
                     snackBar.show();
                 }
             }

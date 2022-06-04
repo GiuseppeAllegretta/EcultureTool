@@ -170,6 +170,7 @@
     <string name="carica_immagine">Upload Image</string>
     <string name="cerca">Search</string>
     <string name="conferma">Confirm</string>
+    <string name="connessione_internet">An internet connection is required to access this feature</string>
 
 
     <!-- Tutorial -->
@@ -200,4 +201,7 @@
     <string name="Elimina_Percorso">Delete Itinerary</string>
     <string name="Modifica_percorso">Edit Itinerary</string>
     <string name="reset_diramazione">Reset branch</string>
+    <string name="percorso_vuoto">Empty itinerary</string>
+    <string name="oggetti_nella_zona">Objects in the area </string>
+    <string name="cancella_percorso">Do you want to permanently delete the itinerary?</string>
 </resources>

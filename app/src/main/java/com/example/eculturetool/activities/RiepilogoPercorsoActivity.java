@@ -122,7 +122,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
                 builder.create();
-                builder.setTitle("Oggetti nella zona " + "\"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti).show();
+                builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + "\"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti).show();
                 oggetti.clear();
             }
         });
@@ -217,7 +217,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         dialog.setContentView(layout);
 
         TextView testo_tv = layout.findViewById(R.id.titolo_dialog);
-        testo_tv.setText("Vuoi cancellare definitivamente il percorso?");
+        testo_tv.setText(getResources().getString(R.string.cancella_percorso));
 
         final Button conferma = dialog.findViewById(R.id.conferma);
         final Button rifiuto = dialog.findViewById(R.id.annulla);
