@@ -46,7 +46,7 @@
         <activity
             android:name=".activities.RiepilogoPercorsoActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="false"
@@ -161,17 +161,18 @@
         <activity
             android:name=".activities.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
-            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
-            android:parentActivityName=".activities.PercorsiActivity" />
+            android:parentActivityName=".activities.PercorsiActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.InfoZonaActivity"
             android:exported="false" />
         <activity
             android:name=".activities.CreazioneDiramazioneActivity"
             android:exported="false" />
-        <activity android:name=".activities.VisualizzaDiramazioneActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activities.VisualizzaDiramazioneActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"

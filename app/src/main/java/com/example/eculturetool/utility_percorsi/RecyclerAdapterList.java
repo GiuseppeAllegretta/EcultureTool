@@ -37,7 +37,7 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
 
         //Nascondo immagine zona
         holder.imageView.setVisibility(View.INVISIBLE);
-        holder.numeroZona.setText(""+ (position + 1));
+        holder.iconaFreccia.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -47,14 +47,14 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView nomeZona, descrizioneZona, numeroZona;
+        ImageView imageView, iconaFreccia;
+        TextView nomeZona, descrizioneZona;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.iconaZona);
-            numeroZona = itemView.findViewById(R.id.numeroZona);
+            iconaFreccia = itemView.findViewById(R.id.icona_freccia);
             nomeZona = itemView.findViewById(R.id.nomeZona);
             descrizioneZona = itemView.findViewById(R.id.descrizioneZona);
         }

@@ -30,6 +30,13 @@ android {
         viewBinding true
     }
     namespace 'com.example.eculturetool'
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\video'
+            }
+        }
+    }
 }
 
 dependencies {
