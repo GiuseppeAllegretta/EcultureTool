@@ -157,7 +157,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
             }
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, zoneNomi);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, zoneNomi);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         autoCompleteTextView.setAdapter(adapter);
