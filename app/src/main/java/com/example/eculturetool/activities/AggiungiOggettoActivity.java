@@ -166,7 +166,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 nomiZoneList.add(zoneList.get(i).getNome());
             }
 
-            ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+            ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, nomiZoneList);
             spinnerZone.setAdapter(nomiZoneListAdapter);
 
             spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
