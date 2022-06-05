@@ -204,4 +204,5 @@
     <string name="percorso_vuoto">Empty itinerary</string>
     <string name="oggetti_nella_zona">Objects in the area </string>
     <string name="cancella_percorso">Do you want to permanently delete the itinerary?</string>
+    <string name="selezione_zona_oggetti">Select Zone to see the objects</string>
 </resources>

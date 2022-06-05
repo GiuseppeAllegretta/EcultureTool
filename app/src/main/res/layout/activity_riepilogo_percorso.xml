@@ -33,7 +33,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Seleziona Zona"
+            android:hint="@string/selezione_zona_oggetti"
             android:layout_margin="10dp">
 
             <AutoCompleteTextView

@@ -122,7 +122,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
                 builder.create();
-                builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + "\"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti).show();
+                builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + " \"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti).show();
                 oggetti.clear();
             }
         });

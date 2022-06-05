@@ -174,6 +174,7 @@
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/dialog_anteprima_oggetto.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/dialog_tutorial.xml" value="0.3671875" />
