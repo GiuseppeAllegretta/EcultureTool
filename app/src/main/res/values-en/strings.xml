@@ -58,6 +58,7 @@
     <string name="registrazione">Registration</string>
 
     <!-- String database -->
+    <string name="errore">An unexpected problem has occurred</string>
     <string name="db_errore_scrittura">There was an unexpected problem with writing to the database</string>
 
     <!-- Stringhe del luogo -->
@@ -157,6 +158,7 @@
     <string name="alert_zona">To add new objects, you must first enter at least one zone</string>
     <string name="inserisci_nome_percorso">Enter itinerary name</string>
     <string name="nessun_QR">No QR code found</string>
+    <string name="fotocamera_non_disponibile">Function not available! the device does not have a camera</string>
     <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
     <string name="doppio_tap">press double tap to exit</string>
     <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
