@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activities.oggetti.AggiungiOggettoActivity">
 
@@ -16,6 +16,7 @@
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/verdePrimario"
             android:paddingBottom="1dp">
 
             <RelativeLayout
@@ -62,13 +63,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:layout_gravity="center"
                         android:visibility="invisible"
                         app:SpinKit_Color="@color/gialloPrimario"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_gravity="center"
                         tools:ignore="MissingConstraints" />
 
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -120,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/nome_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <EditText
@@ -136,9 +137,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/grey" />
+                            android:layout_height="1dp"
+                            android:background="@color/black" />
 
                     </LinearLayout>
 
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/descrizione_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <EditText
@@ -169,10 +169,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginBottom="1dp"
-                            android:background="@color/grey" />
+                            android:layout_height="1dp"
+                            android:background="@color/black" />
 
                     </LinearLayout>
 
@@ -187,7 +185,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/tipologia_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <Spinner
@@ -200,10 +198,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginBottom="1dp"
-                            android:background="@color/grey" />
+                            android:layout_height="1dp"
+                            android:background="@color/black" />
 
                     </LinearLayout>
 
@@ -218,7 +214,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/zona_di_appartenenza"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <Spinner
@@ -230,10 +226,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginBottom="1dp"
-                            android:background="@color/grey" />
+                            android:layout_height="1dp"
+                            android:background="@color/black" />
 
                     </LinearLayout>
 
