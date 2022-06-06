@@ -56,8 +56,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         eliminaLuogo = findViewById(R.id.eliminaLuogo);
         dataBaseHelper = new DataBaseHelper(this);
 
-        //Metodo di scroll per la textView
-        descrizioneLuogo.setMovementMethod(new ScrollingMovementMethod());
 
         //Recupero dei dati dall'intent
         Intent intent = getIntent();

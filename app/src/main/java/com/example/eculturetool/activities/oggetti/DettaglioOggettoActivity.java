@@ -116,8 +116,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         progressBarQr = findViewById(R.id.progressBarQr);
         qrCodeBtn = findViewById(R.id.qrCode);
 
-        //Metodo di scroll per la textView
-        descrizioneOggetto.setMovementMethod(new ScrollingMovementMethod());
 
 
         //Recupero dei dati dall'intent

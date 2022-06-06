@@ -75,8 +75,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-light"
-                        android:maxLines="10"
-                        android:scrollbars="vertical"
                         android:text=""
                         android:textColor="#000000"
                         android:textSize="20sp" />
