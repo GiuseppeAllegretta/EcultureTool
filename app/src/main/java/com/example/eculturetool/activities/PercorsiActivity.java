@@ -29,6 +29,9 @@ import org.jgrapht.graph.DefaultEdge;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Permette di visualizzare l'elenco dei percorsi creati, ricercare un percorso attraverso il suo nome ed accedere alle sue informazioni
+ */
 public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapterPercorso.OnPercorsoListener {
 
     private ArrayList<Percorso> percorsiList;
@@ -65,7 +68,7 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
     @Override
     protected void onStart() {
         super.onStart();
-
+        //Setting del floating button per l'aggiunta di un nuovo percorso
         addPercorsoFbt.setOnClickListener(view -> {
             DataHolder data = DataHolder.getInstance();
             data.getData().clear();
@@ -74,6 +77,9 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         });
     }
 
+    /**
+     * Setting adapter contente un percorso
+     */
     private void setAdapter() {
         adapterPercorso = new RecyclerAdapterPercorso(percorsiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -82,11 +88,15 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         recyclerView.setAdapter(adapterPercorso);
     }
 
+    /**
+     * Acquisizione da database dei percorsi creati
+     */
     private void setPercorsiInfo() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         percorsiList.addAll(dataBaseHelper.getPercorsi());
     }
 
+    //Menù di ricerca; attraverso il nome è possibile ritrovare un percorso specifico
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -107,6 +117,7 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Clickando su un percorso di accede alle sue informazioni
     @Override
     public void onPercorsoClick(int position) {
         IoHelper ioHelper = new IoHelper(this);
@@ -122,6 +133,7 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         startActivity(intent);
     }
 
+    //Pulizia della lista di percorsi
     @Override
     protected void onResume() {
         super.onResume();

@@ -17,9 +17,14 @@ import com.example.eculturetool.utility_percorsi.CheckboxListener;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ * Permette di aggiungere una zona in un percorso
+ */
 public class AddZonaToPercorsoActivity extends AppCompatActivity implements CheckboxListener {
 
+    //Recupero istanza del dataholder, contenente la lista di zone attualmente in uso per creare il percorso
     private DataHolder data = DataHolder.getInstance();
 
     RecyclerView recyclerView;
@@ -38,7 +43,7 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
         setContentView(R.layout.activity_add_zona_to_percorso);
 
         //Settaggio del titolo all'activity
-        getSupportActionBar().setTitle(getResources().getString(R.string.aggiungi_zona));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.aggiungi_zona));
 
         recyclerView = findViewById(R.id.recyclerViewCheckbox);
         btnConferma = findViewById(R.id.btn_conferma);
@@ -49,6 +54,7 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
         prepList();
         init();
 
+        //Setting bottone conferma
         btnConferma.setOnClickListener(v -> {
             data.getData().addAll(recyclerAdapterCheckbox.getSelectedList());
             finish();
@@ -62,6 +68,9 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
     public void onQuantityChange(ArrayList<Zona> arrayList) {
     }
 
+    /**
+     * Alla pressione del tasto indietro, si ritorna nell'activity di creazione del percorso
+     */
     @Override
     public void onBackPressed() {
         finish();
@@ -70,7 +79,7 @@ public class AddZonaToPercorsoActivity extends AppCompatActivity implements Chec
     }
 
     /**
-     * Rimuove le zone già inserite dalle possibili opzioni selezionabili
+     * Rimuove le zone già inserite dalle possibili opzioni selezionabili, per evitare che una diramazione contenga il nodo padre
      */
     private void prepList() {
         //Recupero zone del luogo corrente, da database

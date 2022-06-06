@@ -10,11 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +25,6 @@ import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Oggetto;
-import com.example.eculturetool.entities.TipologiaOggetto;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.view.GraphView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,6 +35,10 @@ import org.jgrapht.graph.DefaultEdge;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Permette di vedere il riepilogo di un percorso, attraverso un grafo che indica le zone che lo compongono.
+ * Permette inoltre di accedere alla modifica o all'eliminazione del percorso
+ */
 public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private Button eliminaBtn;
     private Button modificaBtn;
@@ -53,7 +54,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     private List<Oggetto> oggetti = new ArrayList<>();
     private List<Zona> zone;
 
-    //TODO in tasto condividi genera eccezione
+    //TODO il tasto condividi genera eccezione
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,40 +95,42 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         gestioneSpinner();
     }
 
+    /**
+     * Permette di gestire lo spinner delle zone che costituiscono il percorso
+     */
     private void gestioneSpinner() {
         settaggioSpinner();
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                for(Zona zona: zone){
-                    if(zona.getNome().compareTo(zoneNomi.get(i)) == 0){
-                        oggetti.addAll(zona.getListaOggetti());
+        autoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            for(Zona zona: zone){
+                if(zona.getNome().compareTo(zoneNomi.get(i)) == 0){
+                    oggetti.addAll(zona.getListaOggetti());
+                    break;
+                }
+
+                for(Zona zonaDiramazione: zona.getDiramazione()){
+                    if(zonaDiramazione.getNome().compareTo(zoneNomi.get(i)) == 0){
+                        oggetti.addAll(zonaDiramazione.getListaOggetti());
                         break;
                     }
-
-                    for(Zona zonaDiramazione: zona.getDiramazione()){
-                        if(zonaDiramazione.getNome().compareTo(zoneNomi.get(i)) == 0){
-                            oggetti.addAll(zonaDiramazione.getListaOggetti());
-                            break;
-                        }
-                    }
                 }
-
-                String nomiOggetti = "\n";
-
-
-                for(Oggetto oggetto: oggetti){
-                    nomiOggetti = nomiOggetti + oggetto.getNome() + " \n\n";
-                }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
-                builder.create();
-                builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + " \"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti).show();
-                oggetti.clear();
             }
+
+            //Costruzione nomi oggetti
+            StringBuilder nomiOggetti = new StringBuilder("\n");
+            for(Oggetto oggetto: oggetti){
+                nomiOggetti.append(oggetto.getNome()).append(" \n\n");
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
+            builder.create();
+            builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + " \"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti.toString()).show();
+            oggetti.clear();
         });
     }
 
+    /**
+     * Settaggio dello spinner che contine la lista delle zone che costituiscono il percorso
+     */
     private void settaggioSpinner() {
         spinner = findViewById(R.id.materialSpinner);
         autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
@@ -167,12 +170,15 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
         autoCompleteTextView.setClickable(true);
     }
 
+    /**
+     * Permette di salvare in un file tutti i dati relativi al grafo
+     */
     private void scritturaSuFileJson() {
-        //Appena ottenuti i dati del grafo vengno salvati tra i file
         ioHelper.esportaTxtinJsonFormat(graph, idPercorso);
     }
 
 
+    //Menù principale, consente di condividere il percorso visualizzato
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -191,8 +197,10 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Setting bottone "elimina"
         eliminaBtn.setOnClickListener(view -> showCustomDialog());
 
+        //Setting bottone "modifica"
         modificaBtn.setOnClickListener(v -> {
             data.setData((ArrayList<Zona>) ioHelper.listZoneDeserializzazione(idPercorso));
             data.setPathName(dataBaseHelper.getPercorsoById(idPercorso).getNome());
@@ -205,8 +213,10 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
     }
 
 
-    // Metodo che gestisce il dialog di conferma eliminazione del percorso
-    void showCustomDialog() {
+    /**
+     * Metodo che gestisce il dialogo per l'eliminazione del percorso
+     */
+    private void showCustomDialog() {
         final Dialog dialog = new Dialog(this);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -224,6 +234,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
 
         dialog.show();
 
+        //Setting bottone "conferma" cancellazione percorso
         conferma.setOnClickListener(view -> {
             dataBaseHelper.deletePercorso(idPercorso);
             ioHelper.cancellaPercorsoArray(idPercorso);
@@ -233,6 +244,7 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
             finish();
         });
 
+        //Setting bottone "annulla" cancellazione percorso
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 }

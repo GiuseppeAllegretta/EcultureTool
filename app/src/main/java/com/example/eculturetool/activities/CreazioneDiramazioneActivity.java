@@ -23,9 +23,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * Permette di creare una diramazione del percorso principale
+ */
 public class CreazioneDiramazioneActivity extends AppCompatActivity {
 
     DataBaseHelper dataBaseHelper;
+    //Recupero istanza del dataholder, contenente la lista di zone attualmente in uso per creare il percorso
     DataHolder data = DataHolder.getInstance();
     ArrayList<Zona> childs = new ArrayList<>(); //Array che esclude il nodo padre
     Intent intent;
@@ -55,6 +59,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         String root = intent.getStringExtra("ROOT");
         int number = Integer.parseInt(intent.getStringExtra("NUMBER"));
 
+        //Recupero di tutte le zone del luogo corrente e preparazione dei dati
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         childs.addAll(dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
         prepData(root);
@@ -62,6 +67,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         //Inizializzazione recycler view
         initRecyclerView();
 
+        //Setting bottone "conferma"
         btnConferma.setOnClickListener(v -> {
             //Acquisisco la posizione della card per impostare la diramazione
             data.getData().get(number - 1).setDiramazione(childs);
@@ -70,6 +76,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        //Setting bottone "reset"
         btnReset.setOnClickListener(v -> {
             finish();
             overridePendingTransition( 0, 0);
@@ -85,6 +92,7 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //Quando selezionata la freccia indietro si ritorna nell'activity specificata
@@ -96,8 +104,10 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Setting dell'ItemTouchHelper, necessario per registrare i movimenti effettuati dall'utente
+     */
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
-
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
@@ -115,6 +125,9 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Alla pressione del tasto indietro, si ritorna nell'activity di creazione del percorso
+     */
     @Override
     public void onBackPressed() {
         finish();
@@ -122,11 +135,17 @@ public class CreazioneDiramazioneActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     * Metodo che permette la preparazione delle zone inseribili, escludento il nodo padre dalle diramazioni
+     * @param root, il nodo padre
+     */
     private void prepData(String root){
         childs.removeIf(item -> item.getNome().equals(root));
     }
 
+    /**
+     * Inizializzazione della recyclerView, setting adapter e itemTouchHelper
+     */
     private void initRecyclerView(){
         recyclerAdapterList = new RecyclerAdapterList<>(childs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

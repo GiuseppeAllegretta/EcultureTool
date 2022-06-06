@@ -1,22 +1,12 @@
 package com.example.eculturetool.activities;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.PixelCopy;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -42,10 +32,14 @@ import org.jgrapht.graph.DefaultEdge;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Permette la creazione di un nuovo percorso
+ */
 public class CreazionePercorsoActivity extends AppCompatActivity {
 
 
@@ -55,18 +49,15 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     EditText editText;
     MaterialButton btnConferma;
     MaterialButton btnAggiungiZona;
-    private ImageView showTutorial;
 
     DataBaseHelper dataBaseHelper;
     ItemTouchHelper itemTouchHelper;
-    Intent intent;
 
     IoHelper ioHelper;
 
-    //ArrayList condiviso, memorizza le zone selezionate
+    //Recupero istanza del dataholder, contenente la lista di zone attualmente in uso per creare il percorso
     DataHolder data = DataHolder.getInstance();
 
-    ArrayList<Zona> listaZone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,14 +67,13 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         editText = findViewById(R.id.nomePercorso);
         btnConferma = findViewById(R.id.btnConfermaPercorso);
         btnAggiungiZona = findViewById(R.id.btnAggiungiZona);
-        showTutorial = findViewById(R.id.showTutorialPercorsi);
+        ImageView showTutorial = findViewById(R.id.showTutorialPercorsi);
 
+        //Setting nome activity
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.creazione_percorso));
 
-
+        //Creazione oggetto IoHelper, necessario per il salvataggio del percorso
         ioHelper = new IoHelper(getApplicationContext());
-        getSupportActionBar().setTitle(getResources().getString(R.string.creazione_percorso));
-
-        intent = getIntent();
 
         //Recupero zone del luogo corrente
         data.setElencoZone((ArrayList<Zona>) dataBaseHelper.getZoneByIdLuogo(dataBaseHelper.getLuogoCorrente().getId()));
@@ -95,6 +85,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         init();
         generateItems();
 
+        //Setting bottone "Aggiungi zona"
         btnAggiungiZona.setOnClickListener(v -> {
             if (!editText.getText().toString().equals(""))
                 data.setPathName(editText.getText().toString());
@@ -104,10 +95,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        //Setting bottone Tutorial
         showTutorial.setOnClickListener(v -> {
             //Intent intent = new Intent(this, ProvaTutorialActivity.class);
             //startActivity(intent);
-
 
             final Dialog dialog = new Dialog(CreazionePercorsoActivity.this);
             dialog.setCancelable(true);
@@ -125,12 +116,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             videoView.setMediaController(mediaController);
             mediaController.setAnchorView(videoView);
             videoView.start();
-
         });
 
-
+        //Setting bottone "conferma" e controllo validità dati
         btnConferma.setOnClickListener(v -> {
-            boolean isValid = true;
 
             if (data.getData().size() == 0) {
                 Toast.makeText(this, getResources().getString(R.string.percorso_vuoto), Toast.LENGTH_SHORT).show();
@@ -155,13 +144,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
 
             } else {
                 if (!checkNomePercorso())
-                    isValid = false;
-
-                if (!isValid)
                     return;
 
-                if (isValid)
-                    createPercorso();
+                createPercorso();
             }
 
             Bundle bundle = new Bundle();
@@ -179,19 +164,18 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
             intent.putExtra("ID_PERCORSO", data.getIdPath());
             startActivity(intent);
             finish();
-            //TODO ripulire edit text alla creazione nuovo percorso dopo averne creato uno precedentemente
+
+            //Pulizia dei dati dopo il salvataggio
             data.setIdPath(0);
             data.getData().clear();
             editText.getText().clear();
         });
-
     }
 
 
     /**
      * Effettua il controllo sulla validità del nome del percorso
-     *
-     * @return true(se il nome non è già esisistente e non è vuoto), false in ogni altro caso
+     * @return true(se il nome non è già esisistente e non è vuoto), false altrimenti
      */
     private boolean checkNomePercorso() {
         boolean flag = true;
@@ -212,6 +196,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Effettua il controllo sull'esistenza del nome del percorso
+     * @return true se il nome è già esistente, false altrimenti
+     */
     private boolean esistenzaNomePercorso() {
         boolean risultato = false;
         List<Percorso> percorsi = dataBaseHelper.getPercorsi();
@@ -224,6 +212,10 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         return risultato;
     }
 
+    /**
+     * Effettua il controllo sull'esistenza del nome del percorso, durante l'operazione di modifica
+     * @return false se il nome non esiste o non è stato modificato, true altrimenti
+     */
     private boolean esistenzaNomePercorsoModifica() {
         boolean risultato = false;
         List<Percorso> percorsi = dataBaseHelper.getPercorsi();
@@ -242,6 +234,9 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         return risultato;
     }
 
+    /**
+     * Permette la screazione di un nuovo oggetto Percorso
+     */
     private void createPercorso() {
         Percorso percorso = new Percorso(editText.getText().toString(), dataBaseHelper.getIdLuogoCorrente());
         data.setIdPath(dataBaseHelper.addPercorso(percorso));
@@ -258,7 +253,7 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo che permette la creazione delle cards zone
+     * Permette la creazione delle cards zone, all'interno di una griglia ordinata
      */
     private void generateItems() {
         RecyclerAdapterGrid adapter = new RecyclerAdapterGrid(this, data.getData(), viewHolder -> itemTouchHelper.startDrag(viewHolder));
@@ -284,14 +279,12 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
     }
 
+    /**
+     * Alla pressione del tasto indietro l'activity termina
+     */
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-
-    private void showCustomDialog() {
-
     }
 
 }

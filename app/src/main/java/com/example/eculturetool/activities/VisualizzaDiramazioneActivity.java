@@ -20,6 +20,9 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
+/**
+ * Permette di visualizzare le possibili diramazioni a partire da una zona, in un percorso
+ */
 public class VisualizzaDiramazioneActivity extends AppCompatActivity {
 
     private DataHolder data = DataHolder.getInstance();
@@ -47,6 +50,7 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         //Inizializzazione recycler view
         initRecyclerView();
 
+        //Setting bottone "reimposta", permette di modificare le diramazioni
         btnReimposta.setOnClickListener(v -> {
             finish();
             Intent intent = new Intent (VisualizzaDiramazioneActivity.this, CreazioneDiramazioneActivity.class);
@@ -57,10 +61,9 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
 
         //Imposta la freccia back visibile nella actionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
+    //Menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home){
@@ -71,6 +74,9 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Alla pressione del tasto indietro l'activity termina
+     */
     @Override
     public void onBackPressed() {
         finish();
@@ -78,6 +84,9 @@ public class VisualizzaDiramazioneActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Inizializzazione della recyclerView e setting adapter
+     */
     private void initRecyclerView(){
         RecyclerAdapterList<Zona> recyclerAdapterList = new RecyclerAdapterList<>(data.getData().get(Integer.parseInt(intent.getStringExtra("NUMBER")) - 1).getDiramazione());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
