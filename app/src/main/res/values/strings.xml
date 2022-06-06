@@ -32,6 +32,11 @@
         <item>Altro</item>
     </string-array>
 
+    <!-- String permessi -->
+    <string name="msg_permesso_storage">Per usare questa funzionalità è necessario consentire l\'accesso a risorse esterne.</string>
+    <string name="msg_permesso_fotocamera">Per usare questa funzionalità è necessario consentire l\'accesso alla fotocamera.</string>
+    <string name="msg_internet_non_disponibile">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
+
     <!-- String database -->
     <string name="errore">Si è verificato un problema inaspettato</string>
     <string name="db_errore_scrittura">Si è verificato un problema inaspettato con la scrittura nel database</string>
@@ -168,7 +173,6 @@
     <string name="carica_immagine">Carica Immagine</string>
     <string name="cerca">Ricerca</string>
     <string name="creazione_percorso">Creazione Percorso</string>
-    <string name="connessione_internet">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
 
     <string name="Pulsante_luoghi">Pulsante Luoghi</string>
     <string name="Pulsante_zone">Pulsante Zone</string>

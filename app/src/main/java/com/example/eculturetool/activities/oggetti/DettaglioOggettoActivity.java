@@ -211,7 +211,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
             }else{
-                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.connessione_internet));
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
                 snackBar.show();
             }
         });
@@ -252,7 +252,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     Message msg = handler.obtainMessage();
                     msg.what = 1;
                     handler.sendMessage(msg);
-                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.connessione_internet));
+                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
                     snackBar.show();
                 }
             }

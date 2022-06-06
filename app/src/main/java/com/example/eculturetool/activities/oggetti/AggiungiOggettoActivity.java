@@ -122,7 +122,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
             }else{
-            Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.connessione_internet));
+            Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
             snackBar.show();
             }
         });

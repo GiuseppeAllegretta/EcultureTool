@@ -170,8 +170,8 @@ public class UploadImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Controllo dei permessi necessari
-                if (!permission.checkStoragePermission(UploadImageActivity.this, parentLayout)) {
-                    permission.requestStoragePermission(UploadImageActivity.this, parentLayout);
+                if (!permission.checkStoragePermission(UploadImageActivity.this)) {
+                    permission.requestStoragePermission(UploadImageActivity.this);
                 } else {
                     //Intent per la scelta del file
                     Intent intent = new Intent();
@@ -187,8 +187,8 @@ public class UploadImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Controllo dei permessi necessari
-                if (!permission.checkCameraPermission(UploadImageActivity.this, parentLayout)) {
-                    permission.requestCameraPermission(UploadImageActivity.this, parentLayout);
+                if (!permission.checkCameraPermission(UploadImageActivity.this)) {
+                    permission.requestCameraPermission(UploadImageActivity.this);
                 } else {
                     apriFotocamera();
                 }
@@ -352,16 +352,16 @@ public class UploadImageActivity extends AppCompatActivity {
                             //Mi assicuro la prima volta che l'utente voglia effettivamente rifiutare il permesso
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                                 //Messaggio per la richiesta di riconferma
-                                perm.showMessageOkCancel(Permissions.STORAGE_PERMISSION_MSG,
+                                perm.showMessageOkCancel(getString(R.string.msg_permesso_storage),
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 switch (which) {
                                                     case DialogInterface.BUTTON_POSITIVE:
-                                                        perm.requestStoragePermission(UploadImageActivity.this, parentLayout);
+                                                        perm.requestStoragePermission(UploadImageActivity.this);
                                                         break;
                                                     case DialogInterface.BUTTON_NEGATIVE:
-                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, Permissions.STORAGE_PERMISSION_MSG);
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.msg_permesso_storage));
                                                         snackBar.show();
                                                         break;
                                                 }
@@ -388,16 +388,16 @@ public class UploadImageActivity extends AppCompatActivity {
                             //Mi assicuro la prima volta che l'utente voglia effettivamente rifiutare il permesso
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
                                 //Messaggio per la richiesta di riconferma
-                                perm.showMessageOkCancel(Permissions.CAMERA_PERMISSION_MSG,
+                                perm.showMessageOkCancel(getString(R.string.msg_permesso_fotocamera),
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 switch (which) {
                                                     case DialogInterface.BUTTON_POSITIVE:
-                                                        perm.requestCameraPermission(UploadImageActivity.this, parentLayout);
+                                                        perm.requestCameraPermission(UploadImageActivity.this);
                                                         break;
                                                     case DialogInterface.BUTTON_NEGATIVE:
-                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, Permissions.CAMERA_PERMISSION_MSG);
+                                                        Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.msg_permesso_fotocamera));
                                                         snackBar.show();
                                                         break;
                                                 }
