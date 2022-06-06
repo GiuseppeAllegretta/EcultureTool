@@ -1,4 +1,4 @@
-package com.example.eculturetool.percorsi;
+package com.example.eculturetool.activities.percorsi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterList;

@@ -44,7 +44,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
-            android:name=".percorsi.RiepilogoPercorsoActivity"
+            android:name=".activities.percorsi.RiepilogoPercorsoActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -57,7 +57,7 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
         <activity
-            android:name=".percorsi.PercorsiActivity"
+            android:name=".activities.percorsi.PercorsiActivity"
             android:exported="true"
             android:label="@string/percorsi"
             android:parentActivityName=".activities.HomeActivity"
@@ -155,19 +155,19 @@
             android:name=".activities.percorsi.AddZonaToPercorsoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CreazionePercorsoActivity"
+            android:name=".activities.percorsi.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
             android:exported="false"
-            android:parentActivityName=".percorsi.PercorsiActivity"
+            android:parentActivityName=".activities.percorsi.PercorsiActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.zone.InfoZonaActivity"
             android:exported="false" />
         <activity
-            android:name=".percorsi.CreazioneDiramazioneActivity"
+            android:name=".activities.percorsi.CreazioneDiramazioneActivity"
             android:exported="false" />
         <activity
-            android:name=".percorsi.VisualizzaDiramazioneActivity"
+            android:name=".activities.percorsi.VisualizzaDiramazioneActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"

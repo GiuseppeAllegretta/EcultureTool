@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_weight="2"
     android:orientation="vertical"
-    tools:context=".percorsi.RiepilogoPercorsoActivity">
+    tools:context=".activities.percorsi.RiepilogoPercorsoActivity">
 
 
     <androidx.appcompat.widget.Toolbar

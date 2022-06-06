@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:weightSum="100"
-    tools:context=".activities.CreazionePercorsoActivity"
+    tools:context=".activities.percorsi.CreazionePercorsoActivity"
     tools:ignore="HardcodedText">
 
 
