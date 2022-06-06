@@ -31,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * Recycler dinamico a griglia delle card nella creazione percorso
+ */
 public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGrid.MyViewHolder>
     implements ItemTouchHelperAdapter {
 
@@ -66,6 +69,12 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
         }
     }
 
+    /**
+     * Costruttore del recycler
+     * @param context
+     * @param listZone
+     * @param listener
+     */
     public RecyclerAdapterGrid(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
         this.context = context;
         this.listZone = listZone;
