@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.zone;
 
 import android.content.Intent;
 import android.os.Bundle;

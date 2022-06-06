@@ -1,6 +1,6 @@
 package com.example.eculturetool.activities;
 
-import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+import static com.example.eculturetool.activities.oggetti.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Placeholder;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;

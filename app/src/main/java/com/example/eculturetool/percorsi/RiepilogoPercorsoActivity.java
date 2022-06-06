@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.percorsi;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.ablanco.zoomy.Zoomy;
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.CreazionePercorsoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.DataHolder;

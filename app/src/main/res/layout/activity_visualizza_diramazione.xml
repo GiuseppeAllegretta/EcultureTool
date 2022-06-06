@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:weightSum="100"
-    tools:context=".activities.VisualizzaDiramazioneActivity">
+    tools:context=".percorsi.VisualizzaDiramazioneActivity">
 
     <TextView
         android:id="@+id/titolo"

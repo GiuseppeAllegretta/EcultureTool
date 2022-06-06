@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.percorsi.AddZonaToPercorsoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
+import com.example.eculturetool.percorsi.RiepilogoPercorsoActivity;
 import com.example.eculturetool.utility_percorsi.MyItemTouchHelperCallback;
 import com.example.eculturetool.utility_percorsi.RecyclerAdapterGrid;
 import com.google.android.material.button.MaterialButton;
