@@ -35,9 +35,11 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_luoghi);
-        fabAddLuogo = findViewById(R.id.addLuogo);
 
+        //Dichiarazione degli elementi della View
+        fabAddLuogo = findViewById(R.id.addLuogo);
         Toolbar myToolbar = findViewById(R.id.toolbarLuoghi);
+        recyclerView = findViewById(R.id.recyclerView);
 
         //Operazione che consente di aggiungere una freccia di navigazione alla toolbar da codice
         Drawable freccia_indietro = ContextCompat.getDrawable(this, R.drawable.ic_freccia_back);
@@ -50,10 +52,12 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
             finish();
         });
 
-        recyclerView = findViewById(R.id.recyclerView);
         luoghiList = new ArrayList<>();
 
+        //metodo che si occupa di settare i dati nella recyclerView
         setLuogoInfo();
+
+        //metodo che si occupa di nascondere le view nel caso di accesso come ospite
         nascondiView();
     }
 
@@ -79,6 +83,9 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiLuogoActivity.class)));
     }
 
+    /**
+     * Metodo che si occupa di effettuare tutte quelle operazioni che consistono nel settaggio dell'adapter
+     */
     private void setAdapter() {
         adapter = new RecyclerAdapterLuogo(luoghiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -87,6 +94,9 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Metodo che recupera i dati dal DB e dopo li va a settare attraverso l'adapter
+     */
     private void setLuogoInfo() {
         dataBaseHelper = new DataBaseHelper(this);
         luoghiList.clear();
@@ -95,6 +105,10 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
 
+    /**
+     * Operazioni da eseguire quando si clicca su un elemento della recyclerView
+     * @param position posizione dell'elemento nella lista
+     */
     @Override
     public void onLuogoClick(int position) {
         int luogoSelezionato = luoghiList.get(position).getId();
@@ -103,6 +117,12 @@ public class LuoghiActivity extends AppCompatActivity implements RecyclerAdapter
         startActivity(intent);
     }
 
+
+    /**
+     * Metodo che si occupa di gestire il filtro di ricerca quando si clicca sulla lente di ingrandimento in alto nella view
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);

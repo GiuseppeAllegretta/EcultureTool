@@ -28,8 +28,6 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     private EditText nomeLuogo, descrizioneLuogo;
     private Spinner tipologiaLuogo;
     private ImageView frecciaBack, conferma;
-
-    //Si recupera questa lista per fare in modo che l'utente non crei/modifichi un luogo con lo stesso nome di uno già creato
     private List<Luogo> luoghiList;
     private Tipologia tipologia;
 
@@ -39,13 +37,14 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_luogo);
 
+        //Dichiarazione degli elementi della View
         nomeLuogo = findViewById(R.id.edit_name_luogo);
         descrizioneLuogo = findViewById(R.id.edit_descrizione_luogo);
         tipologiaLuogo = findViewById(R.id.spinner_tipologia_luoghi_modifica);
         frecciaBack = findViewById(R.id.freccia_back_modifica_luogo);
         conferma = findViewById(R.id.icona_conferma_luoghi);
 
-        //Ottengo i dati del luogo selezionato
+        //Ottengo i dati del luogo selezionato dall'intent
         Intent intent = getIntent();
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);
 
@@ -66,8 +65,10 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         tipologiaLuogo.setAdapter(adapter);
         tipologiaLuogo.setOnItemSelectedListener(this);
 
+        //metodo che si occupa di popolare i capi nella sezione di modifica
         popolaCampi();
 
+        //operazioni da eseguire quando si clicca sulla freccia back
         frecciaBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +76,7 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        //operazioni da eseguire quando si clicca sulla pulsante conferma
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +86,9 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
     }
 
+    /**
+     * Metodo che va a riempire le editText con i valori recuperati dall'intent
+     */
     private void popolaCampi() {
         if(luogo != null){
             nomeLuogo.setText(luogo.getNome());
@@ -93,6 +98,11 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
 
+    /**
+     * Metodo che restituisce l'indice sulla base della scelta effettuata dall'utente
+     * @param tipologia
+     * @return
+     */
     private int getIndexSpinner(Tipologia tipologia) {
         int index = 0;
 
@@ -119,32 +129,38 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
 
     private void editLuogo() {
+        //Recupero i dati dalla editText
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
+        //operazioni da eseguire nel caso in cui la editText del nome è vuota
         if (nome.isEmpty()) {
             nomeLuogo.setError(getResources().getString(R.string.nome_luogo_richiesto));
             nomeLuogo.requestFocus();
             return;
         }
 
+        //operazioni da eseguire nel caso in cui  il nome dato al luogo esiste
         if (controlloEsistenzaNomeLuogo(nome)) {
             nomeLuogo.requestFocus();
             nomeLuogo.setError(getResources().getString(R.string.nome_esistente));
             return;
         }
 
+        //operazioni da eseguire nel caso in cui la editText della descrizione è vuota
         if (descrizione.isEmpty()) {
             descrizioneLuogo.setError(getResources().getString(R.string.descrizione_richiesta));
             descrizioneLuogo.requestFocus();
             return;
         }
 
+        //operazioni da eseguire nel caso in cui la scelta effettuata nello spinner è nulla
         if (tipologiaLuogo == null) {
             tipologiaLuogo.requestFocus();
             return;
         }
 
+        //operazioni da eseguire nel caso in cui l'aggiornamento dei dati nel DB sia andato a buon fine
         if(dataBaseHelper.updateLuogo(idLuogo, nome, descrizione, tipologia)){
             Toast.makeText(this, getResources().getString(R.string.aggiornati_dati), Toast.LENGTH_SHORT).show();
         }else {
@@ -162,6 +178,8 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
 
         returnList = dataBaseHelper.getLuoghi();
 
+        //rimuove il luogo selezionato dalla lista dei luoghi per far si che l'utente possa dare sempre lo stesso nome al luogo che si sta modificando
+        //non avrebbe senso impedire all'utente di dare lo stesso nome al luogo che si sta modificando
         for(int i = 0; i < returnList.size(); i++){
             if(returnList.get(i).getId() == idLuogo){
                 returnList.remove(i);
@@ -171,6 +189,13 @@ public class ModificaLuogoActivity extends AppCompatActivity implements AdapterV
         return returnList;
     }
 
+
+
+    /**
+     * Metodo che effettua un controllo sul nome che l'utente ha dato al luogo
+     * @param nomeLuogo nome da confrontare
+     * @return true se il nome dato al luogo dall'utente già esiste, false altrimenti
+     */
     private boolean controlloEsistenzaNomeLuogo(String nomeLuogo) {
         boolean isEsistente = false;
         nomeLuogo = this.nomeLuogo.getText().toString();

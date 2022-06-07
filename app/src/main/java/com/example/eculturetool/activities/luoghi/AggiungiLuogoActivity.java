@@ -31,7 +31,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     private ProgressBar progressBar;
     private Tipologia tipologia;
 
-    //Si recupera questa lista per fare in modo che l'utente non crei un luogo con lo stesso nome di quello precedente
+    //lista di oggetti di tipo luogo che conterrà tutti i luoghi precedentemente creati dall'utente
     private List<Luogo> luoghiList;
 
     @Override
@@ -39,6 +39,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_luogo);
 
+        //Qui si prendono i riferimenti agli elementi del layout
         nomeLuogo = findViewById(R.id.nome_luogo_add);
         descrizioneLuogo = findViewById(R.id.descrizione_luogo_add);
         tipologiaLuogo = findViewById(R.id.spinner_tipologia_luoghi_add);
@@ -46,7 +47,10 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
         progressBar = findViewById(R.id.progressAddLuogo);
         dataBaseHelper = new DataBaseHelper(this);
 
+        //si prendono tutti i luoghi e si memorizzano in questa lists
         luoghiList = dataBaseHelper.getLuoghi();
+
+        //operazioni da eseguire nel caso in cui si clicca sul pulsante di creazione del luogo
         creaLuogo.setOnClickListener(view -> {
             creazioneLuogo();
         });
@@ -65,6 +69,9 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
 
     }
 
+    /**
+     * Metodo void che si occupa di tutta la logica di creazione del luogo
+     */
     private void creazioneLuogo() {
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
@@ -85,9 +92,11 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        //prendo i valori che l'utente ha scritto nelle due editText
         String nome = nomeLuogo.getText().toString().trim();
         String descrizione = descrizioneLuogo.getText().toString().trim();
 
+        //operazioni da eseguire nel caso in cui la editText del nome è vuota
         if (nome.isEmpty()) {
             //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
@@ -98,6 +107,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
+        //operazioni da eseguire nel caso in cui  il nome dato al luogo esista
         if (controlloEsistenzaNomeLuogo()) {
             //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
@@ -108,6 +118,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
+        //operazioni da eseguire nel caso in cui la editText della descrizione è vuota
         if (descrizione.isEmpty()) {
             //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
@@ -118,6 +129,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
+        //operazioni da eseguire nel caso in cui la scelta effettuata nello spinner è nulla
         if (tipologiaLuogo == null) {
             //Rendo la progressBar gestita dall'handler non visibile attraverso un messaggio
             Message msg = handler.obtainMessage();
@@ -127,7 +139,10 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
+        //creazione del luogo
         Luogo luogo = new Luogo(nome, descrizione, tipologia, DataBaseHelper.getEmailCuratore());
+
+        //caso in cui la creazione del luogo va a buon fine nel DB
         if(dataBaseHelper.addLuogo(luogo)){
             finish();
         }else {
@@ -136,10 +151,15 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
     }
 
 
+    /**
+     * Metodo che effettua un controllo sul nome che l'utente ha dato al luogo
+     * @return true se il nome dato al luogo dall'utente già esiste, false altrimenti
+     */
     private boolean controlloEsistenzaNomeLuogo() {
         boolean isEsistente = false;
         String nomeLuogo = this.nomeLuogo.getText().toString();
 
+        //si compara il nome recuperato dalla edit text e che ha dato l'utente con i nomi degli oggetti che sono stati già scritti nel DB
         for (int i = 0; i < luoghiList.size(); i++) {
             if (nomeLuogo.compareToIgnoreCase(luoghiList.get(i).getNome()) == 0) {
                 isEsistente = true;

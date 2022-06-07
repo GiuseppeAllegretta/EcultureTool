@@ -61,6 +61,7 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idLuogo = intent.getIntExtra(Luogo.Keys.ID, 0);     //id del luogo selezionato nella recyclerView precedente
 
+        //recupero dei dati dal DB
         luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
         luoghiList = dataBaseHelper.getLuoghi();                        //elenco di tutti luoghi relativi a un curatore
 
@@ -89,23 +90,31 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //metodo che consente di popolare correttamente i capi dell view
         popolaCampi();
 
+        //operazioni da eseguire nel caso in cui si clicchi sul pulsante che imposta il luogo corrente
         impostaLuogoCorrente.setOnClickListener(view -> {
+            //si setta nel DB il luogo corrente
             dataBaseHelper.setLuogoCorrente(idLuogo);
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         });
 
+        //operazioni da eseguire nel caso in cui si voglia effettuare la modifica del luogo
         editLuogo.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), ModificaLuogoActivity.class);
             intent.putExtra(Luogo.Keys.ID, idLuogo);
             startActivity(intent);
         });
 
+        //operazioni da eseguire nel caso in cui si voglia eliminare un luogo
         eliminaLuogo();
     }
 
+    /**
+     * metodo void che si occupa settare nelle textView i dati relativi al luogo
+     */
     private void popolaCampi() {
         if(luogoSelezionato != null){
             Objects.requireNonNull(getSupportActionBar()).setTitle(luogoSelezionato.getNome());
@@ -116,6 +125,11 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Metodo che si occupa di restituire la tipologia del luogo in formato stringha sulla base di quello che è il valore dato in input al metodo.
+     * @param tipologia tipologia del luogo enumerativo.
+     * @return viene restituito il formato stringa del valore enumerativo assegnato al luogo
+     */
     private String setTipologia(Tipologia tipologia) {
         String risultato = null;
 
@@ -141,6 +155,9 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * metodo che contiene la logica della funzionalità che consente di eliminare un luogo
+     */
     private void eliminaLuogo() {
 
         //Ottengo il numero di luoghi creato da un certo curatore
@@ -159,7 +176,6 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
@@ -167,9 +183,11 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         super.onResume();
         luogoSelezionato = dataBaseHelper.getLuogoById(idLuogo);
         popolaCampi();
-
     }
 
+    /**
+     * Metodo che consente di mostrare a video il dialog settato con gli opportuni messaggi
+     */
     public void showDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getResources().getString(R.string.avviso))
@@ -178,6 +196,10 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         alert.create().show();
     }
 
+    /**
+     * Metodo che si occupa di mostrare il custum dialog e di settare i vari messaggi
+     * @param luogoCorrente
+     */
     private void showCustomDialog(int luogoCorrente) {
         final Dialog dialog = new Dialog(this);
 
@@ -194,10 +216,13 @@ public class DettaglioLuogoActivity extends AppCompatActivity {
         descrizione_tv.setText(getResources().getString(R.string.NB_luogo));
 
 
+        //recupera gli id dalla view del dialog
         final Button conferma = dialog.findViewById(R.id.conferma);
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
+
+        //operazioni da eseguire nel caso in cui si clicci su conferma
         conferma.setOnClickListener(v -> {
             if (idLuogo == luogoCorrente) {
 
