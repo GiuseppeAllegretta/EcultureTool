@@ -184,8 +184,11 @@
     <string name="Aggiungi_da_qui">Add from here</string>
     <string name="un_nuovo_oggetto">a new object</string>
     <string name="aggiungi_zona">Add zone</string>
+    <string name="crea_percorso">Add itineraries</string>
     <string name="zona_msg_1">To get started, add</string>
     <string name="zona_msg_2">a new zone</string>
+    <string name="percorso_msg_1">To get started, add</string>
+    <string name="percorso_msg_2">a new itinerary</string>
     <string name="Pulsante_luoghi">Places button</string>
     <string name="Pulsante_zone">Zone button</string>
     <string name="Pulsante_oggetti">Objects button</string>

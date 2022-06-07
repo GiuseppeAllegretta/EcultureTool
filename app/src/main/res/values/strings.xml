@@ -160,8 +160,11 @@
     <string name="accesso_risorse_esterne">Consenti l\'accesso a risorse esterne dalle impostazioni per usare questa funzionalità</string>
     <string name="doppio_tap">Doppio tap per uscire</string>
     <string name="aggiungi_zona">Aggiungi zona</string>
+    <string name="crea_percorso">Aggiungi percorso</string>
     <string name="zona_msg_1">Per iniziare, aggiungi</string>
     <string name="zona_msg_2">una nuova zona</string>
+    <string name="percorso_msg_1">Per iniziare, aggiungi</string>
+    <string name="percorso_msg_2">un nuovo percorso</string>
     <string name="file_non_esiste">Il file non esiste!</string>
     <string name="nessun_oggetto_trovato">Nessun oggetto trovato</string>
     <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
