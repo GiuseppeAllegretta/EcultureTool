@@ -67,6 +67,10 @@ public class SplashActivity extends AppCompatActivity {
                     (srcActivity);
         }
 
+        /**
+         * Questo metodo gestisce il tempo della visualizzazione della SplashActivity
+         */
+
         @Override
         public void handleMessage(Message msg) {
             final SplashActivity srcActivity = this.mActivityRef.get();
