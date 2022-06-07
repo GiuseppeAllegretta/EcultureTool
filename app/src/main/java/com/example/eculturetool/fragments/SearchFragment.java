@@ -22,9 +22,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.DettaglioOggettoActivity;
-import com.example.eculturetool.activities.DettaglioZonaActivity;
-import com.example.eculturetool.activities.RiepilogoPercorsoActivity;
+import com.example.eculturetool.activities.oggetti.DettaglioOggettoActivity;
+import com.example.eculturetool.activities.zone.DettaglioZonaActivity;
+import com.example.eculturetool.activities.percorsi.RiepilogoPercorsoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Entita;

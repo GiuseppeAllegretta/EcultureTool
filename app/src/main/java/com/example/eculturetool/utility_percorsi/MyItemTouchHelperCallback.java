@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Callback custom, consente il movimento delle card nella creazione del percorso e il corretto display e movimento di queste
+ */
 public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
@@ -26,6 +29,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         return true;
     }
 
+    //Acqusizione movimento card
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {

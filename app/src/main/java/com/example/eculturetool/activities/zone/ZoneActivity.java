@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.zone;
 
 import android.app.Dialog;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.oggetti;
 
 import android.content.Intent;
 import android.os.Bundle;

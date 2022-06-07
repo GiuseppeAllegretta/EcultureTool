@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.luoghi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.LoginActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;

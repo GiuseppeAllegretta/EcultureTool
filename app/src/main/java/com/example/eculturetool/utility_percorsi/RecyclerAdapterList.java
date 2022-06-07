@@ -14,10 +14,18 @@ import com.example.eculturetool.entities.Entita;
 
 import java.util.ArrayList;
 
+/**
+ * Recycler adapter di tipo lista, utilizzato per rappresentare ina lista di oggetti di tipo Entita (Luoghi, Zone, Oggetti)
+ * @param <T>, oggetto di tipo derivato da Entita
+ */
 public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<RecyclerAdapterList.ViewHolder>{
 
     ArrayList<T> list;
 
+    /**
+     * Costruttore della recycler
+     * @param list, la lista di oggetti che comporranno la recycler
+     */
     public RecyclerAdapterList(ArrayList<T> list) {
         this.list = list;
     }

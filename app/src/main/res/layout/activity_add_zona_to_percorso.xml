@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:weightSum="100"
-    tools:context=".activities.AddZonaToPercorsoActivity">
+    tools:context=".activities.percorsi.AddZonaToPercorsoActivity">
 
     <TextView
         android:id="@+id/titolo"
@@ -19,7 +19,7 @@
         android:gravity="center"
         android:text="@string/Messaggio_percorso_3"
         android:textAlignment="center"
-        android:textColor="@color/orangeAction"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,7 +1,7 @@
 package com.example.eculturetool;
 
 
-import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+import static com.example.eculturetool.activities.oggetti.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
 
 import android.view.LayoutInflater;
 import android.view.View;

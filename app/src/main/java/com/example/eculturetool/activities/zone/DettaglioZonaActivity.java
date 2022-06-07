@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.zone;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.oggetti.AggiungiOggettoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Zona;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

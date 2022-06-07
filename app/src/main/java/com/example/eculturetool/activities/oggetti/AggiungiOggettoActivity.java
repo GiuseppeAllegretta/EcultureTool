@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.oggetti;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.TipologiaOggetto;
@@ -121,7 +122,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
             }else{
-            Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+            Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
             snackBar.show();
             }
         });
@@ -166,7 +167,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                 nomiZoneList.add(zoneList.get(i).getNome());
             }
 
-            ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, nomiZoneList);
+            ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, nomiZoneList);
             spinnerZone.setAdapter(nomiZoneListAdapter);
 
             spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

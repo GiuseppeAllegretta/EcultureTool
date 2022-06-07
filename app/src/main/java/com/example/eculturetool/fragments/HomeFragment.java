@@ -19,10 +19,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.LuoghiActivity;
-import com.example.eculturetool.activities.OggettiActivity;
-import com.example.eculturetool.activities.PercorsiActivity;
-import com.example.eculturetool.activities.ZoneActivity;
+import com.example.eculturetool.activities.luoghi.LuoghiActivity;
+import com.example.eculturetool.activities.oggetti.OggettiActivity;
+import com.example.eculturetool.activities.percorsi.PercorsiActivity;
+import com.example.eculturetool.activities.zone.ZoneActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 import com.example.eculturetool.entities.Luogo;

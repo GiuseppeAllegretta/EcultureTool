@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.luoghi;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

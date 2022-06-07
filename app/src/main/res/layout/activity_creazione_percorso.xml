@@ -7,8 +7,9 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:weightSum="100"
-    tools:context=".activities.CreazionePercorsoActivity"
-    tools:ignore="HardcodedText">
+    tools:context=".activities.percorsi.CreazionePercorsoActivity"
+    tools:ignore="HardcodedText"
+    android:background="#F8F8F8">
 
 
 <LinearLayout
@@ -19,13 +20,14 @@
     <EditText
         android:paddingTop="20dp"
         android:id="@+id/nomePercorso"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:fontFamily="@font/posterama_1927_regular"
         android:gravity="center"
         android:hint="@string/NomePercorso"
-        android:textColorHint="@color/orangeAction"
+        android:textColorHint="@color/black"
+        android:backgroundTint="@color/verdePrimario"
         android:textSize="20sp"
         android:inputType="text"
         android:importantForAutofill="no"/>
@@ -33,26 +35,19 @@
         android:id="@+id/showTutorialPercorsi"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
         android:src="@drawable/question" />
 
 </LinearLayout>
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="right"
-    android:padding="10dp">
-
-</LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewZone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="85"
-        android:layout_gravity="right"
-        android:background="@color/white"/>
+        android:layout_weight="95"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:background="#F8F8F8"/>
 
 
     <LinearLayout
@@ -60,16 +55,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAggiungiZona"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/orangeAction"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/gialloSecondario"
             android:fontFamily="@font/posterama_1927_regular"
             android:text="@string/AggiuntaZonaPercorso"
             android:textSize="20sp"
@@ -77,14 +70,12 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:layout_weight="1"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginEnd="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnConfermaPercorso"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
+            android:layout_height="70dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/verdePrimario"
             android:fontFamily="@font/posterama_1927_regular"
@@ -94,7 +85,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginStart="5dp"/>
 
 
 

@@ -32,7 +32,13 @@
         <item>Altro</item>
     </string-array>
 
+    <!-- String permessi -->
+    <string name="msg_permesso_storage">Per usare questa funzionalità è necessario consentire l\'accesso a risorse esterne.</string>
+    <string name="msg_permesso_fotocamera">Per usare questa funzionalità è necessario consentire l\'accesso alla fotocamera.</string>
+    <string name="msg_internet_non_disponibile">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
+
     <!-- String database -->
+    <string name="errore">Si è verificato un problema inaspettato</string>
     <string name="db_errore_scrittura">Si è verificato un problema inaspettato con la scrittura nel database</string>
 
     <!-- String profilo/oggetto/zona/luogo -->
@@ -77,6 +83,7 @@
     <string name="seleziona_da_file">Seleziona da file</string>
     <string name="salva">Salva</string>
     <string name="cancella_oggetto">Vuoi cancellare definitivamente l\'oggetto?</string>
+    <string name="cancella_percorso">Vuoi cancellare definitivamente il percorso?</string>
     <string name="si">Si</string>
     <string name="cancella_profilo">Vuoi cancellare definitivamente il tuo profilo?</string>
     <string name="cancella_zona">Vuoi cancellare definitivamente la zona?</string>
@@ -148,19 +155,23 @@
     <string name="aggiungi_oggetto">Aggiungi oggetto</string>
     <string name="Aggiungi_da_qui">Aggiungi da qui</string>
     <string name="un_nuovo_oggetto">un nuovo oggetto</string>
+    <string name="fotocamera_non_disponibile">Funzione non disponibile! il dispositivo non dispone di una fotocamera</string>
     <string name="accesso_fotocamera">Consenti l\'accesso alla fotocamera dalle impostazioni per usare questa funzionalità</string>
     <string name="accesso_risorse_esterne">Consenti l\'accesso a risorse esterne dalle impostazioni per usare questa funzionalità</string>
     <string name="doppio_tap">Doppio tap per uscire</string>
     <string name="aggiungi_zona">Aggiungi zona</string>
+    <string name="crea_percorso">Aggiungi percorso</string>
     <string name="zona_msg_1">Per iniziare, aggiungi</string>
     <string name="zona_msg_2">una nuova zona</string>
+    <string name="percorso_msg_1">Per iniziare, aggiungi</string>
+    <string name="percorso_msg_2">un nuovo percorso</string>
     <string name="file_non_esiste">Il file non esiste!</string>
     <string name="nessun_oggetto_trovato">Nessun oggetto trovato</string>
     <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
     <string name="flash">Per il flash usa il tasto volume su</string>
     <string name="inquadra">Inquadra un Qr code di un\n oggetto per visualizzarlo,\nmodificarlo o eliminarlo</string>
     <string name="dati_percorso">Dati percorso</string>
-    <string name="errore_percorso_riprova">Si è verificato un errore! Riprova</string>
+    <string name="errore_percorso_riprova">Si è verificato un errore! \nRiprova</string>
     <string name="oppure">OPPURE</string>
     <string name="carica_immagine">Carica Immagine</string>
     <string name="cerca">Ricerca</string>
@@ -176,7 +187,7 @@
     <string name="gestire_percorsi">Potrai gestire da qui \n i tuoi percorsi</string>
     <string name="Entita">Entita</string>
     <string name="Messaggio_percorso_1">Seleziona le zone che comporranno la diramazione</string>
-    <string name="Messaggio_percorso_2">Effettua lo swipe per eliminare una zona</string>
+    <string name="Messaggio_percorso_2">Effettua lo swipe a destra o sinistra per eliminare una zona</string>
     <string name="Creazione_diramazione">Creazione diramazione</string>
     <string name="AggiuntaZonaPercorso">Aggiungi\nZona</string>
     <string name="NomePercorso">Inserisci nome percorso</string>
@@ -185,6 +196,10 @@
     <string name="Modifica_percorso">Modifica Percorso</string>
     <string name="reset_diramazione">Reimposta diramazione</string>
     <string name="Visualizza_diramazione">Visualizza diramazione</string>
+    <string name="percorso_vuoto">Percorso vuoto</string>
+    <string name="oggetti_nella_zona">Oggetti nella zona </string>
+    <string name="selezione_zona_oggetti">Seleziona Zona per vedere gli oggetti</string>
+
 
 
 </resources>

@@ -44,7 +44,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcultureTool">
         <activity
-            android:name=".activities.RiepilogoPercorsoActivity"
+            android:name=".activities.percorsi.RiepilogoPercorsoActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -57,71 +57,67 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
         <activity
-            android:name=".percorsi.EsportazionePercorsoActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.PercorsiActivity"
+            android:name=".activities.percorsi.PercorsiActivity"
             android:exported="true"
             android:label="@string/percorsi"
             android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.ModificaZonaActivity"
+            android:name=".activities.zone.ModificaZonaActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.DettaglioZonaActivity"
+            android:name=".activities.zone.DettaglioZonaActivity"
             android:exported="false"
-            android:parentActivityName=".activities.ZoneActivity" />
+            android:parentActivityName=".activities.zone.ZoneActivity" />
         <activity
-            android:name=".activities.AggiungiZonaActivity"
+            android:name=".activities.zone.AggiungiZonaActivity"
             android:exported="false"
-            android:parentActivityName=".activities.ZoneActivity" />
+            android:parentActivityName=".activities.zone.ZoneActivity" />
         <activity
-            android:name=".activities.ZoneActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".activities.ModificaOggettoActivity"
+            android:name=".activities.zone.ZoneActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.DettaglioOggettoActivity"
+            android:name=".activities.oggetti.ModificaOggettoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.oggetti.DettaglioOggettoActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.ModificaLuogoActivity"
+            android:name=".activities.luoghi.ModificaLuogoActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.AggiungiLuogoActivity"
+            android:name=".activities.luoghi.AggiungiLuogoActivity"
             android:exported="false"
             android:label="Crea Luogo"
-            android:parentActivityName=".activities.LuoghiActivity" />
+            android:parentActivityName=".activities.luoghi.LuoghiActivity" />
         <activity
-            android:name=".activities.DettaglioLuogoActivity"
+            android:name=".activities.luoghi.DettaglioLuogoActivity"
             android:exported="false"
             android:label=""
-            android:parentActivityName=".activities.LuoghiActivity" />
+            android:parentActivityName=".activities.luoghi.LuoghiActivity" />
         <activity
-            android:name=".activities.LuoghiActivity"
+            android:name=".activities.luoghi.LuoghiActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.CreazioneLuogoActivity"
+            android:name=".activities.luoghi.CreazioneLuogoActivity"
             android:exported="true"
             android:label="Crea il tuo luogo"
             android:parentActivityName=".activities.RegisterUserActivity" />
         <activity
-            android:name=".activities.OggettiActivity"
+            android:name=".activities.oggetti.OggettiActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.AggiungiOggettoActivity"
+            android:name=".activities.oggetti.AggiungiOggettoActivity"
             android:exported="false"
             android:label="Crea Oggetto"
-            android:parentActivityName=".activities.OggettiActivity" />
+            android:parentActivityName=".activities.oggetti.OggettiActivity" />
         <activity
             android:name=".activities.ModificaPasswordActivity"
             android:exported="false"
@@ -156,22 +152,22 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.AddZonaToPercorsoActivity"
+            android:name=".activities.percorsi.AddZonaToPercorsoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CreazionePercorsoActivity"
+            android:name=".activities.percorsi.CreazionePercorsoActivity"
             android:clearTaskOnLaunch="true"
             android:exported="false"
-            android:parentActivityName=".activities.PercorsiActivity"
+            android:parentActivityName=".activities.percorsi.PercorsiActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.InfoZonaActivity"
+            android:name=".activities.zone.InfoZonaActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CreazioneDiramazioneActivity"
+            android:name=".activities.percorsi.CreazioneDiramazioneActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.VisualizzaDiramazioneActivity"
+            android:name=".activities.percorsi.VisualizzaDiramazioneActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"

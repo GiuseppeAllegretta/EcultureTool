@@ -18,9 +18,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.CreazioneDiramazioneActivity;
-import com.example.eculturetool.activities.InfoZonaActivity;
-import com.example.eculturetool.activities.VisualizzaDiramazioneActivity;
+import com.example.eculturetool.activities.percorsi.CreazioneDiramazioneActivity;
+import com.example.eculturetool.activities.zone.InfoZonaActivity;
+import com.example.eculturetool.activities.percorsi.VisualizzaDiramazioneActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 
@@ -31,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * Recycler dinamico a griglia delle card nella creazione percorso
+ */
 public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGrid.MyViewHolder>
     implements ItemTouchHelperAdapter {
 
@@ -66,6 +69,12 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
         }
     }
 
+    /**
+     * Costruttore del recycler
+     * @param context
+     * @param listZone
+     * @param listener
+     */
     public RecyclerAdapterGrid(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
         this.context = context;
         this.listZone = listZone;

@@ -1,6 +1,7 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.percorsi;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,8 @@ import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Percorso;
 import com.example.eculturetool.entities.Zona;
 import com.example.eculturetool.utilities.RecyclerAdapterPercorso;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jgrapht.Graph;
@@ -29,6 +32,9 @@ import org.jgrapht.graph.DefaultEdge;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Permette di visualizzare l'elenco dei percorsi creati, ricercare un percorso attraverso il suo nome ed accedere alle sue informazioni
+ */
 public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapterPercorso.OnPercorsoListener {
 
     private ArrayList<Percorso> percorsiList;
@@ -60,12 +66,15 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
 
         setPercorsiInfo();
         setAdapter();
+        if(percorsiList.isEmpty()){
+            showTutorial();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        //Setting del floating button per l'aggiunta di un nuovo percorso
         addPercorsoFbt.setOnClickListener(view -> {
             DataHolder data = DataHolder.getInstance();
             data.getData().clear();
@@ -74,6 +83,9 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         });
     }
 
+    /**
+     * Setting adapter contente un percorso
+     */
     private void setAdapter() {
         adapterPercorso = new RecyclerAdapterPercorso(percorsiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -82,11 +94,15 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         recyclerView.setAdapter(adapterPercorso);
     }
 
+    /**
+     * Acquisizione da database dei percorsi creati
+     */
     private void setPercorsiInfo() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
         percorsiList.addAll(dataBaseHelper.getPercorsi());
     }
 
+    //Menù di ricerca; attraverso il nome è possibile ritrovare un percorso specifico
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -107,6 +123,7 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Clickando su un percorso di accede alle sue informazioni
     @Override
     public void onPercorsoClick(int position) {
         IoHelper ioHelper = new IoHelper(this);
@@ -122,11 +139,43 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         startActivity(intent);
     }
 
+    //Pulizia della lista di percorsi
     @Override
     protected void onResume() {
         super.onResume();
         percorsiList.clear();
         setPercorsiInfo();
         setAdapter();
+    }
+
+    private void showTutorial(){
+
+
+        TapTargetView.showFor(this,
+                TapTarget.forView(addPercorsoFbt, getString(R.string.crea_percorso), getString(R.string.percorso_msg_1)+ "\n" +
+                                getString(R.string.percorso_msg_2))
+                        // All options below are optional
+                        .outerCircleColor(R.color.gialloSecondario)
+                        .outerCircleAlpha(0.96f)
+                        .targetCircleColor(R.color.white)
+                        .titleTextSize(15)
+                        .titleTextColor(R.color.white)
+                        .descriptionTextSize(12)
+                        .descriptionTextColor(R.color.white)
+                        .textColor(R.color.black)
+                        .textTypeface(Typeface.SANS_SERIF)
+                        .dimColor(R.color.black)
+                        .drawShadow(true)
+                        .cancelable(false)
+                        .tintTarget(false)
+                        .transparentTarget(true)
+                        .targetRadius(60),
+                new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                    }
+                });
+
     }
 }

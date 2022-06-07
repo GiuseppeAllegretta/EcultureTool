@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.eculturetool.R;
-import com.example.eculturetool.activities.DettaglioOggettoActivity;
+import com.example.eculturetool.activities.oggetti.DettaglioOggettoActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Oggetto;
 import com.example.eculturetool.entities.Zona;

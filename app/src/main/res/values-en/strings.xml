@@ -57,7 +57,13 @@
     <string name="accedi_come_ospite">Log in as a guest</string>
     <string name="registrazione">Registration</string>
 
+    <!-- String permessi -->
+    <string name="msg_permesso_storage">To use this feature, you need to allow access to external resources.</string>
+    <string name="msg_permesso_fotocamera">To use this feature, you need to allow access to the camera.</string>
+    <string name="msg_internet_non_disponibile">An internet connection is required to access this feature</string>
+
     <!-- String database -->
+    <string name="errore">An unexpected problem has occurred</string>
     <string name="db_errore_scrittura">There was an unexpected problem with writing to the database</string>
 
     <!-- Stringhe del luogo -->
@@ -157,6 +163,7 @@
     <string name="alert_zona">To add new objects, you must first enter at least one zone</string>
     <string name="inserisci_nome_percorso">Enter itinerary name</string>
     <string name="nessun_QR">No QR code found</string>
+    <string name="fotocamera_non_disponibile">Function not available! the device does not have a camera</string>
     <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
     <string name="doppio_tap">press double tap to exit</string>
     <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
@@ -177,8 +184,11 @@
     <string name="Aggiungi_da_qui">Add from here</string>
     <string name="un_nuovo_oggetto">a new object</string>
     <string name="aggiungi_zona">Add zone</string>
+    <string name="crea_percorso">Add itineraries</string>
     <string name="zona_msg_1">To get started, add</string>
     <string name="zona_msg_2">a new zone</string>
+    <string name="percorso_msg_1">To get started, add</string>
+    <string name="percorso_msg_2">a new itinerary</string>
     <string name="Pulsante_luoghi">Places button</string>
     <string name="Pulsante_zone">Zone button</string>
     <string name="Pulsante_oggetti">Objects button</string>
@@ -200,4 +210,8 @@
     <string name="Elimina_Percorso">Delete Itinerary</string>
     <string name="Modifica_percorso">Edit Itinerary</string>
     <string name="reset_diramazione">Reset branch</string>
+    <string name="percorso_vuoto">Empty itinerary</string>
+    <string name="oggetti_nella_zona">Objects in the area </string>
+    <string name="cancella_percorso">Do you want to permanently delete the itinerary?</string>
+    <string name="selezione_zona_oggetti">Select Zone to see the objects</string>
 </resources>

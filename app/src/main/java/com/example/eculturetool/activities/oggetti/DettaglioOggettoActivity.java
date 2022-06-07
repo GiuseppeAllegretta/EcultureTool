@@ -1,11 +1,9 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.oggetti;
 
-import static com.example.eculturetool.activities.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
+import static com.example.eculturetool.activities.oggetti.AggiungiOggettoActivity.PLACEHOLDER_OGGETTO;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -40,6 +38,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.eculturetool.R;
+import com.example.eculturetool.activities.UploadImageActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Oggetto;
@@ -117,8 +116,6 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         progressBarQr = findViewById(R.id.progressBarQr);
         qrCodeBtn = findViewById(R.id.qrCode);
 
-        //Metodo di scroll per la textView
-        descrizioneOggetto.setMovementMethod(new ScrollingMovementMethod());
 
 
         //Recupero dei dati dall'intent
@@ -214,7 +211,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 uploadImageIntent.putExtra("directory", OBJECTS_IMAGES_DIR);
                 startForObjectImageUpload.launch(uploadImageIntent);
             }else{
-                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
                 snackBar.show();
             }
         });
@@ -255,7 +252,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                     Message msg = handler.obtainMessage();
                     msg.what = 1;
                     handler.sendMessage(msg);
-                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, "È necessaria una connessione ad internet per avere accesso a questa funzione");
+                    Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(parentLayout, getResources().getString(R.string.msg_internet_non_disponibile));
                     snackBar.show();
                 }
             }

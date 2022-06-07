@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-    tools:context=".activities.RiepilogoPercorsoActivity">
+    tools:context=".activities.percorsi.RiepilogoPercorsoActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarDettaglioPercorso"
@@ -33,14 +33,15 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Seleziona Zona"
+            android:hint="@string/selezione_zona_oggetti"
             android:layout_margin="10dp">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

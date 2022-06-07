@@ -1,4 +1,4 @@
-package com.example.eculturetool.activities;
+package com.example.eculturetool.activities.zone;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,6 +17,9 @@ import com.example.eculturetool.utilities.ImageAdapter;
 
 import java.util.Objects;
 
+/**
+ * Permette di visualizzare le informazioni relative ad una zona
+ */
 public class InfoZonaActivity extends AppCompatActivity {
 
     DataHolder data = DataHolder.getInstance();
@@ -58,7 +61,10 @@ public class InfoZonaActivity extends AppCompatActivity {
         closeX.setOnClickListener(v -> finish());
     }
 
-
+    /**
+     * Consente di mettere a display un dialog customizzato che mostra il titolo dell'oggetto selezionato e la sua foto
+     * @param oggetto, l'oggetto di cui si vogliono conoscere le informazioni
+     */
     public void showDialogBox(Oggetto oggetto){
         Dialog dialog = new Dialog(this);
 

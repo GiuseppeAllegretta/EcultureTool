@@ -19,11 +19,19 @@ import com.example.eculturetool.entities.Oggetto;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Recycle adapter di oggetti derivanti da Entita. Permette la ricerca di Luoghi, Zone ed Oggetti
+ */
 public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterEntita.EntitaViewHolder> implements Filterable {
     private ArrayList<Entita> entitaList;
     private ArrayList<Entita> entitaListAll;
     private OnEntitaListener mOnEntitaListener;
 
+    /**
+     * Costruttore del recycle adapter per entita
+     * @param entitaList, una List di Entita
+     * @param onEntitaListener, un listener di Entita
+     */
     public RecyclerAdapterEntita(ArrayList<Entita> entitaList, OnEntitaListener onEntitaListener) {
         this.entitaList=entitaList;
         this.entitaListAll = new ArrayList<>(entitaList);
@@ -68,6 +76,11 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         private OnEntitaListener onEntitaListener;
         private ImageView immagineOggetto;
 
+        /**
+         * Costruttore ViewHolder
+         * @param view, la vista
+         * @param onEntitaListener, listener di Entita
+         */
         public EntitaViewHolder(final View view, OnEntitaListener onEntitaListener){
             super(view);
             nomeEntita= view.findViewById(R.id.nomeEntita);
@@ -109,6 +122,5 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
     public interface OnEntitaListener {
 
         void onEntitaClick(int position);
-
     }
 }

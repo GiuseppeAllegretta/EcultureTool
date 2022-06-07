@@ -6,7 +6,7 @@
     android:padding="8dp"
     android:background="@color/lightWhiteGreen"
     android:elevation="20pt"
-    tools:context=".activities.InfoZonaActivity"
+    tools:context=".activities.zone.InfoZonaActivity"
     android:id="@+id/fragment_container">
 
 
