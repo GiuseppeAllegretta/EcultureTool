@@ -1,5 +1,8 @@
 package com.example.eculturetool.entities;
-// tipologia lei luoghi
+
+/**
+ * Classe enumerativa che permette la differenziazione delle tipologie di Luogo
+ */
 public enum Tipologia {
     MUSEO,
     SITO_CULTURALE,

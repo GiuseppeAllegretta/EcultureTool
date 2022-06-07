@@ -1,5 +1,8 @@
 package com.example.eculturetool.entities;
-//tipologia degli oggetti
+
+/**
+ * Classe enumerativa che permette la differenziazione delle tipologie di Oggetto
+ */
 public enum TipologiaOggetto {
     QUADRO,
     STATUA,
