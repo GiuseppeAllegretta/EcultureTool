@@ -35,12 +35,13 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_zona);
+        //prendo i riferimenti delle view del layout
         nomeZona=findViewById(R.id.nome_zona_add);
         descrizioneZona=findViewById(R.id.descrizione_zona_add);
         progressBar=findViewById(R.id.progressAddZona);
         creaZona=findViewById(R.id.creaZona);
         dataBaseHelper = new DataBaseHelper(this);
-
+        //prendo le zone relative ad un luogo
         luogoCorrente = dataBaseHelper.getIdLuogoCorrente();
         if (zoneList != null)
             zoneList = dataBaseHelper.getZone();
@@ -52,6 +53,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //crea una nuova zona
         creaZona.setOnClickListener(view -> {
             creazioneZona();
         });
@@ -114,7 +116,7 @@ public class AggiungiZonaActivity extends AppCompatActivity {
             Toast.makeText(this, getResources().getString(R.string.db_errore_scrittura), Toast.LENGTH_LONG).show();
         }
     }
-
+    //controllo unicità della zona
     private boolean controlloEsistenzaNomeZona() {
         boolean isEsistente = false;
         String nomeZona = this.nomeZona.getText().toString();

@@ -30,6 +30,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_zona);
 
+        //prendo i riferimenti delle view del layout
         nomeZona = findViewById(R.id.nomeZonaModifica);
         descrizioneZona = findViewById(R.id.descrizioneZonaModifica);
         frecciaBack = findViewById(R.id.freccia_back_modifica_zona);
@@ -58,7 +59,7 @@ public class ModificaZonaActivity extends AppCompatActivity {
     }
 
 
-
+//avvaloro la zona corrispondente verificandone la correttezza delle informazioni immesse
     private void editZona() {
         String nome = nomeZona.getText().toString().trim();
         String descrizione = descrizioneZona.getText().toString().trim();
@@ -84,13 +85,12 @@ public class ModificaZonaActivity extends AppCompatActivity {
 
         Zona z2 = new Zona(0, nome, descrizione, 0);
 
-        progressBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
 
         dataBaseHelper.modifica(z1, z2);
         finish();
     }
-
+//controllo se esiste  una zona con il nome specificato
     private boolean controlloEsistenzaNomeZona(String nomeZona) {
         boolean isEsistente = false;
 

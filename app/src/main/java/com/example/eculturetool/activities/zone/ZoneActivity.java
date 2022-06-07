@@ -92,10 +92,11 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
     @Override
     protected void onStart() {
         super.onStart();
+        //aggiungo una zona quando premo il fab mediante un intent esplicito che rimanda all'activity corrispondente
         fabAddLuogo.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiZonaActivity.class)));
     }
 
-
+//imposto l'adapter per la recyclerView
     private void setAdapter() {
         adapter = new RecyclerAdapterZona(zoneList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -104,7 +105,8 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         recyclerView.setAdapter(adapter);
 
     }
-
+    //rimanda alla zona corrispondente quando seleziono una zona dalla recyclerView
+    //e passa le informazioni della zona all'activity del dettaglio
     @Override
     public void onZonaClick(int position) {
         Zona z = zoneList.get(position);
@@ -116,13 +118,14 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         intent.putExtras(b);
         startActivity(intent);
     }
-
+    // permette di eliminare la zona se effettuo un longpress
     @Override
     public void onZonaLongClick(int position) {
         showCustomDialog(position);
     }
 
 
+    //metodo che effettua la ricerca di una specifica zona
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -149,14 +152,14 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         super.onResume();
         setZoneInfo();
     }
-
+//recupero le informazioni delle zone mediante query
     private void setZoneInfo() {
         zoneList.clear();
         zoneList = dataBaseHelper.getZone();
         setAdapter();
     }
 
-
+//visualizzo il dialog che permette di eliminare una zona
     private void showCustomDialog(int p) {
         final Dialog dialog = new Dialog(this);
 
@@ -179,6 +182,7 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
+        //confermo l'eliminazione di una zona
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,13 +194,12 @@ public class ZoneActivity extends AppCompatActivity implements RecyclerAdapterZo
 
             }
         });
+        //annullo l'eliminazione di una zona
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 
-
+//visualizzo il tutorial per l'activity corrispondente
     private void showTutorial(){
-
-
         TapTargetView.showFor(this,
                 TapTarget.forView(fabAddLuogo, getString(R.string.aggiungi_zona), getString(R.string.zona_msg_1)+ "\n" +
                         getString(R.string.zona_msg_2))

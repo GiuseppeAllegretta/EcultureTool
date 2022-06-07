@@ -33,7 +33,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_zona);
-
+        //prendo i riferimenti delle view del layout
         nomeZona = findViewById(R.id.nomeZonaDettaglio);
         descrizioneZona = findViewById(R.id.descrizioneZonaDettaglio);
         aggiungiOggettoButton = findViewById(R.id.aggiungiOggetto);
@@ -46,7 +46,7 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         //recupero dati dall'intent
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
-
+        //recupero i dati della zona
         z= (Zona) bundle.getSerializable("ZONE");
 
         nomeZona.setText(z.getNome());
@@ -88,19 +88,20 @@ public class DettaglioZonaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+//avvio la modifica della zona reindirizzandola all'activity corrispondente mediante intent esplicito
         modificaZona.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), ModificaZonaActivity.class);
             intent.putExtra("ZONE", z);
             startActivity(intent);
         });
-
+//aggiungo un oggetto reindirizzandolo all'activity corrispondente mediante intent esplicito
         aggiungiOggettoButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class)));
+       //visualizzo il dialog se voglio eliminare una zona
         eliminaZonaButton.setOnClickListener(view -> showCustomDialog());
     }
 
 
-
+//dialog per l'eliminazione della zona
     private void showCustomDialog() {
         final Dialog dialog = new Dialog(this);
 
@@ -120,12 +121,13 @@ public class DettaglioZonaActivity extends AppCompatActivity {
         final Button rifiuto = dialog.findViewById(R.id.annulla);
 
         dialog.show();
-
+        //confermo eliminazione della zona
         conferma.setOnClickListener(v -> {
             dataBaseHelper.rimuoviZona(z);
             dialog.dismiss();
             finish();
         });
+        //rifuito l'eliminazione della zona
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
 
