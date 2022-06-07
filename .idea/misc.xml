@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.48148148148148145" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.2037037037037037" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-anydpi/ic_list.xml" value="0.259" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1355" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.151" />
@@ -53,18 +53,17 @@
         <entry key="..\:/Android/EcultureTool/app/src/main/res/menu/upload_image_options.xml" value="0.2777777777777778" />
         <entry key="..\:/Android/EcultureTool/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.292" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/gradient_background.xml" value="0.172" />
+        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/ic_double_arrow_down.xml" value="0.158" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/new_background_test.xml" value="0.172" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/prova.xml" value="0.158" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-land/activity_luoghi.xml" value="0.2875" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-v28/activity_visualizza_diramazione.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.28888888888888886" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_diramazione.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dati_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_info_zona.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_percorsi.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.22" />
@@ -75,14 +74,12 @@
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_info_zona.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/home.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_percorsi.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/list_item_zona.xml" value="0.215625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/prova.xml" value="0.365625" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/searcher.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Matteo/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/search_menu.xml" value="0.22864583333333333" />
-        <entry key="..\:/Users/Matteo/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/auto_complete_list.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/grad.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-anydpi/ic_action_settings.xml" value="0.229" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.1675" />
@@ -92,14 +89,17 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/button_shape_tondo.xml" value="0.116" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1675" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/font/le_chant_des_albatros.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-land/activity_dettaglio_oggetto.xml" value="0.264" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout-land/activity_dettaglio_zona.xml" value="0.2564102564102564" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_add_museo.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.14907407407407408" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_aggiungi_zona.xml" value="0.264" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_create_object.xml" value="0.2059071729957806" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_museo.xml" value="0.20854700854700856" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_creazione_percorso.xml" value="0.264" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.2059071729957806" />
-        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.1" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_luoghi.xml" value="0.2059071729957806" />
@@ -113,6 +113,7 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_oggetti_no_zone.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_password_dimenticata.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_percorsi.xml" value="0.28846153846153844" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_prova_tutotial.xml" value="0.10341880341880341" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_register_user.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_show_image.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/activity_upload_image.xml" value="0.20854700854700856" />
@@ -120,6 +121,8 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_oggetto.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_elimina_zona.xml" value="0.20854700854700856" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_layout.xml" value="0.2848101265822785" />
+        <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/dialog_tutorial.xml" value="0.2839662447257384" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_places.xml" value="0.1" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
@@ -147,17 +150,13 @@
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_places.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1755" />
-        <entry key="app/src/main/res/layout-land/activity_dettaglio_oggetto.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout-land/activity_riepilogo_percorso.xml" value="0.33" />
-        <entry key="app/src/main/res/layout-land/activity_riepilogo_percorso.xml" value="0.33" />
         <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.1296875" />
         <entry key="app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_aggiungi_zona.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_create_object.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/activity_creazione_diramazione.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/activity_creazione_percorso.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_creazione_diramazione.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/activity_dettaglio_luogo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/activity_dettaglio_oggetto.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_dettaglio_zona.xml" value="0.4036458333333333" />
@@ -175,14 +174,14 @@
         <entry key="app/src/main/res/layout/activity_percorsi.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.39351851851851855" />
-        <entry key="app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_riepilogo_percorso.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/activity_show_image.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.2078125" />
-        <entry key="app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.265625" />
+        <entry key="app/src/main/res/layout/activity_zone.xml" value="0.325" />
         <entry key="app/src/main/res/layout/dialog_anteprima_oggetto.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/dialog_tutorial.xml" value="0.3671875" />
         <entry key="app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_info_zona.xml" value="0.4036458333333333" />
