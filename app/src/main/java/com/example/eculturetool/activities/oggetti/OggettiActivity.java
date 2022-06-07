@@ -56,6 +56,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oggetti);
+        //prendo i riferimenti delle view del layout
         fabAddOggetto = findViewById(R.id.addOggetto);
         recyclerView = findViewById(R.id.recyclerViewOggetti);
         layoutNoZone = findViewById(R.id.layout_no_zone);
@@ -81,7 +82,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         retrieveZone();
 
         setOggettoInfo();
-
+        // Nasconde la recyclerView view quando essa è vuota
         if (zoneList.isEmpty()) {
             recyclerView.setVisibility(View.INVISIBLE);
             fabAddOggetto.setVisibility(View.INVISIBLE);
@@ -118,14 +119,16 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
     @Override
     protected void onStart() {
         super.onStart();
-
+        //aggiunge un oggetto quando viene premuto il fab mediante un intent
+        // esplicito che rimanda all'activity corrispondente
         fabAddOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), AggiungiOggettoActivity.class));
             }
         });
-
+        //aggiunge una zona mediante un intent esplicito
+        // che rimanda all'activity corrispondente
         addZona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +138,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         });
 
     }
-
+    //imposta l'adapter per la specifica recyclerView
     private void setAdapter() {
         adapter = new RecyclerAdapterOggetto(oggettiList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -143,7 +146,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
-
+//recupera le informazioni dell'oggetto mediante query
     private void setOggettoInfo() {
         dataBaseHelper = new DataBaseHelper(this);
         oggettiList.clear();
@@ -151,7 +154,6 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
         setAdapter();
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -172,7 +174,8 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         return true;
     }
 
-
+//passa all'activity del dettaglio dell'oggetto mediante
+// intent esplicito e passa i relativi dati corrispondenti
     @Override
     public void onOggettoClick(int position) {
         int oggettoSelezionato = oggettiList.get(position).getId();
@@ -183,6 +186,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         startActivity(intent);
     }
 
+    //permette di eliminare l'oggetto usando un long press
     @Override
     public void onOggettoLongClick(int position) {
         showCustomDialog(position);
@@ -197,6 +201,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
         setAdapter();
     }
 
+    //dialog per l'eliminazione dell'oggetto corrispondente
     void showCustomDialog(int p) {
         final Dialog dialog = new Dialog(this);
         int idOggettoEliminare = oggettiList.get(p).getId();
@@ -217,6 +222,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
         dialog.show();
 
+        //elimina l'oggetto quando viene premuto conferma
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,7 +236,7 @@ public class OggettiActivity extends AppCompatActivity implements RecyclerAdapte
 
         rifiuto.setOnClickListener(onClickListener -> dialog.dismiss());
     }
-
+//mostra il tutorial per questa activity
     private void showTutorial() {
 
         TapTargetView.showFor(this,

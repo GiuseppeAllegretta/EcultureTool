@@ -124,25 +124,29 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         luogoCorrente = intent.getIntExtra(Luogo.Keys.ID, 0);
         zoneList = (List<Zona>) intent.getSerializableExtra("ZONELIST");
 
-
+        //gestisce l'upload dell'immagine mediante una activity che si aspetta un risultato
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
                     Uri uri = null;
+                    //controlla che il risultato non sia null
                     if (activityResult.getData() != null) {
                         uri = activityResult.getData().getData();
                     }
+                    //controlla che il risultato dell'activity sia andato a buon fine
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         imgUri = uri;
                         dataBaseHelper.setImageOggetto(idOggetto, imgUri.toString());
 
+                        //ridimensiona l'immagine all'imageview rotonda
                         Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
+                            //gestisce il fallimento del caricamento
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 progressBar.setVisibility(View.GONE);
                                 return false;
                             }
-
+                            //verifica quando l'immagine è pronta
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 progressBar.setVisibility(View.VISIBLE);
@@ -175,16 +179,16 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         setDatiOggetto();
 
+        //gestione della navigazione dell'activity
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
+        //mostra un dialog prima dell'eliminazione dell'oggetto
         eliminaOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,7 +196,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             }
 
         });
-
+        //passa all'activity di modifica oggetto i dati attraverso un intent esplicito
         modificaOggetto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,7 +208,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //effettua la modifica dell'immagine e verifica che sia presente la connessione per effettuare l'upload
         cambiaImmagine.setOnClickListener(onClickListener -> {
             if (permissions.checkConnection(getApplicationContext())) {
                 Intent uploadImageIntent = new Intent(this, UploadImageActivity.class);
@@ -216,7 +220,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
             }
         });
 
-
+        //abilita il QR code quando viene selezionato il tasto corrispondente
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

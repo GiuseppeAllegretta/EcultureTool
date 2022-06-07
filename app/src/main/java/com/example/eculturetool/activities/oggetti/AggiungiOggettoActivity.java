@@ -74,6 +74,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_oggetti);
+        //prendo i riferimenti delle view del layout
         permissions = new Permissions();
         imgOggetto = findViewById(R.id.imgOggetto);
         nomeOggetto = findViewById(R.id.nome_oggetto_add);
@@ -88,17 +89,24 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         parentLayout = findViewById(android.R.id.content);
         imgOggetto.setImageDrawable(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.pottery));
 
+        //gestisce l'upload dell'immagine mediante una activity che si aspetta un risultato
         startForObjectImageUpload = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 activityResult -> {
+                    //mostra la progressbar durante l'upload
                     progressBarImg.setVisibility(View.VISIBLE);
                     Uri uri = null;
+                    //si assicura che il risultato non sia null
                     if (activityResult.getData() != null) {
                         uri = activityResult.getData().getData();
                     }
+                    //controlla che il risultato dell'activity sia andato a buon fine
                     if (activityResult.getResultCode() == UploadImageActivity.RESULT_OK) {
                         imgUri = uri;
+
+                        //ridimensiona l'immagine all'imageview rotonda
                         Glide.with(this).load(imgUri).listener(new RequestListener<Drawable>() {
+                            //gestisce il fallimento del caricamento
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 progressBarImg.setVisibility(View.GONE);
@@ -106,6 +114,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                                 return false;
                             }
 
+                            //verifica quando l'immagine è pronta
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                 progressBarImg.setVisibility(View.GONE);
@@ -115,6 +124,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
                     }
                 });
 
+        //nel caso in cui non sia presente la connessione ad internet carica una immagine di default per l'oggetto
         changeImg.setOnClickListener(onClickListener -> {
             if(permissions.checkConnection(getApplicationContext())){
 
@@ -126,7 +136,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             snackBar.show();
             }
         });
-
 
         oggettiList = getListOggettiCreati();
         setZoneSpinner();
@@ -151,7 +160,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
 
     /**
-     * Metodo per settare l'elenco delle zone nello spinner relativo. Per ora ci sono solo valori statici
+     * Metodo per settare l'elenco delle zone nello spinner relativo.
      */
     private void setZoneSpinner() {
         zoneList.clear();       //pulisce la lista prima di riempirla
@@ -170,6 +179,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             ArrayAdapter<String> nomiZoneListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, nomiZoneList);
             spinnerZone.setAdapter(nomiZoneListAdapter);
 
+            //recupera la zona selezionata
             spinnerZone.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -189,6 +199,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         dialogAddOggettoFragment.show(getSupportFragmentManager(), "dialog");
     }
 
+    //
     private void creazioneOggetto() {
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
@@ -253,6 +264,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
             tipologiaOggetto.requestFocus();
             return;
         }
+        //controllo che sia presente la connesione e se sia presente un immagine per un determinato oggetto
         if(permissions.checkConnection(getApplicationContext())){
             if(imgUri == null){
                 Toast.makeText(this, getResources().getString(R.string.inserimento_immagine), Toast.LENGTH_LONG).show();
@@ -276,7 +288,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         }
     }
 
-
+    //controllo che un oggetto sia stato già creato
     private boolean controlloEsistenzaNomeOggetto(String nomeOggetto) {
         boolean isEsistente = false;
 
@@ -288,14 +300,14 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         return isEsistente;
     }
 
-
+    //ritorna la lista degli oggetti creati presenti nel database
     private List<Oggetto> getListOggettiCreati() {
         List<Oggetto> returnList;
         returnList = dataBaseHelper.getOggetti();
         return returnList;
     }
 
-
+    //assegno una tipologia all'oggetto creato
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
