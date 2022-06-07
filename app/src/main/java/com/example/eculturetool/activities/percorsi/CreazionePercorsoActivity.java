@@ -121,6 +121,14 @@ public class CreazionePercorsoActivity extends AppCompatActivity {
         //Setting bottone "conferma" e controllo validità dati
         btnConferma.setOnClickListener(v -> {
 
+            //Questo ciclo consente di aggiungere tutti gli oggetti alle zone del percorso (sia zone principali che diramazioni)
+            for(Zona zona: data.getData()){
+                zona.addListaOggetti(dataBaseHelper.getOggettiByZona(zona));
+                for(Zona diramazione: zona.getDiramazione()){
+                    diramazione.addListaOggetti(dataBaseHelper.getOggettiByZona(diramazione));
+                }
+            }
+
             if (data.getData().size() == 0) {
                 Toast.makeText(this, getResources().getString(R.string.percorso_vuoto), Toast.LENGTH_SHORT).show();
                 return;
