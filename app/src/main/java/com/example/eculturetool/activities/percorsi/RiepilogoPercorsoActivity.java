@@ -33,7 +33,10 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Permette di vedere il riepilogo di un percorso, attraverso un grafo che indica le zone che lo compongono.
@@ -115,11 +118,22 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
                 }
             }
 
+            Set<String> oggettiSet = new HashSet<>();
+            for(Oggetto oggetto: oggetti){
+                oggettiSet.add(oggetto.getNome());
+            }
+
             //Costruzione nomi oggetti
             StringBuilder nomiOggetti = new StringBuilder("\n");
-            for(Oggetto oggetto: oggetti){
-                nomiOggetti.append(oggetto.getNome()).append(" \n\n");
+
+            Iterator<String> iterator = oggettiSet.iterator();
+            while (iterator.hasNext()){
+                nomiOggetti.append(iterator.next() + "\n\n");
             }
+
+            //for(Oggetto oggetto: oggetti){
+            //    nomiOggetti.append(oggetto.getNome()).append(" \n\n");
+            //}
 
             AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
             builder.create();
