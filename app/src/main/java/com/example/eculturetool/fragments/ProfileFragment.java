@@ -133,7 +133,7 @@ public class ProfileFragment extends Fragment {
                 uploadImageIntent.putExtra("directory", PROFILE_IMAGES_DIR);
                 startForProfileImageUpload.launch(uploadImageIntent);
             }else{
-                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(requireActivity().findViewById(R.id.frame_layout), getResources().getString(R.string.connessione_internet));
+                Snackbar snackBar = permissions.getPermanentSnackBarWithOkAction(requireActivity().findViewById(R.id.frame_layout), getResources().getString(R.string.msg_internet_non_disponibile));
                 snackBar.show();
             }
         });

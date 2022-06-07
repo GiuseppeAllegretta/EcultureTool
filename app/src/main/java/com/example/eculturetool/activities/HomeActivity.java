@@ -1,6 +1,5 @@
 package com.example.eculturetool.activities;
 
-import static com.example.eculturetool.utilities.Permissions.CAMERA_PERMISSION_MSG;
 import static com.example.eculturetool.utilities.Permissions.CAMERA_REQUEST_CODE;
 
 import android.Manifest;
@@ -57,12 +56,10 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new ProfileFragment());
                     break;
                 case R.id.qr_scanner:
-                    //replaceFragment(new QRScannerFragment());
-                    if(permission.checkCameraPermission(this, parentLayout)){
+                    if(permission.checkCameraPermission(this)){
                         replaceFragment(new QRcodeScannerFragment());
-                        //replaceFragment(new QRScannerFragment());
                     }else{
-                        permission.requestCameraPermission(this, parentLayout);
+                        permission.requestCameraPermission(this);
                     }
                     break;
 
@@ -88,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (!(grantResult == PackageManager.PERMISSION_GRANTED)) {
                         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                            perm.showMessageOkCancel(CAMERA_PERMISSION_MSG,
+                            perm.showMessageOkCancel(getString(R.string.msg_permesso_fotocamera),
                                     new DialogInterface.OnClickListener() {
 
                                         @Override
@@ -96,10 +93,10 @@ public class HomeActivity extends AppCompatActivity {
 
                                             switch (which) {
                                                 case DialogInterface.BUTTON_POSITIVE:
-                                                    perm.requestCameraPermission(HomeActivity.this, parentLayout);
+                                                    perm.requestCameraPermission(HomeActivity.this);
                                                     break;
                                                 case DialogInterface.BUTTON_NEGATIVE:
-                                                    Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, CAMERA_PERMISSION_MSG);
+                                                    Snackbar snackBar = perm.getPermanentSnackBarWithOkAction(parentLayout, getString(R.string.msg_permesso_fotocamera));
                                                     snackBar.show();
                                                     break;
                                             }

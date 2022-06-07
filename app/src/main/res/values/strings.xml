@@ -32,7 +32,13 @@
         <item>Altro</item>
     </string-array>
 
+    <!-- String permessi -->
+    <string name="msg_permesso_storage">Per usare questa funzionalità è necessario consentire l\'accesso a risorse esterne.</string>
+    <string name="msg_permesso_fotocamera">Per usare questa funzionalità è necessario consentire l\'accesso alla fotocamera.</string>
+    <string name="msg_internet_non_disponibile">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
+
     <!-- String database -->
+    <string name="errore">Si è verificato un problema inaspettato</string>
     <string name="db_errore_scrittura">Si è verificato un problema inaspettato con la scrittura nel database</string>
 
     <!-- String profilo/oggetto/zona/luogo -->
@@ -149,6 +155,7 @@
     <string name="aggiungi_oggetto">Aggiungi oggetto</string>
     <string name="Aggiungi_da_qui">Aggiungi da qui</string>
     <string name="un_nuovo_oggetto">un nuovo oggetto</string>
+    <string name="fotocamera_non_disponibile">Funzione non disponibile! il dispositivo non dispone di una fotocamera</string>
     <string name="accesso_fotocamera">Consenti l\'accesso alla fotocamera dalle impostazioni per usare questa funzionalità</string>
     <string name="accesso_risorse_esterne">Consenti l\'accesso a risorse esterne dalle impostazioni per usare questa funzionalità</string>
     <string name="doppio_tap">Doppio tap per uscire</string>
@@ -166,7 +173,6 @@
     <string name="carica_immagine">Carica Immagine</string>
     <string name="cerca">Ricerca</string>
     <string name="creazione_percorso">Creazione Percorso</string>
-    <string name="connessione_internet">È necessaria una connessione ad internet per avere accesso a questa funzione</string>
 
     <string name="Pulsante_luoghi">Pulsante Luoghi</string>
     <string name="Pulsante_zone">Pulsante Zone</string>
@@ -190,7 +196,6 @@
     <string name="percorso_vuoto">Percorso vuoto</string>
     <string name="oggetti_nella_zona">Oggetti nella zona </string>
     <string name="selezione_zona_oggetti">Seleziona Zona per vedere gli oggetti</string>
-
 
 
 
