@@ -148,9 +148,10 @@ public class PercorsiActivity extends AppCompatActivity implements RecyclerAdapt
         setAdapter();
     }
 
+    /**
+     * Metoto utile a gestire il tutorial relativo ai percorsi
+     */
     private void showTutorial(){
-
-
         TapTargetView.showFor(this,
                 TapTarget.forView(addPercorsoFbt, getString(R.string.crea_percorso), getString(R.string.percorso_msg_1)+ "\n" +
                                 getString(R.string.percorso_msg_2))

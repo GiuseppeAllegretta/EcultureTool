@@ -61,7 +61,6 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
     private FloatingActionButton changeImg;
     private View parentLayout;
 
-    //Si recupera questa lista per fare in modo che l'utente non crei un oggetto con lo stesso nome di uno precedente
     List<Oggetto> oggettiList = new ArrayList<>();
 
     //VARIABILI GESTIONE SPINNER PER LE ZONE
@@ -199,7 +198,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
         dialogAddOggettoFragment.show(getSupportFragmentManager(), "dialog");
     }
 
-    //
+
     private void creazioneOggetto() {
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override

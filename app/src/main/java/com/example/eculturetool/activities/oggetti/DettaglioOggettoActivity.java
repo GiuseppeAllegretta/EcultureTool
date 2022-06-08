@@ -355,6 +355,9 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Metoto che si occupa di recuperare i dati degli oggetti dal DB e di andarli ad inserire nelle opportune view all'interno dell'activitu
+     */
     private void setDatiOggetto() {
         dataBaseHelper = new DataBaseHelper(this);
         oggetto = dataBaseHelper.getOggettoById(idOggetto);
