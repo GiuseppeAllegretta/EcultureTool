@@ -27,13 +27,23 @@ import com.example.eculturetool.fragments.SearchFragment;
 import com.example.eculturetool.utilities.Permissions;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * Classe principale rappresentante la schermata che l'utente si ritrova all'avvio dell'app.
+ * Permette di visualizzare i menu e di navigare nelle varie sezioni di cui l'app è costituita.
+ */
 public class HomeActivity extends AppCompatActivity {
 
+    /**
+     * binding: necessario per le interazioni con la view
+     * parentLayout: layout grafico a monte dell'interfaccia
+     * curatore: contiene i dati relativi all'utente loggato
+     * permission: oggetto di tipo Permission, utilizzato per la gestione dei permessi
+     * doubleBackToExitPressedOnce: flag per consentire di uscire dall'app con la doppia pressione del tasto indietro
+     */
     HomeBinding binding;
     private View parentLayout;
     protected Curatore curatore;
     private Permissions permission = new Permissions();
-
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -112,7 +122,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Permette di intercambiare i fragment del menù in basso, spostandosi tra le varie sezioni dell'app
+     * @param fragment, il fragment da caricare
+     */
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -140,6 +153,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Permette di sapere se un fragment è stato selezionato ed è attivo
+     * @return boolean, true se ci si trova in un fragment, false altrimenti
+     */
     private boolean isInFragment() {
         for (Fragment item : getSupportFragmentManager().getFragments()) {
             if (item.isVisible() && (
@@ -151,6 +168,5 @@ public class HomeActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
 }

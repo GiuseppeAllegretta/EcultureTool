@@ -28,8 +28,20 @@ import com.example.eculturetool.utilities.LocaleHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe utilizzata per permettere il login dell'utente
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * dataBaseHelper: istanza di DataBaseHelper, necessaria per reperire dati dal db
+     * editTextEmail: casella di testo per l'inserimento dell'email dell'utente
+     * editTextPassword: casella di testo per l'inserimento della password dell'utente
+     * progressBar: barra grafica che indica il progresso dell'operazione di login
+     * language_dialog: menù che consente di effettuare la scelta relativa alla lingua da utilizzare
+     * lang_selected: la lingua scelta per l'app
+     * context: il contesto dell'app
+     */
     DataBaseHelper dataBaseHelper;
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
@@ -82,6 +94,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * Permette di effettuare controlli su email e password inseriti. Una volta verificata la correttezza consente di effettuare il login
+     */
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -180,7 +195,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-
+    /**
+     * Permette di preparare il database con dati preimpostati per la modalità ospite (senza doversi registrare).
+     * Effettua inoltre il login con i profilo ospite.
+     * @param view, la vista di default
+     */
     public void popolaDBmodalitaOspite(View view) {
 
         //Stringhe relative alle zone del museo

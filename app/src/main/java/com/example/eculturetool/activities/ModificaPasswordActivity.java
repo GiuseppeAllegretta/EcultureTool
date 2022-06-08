@@ -13,13 +13,23 @@ import com.example.eculturetool.R;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Curatore;
 
+/**
+ * Classe che consente all'utente di modificare la propria password
+ */
 public class ModificaPasswordActivity extends AppCompatActivity {
 
+    /**
+     * dataBaseHelper: istanza di DataBaseHelper, necessaria per reperire dati dal db
+     * oldPassword: edit text per l'inserimento della password attuale
+     * newPassword: edit text per l'inserimento della nuova password
+     * confirmPassword: edit text per reinserire la nuova password al fine di controllare che combacino
+     * progressBar: barra grafica che indica il progresso dell'operazione
+     * passNuova: stringa contenente la nuova password impostata
+     * curatore: contiene i dati relativi all'utente loggato
+     */
     private DataBaseHelper dataBaseHelper;
     private EditText oldPassword, newPassword, confirmPassword;
-    private ImageView frecciaBack, tastoConferma;
     private ProgressBar progressBar;
-    private boolean flagPassword = false;
     private String passNuova;
     private Curatore curatore;
 
@@ -32,8 +42,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         oldPassword = findViewById(R.id.password_attuale);
         newPassword = findViewById(R.id.nuova_password);
         confirmPassword = findViewById(R.id.conferma_nuova_password);
-        frecciaBack = findViewById(R.id.freccia_back_modifica_password);
-        tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
+        ImageView frecciaBack = findViewById(R.id.freccia_back_modifica_password);
+        ImageView tastoConferma = findViewById(R.id.icona_conferma_modifica_password);
         progressBar = findViewById(R.id.pb);
         dataBaseHelper = new DataBaseHelper(this);
         curatore = dataBaseHelper.getCuratore();
@@ -46,7 +56,10 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Permette di modificare la password attuale, effettuando controlli sulla validità dell'input utente
+     * @return true se l'operazione va a buon fine, false altrimenti
+     */
     public boolean modificaPassword() {
         String passAttuale, passNuovaConf;
         passAttuale = oldPassword.getText().toString();
@@ -83,9 +96,16 @@ public class ModificaPasswordActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Permette di verificare che la password inserita sia coerente
+     * @param passwordAttuale, la password attualmente in uso
+     * @param password, la nuova password da impostare
+     * @return true se se due password coincidono, false altrimenti
+     */
     public boolean passwordVerificata(String passwordAttuale, String password) {
         progressBar.setVisibility(View.VISIBLE);
 
+        boolean flagPassword;
         if(passwordAttuale.compareTo(password) == 0){
             if(dataBaseHelper.updatePassword(passNuova)){
                 Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_aggiornata), Toast.LENGTH_SHORT).show();
