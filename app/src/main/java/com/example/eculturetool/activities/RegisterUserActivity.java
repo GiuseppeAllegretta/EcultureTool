@@ -25,12 +25,12 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
     private ProgressBar progressBar;
     private DataBaseHelper dataBaseHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
+        //Acquisizione riferimenti view nell'acitivty
         TextView registerUser = findViewById(R.id.avantiButton);
         registerUser.setOnClickListener(this);
 
@@ -50,11 +50,12 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
+        //permette di effettuare la registrazione dell'utente
         if (view.getId() == R.id.avantiButton) {
             registerUser();
         }
     }
-
+    //logica che acquisisce i dati dell'utente in fase di registrazione
     private void registerUser() {
 
         String nome = editTextNome.getText().toString().trim();
@@ -107,7 +108,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             progressBar.setVisibility(View.INVISIBLE);
             return;
         }
-
+        //passaggio alla creazione del luogo associato all'utente che si sta registrando
+        //mediante un intent esplicito
         Curatore curatore = new Curatore(nome, cognome, email, password, null);
 
         Bundle bundle = new Bundle();
@@ -129,6 +131,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         savedInstanceState.putCharSequence("MySavedData", charSequence);
     }
 
+    //recupero informazioni Activity corrente
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

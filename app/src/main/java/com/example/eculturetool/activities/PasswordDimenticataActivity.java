@@ -27,6 +27,7 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_dimenticata);
 
+        //Acquisizione riferimenti view nell'acitivty
         emailEditText = findViewById(R.id.emailReset);
         resetPasswordButton = findViewById(R.id.resetPassword);
         progressBar = findViewById(R.id.progressBarReset);
@@ -38,6 +39,7 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.password_dimenticata_activity);
     }
 
+    //logica che gestisce il reset della password e verifica la correttezza dei dati inseriti
     private void resetPassword() {
         String email = emailEditText.getText().toString().trim();
 
@@ -60,9 +62,9 @@ public class PasswordDimenticataActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-
+    //passa all'activity di reset della password attraverso un intent esplicito che contiene l'email del curatore
         Intent intent = new Intent(this, ResetPasswordActivity.class);
-        intent.putExtra(Curatore.Keys.CURATORE_KEY, email); //passo la mail nell'intent
+        intent.putExtra(Curatore.Keys.CURATORE_KEY, email);
         startActivity(intent);
 
         progressBar.setVisibility(View.VISIBLE);

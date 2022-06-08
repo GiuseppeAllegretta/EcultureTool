@@ -25,6 +25,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
+        //Acquisizione riferimenti view nell'acitivty
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
         backImg = findViewById(R.id.freccia_back_reset_password);
         confirmImg = findViewById(R.id.icona_conferma_reset_password);
@@ -40,13 +41,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //pressione sul tasto conferma con
+        //conseguente modifica della password
         confirmImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 modificaPassword();
             }
         });
-
+        //pressione sulla freccia back con
+        //conseguente chiusura dell'acticity
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +59,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
     }
 
+    //logica che gestisce la modifica della password
     private boolean modificaPassword() {
 
         boolean flagPassword = false;
