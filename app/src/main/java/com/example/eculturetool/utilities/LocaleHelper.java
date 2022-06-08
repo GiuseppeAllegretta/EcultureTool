@@ -11,7 +11,9 @@ import android.preference.PreferenceManager;
 import java.util.Locale;
 
 
-
+/**
+ * Classe che si occupa della gestione del multilingua
+ */
 public class LocaleHelper {
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
     public static Context onAttach(Context context) {
@@ -22,9 +24,22 @@ public class LocaleHelper {
         String lang = getPersistedData(context, defaultLanguage);
         return setLocale(context, lang);
     }
+
+    /**
+     * Metoto che consente di ottenere la lingua attualmente settata dall'applicazione
+     * @param context il contesto che deve essere passato come parametro
+     * @return il nome della lingua che è attualmente impostata
+     */
     public static String getLanguage(Context context) {
         return getPersistedData(context, Locale.getDefault().getLanguage());
     }
+
+    /**
+     * Metoto che consente di settare una lingua
+     * @param context il contesto che deve essere passato come parametro
+     * @param language da impostare
+     * @return il contesto
+     */
     public static Context setLocale(Context context, String language) {
         persist(context, language);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -32,10 +47,23 @@ public class LocaleHelper {
         }
         return updateResourcesLegacy(context, language);
     }
+
+    /**
+     * Metodo che si occupa di gestire la persistenza della lingua
+     * @param context il contesto che deve essere passato come parametro
+     * @param defaultLanguage lingua di default dell'applicazione
+     * @return la lingua impostata
+     */
     private static String getPersistedData(Context context, String defaultLanguage) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString(SELECTED_LANGUAGE, defaultLanguage);
     }
+
+    /**
+     * Metoto che consente di rendere persistente la lingua che si vuole impostare
+     * @param context il contesto che deve essere passato come parametro
+     * @param language da rendere persistente
+     */
     private static void persist(Context context, String language) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
@@ -51,6 +79,13 @@ public class LocaleHelper {
         configuration.setLayoutDirection(locale);
         return context.createConfigurationContext(configuration);
     }
+
+    /**
+     *
+     * @param context il contesto che deve essere passato come parametro
+     * @param language lingua da inserire
+     * @return context aggiornato
+     */
     @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, String language) {
         Locale locale = new Locale(language);

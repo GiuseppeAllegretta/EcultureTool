@@ -79,6 +79,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
+        //Sulla base dell'id viene effettuata una scelta dei vari case
         switch (view.getId()) {
             case R.id.registrati:
                 startActivity(new Intent(this, RegisterUserActivity.class));
@@ -101,18 +103,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        //gestione del caso in cui il campo mail è vuoto
         if (email.isEmpty()) {
             editTextEmail.setError(getResources().getString(R.string.email_richiesta));
             editTextEmail.requestFocus();
             return;
         }
 
+        //gestione del caso in cui il campo mail non matcha con il pattern delle email (regex)
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError(getResources().getString(R.string.email_valida));
             editTextEmail.requestFocus();
             return;
         }
 
+        //gestione del caso in cui il password  è vuoto
         if (password.isEmpty()) {
             editTextPassword.setError(getResources().getString(R.string.password_richiesta));
             editTextPassword.requestFocus();
@@ -120,6 +125,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         int PASSWORD_LENGTH = 6;
+
+        //gestione del caso in cui il la lunghezza della password è inferire alla lunghezza minima
         if (password.length() < PASSWORD_LENGTH) {
             editTextPassword.setError(getResources().getString(R.string.password_min_caratteri) + PASSWORD_LENGTH + getResources().getString(R.string.caratteri));
             editTextPassword.requestFocus();
@@ -128,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressBar.setVisibility(View.VISIBLE);
 
+        //Veirifico che il login sia andato a buon fine
         if(dataBaseHelper.login(email, password)){
             Toast.makeText(LoginActivity.this, getResources().getString(R.string.autenticazione_corretta), Toast.LENGTH_SHORT).show();
 
@@ -141,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }else {
 
+            //verifico che la mail esista o meno
             if(!dataBaseHelper.checkEmailExist(email)){
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.verifica_email), Toast.LENGTH_SHORT).show();
                 editTextEmail.requestFocus();
@@ -157,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
 
+        //Gestione della lingua del device
         if (LocaleHelper.getLanguage(getApplicationContext()).equalsIgnoreCase("it")) {
             context = LocaleHelper.setLocale(LoginActivity.this, "it");
             lang_selected = 0;

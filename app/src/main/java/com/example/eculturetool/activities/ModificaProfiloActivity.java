@@ -36,7 +36,6 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         back = findViewById(R.id.freccia_back);
         conferma = findViewById(R.id.icona_conferma);
         curatore = dataBaseHelper.getCuratore();
-
     }
 
     @Override

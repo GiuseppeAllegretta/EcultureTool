@@ -131,10 +131,6 @@ public class RiepilogoPercorsoActivity extends AppCompatActivity {
                 nomiOggetti.append(iterator.next() + "\n\n");
             }
 
-            //for(Oggetto oggetto: oggetti){
-            //    nomiOggetti.append(oggetto.getNome()).append(" \n\n");
-            //}
-
             AlertDialog.Builder builder = new AlertDialog.Builder(RiepilogoPercorsoActivity.this);
             builder.create();
             builder.setTitle(getResources().getString(R.string.oggetti_nella_zona) + " \"" + zoneNomi.get(i) + "\"").setMessage(nomiOggetti.toString()).show();

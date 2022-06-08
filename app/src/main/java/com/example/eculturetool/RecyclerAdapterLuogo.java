@@ -50,6 +50,12 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
      * Classe utilizzata per contenere la view relativa ad un luogo nella recycler
      */
     public class LuoghiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        /**
+         * nomeLuogo: textview contenente il nome del luogo
+         * iconaTipologia: imageview contenente l'immagine relativa alla tipologia del luogo
+         * itemSelected: elemento della view selezionato
+         * onLuogoListener: listener custom per il luogo
+         */
         private TextView nomeLuogo;
         private ImageView iconaTipologia;
         private LinearLayout itemSelected;

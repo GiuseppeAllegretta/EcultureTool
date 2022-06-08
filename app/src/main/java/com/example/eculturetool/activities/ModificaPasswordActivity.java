@@ -66,24 +66,28 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         passNuova = newPassword.getText().toString();
         passNuovaConf = confirmPassword.getText().toString();
 
+        //gestione del caso in cui il campo password attuale  è vuoto
         if (passAttuale.isEmpty()) {
             oldPassword.setError(getResources().getString(R.string.password_attuale));
             oldPassword.requestFocus();
             return false;
         }
 
+        //gestione del caso in cui il campo nuova password  è vuoto
         if (passNuova.isEmpty()) {
             newPassword.setError(getResources().getString(R.string.nuova_password));
             newPassword.requestFocus();
             return false;
         }
 
+        //gestione del caso in cui il campo conferma password è vuoto
         if (passNuovaConf.isEmpty()) {
             confirmPassword.setError(getResources().getString(R.string.conferma_password));
             confirmPassword.requestFocus();
             return false;
         }
 
+        //verifico che la nuova passowrd e la conferma della nuova password siano uguali o meno
         if (passNuova.compareTo(passNuovaConf) != 0) {
             Toast.makeText(this, getResources().getString(R.string.password_non_coincidenti), Toast.LENGTH_SHORT).show();
             newPassword.setError(getResources().getString(R.string.password_non_coincidenti));
@@ -92,8 +96,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             return false;
         }
 
+        //Aggiorno la password
         return passwordVerificata(passAttuale, curatore.getPassword());
-
     }
 
     /**
@@ -107,6 +111,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
 
         boolean flagPassword;
         if(passwordAttuale.compareTo(password) == 0){
+            //verifica che l'aggiornamento sia eseguito correttamente
             if(dataBaseHelper.updatePassword(passNuova)){
                 Toast.makeText(ModificaPasswordActivity.this, getResources().getString(R.string.password_aggiornata), Toast.LENGTH_SHORT).show();
                 flagPassword = true;

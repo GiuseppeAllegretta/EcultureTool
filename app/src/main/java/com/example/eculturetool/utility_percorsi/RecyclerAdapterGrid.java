@@ -37,12 +37,21 @@ import butterknife.Unbinder;
 public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGrid.MyViewHolder>
     implements ItemTouchHelperAdapter {
 
+    /**
+     * context: rappresenta il contesto in cui l'app si trova al momento
+     * listZone: elenco di tutte le zone disponibili
+     * listener: listener per un oggetto di tipo zona
+     * data: array contenente solo le zone selezionate per far parte del percorso
+     */
     private Context context;
     private ArrayList<Zona> listZone;
     private OnStartDragListener listener;
     private DataHolder data = DataHolder.getInstance();
 
 
+    /**
+     * Classe custom che contiene la view relativa agli elementi della recycler
+     */
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cardZona)
         CardView cardZona;
@@ -63,6 +72,10 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
 
         Unbinder unbinder;
 
+        /**
+         * Costruttore di MyViewHolder
+         * @param itemView, la vista da rappresentare
+         */
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
             unbinder = ButterKnife.bind(this, itemView);
@@ -70,10 +83,10 @@ public class RecyclerAdapterGrid extends RecyclerView.Adapter<RecyclerAdapterGri
     }
 
     /**
-     * Costruttore del recycler
-     * @param context
-     * @param listZone
-     * @param listener
+     * Costruttore di RecyclerAdapterGrid
+     * @param context, il contesto dell'app
+     * @param listZone, lista delle zone da rappresentare
+     * @param listener, listener per una zona
      */
     public RecyclerAdapterGrid(Context context, ArrayList<Zona> listZone, OnStartDragListener listener) {
         this.context = context;

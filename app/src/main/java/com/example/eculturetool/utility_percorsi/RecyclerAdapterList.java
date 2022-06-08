@@ -53,8 +53,17 @@ public class RecyclerAdapterList<T extends Entita> extends RecyclerView.Adapter<
         return list.size();
     }
 
+    /**
+     * Classe utilizzata per contenere una view all'interno della recycler
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * imageView: contiene l'icona della zona
+         * iconaFreccia: contiene l'icona della freccia per tornare indietro
+         * nomeZona: textview contenente il nome della zona
+         * descrizioneZona: textview contenente la descrizione della zona
+         */
         ImageView imageView, iconaFreccia;
         TextView nomeZona, descrizioneZona;
 

@@ -17,20 +17,40 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Recycler adapter utilizzato per la rappresentazione dei percorsi all'interno dell'app
+ */
 public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapterPercorso.PercorsoViewHolder> implements Filterable {
 
+    /**
+     * percorsiList: elenco dei percorsi creati (riferito ad un luogo)
+     * percorsiListAll: elenco di tutti i percorsi creati
+     * mOnPercorsoListener: listener per un percorso
+     */
     private ArrayList<Percorso> percorsiList;
     private ArrayList<Percorso> percorsiListAll;
     private OnPercorsoListener mOnPercorsoListener;
 
+    /**
+     * Costruttore di RecyclerAdapterPercorso
+     * @param percorsiList, lista dei percorsi
+     * @param onPercorsoListener, listener per percorso
+     */
     public RecyclerAdapterPercorso (ArrayList<Percorso> percorsiList, OnPercorsoListener onPercorsoListener){
         this.percorsiList = percorsiList;
         this.percorsiListAll = new ArrayList<>(percorsiList);
         this.mOnPercorsoListener = onPercorsoListener;
     }
 
-
+    /**
+     * Classe utilizzata per contenere la view relativa ad un percorso nella recycler
+     */
     public class PercorsoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        /**
+         * nomePercorsoTxt: textview contenente il nome del percorso
+         * onPercorsoListener: listener custom per il percorso
+         */
         private TextView nomePercorsoTxt;
         private OnPercorsoListener onPercorsoListener;
 
@@ -101,7 +121,9 @@ public class RecyclerAdapterPercorso extends RecyclerView.Adapter<RecyclerAdapte
         }
     };
 
-
+    /**
+     * Interfaccia che consente di selezionare uno specifico percorso
+     */
     public interface OnPercorsoListener{
         void onPercorsoClick(int position);
     }
