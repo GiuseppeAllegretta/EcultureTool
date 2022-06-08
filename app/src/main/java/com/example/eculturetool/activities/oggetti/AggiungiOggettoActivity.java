@@ -200,6 +200,7 @@ public class AggiungiOggettoActivity extends AppCompatActivity implements Adapte
 
 
     private void creazioneOggetto() {
+        //Delego la gestione della progress bar ad un apposito handler
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
