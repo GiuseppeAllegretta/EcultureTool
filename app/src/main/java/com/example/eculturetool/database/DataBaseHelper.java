@@ -78,15 +78,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         emailCuratore = sharedPreferences.getString(SESSION_KEY, "null");
     }
 
+    /**
+     * Metodo che restituisce la variabile che rappresenta l'email del curatore
+     * @return emailCuratore: la variabile che rappresenta l'email del curatore
+     */
     public static String getEmailCuratore() {
         return emailCuratore;
     }
 
+    /**
+     * Metodo che va a settare l'email del curatore
+     * @param emailCuratore
+     */
     public void setEmailCuratore(String emailCuratore) {
         DataBaseHelper.emailCuratore = emailCuratore;
     }
 
-    //this is called the first time a database is accessed. There should be code in here to create a new database
+    //questo viene chiamato la prima volta che si accede a un database. Dovrebbe esserci del codice qui per creare un nuovo database
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //String che consente di creare la tabella Curatori
@@ -98,6 +106,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + COLONNA_CURATORE_LUOGO_CORRENTE + " INT," +
                 " " + COLONNA_CURATORE_IMG + " TEXT" + ")";
 
+        //String che consente di creare la tabella LUOGHI
         String createTableLuogo = "CREATE TABLE " + TABLE_LUOGHI +
                 " (" + COLONNA_LUOGHI_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " " + COLONNA_LUOGHI_NOME + " TEXT," +
@@ -107,6 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " " + "CONSTRAINT fk_curatori " +
                 " FOREIGN KEY (" + COLONNA_LUOGHI_EMAIL_CURATORE + ") REFERENCES " + TABLE_CURATORI + " ( " + COLONNA_EMAIL + ")" + " ON DELETE CASCADE " + " )";
 
+        //String che consente di creare la tabella ZONE
         String createTableZona = "CREATE TABLE " + TABLE_ZONE +
                 " (" + COLONNA_ZONE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " " + COLONNA_ZONE_NOME + " TEXT," +
@@ -116,6 +126,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " FOREIGN KEY (" + COLONNA_LUOGO_RIFERIMENTO + ") REFERENCES " + TABLE_LUOGHI + " ( " + COLONNA_LUOGHI_ID + ")" + " ON DELETE CASCADE" + ")";
 
 
+        //String che consente di creare la tabella OGGETTI
         String createTableOggetti = "CREATE TABLE " + TABLE_OGGETTI + " " +
                 "(" + COLONNA_OGGETTO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLONNA_OGGETTO_NOME + " TEXT," +
@@ -127,6 +138,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "CONSTRAINT fk_zone FOREIGN KEY (" + COLONNA_OGGETTO_ZONA_ID + ") REFERENCES " + TABLE_ZONE + " (" + COLONNA_ZONE_ID + ")" + " ON DELETE CASCADE" + ")";
 
 
+        //String che consente di creare la tabella PERCORSI
         String createTablePercorsi = "CREATE TABLE " + TABLE_PERCORSI + " " +
                 "(" + COLONNA_PERCORSO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLONNA_PERCORSO_NOME + " TEXT," +
@@ -140,15 +152,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createTablePercorsi);
     }
 
-    //this is called if the databse version number changes. It prevents previous users apps from breaking whe you change the database design
+    //questo viene chiamato se il numero di versione del database cambia. Impedisce che le app degli utenti precedenti si interrompano quando modifichi la progettazione del database
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
 
+    /**
+     * Metodo che si occupa di effettuare un controllo tra i dati forniti in input e quanto memorizzato nel DB
+     * @param email email fornita in input da confrontare con quanto memoriazzato nel DB
+     * @param password password fornita in input da confrontare con quanto memoriazzato nel DB
+     * @return true se il confronto è andato a buon fine e email e password combaciano, false altrimenti
+     */
     public boolean login(String email, String password){
         boolean risultato = false;
 
+        //Query da eseguire
         String stringQuery = "SELECT " + COLONNA_EMAIL + ", " + COLONNA_CURATORE_PASSWORD + " FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ? and " + COLONNA_CURATORE_PASSWORD + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -165,6 +184,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che si occupa di aggiungere un curatore al DB
+     * @param curatore oggetto curatore da inserire nel DB
+     * @return
+     */
     public boolean addCuratore(Curatore curatore){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -186,6 +210,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
+    /**
+     * Metodo che si occupa di recuperare i dati del curatore loggato nell'applicazione
+     * @return curatore ovvero l'oggetto che rappresenta il curatore loggato nel sistema
+     */
     public Curatore getCuratore(){
         Curatore curatore = null;
         String email = null;
@@ -194,10 +223,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String password = null;
         String img = null;
 
+
+
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //instanziazione e utilizzo del cursore per scorrere i record restituiti dalla query
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
+
+        //Ci deve essere una riga trovata dalla query
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 email = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_EMAIL));
@@ -214,6 +249,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return curatore;
     }
 
+    /**
+     * Metodo che si occupa di aggiornare i dati del curatore nel sistema
+     * @param nome nome da aggiornare
+     * @param cognome cognome da aggiornare
+     * @return true se i dati sono stati aggirnati correttamente, false altrimenti
+     */
     public boolean modificaCuratore(String nome, String cognome){
         boolean risultato = false;
 
@@ -224,6 +265,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_CURATORE_COGNOME, cognome);
         final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -234,6 +276,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metodo che va a settare l'imagine del profilo del curatore nel DB
+     * @param uri stringa dell'uri relativa all'immagine
+     * @return
+     */
     public boolean setImageCuratore(String uri){
         boolean risultato = false;
 
@@ -244,6 +291,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -254,6 +302,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metodo che recupera l'uri dal DB relativo all'immagine del curatore
+     * @return
+     */
     public String getImageCuratore(){
         String uri = null;
 
@@ -261,6 +313,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
+        //verifica che sia stato trovato il record relativo all'immagine
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 uri = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_IMG));
@@ -272,6 +325,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return uri;
     }
 
+
+    /**
+     * Metodo che ottiene il lugoo corrente
+     * @return viene restituito l'oggetto che rappresenta il luogo corrente
+     */
     public Luogo getLuogoCorrente(){
         Luogo luogo = null;
 
@@ -283,6 +341,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int luogoCorrente = getIdLuogoCorrente();
 
+        //Query da eseguire
         String stringQuery = "SELECT " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_NOME + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_DESCRIZIONE + "," +
                 TABLE_LUOGHI + "." + COLONNA_LUOGHI_TIPOLOGIA + "," +
@@ -294,6 +353,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(stringQuery, null);
 
+
+        //Verifica che sia stato trovato solo il record relativo al luogo corrente
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 id = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_ID));
@@ -312,14 +373,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return luogo;
     }
 
+    /**
+     * Metodo che restituisce l'id del luogo corrente
+     * @return
+     */
     public int getIdLuogoCorrente(){
         int luogoCorrente =  0;
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
+        //Verifica che sia stato trovato solo il record relativo al luogo corrente
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 luogoCorrente = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_CURATORE_LUOGO_CORRENTE));
@@ -332,13 +399,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     *
+     *Metodo che verifica che l'email data in input esista o meno nel DB
      * @param email
      * @return true se la mail in input esiste nel database, false altrimenti
      */
     public boolean checkEmailExist(String email){
         boolean risultato = false;
 
+
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_CURATORI + " WHERE " + COLONNA_EMAIL + " = " + "?";
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -354,6 +423,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che consente di aggiungere i dati di un luogo al DB
+     * @param luogo
+     * @return
+     */
     public boolean addLuogo(Luogo luogo){
         boolean risultato = false;
 
@@ -367,6 +441,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         long insert = db.insert(TABLE_LUOGHI, null, contentValues);
 
+        //Verifica che i dati siano stati inseriti
         if(insert == -1){
             risultato = false;
         }else {
@@ -387,6 +462,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int luogoCorrente = 0;
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_LUOGHI + " WHERE " + COLONNA_LUOGHI_EMAIL_CURATORE + " = ?";
 
         Cursor cursor = db.rawQuery(stringQuery, new String[] {email});
@@ -400,6 +477,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return luogoCorrente;
     }
 
+    /**
+     * Metodo che si occupa di aggiornare la password del DB
+     * @param password da aggiornare
+     * @return true se l'aggiornamento è andato a buon fine, false altrimenti
+     */
     public boolean updatePassword(String password){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -407,6 +489,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_CURATORE_PASSWORD, password);
         final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             db.close();
             return false;
@@ -416,6 +499,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Metodo che si occupa del reset della password quando è stata dimenticata
+     * @param password da aggiornare
+     * @param emailCuratore a cui fa riferimento la password
+     * @return true se il reset è andato a buon fine, false altrimenti
+     */
     public boolean resetPassword(String password, String emailCuratore){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -423,6 +512,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_CURATORE_PASSWORD, password);
         final int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             db.close();
             return false;
@@ -433,10 +523,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Ottiene tutti i luoghi di un curatore
+     * @return la lista dei luoghi creati
+     */
     public List<Luogo> getLuoghi(){
         List<Luogo> list = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_LUOGHI + " WHERE " + COLONNA_LUOGHI_EMAIL_CURATORE + " = ?";
         Cursor cursor = db.rawQuery(stringQuery, new String[]{emailCuratore});
 
@@ -461,13 +556,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+
+    /**
+     * Metodo che restituisce un luogo sulla base dell'id in input
+     * @param id in input del luogo che si vuole ottenere
+     * @return Luogo ottenuto effettuando una ricerba attraverso l'ID
+     */
     public Luogo getLuogoById(int id){
         Luogo luogo = null;
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_LUOGHI + " WHERE " + COLONNA_LUOGHI_ID + " = " + id;
         Cursor cursor = db.rawQuery(stringQuery, null);
 
+        //Ci deve essere una riga trovata dalla query
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLONNA_LUOGHI_NOME));
@@ -486,6 +590,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return luogo;
     }
 
+    /**
+     * Metodo che va a settare il luogo corrente attraverso l'id dato in input
+     * @param id id del luogo da settare come corrente
+     * @return true se il settaggio è andato a buon fine, false altrimenti
+     */
     public boolean setLuogoCorrente(int id){
         boolean risultato;
 
@@ -496,6 +605,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int update = db.update(TABLE_CURATORI, contentValues, COLONNA_EMAIL + " = ?", new String[]{emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             db.close();
             risultato = false;
@@ -508,6 +618,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+
+    /**
+     * Metodo che si occupa di aggiornare i dati di un luogo
+     * @param id del luogo da aggiornare
+     * @param nome del luogo da aggiornare
+     * @param descrizione del luogo da aggiornare
+     * @param tipologia del luogo da aggiornare
+     * @return true se i dati vengono correttamente aggiornati, false altrimenti
+     */
     public boolean updateLuogo(int id, String nome, String descrizione, Tipologia tipologia){
         boolean risultato = false;
 
@@ -520,6 +639,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int update = db.update(TABLE_LUOGHI, contentValues, COLONNA_LUOGHI_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -530,6 +650,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metodo che consente di cancellare un luogo dal DB
+     * @param id del luogo da cancellare
+     * @return true se il luogo è stato correttamente cancellato, false altrimenti
+     */
     public boolean deleteLuogo(int id){
         boolean risultato = false;
 
@@ -540,6 +665,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int delete = db.delete(TABLE_LUOGHI, COLONNA_LUOGHI_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(delete == -1){
             risultato = false;
         }else {
@@ -551,6 +677,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Metodo che consente di cancellare un curatore dal DB
+     * @return true se il curatore è stato correttamente cancellato, false altrimenti
+     */
     public boolean deleteCuratore(){
         boolean risultato = false;
 
@@ -561,6 +691,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int delete = db.delete(TABLE_CURATORI, COLONNA_EMAIL + " = ?", new String[] {emailCuratore});
 
+        //Verifica che i dati siano stati aggiornati
         if(delete == -1){
             risultato = false;
         }else {
@@ -572,11 +703,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che consente di recuperare una lista di zone dal DB, queste sono tutte quelle che appartengono a uno stesso luogo
+     * @return
+     */
     public ArrayList<Zona> getZone(){
         ArrayList<Zona> info = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         //String stringQuery = "SELECT * FROM "+ TABLE_ZONE + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + "=" + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID;
+        //Stringa query da eseguire
         String stringQuery = "SELECT * FROM ZONE JOIN CURATORI ON ZONE.LUOGHI_RIF = CURATORI.CURATORE_LUOGO_CORRENTE AND CURATORI.EMAIL = ?";
         Cursor cursor = db.rawQuery(stringQuery, new String[]{emailCuratore});
 
@@ -605,6 +741,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return info;
     }
 
+    /**
+     * Metodo che consente di oggiungere una zona al DB
+     * @param z zona da aggiungere al DB
+     * @return true se la zona è stata aggiunta correttamente al DB, false altrimenti
+     */
     public boolean aggiungiZona(Zona z){
         boolean risultato=false;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -615,6 +756,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_LUOGO_RIFERIMENTO,z.getRiferimentoLuogo());
         long insert = db.insert(TABLE_ZONE, null, contentValues);
 
+        //Verifica che i dati siano stati aggiornati
         if(insert == -1){
             risultato = false;
         }else {
@@ -627,23 +769,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metodo che consente di eliminare una zona dal DB
+     * @param z la zona da eliminare
+     */
     public void rimuoviZona(Zona z){
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.setForeignKeyConstraintsEnabled(true);
 
+        //Query da eseguire
         String stringQuery = "DELETE  FROM ZONE WHERE  ZONE_NOME =?  AND ZONE_DESCRIZIONE = ?";
 
         db.execSQL(stringQuery,new String[] {z.getNome(),z.getDescrizione()});
 
-        System.out.println("Lancia rimuovi");
-
         db.close();
     }
 
+    /**
+     * Metodo che consente di elminare una zona nel DB
+     * @param z1
+     * @param z2
+     */
     public void modifica(Zona z1,Zona z2){
 
         SQLiteDatabase db = this.getWritableDatabase();
+        //Query da eseguire
         String stringQuery = "UPDATE ZONE SET ZONE_NOME = ? , ZONE_DESCRIZIONE = ? WHERE ZONE_NOME = ?";
 
         db.execSQL(stringQuery,new String[] {z2.getNome(),z2.getDescrizione(), z1.getNome()});
@@ -651,6 +802,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Metodo che consente di recuperare una zona modificata
+     * @param idz
+     * @return
+     */
     public Zona recuperoZonaModificata(int idz){
         Zona zona = null;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -675,11 +831,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che consente di recuperare tutti i luoghi che appartengono al luogo corrente
+     * @return lista di oggetti che appartengono tutti allo stesso luogo
+     */
     public List<Oggetto> getOggetti(){
         List<Oggetto> returnList = new ArrayList<>();
         int idLuogoCorrente = getLuogoCorrente().getId();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM "
                 + "(" + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
                 + " INNER JOIN " + TABLE_ZONE + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
@@ -712,10 +873,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    /**
+     * Metodo che restituisce una lista di zone accumuntate dal fatto di appartenere allo stesso luogo identificato dall'id in input
+     * @param idLuogo
+     * @return una lista di zone
+     */
     public List<Zona> getZoneByIdLuogo(int idLuogo){
         List<Zona> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_ZONE + " WHERE " + COLONNA_LUOGO_RIFERIMENTO + " = ? ";
         Cursor cursor = db.rawQuery(stringQuery, new String[] {"" + idLuogo});
 
@@ -736,17 +903,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * @return restituisce tutti gli oggetti che sono stati creati dal curatore loggato
+     */
     public List<Oggetto> getAllOggetti(){
         List<Oggetto> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM "
                 + "(" + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
                 + " INNER JOIN " + TABLE_ZONE + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
                 + " INNER JOIN " + TABLE_OGGETTI + " ON " + TABLE_OGGETTI + "." + COLONNA_OGGETTO_ZONA_ID + " = " + TABLE_ZONE + "." + COLONNA_ZONE_ID + ") "
                 + " WHERE " + COLONNA_EMAIL + " = ? ";
 
-        System.out.println("Query aab: " + stringQuery);
+        System.out.println("" + stringQuery);
         Cursor cursor = db.rawQuery(stringQuery, new String[] {emailCuratore});
 
         if(cursor.moveToFirst()){
@@ -773,6 +944,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    /**
+     * Aggiunge un oggetto al database
+     * @param oggetto da aggiungere al database
+     * @return id dell'oggetto aggiunto dal db
+     */
     public int addOggetto(Oggetto oggetto){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -791,14 +967,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che restituisce un oggetto sulla base dell'id che è stato fornito in input al metodo
+     * @param id dell'oggetto da restituire
+     * @return
+     */
     public Oggetto getOggettoById(int id){
         Oggetto oggetto = null;
 
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_OGGETTI + " WHERE " + COLONNA_OGGETTO_ID + " = " + id;
         Cursor cursor = db.rawQuery(stringQuery, null);
 
+        //Ci deve essere una riga trovata dalla query
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 int idOggetto = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_OGGETTO_ID));
@@ -822,11 +1005,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return oggetto;
     }
 
+    /**
+     * Metodo che restituisce l'elenco degli oggetti di una certa zona fornita in input
+     * @param zona zona di riferimento per la query
+     * @return lista di oggetti da restituire che apprtengono tutti alla stessa zona
+     */
     public List<Oggetto> getOggettiByZona(Zona zona){
         List<Oggetto> returnList = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM " + TABLE_OGGETTI + " WHERE " + COLONNA_OGGETTO_ZONA_ID + " = " + zona.getId();
         Cursor cursor = db.rawQuery(stringQuery, null);
 
@@ -856,6 +1045,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che si occupa di eliminare un oggetto dal DB
+     * @param id dell'oggetto da eliminare
+     * @return true se l'oggetto è stato correttamente eliminato dal DB, false altrimenti.
+     */
     public boolean deleteOggetto(int id){
         boolean risultato = false;
 
@@ -863,6 +1057,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int delete = db.delete(TABLE_OGGETTI, COLONNA_OGGETTO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(delete == -1){
             risultato = false;
         }else {
@@ -873,6 +1068,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metoto che si occupa di effettuare l'aggiornamento dei dati di un determinato oggetto già esistente nel DB
+     * @param id dell'oggetto da aggiornare
+     * @param nome dell'oggetto da aggiornare
+     * @param descrizione dell'oggetto da aggiornare
+     * @param tipologiaOggetto dell'oggetto da aggiornare
+     * @param zona a cui appartienen l'oggetto da aggiornare
+     * @return true se l'aggiornamento è andato a buon fine, false altrimenti
+     */
     public boolean updateOggetto(int id, String nome, String descrizione, TipologiaOggetto tipologiaOggetto, int zona){
         boolean risultato = false;
 
@@ -886,6 +1090,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int update = db.update(TABLE_OGGETTI, contentValues, COLONNA_OGGETTO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -896,6 +1101,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return risultato;
     }
 
+    /**
+     * Metoro che si occupa di andare a settare l'uri di un oggetto all'interno del databsse
+     * @param id dell'oggetto su cui settare l'uri
+     * @param uri l'uri da settare
+     * @return true se la scrittura è andato a buon fine, false altrimenti
+     */
     public boolean setImageOggetto(int id, String uri){
         boolean risultato = false;
 
@@ -906,6 +1117,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int update = db.update(TABLE_OGGETTI, contentValues, COLONNA_OGGETTO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -917,6 +1129,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che si occupa di andare a settare l'url dell'immagine del QR code all'interno della tabella OGGETTI
+     * @param id dell'oggetto a cui associare il QR code
+     * @param url del QR code da inserire nel record di quell'oggetto
+     * @return true se l'aggiornamento dei dati è andato a buon fine, false altrimenti
+     */
     public boolean setQRCode(int id, String url){
         boolean risultato = false;
 
@@ -926,6 +1144,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_OGGETTO_URL_QRCODE, url);
         int update = db.update(TABLE_OGGETTI, contentValues, COLONNA_OGGETTO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
@@ -948,6 +1167,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         //String stringQuery = "SELECT * FROM "+ TABLE_ZONE + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_ZONE + "." + COLONNA_LUOGO_RIFERIMENTO + "=" + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID;
+        //Query da eseguire
         String stringQuery = "SELECT * FROM ZONE JOIN CURATORI ON ZONE.LUOGHI_RIF = CURATORI.CURATORE_LUOGO_CORRENTE AND CURATORI.EMAIL = ?";
         Cursor cursor = db.rawQuery(stringQuery, new String[]{emailOspite});
 
@@ -977,6 +1197,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che inserisce degli oggetti a sistema per effettuare dei test
+     */
     public void uploadZoneOggettiTest(){
         int idLuogo = getIdLuogoCorrente();
 
@@ -1014,7 +1237,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Metoto che si occupa di andare ad aggiungere un record del percorso nel DB
+     * @param percorso oggetto percorso i cui dati sarannno inseriti nel DB
+     * @return id del percorso creato. L'id è quello generato attraverso l'auto increment
+     */
     public int addPercorso(Percorso percorso){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -1022,15 +1249,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_PERCORSO_NOME, percorso.getNome());
         contentValues.put(COLONNA_PERCORSO_ID_LUOGO, percorso.getIdLuogo());
 
-
         int insert = (int) db.insert(TABLE_PERCORSI, null, contentValues);
-
 
         db.close();
         return insert;
     }
 
 
+    /**
+     * Metoto che restituisce un oggetto Percorso effettuando la ricerca mediante l'id fornito in input
+     * @param id del Percorso che deve essere restituito
+     * @return
+     */
     public Percorso getPercorsoById(int id){
         Percorso percorso = null;
 
@@ -1038,6 +1268,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String stringQuery = "SELECT * FROM " + TABLE_PERCORSI + " WHERE " + COLONNA_PERCORSO_ID + " = " + id;
         Cursor cursor = db.rawQuery(stringQuery, null);
 
+        //Ci deve essere una riga trovata dalla query
         if(cursor.getCount() == 1){
             if(cursor.moveToFirst()){
                 int idPercorso = cursor.getInt(cursor.getColumnIndexOrThrow(COLONNA_PERCORSO_ID));
@@ -1055,12 +1286,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che restituisce una lista di percorsi che appartengono tutti allo stesso curatore ad a uno stesso luogo
+     * @return lista dei percorsi
+     */
     public List<Percorso> getPercorsi(){
         List<Percorso> percorsiList = new ArrayList<>();
 
         int idLuogoCorrente = getLuogoCorrente().getId();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //Query da eseguire
         String stringQuery = "SELECT * FROM "
                 + "(" + "(" + TABLE_CURATORI + " INNER JOIN " + TABLE_LUOGHI + " ON " + TABLE_CURATORI + "." + COLONNA_EMAIL + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_EMAIL_CURATORE + ") "
                 + " INNER JOIN " + TABLE_PERCORSI + " ON " + TABLE_PERCORSI + "." + COLONNA_PERCORSO_ID_LUOGO + " = " + TABLE_LUOGHI + "." + COLONNA_LUOGHI_ID + ") "
@@ -1086,6 +1322,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return percorsiList;
     }
 
+    /**
+     * Metoto che elimina un percorso del DB facendo riferimento all'id che viene dato in input
+     * @param id dell'oggetto da eliminare
+     * @return true se l'eliminazione è andata a buon fine, false altrimenti
+     */
     public boolean deletePercorso(int id){
         boolean risultato = false;
 
@@ -1093,6 +1334,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         int delete = db.delete(TABLE_PERCORSI, COLONNA_PERCORSO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(delete == -1){
             risultato = false;
         }else {
@@ -1104,6 +1346,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Metodo che si occupa di aggiornare i dati di un percorso
+     * @param id del percorso da aggiornare
+     * @param nome del percorso da aggiornare
+     * @return true se i dati del percorso sono stati aggiornati correttamente, false altrimenti
+     */
     public boolean modificaPercorso(int id, String nome){
         boolean risultato = false;
 
@@ -1113,6 +1361,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLONNA_PERCORSO_NOME, nome);
         final int update = db.update(TABLE_PERCORSI, contentValues, COLONNA_PERCORSO_ID + " = " + id, null);
 
+        //Verifica che i dati siano stati aggiornati
         if(update == -1){
             risultato = false;
         }else {
