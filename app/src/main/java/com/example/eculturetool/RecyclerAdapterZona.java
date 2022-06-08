@@ -16,12 +16,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Recycler adapter di tipo lista, utilizzato per rappresentare una lista di zone
+ */
 public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZona.ZoneViewHolder> implements Filterable {
+
+    /**
+     * zoneList: array di oggetti di tipo Zona
+     * mOnZonaListener: listener di un oggetto Zona, utilizzato per performare il movimento
+     * zoneListAll: array che contiene tutte le zone, utilizzato per la ricerca
+     */
     private ArrayList<Zona> zoneList;
     private OnZonaListener mOnZonaListener;
     private ArrayList<Zona> zoneListAll;
 
-
+    /**
+     * Costruttore di RecyclerAdapterZona
+     * @param zoneList, la lista di zone
+     * @param onZonaListener, il listener per la zona
+     */
     public RecyclerAdapterZona(ArrayList<Zona> zoneList, OnZonaListener onZonaListener) {
         this.zoneList = zoneList;
         this.mOnZonaListener = onZonaListener;
@@ -64,10 +77,18 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
     };
 
 
+    /**
+     * Classe utilizzata per contenere la view relativa ad una zona nella recycler
+     */
     public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView nomeZona, descrizioneZona;
         private OnZonaListener onZonaListener;
 
+        /**
+         * Costruttore di LuoghiViewHolder
+         * @param view, la vista di una zona
+         * @param onZonaListener, il listener di una zona
+         */
         public ZoneViewHolder(final View view, OnZonaListener onZonaListener) {
             super(view);
             nomeZona = view.findViewById(R.id.nomeZona);
