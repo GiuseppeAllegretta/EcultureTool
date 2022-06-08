@@ -20,14 +20,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Recycler adapter di tipo lista, utilizzato per rappresentare una lista di luoghi
+ */
 public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLuogo.LuoghiViewHolder> implements Filterable {
 
+    /**
+     * luoghiList: array di oggetti di tipo Luogo
+     * mOnLuogoListener: listener di un oggetto Luogo, utilizzato per performare il movimento
+     * luoghiListAll: array che contiene tutti i luoghi, utilizzato per la ricerca
+     */
     private ArrayList<Luogo> luoghiList;
     private OnLuogoListener mOnLuogoListener;
-
-    //Serve per la ricerca
     private ArrayList<Luogo> luoghiListAll;
 
+    /**
+     * Costruttore di RecyclerAdapterLuogo
+     * @param luoghiList, la lista di luoghi
+     * @param onLuogoListener, il listener per il luogo
+     */
     public RecyclerAdapterLuogo(ArrayList<Luogo> luoghiList, OnLuogoListener onLuogoListener) {
         this.luoghiList = luoghiList;
         this.mOnLuogoListener = onLuogoListener;
@@ -35,12 +46,20 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
     }
 
 
+    /**
+     * Classe utilizzata per contenere la view relativa ad un luogo nella recycler
+     */
     public class LuoghiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView nomeLuogo;
         private ImageView iconaTipologia;
         private LinearLayout itemSelected;
         OnLuogoListener onLuogoListener;
 
+        /**
+         * Costruttore di LuoghiViewHolder
+         * @param view, la vista di un luogo
+         * @param onLuogoListener, il listener di un luogo
+         */
         public LuoghiViewHolder(final View view, OnLuogoListener onLuogoListener) {
             super(view);
             nomeLuogo = view.findViewById(R.id.nomeLuogo);
@@ -71,6 +90,11 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
         setImageLuogo(holder, luoghiList.get(holder.getAdapterPosition()).getTipologia());
     }
 
+    /**
+     * Permette di impostare un'immagine al luogo a seconda della sua tipologia
+     * @param holder, contenitore del luogo; contiene il luogo a cui dovrà essere impostata l'immagine
+     * @param tipologia, la tipologia del luogo
+     */
     private void setImageLuogo(RecyclerAdapterLuogo.LuoghiViewHolder holder, Tipologia tipologia) {
         switch (tipologia) {
             case MUSEO:
@@ -107,6 +131,7 @@ public class RecyclerAdapterLuogo extends RecyclerView.Adapter<RecyclerAdapterLu
         return filter;
     }
 
+    //Filtraggio dei luoghi
     Filter filter = new Filter() {
         //run on backgroun thread
         @Override

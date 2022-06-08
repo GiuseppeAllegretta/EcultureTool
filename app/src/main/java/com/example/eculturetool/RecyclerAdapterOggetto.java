@@ -24,25 +24,43 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Recycler adapter di tipo lista, utilizzato per rappresentare una lista di oggetti
+ */
 public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapterOggetto.OggettiViewHolder> implements Filterable {
+    /**
+     * oggettiList: array di oggetti di tipo Luogo
+     * oggettiListAll: array che contiene tutti gli oggetti, utilizzato per la ricerca
+     * mOnOggettoListener: listener di un oggetto Oggetto utilizzato per performare il movimento
+     */
     private ArrayList<Oggetto> oggettiList;
     private ArrayList<Oggetto> oggettiListAll;
     private OnOggettoListener mOnOggettoListener;
 
+    /**
+     * Costruttore di RecyclerAdapterLuogo
+     * @param oggettiList, la lista di oggetti
+     * @param onOggettoListener, il listener per l'oggetto
+     */
     public RecyclerAdapterOggetto(ArrayList<Oggetto> oggettiList, OnOggettoListener onOggettoListener) {
         this.oggettiList = oggettiList;
         this.oggettiListAll = new ArrayList<>(oggettiList);
         this.mOnOggettoListener = onOggettoListener;
     }
 
-
+    /**
+     * Classe utilizzata per contenere la view relativa ad un oggetto nella recycler
+     */
     public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView nomeOggetto, descrizioneOggetto;
         private ImageView immagineOggetto;
         private OnOggettoListener onOggettoListener;
 
-
+        /**
+         * Costruttore di OggettoViewHolder
+         * @param view, la vista di un oggetto
+         * @param onOggettoListener, il listener di un oggetto
+         */
         public OggettiViewHolder(final View view, OnOggettoListener onOggettoListener) {
             super(view);
             nomeOggetto = view.findViewById(R.id.nomeOggetto);
