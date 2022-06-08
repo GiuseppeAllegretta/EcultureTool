@@ -41,8 +41,16 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che contine la gestione della splash activity
+ */
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG_LOG = SplashActivity.class.getName();
+
+    /**
+     * MIN_WAIT_INTERVAL: intervallo di tempo minima della splash activity
+     * MAX_WAIT_INTERVAL: intervallo di tempo massimi della splash activity
+     */
     private static final long MIN_WAIT_INTERVAL = 1500L;
     private static final long MAX_WAIT_INTERVAL = 2000L;
     private static final int GO_AHEAD_WHAT = 1;
@@ -69,18 +77,17 @@ public class SplashActivity extends AppCompatActivity {
 
             long elapsedTime = SystemClock.uptimeMillis() -
                     srcActivity.mStartTime;
+            //controllo il tempo trascorso con l'intervallo minimo
             if (elapsedTime >= MIN_WAIT_INTERVAL && !srcActivity.mIsDone) {
                 srcActivity.mIsDone = true;
+                //controllo la sessione se esiste
                 if (srcActivity.checkSession()) {
                     srcActivity.nextSessionActivity();
 
                 } else {
                     srcActivity.nextActivity();
                 }
-
             }
-
-
         }
     }
 
@@ -88,7 +95,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        //prende il riferimento del DB
         dataBaseHelper = new DataBaseHelper(getApplicationContext());
+
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
@@ -103,22 +113,33 @@ public class SplashActivity extends AppCompatActivity {
         mHandler.sendMessageAtTime(goAheadMessage, mStartTime + MAX_WAIT_INTERVAL);
     }
 
+    /**
+     * Metodo che viene eseguito quando bisogna passare all'actitivy successiva alla splash, in questo caso la LoginActivity
+     */
     private void nextActivity() {
         final Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Si passa all'acitivy successiva sulla base dell'esito della sessione
+     */
     private void nextSessionActivity() {
         startActivity(new Intent(SplashActivity.this, HomeActivity.class));
         finish();
     }
 
+    /**
+     * Metodo che si occupa di gestire la sessione.
+     * @return true se la sessione appartiene a un utente qualunque, false nel caso in cui si era loggati come ospite
+     */
     private boolean checkSession() {
         boolean flag = false;
         SessionManagement sessionManagement = new SessionManagement(SplashActivity.this);
         String emailCuratore = sessionManagement.getSession();
         if (emailCuratore.compareTo("-1") != 0) {
+            //check sulla sessione se si è loggati con la mail ospite
             if (emailCuratore.compareTo(emailOspite) == 0) {
                 sessionManagement.removeSession();
                 dataBaseHelper.setEmailCuratore(emailOspite);
@@ -128,7 +149,6 @@ public class SplashActivity extends AppCompatActivity {
                 dataBaseHelper.setEmailCuratore(sessionManagement.getSession());
             }
         }
-
         return flag;
     }
 
@@ -141,7 +161,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     /**
-     * Metodo che popola i dati del DB per fornire un account al professore
+     * Metodo che popola i dati del DB per fornire un account al professore. Questi oggetti saranno tutti quanti precaricati durante l'avvio e non potranno essere cancellati
      */
     public void popolaDBmodalitaBalducci() {
 
