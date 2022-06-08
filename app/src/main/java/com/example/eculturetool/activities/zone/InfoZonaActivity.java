@@ -39,6 +39,7 @@ public class InfoZonaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_zona);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.descrizione_zona));
+        //prendo i riferimenti delle view del layout
         titolo = findViewById(R.id.titolo);
         descrizione = findViewById(R.id.descrizione);
         gridView = findViewById(R.id.grid_oggetti);

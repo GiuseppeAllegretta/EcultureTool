@@ -46,7 +46,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_oggetto);
-
+        //prendo i riferimenti delle view del layout
         nomeOggetto = findViewById(R.id.edit_name_oggetto);
         descrizioneOggetto = findViewById(R.id.editDescrizione);
         zonaAppartenenza = findViewById(R.id.spinner_zone_edit);
@@ -117,7 +117,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         });
     }
 
-
+    //avvalora l'oggetto e controlla che tutti i dati inseriti siano validi
     private void editOggetto() {
         String nome = nomeOggetto.getText().toString().trim();
         String descrizione = descrizioneOggetto.getText().toString().trim();
@@ -191,6 +191,7 @@ public class ModificaOggettoActivity extends AppCompatActivity implements Adapte
         return isEsistente;
     }
 
+    //assegno una tipologia all'oggetto creato
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
