@@ -81,6 +81,12 @@ public class RecyclerAdapterZona extends RecyclerView.Adapter<RecyclerAdapterZon
      * Classe utilizzata per contenere la view relativa ad una zona nella recycler
      */
     public class ZoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+
+        /**
+         * nomeZona: textview contenente il nome della zona
+         * descrizioneZona: textview contenente la descrizione della zona
+         * onZonaListener: listener custom per la zona
+         */
         private TextView nomeZona, descrizioneZona;
         private OnZonaListener onZonaListener;
 

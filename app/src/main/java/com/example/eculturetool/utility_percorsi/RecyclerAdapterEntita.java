@@ -70,11 +70,21 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         }
     };
 
+    /**
+     * Classe utilizzata per contenere la view relativa ad un oggetto derivato da Entita nella recycler
+     */
     public class EntitaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        /**
+         * nomeEntita: textview contenente il nome dell'entità
+         * descrizioneEntita: textview contenente la descrizione dell'entità
+         * onOggettoListener: listener custom per l'entità
+         * immagineOggetto: imageview contenente l'immagine dell'entità
+         */
         private TextView nomeEntita;
         private TextView descrizioneEntita;
         private OnEntitaListener onEntitaListener;
-        private ImageView immagineOggetto;
+        private ImageView immagineEntita;
 
         /**
          * Costruttore ViewHolder
@@ -87,7 +97,7 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
             descrizioneEntita= view.findViewById(R.id.descrizioneEntita);
             this.onEntitaListener = onEntitaListener;
             view.setOnClickListener(this);
-            immagineOggetto = view.findViewById(R.id.iconaEntita);
+            immagineEntita = view.findViewById(R.id.iconaEntita);
         }
 
         @Override
@@ -110,7 +120,7 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
         holder.descrizioneEntita.setText(descrizione);
 
         if(entitaList.get(position) instanceof Oggetto)
-            Glide.with(holder.immagineOggetto.getContext()).load(((Oggetto) entitaList.get(position)).getUrl()).circleCrop().into(holder.immagineOggetto);
+            Glide.with(holder.immagineEntita.getContext()).load(((Oggetto) entitaList.get(position)).getUrl()).circleCrop().into(holder.immagineEntita);
     }
 
     @Override
@@ -119,6 +129,9 @@ public class RecyclerAdapterEntita extends RecyclerView.Adapter<RecyclerAdapterE
     }
 
 
+    /**
+     * Interfaccia che consente di selezionare una particolare entità presente nella view
+     */
     public interface OnEntitaListener {
 
         void onEntitaClick(int position);

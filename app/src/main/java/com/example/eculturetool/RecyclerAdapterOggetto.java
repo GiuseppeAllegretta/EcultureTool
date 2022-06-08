@@ -52,6 +52,13 @@ public class RecyclerAdapterOggetto extends RecyclerView.Adapter<RecyclerAdapter
      * Classe utilizzata per contenere la view relativa ad un oggetto nella recycler
      */
     public class OggettiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+
+        /**
+         * nomeOggetto: textview contenente il nome dell'oggetto
+         * descrizioneOggetto: textview contenente la descrizione dell'oggetto
+         * immagineOggetto: imageview contenente l'immagine dell'oggetto
+         * onOggettoListener: listener custom per l'oggetto
+         */
         private TextView nomeOggetto, descrizioneOggetto;
         private ImageView immagineOggetto;
         private OnOggettoListener onOggettoListener;
