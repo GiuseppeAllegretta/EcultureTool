@@ -2,6 +2,13 @@ package com.example.eculturetool.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,18 +20,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.oggetti.DettaglioOggettoActivity;
-import com.example.eculturetool.activities.zone.DettaglioZonaActivity;
 import com.example.eculturetool.activities.percorsi.RiepilogoPercorsoActivity;
+import com.example.eculturetool.activities.zone.DettaglioZonaActivity;
 import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.database.IoHelper;
 import com.example.eculturetool.entities.Entita;

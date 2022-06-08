@@ -17,7 +17,6 @@ import com.example.eculturetool.database.DataBaseHelper;
 import com.example.eculturetool.entities.Luogo;
 import com.example.eculturetool.entities.Tipologia;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaLuogoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
