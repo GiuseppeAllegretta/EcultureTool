@@ -38,7 +38,7 @@ public class IoHelper {
     private static final String GRAPH_FOLDER = "graphSerializzazione";
     private static final String LIST_FOLDER = "listSerializzazione";
 
-
+    //Contesto che viene avvalorato attraverso il costruttore
     private final Context context;
     private Uri contentUri;
 
@@ -61,12 +61,14 @@ public class IoHelper {
         FileOutputStream outFile = null;
         ObjectOutputStream outStream = null;
 
+        //Ottiene il percorso e specifica la cartella in cui saranno salvati i dati
         File fileOutputFolder = new File(context.getFilesDir(), GRAPH_FOLDER); //cartella in cui salvare i file da serializzare
         File file;
 
         try {
 
             fileOutputFolder.mkdirs(); //crea la cartella se non esiste
+            //File da salvare
             file = new File(fileOutputFolder, FILE_NAME);
             outFile = new FileOutputStream(file);
 
@@ -277,6 +279,11 @@ public class IoHelper {
     }
 
 
+    /**
+     *Metodo che contiene la logica di salvataggio su file un file TXT contenente dati in formato JSON. Si appoggia a un metodo che consente di prendere un array e di scriverlo in formato JSon su File
+     * @param graph grafo da scrivere su file
+     * @param id id del percorso a cui fa riferimento quel grafo
+     */
     public void esportaTxtinJsonFormat(Graph graph, int id){
         final String FILE_NAME = id + SHARE + ".txt";
         List<Zona> zone = new ArrayList<>();
@@ -293,6 +300,7 @@ public class IoHelper {
 
             fileOutputStream = new FileOutputStream(file);
 
+            //Scrive su file i byte che restituiti dal metodo arrayToJsonString
             fileOutputStream.write(arrayToJsonString(zone));
 
             contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
@@ -312,6 +320,11 @@ public class IoHelper {
         }
     }
 
+    /**
+     * Metodo che converte un array in una stringa scritta in formato Json
+     * @param list lista da convertire
+     * @return i bytes della stringa in formato Json
+     */
     private byte[] arrayToJsonString(List<Zona> list){
         String jsonString;
         Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
@@ -330,11 +343,13 @@ public class IoHelper {
         File file = new File(stringFile);
         contentUri = FileProvider.getUriForFile(context, "com.example.eculturetool.fileprovider", file);
 
+        //Controlla se il file esiste
         if(!file.exists()){
             Toast.makeText(context, context.getString(R.string.file_non_esiste), Toast.LENGTH_LONG).show();
             return;
         }
 
+        //Attributi che l'intent deve avere per poter effettuare lo share e il richiamo di applicazioni che consentono di ricevere file
         Intent intentShare = new Intent(Intent.ACTION_SEND);
         intentShare.setType("text/*");
         intentShare.putExtra(Intent.EXTRA_SUBJECT, "Subject Here"); //per condividere con email app
@@ -344,6 +359,11 @@ public class IoHelper {
     }
 
 
+    /**
+     * metoto che inserisce elementi in una lista provenienti da un iteratore
+     * @param iterator
+     * @return la lista degli oggetti che siamo andati ad iterare
+     */
     private List<Zona> fromIteratorToArrayZone(Iterator<Zona> iterator) {
         List<Zona> returnList = new ArrayList<>();
 
@@ -355,6 +375,11 @@ public class IoHelper {
     }
 
 
+    /**
+     * Metoto che converte una lista in un grafo facendo uso di cicli
+     * @param list lista da convertire
+     * @return grafo ottenuto dalla conversione
+     */
     public Graph<Zona, DefaultEdge> fromListToGraph(List<Zona> list){
         Graph<Zona, DefaultEdge> returnGraph = new SimpleDirectedGraph<>(DefaultEdge.class);
 
@@ -395,7 +420,11 @@ public class IoHelper {
     }
 
 
-
+    /**
+     * Metoto che effettua una serializzazione su file di una lista di zone
+     * @param list lista da serializzare
+     * @param id id del percorso da serializzare
+     */
     public void listZoneSerializzazione(List<Zona> list, int id){
         final String FILE_NAME = id + ".txt";
         FileOutputStream outFile = null;
@@ -432,6 +461,11 @@ public class IoHelper {
     }
 
 
+    /**
+     * Metoto che deserializza una lisya memoriazzati in un file
+     * @param id della percorso da deserializzare e scritto su file
+     * @return
+     */
     public List<Zona> listZoneDeserializzazione(int id){
         List<Zona> returnList = null;
         final String FILE_NAME = id + ".txt";
