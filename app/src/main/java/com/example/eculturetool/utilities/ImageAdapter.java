@@ -1,25 +1,34 @@
 package com.example.eculturetool.utilities;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
 import com.example.eculturetool.entities.Oggetto;
 
 import java.util.List;
 
+/**
+ * Classe utilizzata per la rappresentazione di oggetti di tipo Oggetto all'interno di una griglia
+ */
 public class ImageAdapter extends BaseAdapter {
 
+    /**
+     * obejctsList: la lista di oggetti
+     * context: il contesto dell'app
+     */
     private List<Oggetto> objectsList;
     private Context context;
 
+    /**
+     * Costruttore di ImageAdapter
+     * @param objectsList, la lista di oggetti
+     * @param context, il contesto dell'app
+     */
     public ImageAdapter(List<Oggetto> objectsList, Context context){
         this.objectsList = objectsList;
         this.context = context;
