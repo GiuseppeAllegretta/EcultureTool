@@ -39,9 +39,14 @@ import org.jgrapht.graph.DefaultEdge;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
+/**
+ * Classe che si occupa di gestire il fragment relativo alla ricerca globale rinvenibile nel menu della home
+ */
 public class SearchFragment extends Fragment implements RecyclerAdapterEntita.OnEntitaListener {
 
+    /**
+     * Lista che contiene oggetti di tipo Entità i cui figli sono Oggetti, Zone, Luoghi e Percorsi
+     */
     private ArrayList<Entita> entitaList;
     private RecyclerView recyclerView;
     private RecyclerAdapterEntita adapterEntita;
@@ -53,7 +58,7 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
 
 
     public SearchFragment() {
-        // Required empty public constructor
+        //Richiesto costruttore pubblico vuoto
     }
 
 
@@ -63,25 +68,38 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Metodo privato che va a settare l'adapter che conterrà tutti oggetti di tipo entità
+     */
     private void setAdapter() {
         adapterEntita = new RecyclerAdapterEntita(entitaList, this);
         RecyclerView.LayoutManager layoutManager;
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //Setta l'adapter all'interno della recyclerView con i relativi elementi
         recyclerView.setAdapter(adapterEntita);
     }
 
+    /**
+     * Metoto che gestisce il caricamento degli elementi nel momento in cui si va a selezionare uno dei tre bottoni (oggetti, percorsi, zone). Inoltre gestisce gli stati quando
+     * questo sono cliccati
+     */
     private void setEntitaInfo() {
         dataBaseHelper = new DataBaseHelper(getActivity().getApplicationContext());
 
         entitaList.clear();
+        //recupero dei dati dal DB e assegnamento della lista alla variabile
         entitaList.addAll(dataBaseHelper.getOggetti());
+        //il bottone oggetti è selezionato di default
         oggettiBtn.setSelected(true);
         zoneBtn.setSelected(false);
         percorsiBtn.setSelected(false);
+
+        //Metodo che si occupa delle operazioni per settare l'adapter
         setAdapter();
 
+        //operazioni da eseguire quando si clicca sul pulsante oggetti. Si occupa del caricamente e gestione dello stato del pulsante
         oggettiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,10 +108,12 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
                 oggettiBtn.setSelected(true);
                 zoneBtn.setSelected(false);
                 percorsiBtn.setSelected(false);
+                //Metodo che si occupa delle operazioni per settare l'adapter con gli elementi relativi agli oggetti
                 setAdapter();
             }
         });
 
+        //operazioni da eseguire quando si clicca sul pulsante zone. Si occupa del caricamente e gestione dello stato del pulsante
         zoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,10 +122,12 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
                 oggettiBtn.setSelected(false);
                 zoneBtn.setSelected(true);
                 percorsiBtn.setSelected(false);
+                //Metodo che si occupa delle operazioni per settare l'adapter con gli oggetti relativi alle zone
                 setAdapter();
             }
         });
 
+        //operazioni da eseguire quando si clicca sul pulsante percorsi. Si occupa del caricamente e gestione dello stato del pulsante
         percorsiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +136,7 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
                 oggettiBtn.setSelected(false);
                 zoneBtn.setSelected(false);
                 percorsiBtn.setSelected(true);
+                //Metodo che si occupa delle operazioni per settare l'adapter con gli oggetti relativi ai percorsi
                 setAdapter();
             }
         });
@@ -124,6 +147,8 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Recupero dei riferimenti delle view
         recyclerView = view.findViewById(R.id.recyclerViewEntita);
         oggettiBtn = view.findViewById(R.id.oggettiSrc);
         zoneBtn = view.findViewById(R.id.ZoneSrc);
@@ -131,15 +156,15 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
 
         entitaList = new ArrayList<>();
         setEntitaInfo();
-        //setAdapter();
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
+        //operazioni che settano la Toolbar nel fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbarEntita);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -147,8 +172,15 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
         return view;
     }
 
+
+    /**
+     * Metoto che gestisce il menu delle opzioni presenti nella toolbar nello specifico la lente di ingrandimento che permette di effettuare la ricerca
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        //inflate del menu
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.ricerca);
         SearchView searchView = (SearchView) item.getActionView();
@@ -160,6 +192,7 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                //azioni da eseguire nel caso in cui si effettua al ricerca
                 adapterEntita.getFilter().filter(newText);
                 return false;
             }
@@ -168,18 +201,26 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
     }
 
 
+    /**
+     * Metodo che gestisce il click su uno degli elementi della recyclerView
+     * @param position l'indice dell'elemento cliccato
+     */
     @Override
     public void onEntitaClick(int position) {
 
+        //OPeraziomni da eseguire nel caso in cui si dovesse cliccare su un elemento della recycler che sia un Oggetto
         if (entitaList.get(position) instanceof Oggetto) {
+            //recuper dell'id dell'oggetto selezionato
             int oggettoSelezionato = entitaList.get(position).getId();
             ArrayList<Zona> zoneList = dataBaseHelper.getZone();
 
+            //OPERAZIONI CHE CONSENTONO DI AVVIARE L'ACITIVITY DI ARRIVO
             Intent intent = new Intent(getActivity(), DettaglioOggettoActivity.class);
             intent.putExtra(Oggetto.Keys.ID, oggettoSelezionato);
             intent.putExtra("ZONELIST", (Serializable) zoneList);
             startActivity(intent);
 
+            //OPeraziomni da eseguire nel caso in cui si dovesse cliccare su un elemento della recycler che sia una Zona
         } else if (entitaList.get(position) instanceof Zona) {
             Zona z = (Zona) entitaList.get(position);
 
@@ -190,6 +231,7 @@ public class SearchFragment extends Fragment implements RecyclerAdapterEntita.On
             intent.putExtras(b);
             startActivity(intent);
 
+            //OPeraziomni da eseguire nel caso in cui si dovesse cliccare su un elemento della recycler che sia un Percorso
         } else if (entitaList.get(position) instanceof Percorso) {
 
             IoHelper ioHelper = new IoHelper(getActivity().getApplicationContext());
