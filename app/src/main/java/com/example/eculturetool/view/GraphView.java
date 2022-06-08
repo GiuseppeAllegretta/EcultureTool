@@ -1,25 +1,28 @@
 package com.example.eculturetool.view;
 
+import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-
+import android.widget.Toast;
+import org.jgrapht.graph.DefaultEdge;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-
 import com.example.eculturetool.R;
 import com.example.eculturetool.entities.Vertice;
 import com.example.eculturetool.entities.Zona;
-
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
-
 import java.util.ArrayList;
 
 

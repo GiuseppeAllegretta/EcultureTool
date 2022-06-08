@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eculturetool.R;
 import com.example.eculturetool.activities.percorsi.CreazioneDiramazioneActivity;
-import com.example.eculturetool.activities.percorsi.VisualizzaDiramazioneActivity;
 import com.example.eculturetool.activities.zone.InfoZonaActivity;
+import com.example.eculturetool.activities.percorsi.VisualizzaDiramazioneActivity;
 import com.example.eculturetool.entities.DataHolder;
 import com.example.eculturetool.entities.Zona;
 
