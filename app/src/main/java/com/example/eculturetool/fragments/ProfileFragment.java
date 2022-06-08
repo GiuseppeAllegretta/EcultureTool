@@ -158,7 +158,12 @@ public class ProfileFragment extends Fragment {
         } else {
             nomeFoto.setText(curatore.getNome() + " " + curatore.getCognome());
         }
-        email.setText(curatore.getEmail());
+
+        if (curatore.getEmail().compareTo(emailOspite) == 0){
+            email.setText("**********@gmail.com");
+        }else{
+            email.setText(curatore.getEmail());
+        }
         nome.setText(curatore.getNome());
         cognome.setText(curatore.getCognome());
 
