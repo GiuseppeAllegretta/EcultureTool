@@ -28,6 +28,7 @@ public class ModificaProfiloActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_profilo);
+        //Acquisizione riferimenti view nell'acitivty
 
         dataBaseHelper = new DataBaseHelper(this);
         nome = findViewById(R.id.edit_name_profile);
@@ -43,13 +44,15 @@ public class ModificaProfiloActivity extends AppCompatActivity {
         nome.setText(curatore.getNome());
         cognome.setText(curatore.getCognome());
 
+        //ritorna indietro quando viene premuto il tasto back
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
-
+        //effettua l'aggiornamento dl nome e del cognome dell'utente e
+        //controlla che i campi non siano vuoti
         conferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +63,8 @@ public class ModificaProfiloActivity extends AppCompatActivity {
             }
         });
     }
-
+    //logica che verifica che i dati immessi siano validi
+    //e aggiorna il database con i nuovi dati
     private boolean modificaDati() {
 
         if (nome.getText().toString().isEmpty()) {
