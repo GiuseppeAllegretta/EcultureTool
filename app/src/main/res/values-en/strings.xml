@@ -165,7 +165,7 @@
     <string name="nessun_QR">No QR code found</string>
     <string name="fotocamera_non_disponibile">Function not available! the device does not have a camera</string>
     <string name="accesso_fotocamera">Please allow access to the camera from settings to use this feature</string>
-    <string name="doppio_tap">press double tap to exit</string>
+    <string name="doppio_tap">Double press to exit</string>
     <string name="accesso_risorse_esterne">Allow access to external resources from settings to use this feature</string>
     <string name="file_non_esiste">The file does not exist!</string>
     <string name="almeno_una_zona">You must create at least one zone for the selected place</string>
