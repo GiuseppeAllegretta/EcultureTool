@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.eculturetool.R;
 
+/**
+ * Classe che rappresenta il dialog che deve aprirsi nel momento in cui si vuole aggiungere un oggetto
+ */
 public class DialogAddOggettoFragment extends AppCompatDialogFragment {
 
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        //Istanziazione dell'alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.informazione))
                 .setMessage(getString(R.string.almeno_una_zona))

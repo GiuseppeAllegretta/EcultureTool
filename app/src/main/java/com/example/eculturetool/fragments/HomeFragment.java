@@ -29,8 +29,14 @@ import com.example.eculturetool.entities.Luogo;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 
+/**
+ * Classe che gestisce il fragment relativo alla Home
+ */
 public class HomeFragment extends Fragment {
 
+    /**
+     * Le 4 CardView principali della home
+     */
     private CardView percorsi, luoghi, zone, oggetti;
     private Context context;
     private Curatore curatore;
@@ -52,6 +58,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Si prendono i riferimenti alle view
         TextView tv = view.findViewById(R.id.nomeCuratore);
         percorsi = view.findViewById(R.id.percorsiCard);
         luoghi = view.findViewById(R.id.luoghiCard);
@@ -73,14 +81,16 @@ public class HomeFragment extends Fragment {
             luogoGestito.setText(Html.fromHtml(context.getString(R.string.stai_gestendo) + " " + "<b>" + luogo.getNome() + "</b>", 0));
         }
 
+        //Operazioni da eseguire nel caso in cui l'utente clicchi sulla lampadina dei tuttorial
         showTutorial.setOnClickListener(view1 -> showTutorial());
 
+        //Operazioni da eseguire nel caso in cui l'utente selezioni la card dei percorsi
         percorsi.setOnClickListener(view12 -> startActivity(new Intent(getActivity(), PercorsiActivity.class)));
-
+        //Operazioni da eseguire nel caso in cui l'utente selezioni la card dei luoghi
         luoghi.setOnClickListener(view13 -> startActivity(new Intent(getActivity(), LuoghiActivity.class)));
-
+        //Operazioni da eseguire nel caso in cui l'utente selezioni la card degli oggetti
         oggetti.setOnClickListener(view14 -> startActivity(new Intent(getActivity(), OggettiActivity.class)));
-
+        //Operazioni da eseguire nel caso in cui l'utente selezioni la card delle zone
         zone.setOnClickListener(view15 -> startActivity(new Intent(getActivity(), ZoneActivity.class)));
     }
 
@@ -108,10 +118,10 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //operazioni di inflate della view del fragment
         FrameLayout frameLayout = new FrameLayout(getActivity());
         inflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -127,13 +137,15 @@ public class HomeFragment extends Fragment {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         requireActivity().recreate();
-
     }
 
 
-
+    /**
+     * operazioin da eseguire quando l'utente clicca sulla lampadina dei tutorial. Verrà eseguito un mini-tutorial per ogni cardView
+     */
     private void showTutorial(){
         new TapTargetSequence(requireActivity()).targets(
+                //Tutorial per i luoghi
                 TapTarget.forView(luoghi, getString(R.string.Pulsante_luoghi), getString(R.string.gestire_luoghi))
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -151,6 +163,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(60),
 
+                        //Tutorial per le zone
                 TapTarget.forView(zone,getString(R.string.Pulsante_zone),getString(R.string.gestire_zone))
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -168,6 +181,7 @@ public class HomeFragment extends Fragment {
                         .transparentTarget(true)
                         .targetRadius(75),
 
+                        //Tutorial per gli oggetti
                 TapTarget.forView(oggetti,getString(R.string.Pulsante_oggetti),getString(R.string.gestire_oggetti))
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)
@@ -184,6 +198,8 @@ public class HomeFragment extends Fragment {
                         .tintTarget(false)
                         .transparentTarget(true)
                         .targetRadius(60),
+
+                        //Tutorial per i percorsi
                 TapTarget.forView(percorsi,getString(R.string.Pulsante_percorsi),getString(R.string.gestire_luoghi))
                         .outerCircleColor(R.color.gialloSecondario)
                         .outerCircleAlpha(0.96f)

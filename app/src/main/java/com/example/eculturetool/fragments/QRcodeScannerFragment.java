@@ -31,7 +31,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.regex.Pattern;
 
-
+/**
+ * Classe che si occupa della gestione della scansione del QR code
+ */
 public class QRcodeScannerFragment extends Fragment {
 
     private ActivityResultLauncher<ScanOptions> activityResultLaucher;
@@ -40,20 +42,25 @@ public class QRcodeScannerFragment extends Fragment {
 
 
     public QRcodeScannerFragment() {
-        // Required empty public constructor
+        //è richiesto un costruttore pubblico vuoto
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String regex_id = "[0-9]*"; //espressione regolare utile per verificare che quanto letto dal qr code contenga solo numeri
+
+        //espressione regolare utile per verificare che quanto letto dal qr code contenga solo numeri
+        String regex_id = "[0-9]*";
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(requireContext());
+
+        //recupero di tutti gli oggetti dal db
         List<Oggetto> oggettiList = dataBaseHelper.getAllOggetti();
+        //lancia l'activity al fine di ottenere un risultato
         activityResultLaucher = registerForActivityResult(new ScanContract(),
                 result -> {
+            //gestione dei vari casi relativi al risultato
                     if (result.getContents() != null) {
                         if (Pattern.matches(regex_id, result.getContents())) {
                             int idOggetto = Integer.parseInt(result.getContents());
@@ -76,6 +83,9 @@ public class QRcodeScannerFragment extends Fragment {
         });
     }
 
+    /**
+     * Dialoda da mostrare nel caso in cui l'oggetto non sia stato trovato
+     */
     private void dialogOggettoNonTrovato() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle(getResources().getString(R.string.avviso));
@@ -96,12 +106,17 @@ public class QRcodeScannerFragment extends Fragment {
         scanBtn = view.findViewById(R.id.scanBtn);
         showTutorial=view.findViewById(R.id.showTutorialQr);
 
+        //opzioni di scansione del QR code
         scanQRcode();
 
+        //operazioni da eseguire quando si clicca sulla lampadina dei tutorial
         showTutorial.setOnClickListener(view1 -> showTutorial());
     }
 
 
+    /**
+     * Metodo che contiene la sequenza di operazioni da eseguire nel caso in cui l'utente clicca sul pulsante per scansionare il QR code
+     */
     private void scanQRcode() {
         scanBtn.setOnClickListener(view -> {
             ScanOptions options = new ScanOptions();
@@ -124,6 +139,9 @@ public class QRcodeScannerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_q_rcode_scanner, container, false);
     }
 
+    /**
+     * Metoto che si occupa di lanciare il tutorial relativo al QR code
+     */
     private void showTutorial(){
         TapTargetView.showFor(requireActivity(),                 //this is an Activity
                 TapTarget.forView(scanBtn, getString(R.string.scansiona_qr_code), getString(R.string.inquadra))
