@@ -224,6 +224,7 @@ public class DettaglioOggettoActivity extends AppCompatActivity {
         qrCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Delego la gestione della progress bar ad un apposito handler
                 Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
                     @Override
                     public boolean handleMessage(@NonNull Message message) {

@@ -291,6 +291,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //Delego la gestione della progress bar ad un apposito handler
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override

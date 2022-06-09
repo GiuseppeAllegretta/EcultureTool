@@ -73,6 +73,7 @@ public class AggiungiLuogoActivity extends AppCompatActivity implements AdapterV
      * Metodo void che si occupa di tutta la logica di creazione del luogo
      */
     private void creazioneLuogo() {
+        //Delego la gestione della progress bar ad un apposito handler
         Handler handler = new Handler(getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
