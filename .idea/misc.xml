@@ -174,6 +174,7 @@
         <entry key="app/src/main/res/drawable/ic_qr_scanner.xml" value="0.357" />
         <entry key="app/src/main/res/drawable/ic_see_percorso.xml" value="0.357" />
         <entry key="app/src/main/res/drawable/shape_background.xml" value="0.357" />
+        <entry key="app/src/main/res/font/le_chant_des_albatros.xml" value="0.40555555555555556" />
         <entry key="app/src/main/res/layout-land/activity_aggiungi_oggetti.xml" value="0.33" />
         <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.4036458333333333" />
@@ -204,9 +205,11 @@
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_visualizza_diramazione.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/activity_zone.xml" value="0.325" />
+        <entry key="app/src/main/res/layout/checkbox_layout.xml" value="0.36018518518518516" />
         <entry key="app/src/main/res/layout/dialog_anteprima_oggetto.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/dialog_elimina_profilo.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/dialog_tutorial.xml" value="0.36018518518518516" />
         <entry key="app/src/main/res/layout/fragment_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_info_zona.xml" value="0.4036458333333333" />
@@ -220,7 +223,9 @@
         <entry key="app/src/main/res/layout/image_item.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/layout_card_creazione_percorso.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/list_item_oggetto.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/list_item_zona.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/list_items_search.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/main_recycler_row_item.xml" value="0.3974358974358974" />
         <entry key="app/src/main/res/layout/object_lower_menu.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/layout/qrcode_dialog.xml" value="0.4036458333333333" />
@@ -228,8 +233,12 @@
         <entry key="app/src/main/res/layout/view_object.xml" value="0.24954710144927536" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/menu/oggetti_menu.xml" value="0.2557291666666667" />
-        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/menu/percorso_menu.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.33" />
         <entry key="app/src/main/res/menu/upload_image_options.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1175" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1175" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.2125" />
       </map>
     </option>
