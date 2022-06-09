@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activities.oggetti.AggiungiOggettoActivity">
 
@@ -21,7 +21,8 @@
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="1dp">
+            android:paddingBottom="1dp"
+            android:background="@color/verdePrimario">
 
             <RelativeLayout
                 android:id="@+id/imgBox"
@@ -97,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/nome_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <EditText
@@ -130,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/descrizione_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <EditText
@@ -164,7 +165,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/tipologia_oggetto"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <Spinner
@@ -195,7 +196,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/posterama_1927_regular"
                             android:text="@string/zona_di_appartenenza"
-                            android:textColor="@color/black"
+                            android:textColor="@color/verdePrimario"
                             android:textSize="20sp" />
 
                         <Spinner

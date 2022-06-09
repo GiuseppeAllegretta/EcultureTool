@@ -141,29 +141,41 @@
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/oggetti_menu.xml" value="0.20854700854700856" />
         <entry key="..\:/Users/domen/AndroidStudioProjects/EcultureTool/app/src/main/res/menu/settings_menu.xml" value="0.16025641025641027" />
-        <entry key="app/src/main/res/drawable-anydpi/circle.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable-anydpi/circle_border.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable-anydpi/grad.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable-anydpi/ic_exit.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable-anydpi/ic_share.xml" value="0.1365" />
+        <entry key="app/src/main/res/drawable-anydpi/circle.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable-anydpi/circle_border.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_exit.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_list.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_ricerca.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_settings.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_share.xml" value="0.357" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.16" />
-        <entry key="app/src/main/res/drawable/btn_qr_tondo.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable/btn_shape_tondo.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable/btn_tondo.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable/button_shape_focused_color.xml" value="0.1365" />
+        <entry key="app/src/main/res/drawable-v24/ic_qr_scanner.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/btn_qr_tondo.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable/btn_shape_tondo.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable/btn_tondo.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable/button_shape_focused_color.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/button_shape_normal.xml" value="0.1075" />
-        <entry key="app/src/main/res/drawable/button_shape_pressed.xml" value="0.1365" />
+        <entry key="app/src/main/res/drawable/button_shape_pressed.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/button_shape_selected.xml" value="0.1075" />
         <entry key="app/src/main/res/drawable/button_state.xml" value="0.2295" />
-        <entry key="app/src/main/res/drawable/drop.xml" value="0.1365" />
+        <entry key="app/src/main/res/drawable/drop.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/gradient_background.xml" value="0.2375" />
+        <entry key="app/src/main/res/drawable/ic_add_to_percorso.xml" value="0.3195" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_double_arrow_down.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_edit_descrizione.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_edit_percorso.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_expand_up.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.357" />
         <entry key="app/src/main/res/drawable/ic_places.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1755" />
-        <entry key="app/src/main/res/drawable/new_background_test.xml" value="0.1365" />
-        <entry key="app/src/main/res/drawable/shape_background.xml" value="0.1365" />
-        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.1296875" />
+        <entry key="app/src/main/res/drawable/ic_qr_scanner.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/ic_see_percorso.xml" value="0.357" />
+        <entry key="app/src/main/res/drawable/shape_background.xml" value="0.357" />
+        <entry key="app/src/main/res/layout-land/activity_aggiungi_oggetti.xml" value="0.33" />
+        <entry key="app/src/main/res/layout-land/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_add_zona_to_percorso.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_aggiungi_luogo.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/activity_aggiungi_oggetti.xml" value="0.33" />
